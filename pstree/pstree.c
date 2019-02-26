@@ -114,7 +114,7 @@ void input(int argc, char *argv[]){
 			{"version",no_argument,0,0},
 			{0,0,0,0}
 		};
-		int ch = getopt_long(argc,argv,"pnv",long_options,&option_index);
+		int ch = getopt_long(argc,argv,"pnV",long_options,&option_index);
 		if(ch == -1) break;
 		
 		switch(ch){
@@ -143,7 +143,7 @@ void input(int argc, char *argv[]){
 				}
 				break;
 			default:
-				printf("error: invalid option");
+				printf("error: invalid option\n");
 				exit(1);
 		}
 	}
