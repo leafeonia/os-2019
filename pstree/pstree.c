@@ -211,6 +211,49 @@ int main(int argc, char *argv[]) {
 			  printf("error: cannot open the file: %s\n",filepath);
 			  exit(2);
 		  }
+		  
+		  
+		  //check for inner process
+		  sprintf(filepath,"/proc/%s/task",ptr->d_name);
+		  DIR* child_dir;
+		  struct dirent *child_ptr;
+		  if((child_dir = opendir(filepath)) == NULL){
+			  printf("error: cannot open %s\n",filepath);
+			  exit(2);
+		  }
+		  while((child_ptr = readdir(child_dir)) != NULL){
+		  	  if(strcmp(ptr->d_name,child_ptr->d_name) != 0 && '0' <= child_ptr->d_name[0] && child_ptr->d_name[0] <= '9' && child_ptr->d_type == 4){
+		  		  sprintf(filepath,"/proc/%s/task/%s/status",ptr->d_name,child_ptr->d_name);
+				  FILE *fp = fopen(filepath,"r");
+				  if(fp){
+					  fgets(buf,100,fp);
+					  sscanf(buf,"%*s %s",process_name);
+					  for(i = 0;i < 3;i++){
+						fgets(buf,100,fp);
+					  }
+					  sscanf(buf,"%*s %d",&ppid);
+					  fgets(buf,100,fp);
+					  fgets(buf,100,fp);
+					  sscanf(buf,"%*s %d",&pid);
+					  map[max_index] = pid;
+					  proc_info temp;
+					  temp.pid = pid;
+					  temp.ppid = ppid;
+					  strcpy(temp.name,process_name);
+					  temp.childlist = NULL;
+					  proc[max_index] = temp;
+					  max_index++;
+					  if(max_index > nr_proc){
+					  	printf("error: too many processes to handle. Please modify the value of macro nr_proc\n");
+					  	exit(1);
+					  }
+				  }
+				  else{
+					  printf("error: cannot open the file: %s\n",filepath);
+					  exit(2);
+				  }
+		  	  }
+		  }
 	  }
   }
   
