@@ -12,6 +12,7 @@ int W,H;
 int main() {
   // Operating system is a C program
   _ioe_init();
+  init_screen();
   //splash();
   unsigned long next_frame = 0;
   int keycode;
