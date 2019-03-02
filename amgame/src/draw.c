@@ -47,6 +47,7 @@ void init_gameboard(){
 	char temp[] = {'u','s','e','d',':'};
 	for(i = 0;i < 5;i++)
 		draw_character(temp[i],8*i,0,WHITE,USEDBD);
+	draw_rect(&usedboard[0][0],usedbd_x,usedbd_y,usedboard_W,usedboard_H);
 	draw_sync();
 }
 
