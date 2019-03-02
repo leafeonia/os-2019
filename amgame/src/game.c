@@ -15,12 +15,12 @@ int main() {
   init_screen();
   reset_game();
   unsigned long next_frame = 0;
+  uint32_t reset_clock = 0;
   int keycode;
   printf("%d %d\n",W,H);
   while (1) {
   	while(uptime() < next_frame);
   	next_frame += 1000 / FPS;
-  	uint32_t reset_clock = 0;
     if((keycode = read_key()) != _KEY_NONE  
     		&& (!(keycode >> 15))){ //only keyup is detected
     	chance--;
