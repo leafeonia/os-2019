@@ -8,3 +8,5 @@
 static inline void puts(const char *s) {
   for (; *s; s++) _putc(*s);
 }
+
+void redraw();

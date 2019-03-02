@@ -23,6 +23,7 @@ int main() {
     	//puts(itoa(keycode));
     	printf("%x\n",keycode);
     }
+    redraw();
     //puts("FA\n");
   }
   return 0;
