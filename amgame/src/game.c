@@ -28,7 +28,7 @@ int main() {
   	while(uptime() < next_frame);
     while((keycode = read_key()) != _KEY_NONE){
     	//puts(itoa(keycode));
-    	printf("%d\n",keycode);
+    	printf("%x\n",keycode);
     }
     //puts("FA\n");
   }
