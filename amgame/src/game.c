@@ -20,12 +20,17 @@ int main() {
   while (1) {
   	while(uptime() < next_frame);
   	next_frame += 1000 / FPS;
+  	uint32_t reset_clock = 0xffffffff;
     if((keycode = read_key()) != _KEY_NONE  
     		&& (!(keycode >> 15))){ //only keyup is detected
     	chance--;
     	check_letter(keycode);
-    	printf("%d\n",left);
-    	if(!left) reset_game();
+    	if(!left) {
+    		reset_clock = uptime();
+    	}
+    }
+    if(!left && uptime() - reset_clock > 1){
+    	printf("%d\n",uptime());
     }
     redraw();
   }
