@@ -57,7 +57,7 @@ void init_screen(){
 	gbd_x = (W - gameboard_W) / 2;
 	gbd_y = (H - gameboard_H) / 2;
 	usedbd_x = gbd_x;
-	usedbd_y = gbd_y + 100;
+	usedbd_y = gbd_y + 30;
 }
 
 
