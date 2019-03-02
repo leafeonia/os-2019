@@ -1,4 +1,5 @@
 #include <game.h>
+#include <unistd.h>
 #define W 128
 #define H 8
 extern char font8x8_basic[128][8];
@@ -17,6 +18,10 @@ static inline void draw_character(char ch, int x, int y, int color) {
 
 void redraw(){
 	draw_character('A',0,0,0xffffffff);
+
+	draw_rect(&gameboard[0][0],100,100,W,H);
+	draw_sync();
+	sleep(2);
 	draw_character('B',8,0,0xffffffff);
 	draw_rect(&gameboard[0][0],100,100,W,H);
 	draw_sync();
