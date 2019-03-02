@@ -65,7 +65,7 @@ void init_gameboard(){
 void init_screen(){
 	W = screen_width();
 	H = screen_height();
-	gbd_x = (W - gameboard_W) / 2 + 5;
+	gbd_x = (W - gameboard_W) / 2 + 50;
 	gbd_y = (H - gameboard_H) / 2 - 50;
 	usedbd_x = gbd_x;
 	usedbd_y = gbd_y + 30;
