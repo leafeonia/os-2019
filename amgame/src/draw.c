@@ -31,6 +31,7 @@ void redraw(){
 	//draw_character('A',0,0,0xffffffff);
 	//draw_character('B',8,0,0xffff);
 	draw_rect(&gameboard[0][0],gbd_x,gbd_y,gameboard_W,gameboard_H);
+	draw_rect(&usedboard[0][0],usedbd_x,usedbd_y,usedboard_W,usedboard_H);
 	draw_sync();
 }
 
@@ -38,17 +39,17 @@ void init_gameboard(){
 	int i;
 	//clear the screen first
 	memset(gameboard,0,sizeof(gameboard));
-	draw_rect(&gameboard[0][0],gbd_x,gbd_y,gameboard_W,gameboard_H);
-	draw_sync();
+	memset(usedboard,0,sizeof(usedboard));
+	redraw();	
+	
 	for(i = 0;i < strlen(answer);i++){
 		draw_character('_',8*i,0,WHITE,GBD);
 	}
-	draw_rect(&gameboard[0][0],gbd_x,gbd_y,gameboard_W,gameboard_H);
 	char temp[] = {'u','s','e','d',':'};
 	for(i = 0;i < 5;i++)
 		draw_character(temp[i],8*i,0,WHITE,USEDBD);
-	draw_rect(&usedboard[0][0],usedbd_x,usedbd_y,usedboard_W,usedboard_H);
-	draw_sync();
+
+	redraw();
 }
 
 void init_screen(){
