@@ -26,7 +26,7 @@ void redraw(){
 
 void init_gameboard(){
 	int i;
-	for(i = 0;i < 8;i++){
+	for(i = 0;i < strlen(answer);i++){
 		draw_character('_',8*i,0,0xffffffff);
 	}
 	draw_rect(&gameboard[0][0],gbd_x,gbd_y,gameboard_W,gameboard_H);
