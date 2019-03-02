@@ -8,6 +8,7 @@
 #define GBD 0
 #define USEDBD 1
 #define HANGMAN 2
+#define FINBD 3
 
 char answer[16]; 
 
@@ -22,3 +23,4 @@ void reset_game();
 void check_letter(int keycode);
 void draw_character(char ch, int x, int y, int color,int mode); 
 void update_hangman();
+void finish();

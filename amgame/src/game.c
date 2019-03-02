@@ -25,6 +25,7 @@ int main() {
     		&& (!(keycode >> 15))){ //only keyup is detected
     	check_letter(keycode);
     	if(!left || !chance) {
+    		finish();
     		reset_clock = uptime();
     	}
     }
