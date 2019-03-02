@@ -30,6 +30,7 @@ int main() {
     	}
     }
     if(!left && uptime() - reset_clock > 5000){
+    	printf("reset_clock:%d\n",reset_clock);
     	reset_game();
     }
     redraw();
