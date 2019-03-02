@@ -13,6 +13,7 @@ int main() {
   // Operating system is a C program
   _ioe_init();
   init_screen();
+  init_gameboard();
   //splash();
   unsigned long next_frame = 0;
   int keycode;
@@ -20,19 +21,14 @@ int main() {
   while (1) {
   	while(uptime() < next_frame);
     while((keycode = read_key()) != _KEY_NONE){
-    	//puts(itoa(keycode));
     	printf("%x\n",keycode);
     }
     redraw();
-    //puts("FA\n");
   }
   return 0;
 }
 
-void init_screen(){
-	W = screen_width();
-	H = screen_height();
-}
+
 /*
 int read_key() {
   _DEV_INPUT_KBD_t event = { .keycode = _KEY_NONE };
