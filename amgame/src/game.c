@@ -58,6 +58,7 @@ void check_letter(int keycode){
 	}
 	for(i = 0;i < strlen(answer);i++){
 		if(answer[i] == letter){
+			answer[i] = '*'; //set guessed letter to *, in case of repeated key decreases "left" again
 			draw_character(letter,8*i,0,WHITE);
 			left--;
 		}
