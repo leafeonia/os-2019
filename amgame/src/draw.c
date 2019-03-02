@@ -28,7 +28,7 @@ void init_gameboard(){
 	int i;
 	//clear the screen first
 	printf("size:%d\n",sizeof(gameboard));
-	memset(gameboard,sizeof(gameboard),0);
+	memset(gameboard,0,sizeof(gameboard));
 	draw_rect(&gameboard[0][0],gbd_x,gbd_y,gameboard_W,gameboard_H);
 	draw_sync();
 	for(i = 0;i < strlen(answer);i++){
