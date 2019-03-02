@@ -30,7 +30,7 @@ int main() {
     		reset_clock = uptime();
     	}
     }
-    if(!left && uptime() - reset_clock > 5000){
+    if(!left && uptime() - reset_clock > 1000){
     	printf("reset_clock:%d\n",reset_clock);
     	reset_game();
     }
