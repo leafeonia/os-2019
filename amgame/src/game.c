@@ -24,6 +24,7 @@ int main() {
     		&& (!(keycode >> 15))){ //only keyup is detected
     	chance--;
     	check_letter(keycode);
+    	if(!left) reset_game();
     }
     redraw();
   }
@@ -57,6 +58,7 @@ void check_letter(int keycode){
 	for(i = 0;i < strlen(answer);i++){
 		if(answer[i] == letter){
 			draw_character(letter,8*i,0,WHITE);
+			left--;
 		}
 	}
 }
