@@ -26,8 +26,14 @@ void redraw(){
 
 void init_gameboard(){
 	int i;
+	//clear the screen first
 	for(i = 0;i < strlen(answer);i++){
-		draw_character('_',8*i,0,0xffffffff);
+		draw_character(' ',8*i,0,WHITE);
+	}
+	draw_rect(&gameboard[0][0],gbd_x,gbd_y,gameboard_W,gameboard_H);
+	draw_sync();
+	for(i = 0;i < strlen(answer);i++){
+		draw_character('_',8*i,0,WHITE);
 	}
 	draw_rect(&gameboard[0][0],gbd_x,gbd_y,gameboard_W,gameboard_H);
 	draw_sync();
