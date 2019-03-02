@@ -1,7 +1,7 @@
 #include <game.h>
 #define gameboard_W 128
 #define gameboard_H 8
-#define usedboard_W 144
+#define usedboard_W 96
 #define usedboard_H 8
 extern char font8x8_basic[128][8];
 
