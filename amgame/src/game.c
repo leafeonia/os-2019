@@ -5,11 +5,6 @@ void splash();
 void read_key();
 
 
-void print(const char *s) {
-  for (; *s; s ++) {
-    _putc(*s);
-  }
-}
 int main() {
   // Operating system is a C program
   _ioe_init();
@@ -17,7 +12,7 @@ int main() {
   splash();
   while (1) {
     read_key();
-   // print("FA\n");
+    puts("FA\n");
   }
   return 0;
 }
