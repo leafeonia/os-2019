@@ -28,7 +28,7 @@ int main() {
     		reset_clock = uptime();
     	}
     }
-    if(!left && uptime() - reset_clock > 1000){
+    if((!left || !chance) && uptime() - reset_clock > 1000){
     	reset_game();
     }
     redraw();
