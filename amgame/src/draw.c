@@ -27,10 +27,8 @@ void redraw(){
 void init_gameboard(){
 	int i;
 	//clear the screen first
-	for(i = 0;i < gameboard_W/8;i++){
-		draw_character('*',8*i,0,WHITE);
-	}
-	draw_rect(&gameboard[0][0],gbd_x+100,gbd_y+100,gameboard_W,gameboard_H);
+	memset(gameboard,sizeof(gameboard),0);
+	draw_rect(&gameboard[0][0],gbd_x,gbd_y,gameboard_W,gameboard_H);
 	draw_sync();
 	for(i = 0;i < strlen(answer);i++){
 		draw_character('_',8*i,0,WHITE);
