@@ -26,6 +26,7 @@ int main() {
     	chance--;
     	check_letter(keycode);
     	if(!left) {
+    	printf("enter\n");
     		reset_clock = uptime();
     	}
     }
