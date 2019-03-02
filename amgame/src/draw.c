@@ -2,7 +2,7 @@
 
 extern char font8x8_basic[128][8];
 
-static uint32_t gameboard[128][8]; //max word length:16
+static uint32_t gameboard[8][8]; //max word length:16
 
 static inline void draw_character(char ch, int x, int y, int color) {
   int i, j;
@@ -16,6 +16,6 @@ static inline void draw_character(char ch, int x, int y, int color) {
 
 void redraw(){
 	draw_character('A',0,0,0xffffffff);
-	draw_rect(&gameboard[0][0],100,100,128,8);
+	draw_rect(&gameboard[0][0],100,100,8,8);
 	draw_sync();
 }
