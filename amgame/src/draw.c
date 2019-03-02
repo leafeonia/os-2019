@@ -19,7 +19,7 @@ static inline void draw_character(char ch, int x, int y, int color) {
 void redraw(){
 	draw_character('A',0,0,0xffffffff);
 	draw_character('B',8,0,0xffff);
-	draw_rect(&gameboard[0][0],100,100,W,H);
+	draw_rect(&gameboard[0][0],100,100,gameboard_W,gameboard_H);
 	draw_sync();
 }
 
@@ -28,7 +28,7 @@ void init_gameboard(){
 	for(i = 0;i < 8;i++){
 		draw_character('_',8*i,0,0xffffffff);
 	}
-	draw_rect(&gameboard[0][0],200,200,W,H);
+	draw_rect(&gameboard[0][0],200,200,gameboard_W,gameboard_H);
 	draw_sync();
 }
 
