@@ -29,8 +29,8 @@ int main() {
     		reset_clock = uptime();
     	}
     }
-    if(!left && uptime() - reset_clock > 1){
-    	printf("%d\n",uptime());
+    if(!left && uptime() - reset_clock > 1000){
+    	reset_game();
     }
     redraw();
   }
