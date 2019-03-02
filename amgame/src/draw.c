@@ -50,6 +50,7 @@ void init_gameboard(){
 	memset(usedboard,0,sizeof(usedboard));
 	redraw();	
 	
+	update_hangman();
 	for(i = 0;i < strlen(answer);i++){
 		draw_character('_',8*i,0,WHITE,GBD);
 	}
