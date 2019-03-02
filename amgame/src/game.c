@@ -2,22 +2,37 @@
 
 void init_screen();
 void splash();
-void read_key();
+int read_key();
+uint32_t uptime();
 
+char *itoa(int n)  {  
+  static char s[64];
+  int i = sizeof(s) - 1;
+  do {
+    s[--i] = n % 10 + '0';  
+    n /= 10;
+  } while(n > 0);  
+  return &s[i];
+}  
 
 int main() {
   // Operating system is a C program
   _ioe_init();
   init_screen();
   splash();
+  unsigned long next_frame = 0;
+  int keycode;
   while (1) {
-    read_key();
-    puts("FA\n");
+  	while(uptime() < next_frame);
+    while((keycode = read_key()) != _KEY_NONE){
+    	puts(itoa(keycode));
+    }
+    //puts("FA\n");
   }
   return 0;
 }
 
-void read_key() {
+int read_key() {
   _DEV_INPUT_KBD_t event = { .keycode = _KEY_NONE };
   #define KEYNAME(key) \
     [_KEY_##key] = #key,
@@ -30,6 +45,9 @@ void read_key() {
     puts(key_names[event.keycode]);
     puts("\n");
   }
+  int ret = event.keycode;
+  if (event.keydown) ret |= 0x8000;
+  return ret;
 }
 
 int w, h;
@@ -61,4 +79,10 @@ void splash() {
       }
     }
   }
+}
+
+uint32_t uptime() {
+  _DEV_TIMER_UPTIME_t uptime;
+  _io_read(_DEV_TIMER, _DEVREG_TIMER_UPTIME, &uptime, sizeof(uptime));
+  return uptime.lo;
 }
