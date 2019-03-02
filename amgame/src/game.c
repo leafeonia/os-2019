@@ -30,9 +30,11 @@ int main() {
   return 0;
 }
 
+char *wordset[] = {"leafeonia","vulpix","eevee","scorbunny"};
 void reset_game(){
 	chance = 7;
-	strcpy(answer,"leafeonia");
+	int random = rand()%4;
+	strcpy(answer,wordset[random]);
 	left = strlen(answer);
 	init_gameboard();
 }
