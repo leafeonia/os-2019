@@ -23,8 +23,6 @@ int main() {
   	next_frame += 1000 / FPS;
     if((keycode = read_key()) != _KEY_NONE  
     		&& (!(keycode >> 15))){ //only keyup is detected
-    	chance--;
-    	update_hangman();
     	check_letter(keycode);
     	if(!left) {
     		reset_clock = uptime();
@@ -62,13 +60,19 @@ void check_letter(int keycode){
 			break;
 		}
 	}
-	draw_character(letter,8*(12-chance),0,WHITE,USEDBD);
+	int found = 0;
 	for(i = 0;i < strlen(answer);i++){
 		if(answer[i] == letter){
+			found = 1;
 			answer[i] = '*'; //set guessed letter to *, in case of repeated key decreases "left" again
 			draw_character(letter,8*i,0,WHITE,GBD);
 			left--;
 		}
+	}
+	if(!found){
+		chance--;
+		draw_character(letter,8*(12-chance),0,WHITE,USEDBD);
+		update_hangman();
 	}
 }
 
