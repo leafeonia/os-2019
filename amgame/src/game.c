@@ -1,29 +1,21 @@
 #include <game.h>
 
-/*
+
 void init_screen();
+/*
 void splash();
 int read_key();
 uint32_t uptime();
 */
-
-char *itoa(int n)  {  
-  static char s[64];
-  int i = sizeof(s) - 1;
-  do {
-    s[--i] = n % 10 + '0';  
-    n /= 10;
-  } while(n > 0);  
-  return &s[i];
-}  
+int W,H;
 
 int main() {
   // Operating system is a C program
   _ioe_init();
-  //init_screen();
   //splash();
   unsigned long next_frame = 0;
   int keycode;
+  printf("%d %d\n",W,H);
   while (1) {
   	while(uptime() < next_frame);
     while((keycode = read_key()) != _KEY_NONE){
@@ -33,6 +25,11 @@ int main() {
     //puts("FA\n");
   }
   return 0;
+}
+
+void init_screen(){
+	W = screen_width();
+	H = screen_height();
 }
 /*
 int read_key() {
