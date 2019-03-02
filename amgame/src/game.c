@@ -20,7 +20,8 @@ int main() {
   while (1) {
   	while(uptime() < next_frame);
   	next_frame += 1000 / FPS;
-    if((keycode = read_key()) != _KEY_NONE && (!(keycode >> 15))){
+    if((keycode = read_key()) != _KEY_NONE  
+    		&& (!(keycode >> 15))){ //only keyup is detected
     	chance--;
     	check_letter(keycode);
     }
@@ -33,6 +34,28 @@ void reset_game(){
 	chance = 7;
 	strcpy(answer,"leafeonia");
 	init_gameboard();
+}
+
+static int letter_code[] = {
+  _KEY_A, _KEY_B, _KEY_C, _KEY_D, _KEY_E, _KEY_F, _KEY_G,
+  _KEY_H, _KEY_I, _KEY_J, _KEY_K, _KEY_L, _KEY_M, _KEY_N, _KEY_O, _KEY_P,
+  _KEY_Q, _KEY_R, _KEY_S, _KEY_T, _KEY_U, _KEY_V,
+  _KEY_W, _KEY_X, _KEY_Y, _KEY_Z,
+};
+void check_letter(int keycode){
+	int i;
+	char letter = ' ';
+	for(i = 0;i < 26;i++){
+		if(letter_code[i] == keycode){
+			letter = 'a' + i;
+			break;
+		}
+	}
+	for(i = 0;i < strlen(answer);i++){
+		if(answer[i] == letter){
+			draw_character(letter,8*i,0,WHITE);
+		}
+	}
 }
 
 /*

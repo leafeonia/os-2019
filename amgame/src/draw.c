@@ -4,10 +4,10 @@
 
 extern char font8x8_basic[128][8];
 
-static uint32_t gameboard[gameboard_H][gameboard_W]; //max word length:16
+uint32_t gameboard[gameboard_H][gameboard_W]; //max word length:16
 static int gbd_x,gbd_y; //gbd = gameboard
 
-static inline void draw_character(char ch, int x, int y, int color) {
+void draw_character(char ch, int x, int y, int color) {
   int i, j;
   char *p = font8x8_basic[(int)ch];
   for (i = 0; i < 8; i ++) 
@@ -40,6 +40,4 @@ void init_screen(){
 	gbd_y = (H - gameboard_H) / 2;
 }
 
-void check_letter(int keycode){
-	printf("detect %d\n",keycode);
-}
+
