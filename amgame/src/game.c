@@ -20,7 +20,7 @@ int main() {
   while (1) {
   	while(uptime() < next_frame);
   	next_frame += 1000 / FPS;
-    if((keycode = read_key()) != _KEY_NONE && (!(keycode >> 31))){
+    if((keycode = read_key()) != _KEY_NONE && (!(keycode >> 15))){
     	chance--;
     	check_letter(keycode);
     }
