@@ -26,12 +26,10 @@ int main() {
     	chance--;
     	check_letter(keycode);
     	if(!left) {
-    	printf("enter\n");
     		reset_clock = uptime();
     	}
     }
     if(!left && uptime() - reset_clock > 1000){
-    	printf("reset_clock:%d\n",reset_clock);
     	reset_game();
     }
     redraw();
@@ -66,7 +64,7 @@ void check_letter(int keycode){
 	for(i = 0;i < strlen(answer);i++){
 		if(answer[i] == letter){
 			answer[i] = '*'; //set guessed letter to *, in case of repeated key decreases "left" again
-			draw_character(letter,8*i,0,WHITE);
+			draw_character(letter,8*i,0,WHITE,GBD);
 			left--;
 		}
 	}
