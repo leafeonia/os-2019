@@ -5,6 +5,7 @@
 extern char font8x8_basic[128][8];
 
 static uint32_t gameboard[gameboard_H][gameboard_W]; //max word length:16
+static int gbd_x,gbd_y; //gbd = gameboard
 
 static inline void draw_character(char ch, int x, int y, int color) {
   int i, j;
@@ -19,7 +20,7 @@ static inline void draw_character(char ch, int x, int y, int color) {
 void redraw(){
 	draw_character('A',0,0,0xffffffff);
 	draw_character('B',8,0,0xffff);
-	draw_rect(&gameboard[0][0],100,100,gameboard_W,gameboard_H);
+	draw_rect(&gameboard[0][0],gbd_x,100,gameboard_W,gameboard_H);
 	draw_sync();
 }
 
@@ -28,11 +29,13 @@ void init_gameboard(){
 	for(i = 0;i < 8;i++){
 		draw_character('_',8*i,0,0xffffffff);
 	}
-	draw_rect(&gameboard[0][0],200,200,gameboard_W,gameboard_H);
+	draw_rect(&gameboard[0][0],gbd_x,gbd_y,gameboard_W,gameboard_H);
 	draw_sync();
 }
 
 void init_screen(){
 	W = screen_width();
 	H = screen_height();
+	gbd_x = (W - gameboard_W) / 2;
+	gbd_y = (H - gameboard_H) / 2;
 }
