@@ -48,6 +48,7 @@ void init_gameboard(){
 	//clear the screen first
 	memset(gameboard,0,sizeof(gameboard));
 	memset(usedboard,0,sizeof(usedboard));
+	memset(hangman,0,sizeof(hangman));
 	redraw();	
 	
 	update_hangman();
