@@ -1,9 +1,11 @@
 #include <game.h>
 
+/*
 void init_screen();
 void splash();
 int read_key();
 uint32_t uptime();
+*/
 
 char *itoa(int n)  {  
   static char s[64];
@@ -18,20 +20,21 @@ char *itoa(int n)  {
 int main() {
   // Operating system is a C program
   _ioe_init();
-  init_screen();
-  splash();
+  //init_screen();
+  //splash();
   unsigned long next_frame = 0;
   int keycode;
   while (1) {
   	while(uptime() < next_frame);
     while((keycode = read_key()) != _KEY_NONE){
-    	puts(itoa(keycode));
+    	//puts(itoa(keycode));
+    	printf("%d\n",keycode);
     }
     //puts("FA\n");
   }
   return 0;
 }
-
+/*
 int read_key() {
   _DEV_INPUT_KBD_t event = { .keycode = _KEY_NONE };
   #define KEYNAME(key) \
@@ -85,4 +88,4 @@ uint32_t uptime() {
   _DEV_TIMER_UPTIME_t uptime;
   _io_read(_DEV_TIMER, _DEVREG_TIMER_UPTIME, &uptime, sizeof(uptime));
   return uptime.lo;
-}
+}*/
