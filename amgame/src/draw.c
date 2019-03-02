@@ -18,9 +18,9 @@ static inline void draw_character(char ch, int x, int y, int color) {
 }
 
 void redraw(){
-	draw_character('A',0,0,0xffffffff);
-	draw_character('B',8,0,0xffff);
-	draw_rect(&gameboard[0][0],gbd_x,100,gameboard_W,gameboard_H);
+	//draw_character('A',0,0,0xffffffff);
+	//draw_character('B',8,0,0xffff);
+	draw_rect(&gameboard[0][0],gbd_x,gbd_y,gameboard_W,gameboard_H);
 	draw_sync();
 }
 
@@ -38,4 +38,8 @@ void init_screen(){
 	H = screen_height();
 	gbd_x = (W - gameboard_W) / 2;
 	gbd_y = (H - gameboard_H) / 2;
+}
+
+void check_letter(int keycode){
+	printf("detect %d\n",keycode);
 }

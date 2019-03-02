@@ -14,15 +14,15 @@ int main() {
   _ioe_init();
   init_screen();
   reset_game();
-  //splash();
   unsigned long next_frame = 0;
   int keycode;
   printf("%d %d\n",W,H);
   while (1) {
   	while(uptime() < next_frame);
   	next_frame += 1000 / FPS;
-    if((keycode = read_key()) != _KEY_NONE){
-    	printf("%x\n",keycode);
+    if((keycode = read_key()) != _KEY_NONE && (!(keycode >> 31))){
+    	chance--;
+    	check_letter(keycode);
     }
     redraw();
   }
@@ -30,6 +30,7 @@ int main() {
 }
 
 void reset_game(){
+	chance = 7;
 	strcpy(answer,"leafeonia");
 	init_gameboard();
 }
