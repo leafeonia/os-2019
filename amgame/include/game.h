@@ -21,3 +21,4 @@ void init_screen();
 void reset_game();
 void check_letter(int keycode);
 void draw_character(char ch, int x, int y, int color,int mode); 
+void update_hangman();

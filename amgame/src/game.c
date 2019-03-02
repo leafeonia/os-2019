@@ -24,6 +24,7 @@ int main() {
     if((keycode = read_key()) != _KEY_NONE  
     		&& (!(keycode >> 15))){ //only keyup is detected
     	chance--;
+    	update_hangman();
     	check_letter(keycode);
     	if(!left) {
     		reset_clock = uptime();
