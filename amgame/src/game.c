@@ -24,6 +24,7 @@ int main() {
     		&& (!(keycode >> 15))){ //only keyup is detected
     	chance--;
     	check_letter(keycode);
+    	printf("%d\n",left);
     	if(!left) reset_game();
     }
     redraw();
