@@ -66,11 +66,11 @@ void init_screen(){
 	W = screen_width();
 	H = screen_height();
 	gbd_x = (W - gameboard_W) / 2;
-	gbd_y = (H - gameboard_H) / 2;
+	gbd_y = (H - gameboard_H) / 2 - 50;
 	usedbd_x = gbd_x;
 	usedbd_y = gbd_y + 30;
-	hangman_x = gbd_x + 200;
-	hangman_y = gbd_y;
+	hangman_x = gbd_x;
+	hangman_y = usedbd_y + 50;
 }
 
 void update_hangman(){
