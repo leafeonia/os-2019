@@ -7,6 +7,7 @@
 #define WHITE 0xffffffff
 #define GBD 0
 #define USEDBD 1
+#define HANGMAN 2
 
 char answer[16]; 
 
