@@ -11,7 +11,7 @@ char answer[16];
 static inline void puts(const char *s) {
   for (; *s; s++) _putc(*s);
 }
-int W,H,chance;
+int W,H,chance,left;
 void redraw();
 void init_gameboard();
 void init_screen();

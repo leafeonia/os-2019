@@ -33,6 +33,7 @@ int main() {
 void reset_game(){
 	chance = 7;
 	strcpy(answer,"leafeonia");
+	left = strlen(answer);
 	init_gameboard();
 }
 
