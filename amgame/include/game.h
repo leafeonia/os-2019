@@ -5,6 +5,8 @@
 #define SIDE 16
 #define FPS 30
 
+char answer[16]; 
+
 static inline void puts(const char *s) {
   for (; *s; s++) _putc(*s);
 }
@@ -12,3 +14,4 @@ int W,H;
 void redraw();
 void init_gameboard();
 void init_screen();
+void reset_game();

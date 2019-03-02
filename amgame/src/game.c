@@ -13,14 +13,15 @@ int main() {
   // Operating system is a C program
   _ioe_init();
   init_screen();
-  init_gameboard();
+  reset_game();
   //splash();
   unsigned long next_frame = 0;
   int keycode;
   printf("%d %d\n",W,H);
   while (1) {
   	while(uptime() < next_frame);
-    while((keycode = read_key()) != _KEY_NONE){
+  	next_frame += 1000 / FPS;
+    if((keycode = read_key()) != _KEY_NONE){
     	printf("%x\n",keycode);
     }
     redraw();
@@ -28,6 +29,10 @@ int main() {
   return 0;
 }
 
+void reset_game(){
+	strcpy(answer,"leafeonia");
+	init_gameboard();
+}
 
 /*
 int read_key() {
