@@ -17,7 +17,7 @@ int main() {
   splash();
   while (1) {
     read_key();
-    print("FA\n");
+   // print("FA\n");
   }
   return 0;
 }
