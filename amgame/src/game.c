@@ -25,7 +25,6 @@ int main() {
   		if((keycode = read_key()) != _KEY_NONE  
     		&& (!(keycode >> 15))){ //only keyup is detected
 			check_letter(keycode);
-			printf("chance = %d\n",chance);
 			if(!left || !chance) {
 				finish();
 				reset_clock = uptime();
@@ -41,10 +40,12 @@ int main() {
   return 0;
 }
 
-char *wordset[] = {"leafeonia","vulpix","eevee","scorbunny"};
+char *wordset[] = {"operating","system","laboratory","hangman","game","deep","dark","fantasy",
+"philosopher","atmosphere","utopia","congratulations","environmental",
+"tranformation"};
 void reset_game(){
 	chance = 7;
-	int random = rand()%4;
+	int random = rand()%14;
 	strcpy(answer,wordset[random]);
 	left = strlen(answer);
 	init_gameboard();
