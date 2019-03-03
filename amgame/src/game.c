@@ -21,15 +21,18 @@ int main() {
   while (1) {
   	while(uptime() < next_frame);
   	next_frame += 1000 / FPS;
-    if((keycode = read_key()) != _KEY_NONE  
+  	if(left > 0 && chance > 0){
+  		if((keycode = read_key()) != _KEY_NONE  
     		&& (!(keycode >> 15))){ //only keyup is detected
-    	check_letter(keycode);
-    	if(!left || !chance) {
-    		finish();
-    		reset_clock = uptime();
+			check_letter(keycode);
+			if(!left || !chance) {
+				finish();
+				reset_clock = uptime();
+			}
     	}
-    }
-    if((!left || chance <= 0) && uptime() - reset_clock > 1000){
+  	}
+    
+    else if((!left || !chance) && uptime() - reset_clock > 1000){
     	reset_game();
     }
     redraw();
