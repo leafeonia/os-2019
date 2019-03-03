@@ -37,7 +37,7 @@ void draw_character(char ch, int x, int y, int color ,int mode) {
         	if (x + j < hangman_W && y + i < hangman_W)
           		hangman[y + i][x + j] = color;
         }
-        else if(mode == HANGMAN){
+        else if(mode == FINBD){
         	if (x + j < finboard_W && y + i < finboard_W)
           		finboard[y + i][x + j] = color;
         }
