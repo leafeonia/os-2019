@@ -8,7 +8,7 @@
 #define finboard_W 64
 #define finboard_H 8
 extern char font8x8_basic[128][8];
-extern char charimg[7][5][5];
+extern char charimg[8][5][5];
 
 uint32_t gameboard[gameboard_H][gameboard_W]; //max word length:16
 uint32_t usedboard[usedboard_H][usedboard_W];
