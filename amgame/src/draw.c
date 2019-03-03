@@ -107,6 +107,11 @@ void finish(){
 		for(i = 0;i < 8;i++){
 			draw_character(temp[i],8*i,0,0x00ff0000,FINBD);
 		}
+		for(i = 0;i < 8;i++){
+			if(answer[i] != '*'){
+				draw_character(answer[i],8*i,0,0x00ff0000,GBD);
+			}
+		}
 	}
 }
 
