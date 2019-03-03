@@ -42,7 +42,7 @@ int main() {
 
 char *wordset[] = {"operating","system","laboratory","hangman","game","deep","dark","fantasy",
 "philosopher","atmosphere","utopia","congratulations","environmental",
-"tranformation"};
+"transformation"};
 void reset_game(){
 	chance = 7;
 	int random = rand()%14;
