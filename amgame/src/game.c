@@ -45,6 +45,7 @@ char *wordset[] = {"operating","system","laboratory","hangman","game","deep","da
 "transformation"};
 void reset_game(){
 	chance = 7;
+	srand(uptime());
 	int random = rand()%14;
 	strcpy(answer,wordset[random]);
 	left = strlen(answer);
