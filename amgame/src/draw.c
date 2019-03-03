@@ -105,7 +105,7 @@ void finish(){
 	else{
 		char* temp = "   GG   ";
 		for(i = 0;i < 8;i++){
-			draw_character(temp[i],8*i,0,0xff000000,FINBD);
+			draw_character(temp[i],8*i,0,0x00ff0000,FINBD);
 		}
 	}
 }
