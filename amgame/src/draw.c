@@ -98,18 +98,14 @@ void finish(){
 	int i;
 	if(!left){
 		char* temp = "success!";
-		while(temp){
-			for(i = 0;i < 8;i++){
-				draw_character(temp[i],8*i,0,0x0000ff00,FINBD);
-			}
+		for(i = 0;i < 8;i++){
+			draw_character(temp[i],8*i,0,0x0000ff00,FINBD);
 		}
 	}
 	else{
 		char* temp = "   GG   ";
-		while(temp){
-			for(i = 0;i < 8;i++){
-				draw_character(temp[i],8*i,0,0xff000000,FINBD);
-			}
+		for(i = 0;i < 8;i++){
+			draw_character(temp[i],8*i,0,0xff000000,FINBD);
 		}
 	}
 }
