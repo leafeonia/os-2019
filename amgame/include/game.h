@@ -11,11 +11,9 @@
 #define FINBD 3
 
 char answer[16]; 
-
-static inline void puts(const char *s) {
-  for (; *s; s++) _putc(*s);
-}
 int W,H,chance,left;
+
+void init_screen();
 void redraw();
 void init_gameboard();
 void init_screen();
