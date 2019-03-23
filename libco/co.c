@@ -21,7 +21,8 @@ void co_init() {
 
 struct co* co_start(const char *name, func_t func, void *arg) {
   ucontext_t new,cur;
-  unsigned char* stack[STACK_SIZE] = malloc(sizeof(char)*STACK_SIZE);
+  unsigned char* mstack = (unsigned char*)malloc(sizeof(unsigned char)*STACK_SIZE);
+  unsigned char stack[STACK_SIZE] = *mstack;
   
   getcontext(&new);
   new.uc_stack.ss_sp = stack;
