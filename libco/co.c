@@ -20,6 +20,7 @@ void co_init() {
 }
 
 struct co* co_start(const char *name, func_t func, void *arg) {
+  printf("enter co_start\n");
   ucontext_t new,cur;
   //unsigned char* stack = (unsigned char*)malloc(sizeof(unsigned char)*STACK_SIZE);
   int index = thread_num;
