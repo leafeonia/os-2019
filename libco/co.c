@@ -12,7 +12,7 @@ struct co {
 	char stack[STACK_SIZE];
 };
 
-co* thread_state[MAX_THREAD];
+struct co* thread_state[MAX_THREAD];
 int thread_num = 0;
 
 void co_init() {
@@ -20,22 +20,22 @@ void co_init() {
 }
 
 struct co* co_start(const char *name, func_t func, void *arg) {
-  ucontext_t new,main;
-  char stack[STACK_SIZE] = malloc(sizeof(char)*STACK_SIZE);
+  ucontext_t new,cur;
+  char* stack[STACK_SIZE] = malloc(sizeof(char)*STACK_SIZE);
   
   getcontext(&new);
   new.uc_stack.ss_sp = stack;
   new.uc_stack.ss_size = sizeof(stack);
   new.uc_stack.ss_flags = 0;
-  new.uc_link = &main;
+  new.uc_link = &cur;
   
-  co ret;
-  ret.context = new;
-  ret.func = func;
-  ret.arg = arg;
-  ret.stack = stack;
+  struct co* ret;
+  ret->context = new;
+  ret->func = func;
+  ret->arg = arg;
+  ret->stack = stack;
   
-  thread_state[thread_num++] = &ret;
+  thread_state[thread_num++] = ret;
   
   makecontext(&new,(void(*)(void))func,arg);
   
