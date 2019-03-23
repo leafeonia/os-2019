@@ -12,7 +12,7 @@ struct co {
 	unsigned char stack[STACK_SIZE];
 };
 
-struct co* thread_state[MAX_THREAD];
+struct co threads[MAX_THREAD];
 int thread_num = 0;
 
 void co_init() {
@@ -21,31 +21,29 @@ void co_init() {
 
 struct co* co_start(const char *name, func_t func, void *arg) {
   ucontext_t new,cur;
-  unsigned char* mstack = (unsigned char*)malloc(sizeof(unsigned char)*STACK_SIZE);
-  unsigned char stack[STACK_SIZE] = *mstack;
+  //unsigned char* stack = (unsigned char*)malloc(sizeof(unsigned char)*STACK_SIZE);
+  int index = thread_num;
   
   getcontext(&new);
-  new.uc_stack.ss_sp = stack;
-  new.uc_stack.ss_size = sizeof(stack);
+  new.uc_stack.ss_sp = threads[index].stack;
+  new.uc_stack.ss_size = sizeof(threads[index].stack);
   new.uc_stack.ss_flags = 0;
   new.uc_link = &cur;
   
-  struct co* ret;
-  ret->context = new;
-  ret->func = func;
-  ret->arg = arg;
-  ret->stack = *stack;
+  threads[index].context = new;
+  threads[index].func = func;
+  threads[index].arg = arg;
+
+  thread_num++;
   
-  thread_state[thread_num++] = ret;
-  
-  makecontext(&new,(void(*)(void))func,arg);
+  makecontext(&new,func,arg);
   
   func(arg); // Test #2 hangs
-  return &ret;
+  return &threads[index];
 }
 
 void co_yield() {
-	setcontext(thread_state[rand()%thread_num]);
+	setcontext(&(threads[rand()%thread_num].context));
 }
 
 void co_wait(struct co *thd) {
