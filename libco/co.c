@@ -36,10 +36,11 @@ struct co* co_start(const char *name, func_t func, void *arg) {
   threads[index].arg = arg;
 
   thread_num++;
-  printf("checkpoint\n");
+
   makecontext(&new,(void(*)(void))func,1);
   
   func(arg); // Test #2 hangs
+    printf("checkpoint\n");
   return &threads[index];
 }
 
