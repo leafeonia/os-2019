@@ -36,7 +36,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 
   thread_num++;
   
-  makecontext(&new,(void(*)(void))func,arg);
+  makecontext(&new,(void(*)(void))func,1,*arg);
   
   func(arg); // Test #2 hangs
   return &threads[index];
