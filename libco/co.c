@@ -40,7 +40,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
     printf("checkpoint\n");
 
   
-  func(arg); // Test #2 hangs
+  //func(arg); // Test #2 hangs
   makecontext(&new,(void(*)(void))func,1);
 
   return &threads[index];
