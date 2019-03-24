@@ -3,7 +3,7 @@
 #include <ucontext.h>
 #include <string.h>
 #include <stdlib.h>
-#include <sys/time.h>
+#include <time.h>
 #include <assert.h>
 
 
@@ -35,7 +35,7 @@ void transfer(){
 }
 
 
-co* co_start(const char *name, func_t func, void *arg) {
+struct co* co_start(const char *name, func_t func, void *arg) {
     int id = 0;
     for (id = 0; id < s.max_length; ++id) {
         if(s.threads[id].state == FREE) break;
