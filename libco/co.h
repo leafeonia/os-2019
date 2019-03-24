@@ -27,7 +27,7 @@ typedef struct _scheduler{
 void co_init();
 struct co* co_start(const char *name, func_t func, void *arg);
 void co_yield();
-void co_wait(co *thd);
+void co_wait(struct co *thd);
 
 
 enum ThreadState{FREE,RUNNING};
