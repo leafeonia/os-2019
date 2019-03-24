@@ -3,53 +3,101 @@
 #include <ucontext.h>
 #include <string.h>
 #include <stdlib.h>
+#include <sys/time.h>
+#include <assert.h>
 
 
-struct co {
-	ucontext_t context;
-	func_t func;
-	void *arg;
-	unsigned char stack[STACK_SIZE];
-};
-
-struct co threads[MAX_THREAD];
-int thread_num = 0;
+scheduler s;
 
 void co_init() {
-	//memset(thread_state,0,sizeof(thread_state));
+    srand((unsigned)time(NULL));
+    s.current = -1;
+    s.max_length = 0;
+    s.valid = 0;
+    s.threads = (co*)malloc(sizeof(co)*NR_THREAD);
+    getcontext(&(s.main));
+    int i;
+    for (i = 0; i < NR_THREAD; ++i) {
+        s.threads[i].state = FREE;
+    }
 }
 
-struct co* co_start(const char *name, func_t func, void *arg) {
-  printf("enter co_start\n");
-  ucontext_t new,cur;
-  //unsigned char* stack = (unsigned char*)malloc(sizeof(unsigned char)*STACK_SIZE);
-  int index = thread_num;
-  
-  getcontext(&new);
-  new.uc_stack.ss_sp = threads[index].stack;
-  new.uc_stack.ss_size = sizeof(threads[index].stack);
-  new.uc_stack.ss_flags = 0;
-  new.uc_link = &cur;
-  
-  threads[index].context = new;
-  threads[index].func = func;
-  threads[index].arg = arg;
+void transfer(){
+//    printf("transfer\n");
+    if(s.current != -1){
+        int id = s.current;
+        co* thread = &s.threads[id];
+        thread->func(thread->arg);
+        s.threads[id].state = FREE;
+        s.current = -1;
+        s.valid--;
+    }
+}
 
-  thread_num++;
 
-    printf("checkpoint\n");
+co* co_start(const char *name, func_t func, void *arg) {
+    int id = 0;
+    for (id = 0; id < s.max_length; ++id) {
+        if(s.threads[id].state == FREE) break;
+    }
+    if (id == s.max_length) s.max_length++;
+    if (s.max_length >= NR_THREAD){
+        printf("The number of threads is more than the design load. Please modify NR_THREAD(in co.h)\n");
+        exit(1);
+    }
+    co* t = &(s.threads[id]);
+    t->state = RUNNING;
+    t->func = func;
+    t->arg = arg;
+    t->id = id;
+    getcontext(&(t->context));
+    t->context.uc_link = &(s.main);
+    t->context.uc_stack.ss_size = STACK_SIZE;
+    t->context.uc_stack.ss_sp = t->stack;
+    t->context.uc_stack.ss_flags = 0;
+    s.current = id;
+    s.valid++;
 
-  
-  //func(arg); // Test #2 hangs
-  makecontext(&new,(void(*)(void))func,1);
-
-  return &threads[index];
+    makecontext(&(t->context),(void(*)(void))(transfer),0);
+    swapcontext(&(s.main),&(t->context));
+    //func(arg); // Test #2 hangs
+    return &s.threads[id];
 }
 
 void co_yield() {
-	setcontext(&(threads[rand()%thread_num].context));
+    int id = rand()%(s.valid+1);
+    if(id == s.valid) {
+        int before = s.current;
+        assert(before != -1);
+        s.current = -1;
+        swapcontext(&(s.threads[before].context),&(s.main));
+    }
+    else{
+        int i;
+        int cnt = 0;
+        for (i = 0; i < s.max_length; ++i) {
+            if(s.threads[i].state == RUNNING){
+                if(cnt == id){
+                    int before = s.current;
+                    s.current = i;
+                    if(before != -1)swapcontext(&(s.threads[before].context),&(s.threads[i].context));
+                    else swapcontext(&(s.main),&(s.threads[i].context));
+                }
+                cnt++;
+            }
+        }
+    }
 }
 
-void co_wait(struct co *thd) {
+void co_wait(co *thd) {
+    while(thd->state != FREE){
+//        setcontext(&(thd->context));
+        s.current = thd->id;
+        if(swapcontext(&(s.main),&(thd->context)) == -1){
+            printf("error\n");
+            exit(1);
+        }
+    }
 }
+
 
