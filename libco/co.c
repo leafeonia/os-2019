@@ -60,7 +60,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 
     makecontext(&(t->context),(void(*)(void))(transfer),0);
     swapcontext(&(s.main),&(t->context));
-    //func(arg); // Test #2 hangs
+    func(arg); // Test #2 hangs
     return &s.threads[id];
 }
 
