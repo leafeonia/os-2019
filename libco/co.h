@@ -5,7 +5,7 @@
 
 typedef void (*func_t)(void *arg);
 #define STACK_SIZE 1024*128
-#define NR_THREAD 3
+#define NR_THREAD 16
 
 struct co {
     ucontext_t context;
