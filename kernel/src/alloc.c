@@ -1,5 +1,8 @@
 #include <common.h>
 #include <klib.h>
+#include <pthread.h>
+
+#define NAIVE
 
 static uintptr_t pm_start, pm_end;
 
