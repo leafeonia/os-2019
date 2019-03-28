@@ -14,7 +14,7 @@ static void hello() {
 
 static void alloc_test(){
 	printf("testing\n");
-}
+} 
 
 static void os_run() {
   hello();
