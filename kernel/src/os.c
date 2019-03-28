@@ -1,6 +1,8 @@
 #include <common.h>
 #include <klib.h>
 
+#define NR_TEST 100
+#define NR_CPU 4
 static void os_init() {
   pmm->init();
 }
@@ -12,8 +14,17 @@ static void hello() {
   _putc("12345678"[_cpu()]); _putc('\n');
 }
 
+static void* test_array[NR_CPU][NR_TEST];
 static void alloc_test(){
-	printf("testing\n");
+	printf("test begins~\n");
+	int i;
+	for (i = 0;i < NR_TEST;i++){
+		test_array[_cpu()][i] = pmm->alloc(1000);
+	}
+	for (i = 0;i < NR_TEST;i++){
+		pmm->free(test_array[_cpu()][i]);
+	}
+	printf("success~\n");
 } 
 
 static void os_run() {
