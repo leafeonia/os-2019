@@ -21,6 +21,6 @@ MODULE_DEF(pmm) {
   .free = kfree,
 };
 
-static alloc_test(){
+static void alloc_test(){
 	printf("testing\n");
 }
