@@ -1,6 +1,5 @@
 #include <common.h>
 #include <klib.h>
-#include <my_os.h>
 
 static void os_init() {
   pmm->init();
@@ -11,6 +10,10 @@ static void hello() {
     _putc(*ptr);
   }
   _putc("12345678"[_cpu()]); _putc('\n');
+}
+
+static void alloc_test(){
+	printf("testing\n");
 }
 
 static void os_run() {

@@ -1,6 +1,5 @@
 #include <common.h>
 #include <klib.h>
-#include <my_os.h>
 
 static uintptr_t pm_start, pm_end;
 
@@ -22,6 +21,4 @@ MODULE_DEF(pmm) {
   .free = kfree,
 };
 
-static void alloc_test(){
-	printf("testing\n");
-}
+
