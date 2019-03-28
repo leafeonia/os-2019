@@ -20,3 +20,7 @@ MODULE_DEF(pmm) {
   .alloc = kalloc,
   .free = kfree,
 };
+
+static alloc_test(){
+	printf("testing\n");
+}
