@@ -1,5 +1,6 @@
 #include <common.h>
 #include <klib.h>
+#include <my_os.h>
 
 static uintptr_t pm_start, pm_end;
 
