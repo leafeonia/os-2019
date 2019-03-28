@@ -5,7 +5,7 @@
 #define NAIVE
 
 static uintptr_t pm_start, pm_end;
-static pthread_mutex_t big_lock;
+//static pthread_mutex_t big_lock;
 
 static void pmm_init() {
   pm_start = (uintptr_t)_heap.start; 
