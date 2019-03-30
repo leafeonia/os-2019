@@ -19,9 +19,7 @@ static void* test_array[NR_CPU][NR_TEST];
 static void alloc_test(){
 	lock_t mylock;
 	lock_init(&mylock);
-	lock(&mylock);
 	printf("test begins~\n");
-	unlock(&mylock);
 	int i;
 	for (i = 0;i < NR_TEST;i++){
 		test_array[_cpu()][i] = pmm->alloc(0x100);
@@ -32,9 +30,7 @@ static void alloc_test(){
 	for (i = 0;i < NR_TEST;i++){
 		pmm->free(test_array[_cpu()][i]);
 	}
-	lock(&mylock);
 	printf("success~\n");
-	unlock(&mylock);
 } 
 
 static void os_run() {
