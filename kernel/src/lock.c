@@ -6,7 +6,7 @@ void lock_init(lock_t *lock){
 }
 
 void lock(lock_t *lock){
-	while(atomic_xchg(&lock->flag,1));
+	while(_atomic_xchg(&lock->flag,1));
 }
 
 void unlock(lock_t *lock){
