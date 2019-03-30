@@ -19,7 +19,7 @@ static void alloc_test(){
 	printf("test begins~\n");
 	int i;
 	for (i = 0;i < NR_TEST;i++){
-		test_array[_cpu()][i] = pmm->alloc(1000);
+		test_array[_cpu()][i] = pmm->alloc(0x100);
 		printf("%x\n",test_array[_cpu()][i]);
 	}
 	for (i = 0;i < NR_TEST;i++){
