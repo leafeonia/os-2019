@@ -25,12 +25,16 @@ static void alloc_test(){
 	int i;
 	for (i = 0;i < NR_TEST;i++){
 		test_array[_cpu()][i] = pmm->alloc(0x100);
+		lock(&mylock);
 		printf("%x\n",test_array[_cpu()][i]);
+		unlock(&mylock);
 	}
 	for (i = 0;i < NR_TEST;i++){
 		pmm->free(test_array[_cpu()][i]);
 	}
+	lock(&mylock);
 	printf("success~\n");
+	unlock(&mylock);
 } 
 
 static void os_run() {
