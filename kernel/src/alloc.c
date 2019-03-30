@@ -15,10 +15,8 @@ static void pmm_init() {
 
 static void *kalloc(size_t size) {
 #ifdef NAIVE
- // pthread_mutex_lock(&big_lock);
   void *ret = (void*)pm_start;
   pm_start += size;  
-  //pthread_mutex_unlock(&big_lock);
   return ret;
 #else
 
