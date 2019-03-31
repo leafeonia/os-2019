@@ -21,9 +21,10 @@ static void alloc_test(){
 	lock_init(&mylock);
 	printf("test begins~\n");
 	int i;
+	lock(&mylock);
 	for (i = 0;i < NR_TEST;i++){
 		test_array[_cpu()][i] = pmm->alloc(0x100);
-		lock(&mylock);
+		
 		printf("%x from cpu#%d\n",test_array[_cpu()][i],_cpu()+1);
 		//volatile int t;
 		//for(t = 0;t < 100000;t++);
