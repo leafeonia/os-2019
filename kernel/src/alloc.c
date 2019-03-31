@@ -21,7 +21,7 @@ static void *kalloc(size_t size) {
   void *ret = (void*)pm_start;
   pm_start += size;  
   printf("%x from cpu#%d\n",ret,_cpu()+1);
-  unlock(&mylock);
+  //unlock(&mylock);
   return ret;
 #else
 
