@@ -19,9 +19,9 @@ static void* test_array[NR_CPU][NR_TEST];
 static void alloc_test(){
 	lock_t mylock;
 	lock_init(&mylock);
+		lock(&mylock);
 	printf("test begins~\n");
 	int i;
-	lock(&mylock);
 	for (i = 0;i < NR_TEST;i++){
 		test_array[_cpu()][i] = pmm->alloc(0x100);
 		
