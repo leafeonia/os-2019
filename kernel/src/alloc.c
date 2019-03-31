@@ -16,7 +16,6 @@ static void pmm_init() {
 
 static void *kalloc(size_t size) {
 #ifdef NAIVE
-
   lock(&mylock);
   void *ret = (void*)pm_start;
   pm_start += size;  
