@@ -15,8 +15,13 @@ static void pmm_init() {
 
 static void *kalloc(size_t size) {
 #ifdef NAIVE
+  lock_t mylock;
+  lock_init(&mylock);
+  lock(&mylock);
   void *ret = (void*)pm_start;
   pm_start += size;  
+  printf("%x from cpu#%d\n",ret,_cpu()+1);
+  unlock(&mylock);
   return ret;
 #else
 
