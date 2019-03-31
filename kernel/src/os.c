@@ -2,7 +2,7 @@
 #include <klib.h>
 #include "my_os.h"
 
-#define NR_TEST 50
+#define NR_TEST 100
 #define NR_CPU 4
 static void os_init() {
   pmm->init();
