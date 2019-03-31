@@ -7,6 +7,7 @@ void lock_init(lock_t *lock){
 
 void lock(lock_t *lock){
 	_intr_write(0);  //cli
+	log("enter\n");
 	while(_atomic_xchg(&lock->flag,1));
 }
 
