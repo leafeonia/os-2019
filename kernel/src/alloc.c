@@ -6,18 +6,17 @@
 #define NAIVE
 
 static uintptr_t pm_start, pm_end;
-//static pthread_mutex_t big_lock;
+static lock_t mylock;
 
 static void pmm_init() {
   pm_start = (uintptr_t)_heap.start; 
   pm_end   = (uintptr_t)_heap.end;
-  //assert(pthread_mutex_init(&big_lock,NULL));
+  lock_init(&mylock);
 }
 
 static void *kalloc(size_t size) {
 #ifdef NAIVE
-  lock_t mylock;
-  lock_init(&mylock);
+
   lock(&mylock);
   void *ret = (void*)pm_start;
   pm_start += size;  
