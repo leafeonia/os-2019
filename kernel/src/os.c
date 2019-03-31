@@ -27,12 +27,13 @@ static void alloc_test(){
 		printf("%x from cpu#%d\n",test_array[_cpu()][i],_cpu()+1);
 		//volatile int t;
 		//for(t = 0;t < 100000;t++);
-		//unlock(&mylock);
+		
 	}
 	for (i = 0;i < NR_TEST;i++){
 		pmm->free(test_array[_cpu()][i]);
 	}
 	printf("success~\n");
+	unlock(&mylock);
 } 
 
 static void os_run() {
