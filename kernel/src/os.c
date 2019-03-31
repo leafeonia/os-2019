@@ -23,9 +23,9 @@ static void alloc_test(){
 	int i;
 	for (i = 0;i < NR_TEST;i++){
 		test_array[_cpu()][i] = pmm->alloc(0x100);
-		//lock(&mylock);
+		lock(&mylock);
 		printf("%x from cpu#%d\n",test_array[_cpu()][i],_cpu()+1);
-		//unlock(&mylock);
+		unlock(&mylock);
 	}
 	for (i = 0;i < NR_TEST;i++){
 		pmm->free(test_array[_cpu()][i]);
