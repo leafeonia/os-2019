@@ -15,7 +15,7 @@ static void hello() {
   _putc("12345678"[_cpu()]); _putc('\n');
 }
 
-//static void* test_array[NR_CPU][NR_TEST];
+
 
 void test_full(){
   //init_lock(&test_lock, 'b');
@@ -48,7 +48,9 @@ void test_full(){
   }
 }
 
+
 /*
+
 static void alloc_test(){
 	printf("test begins~\n");
 	int i;
@@ -64,7 +66,8 @@ static void alloc_test(){
 
 static void os_run() {
   hello();
-  test_full();
+  //test_full();
+  LOG(FA);
   _intr_write(1);
   while (1) {
     _yield();
