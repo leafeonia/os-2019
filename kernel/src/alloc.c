@@ -1,7 +1,7 @@
 #include <common.h>
 #include <klib.h>
-#include <pthread.h>
 #include <my_os.h>
+#include <assert.h>
 
 #define NAIVE
 
