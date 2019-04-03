@@ -32,13 +32,36 @@ static void* fancy_alloc(size_t nbytes){
 		base.s.next = freep = prevp = &base;
 		base.s.size = 0;
 	}
+	for (p = prevp->s.next;;prevp = p,p = p.s->next){
+		if(p->s.size >= nunits){
+			if(p->s.size == nunits){
+				prevp->s.next = p->next;
+			}
+			//suppose size of p is 70,nunits = 50,p = a(an address)
+			//after executing the following codes, prevp->s.next = a, a->s.size = 20
+			//p = a+20(an address), p->s.size = 50, now it has nothing to do with the free linked list
+			//return p+1 = a+21, as the available space.
+			else{
+				p->s.size -= nunits;
+				p += nunits;
+				p->s.size = nunits;
+			}
+			freep = prevp;
+			
+			//sizeof(void*) != sizeof(HEADER),so return (void*)p+1 is wrong
+			return (void*)(p+1);
+		}
+		if (p == freep){
+			return NULL;
+		}
+	}
 }
 
 
 
 
 static void *kalloc(size_t size) {
-  vpid* ret;
+  void* ret;
 #ifdef NAIVE
   lock(&mem_lock);
   ret = (void*)pm_start;
