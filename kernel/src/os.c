@@ -34,7 +34,7 @@ void test_full(){
     }
     if(p_old != NULL){
       for(int i=0;i < 1000;i++){
-        Assert(p_old[i] == i, "test_full: 旧值被改变");
+        assert(p_old[i] == i, "test_full: 旧值被改变");
       }
     }
     if(p_old != NULL)
@@ -48,6 +48,7 @@ void test_full(){
   }
 }
 
+/*
 static void alloc_test(){
 	printf("test begins~\n");
 	int i;
@@ -59,7 +60,7 @@ static void alloc_test(){
 		pmm->free(test_array[_cpu()][i]);
 	}
 	printf("success~\n");
-} 
+} */
 
 static void os_run() {
   hello();
