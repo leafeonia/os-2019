@@ -3,6 +3,8 @@
 #include <my_os.h>
 
 //#define NAIVE
+#define NALLOC 1024
+
 
 typedef long long ALIGN;
 
@@ -23,6 +25,16 @@ static void pmm_init() {
   pm_start = (uintptr_t)_heap.start; 
   pm_end   = (uintptr_t)_heap.end;
   lock_init(&mem_lock);
+}
+
+static void* morecore(size_t nunits){
+	if(nunits < NALLOC) nunits = NALLOC;
+	HEADER* ret = (HEADER*)pm_start;
+	if(pm_start + sizeof(HEADER)*nunits >= pm_end) return NULL;
+	pm_start += sizeof(HEADER)*nunits;
+	ret->s.size = nunits;
+	free((void*)(ret+1));
+	return freep;
 }
 
 static void* fancy_alloc(size_t nbytes){
@@ -52,7 +64,10 @@ static void* fancy_alloc(size_t nbytes){
 			return (void*)(p+1);
 		}
 		if (p == freep){
-			return NULL;
+			if(p = morecore(nunits) == NULL){
+				LOG("The heap is full");
+				return NULL;
+			}
 		}
 	}
 }

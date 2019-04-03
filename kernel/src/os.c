@@ -67,7 +67,6 @@ static void alloc_test(){
 static void os_run() {
   hello();
   //test_full();
-  LOG("FA");
   _intr_write(1);
   while (1) {
     _yield();
