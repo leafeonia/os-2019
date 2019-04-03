@@ -18,13 +18,34 @@ typedef union header{
 
 static uintptr_t pm_start, pm_end;
 static lock_t mem_lock;
-HEADER base;
-HEADER* freep = NULL;
+static HEADER base;
+static HEADER* freep = NULL;
 
 static void pmm_init() {
   pm_start = (uintptr_t)_heap.start; 
   pm_end   = (uintptr_t)_heap.end;
   lock_init(&mem_lock);
+}
+
+static void free(void* ap){
+	HEADER *bp,*p;
+	bp = (HEADER*)ap - 1;
+	for(p = freep;!(bp > p && bp->s.next < p);p = p->s.next){
+		if(p >= p->s.next && (bp > p || bp < p->s.next)) break;
+	}
+	
+	if(bp + bp->s.size == p->s.next){
+		bp->s.size += p->s.next->s.size;
+		bp->s.next = p->s.next->s.next;
+	} 
+	else bp->s.next = p->s.next;
+	
+	if(p + p->s.size == bp){
+		p->s.size += bp->s.size;
+		p->s.next = bp->s.next;
+	}
+	else p->s.next = bp;
+	freep = p;
 }
 
 static void* morecore(size_t nunits){
@@ -64,7 +85,7 @@ static void* fancy_alloc(size_t nbytes){
 			return (void*)(p+1);
 		}
 		if (p == freep){
-			if(p = morecore(nunits) == NULL){
+			if((p = (HEADER*)morecore(nunits)) == NULL){
 				LOG("The heap is full");
 				return NULL;
 			}
@@ -97,7 +118,7 @@ static void kfree(void *ptr) {
 
 #else
   lock(&mem_lock);
-  //free(ptr);
+  free(ptr);
   unlock(&mem_lock);
 #endif
 }
