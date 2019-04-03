@@ -71,8 +71,8 @@ void test_full(){
         assert(p_old[i] == i);
       }
     }
-    if(p_old != NULL)
-      pmm->free(p_old);
+   // if(p_old != NULL)
+     // pmm->free(p_old);
     p_old = p;
     term++;
     /*
@@ -100,8 +100,8 @@ static void alloc_test(){
 
 static void os_run() {
   hello();
-  test_big_small();
-  //test_full();
+  //test_big_small();
+  test_full();
   _intr_write(1);
   while (1) {
     _yield();
