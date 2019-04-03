@@ -16,6 +16,38 @@ static void hello() {
 }
 
 static void* test_array[NR_CPU][NR_TEST];
+
+void test_full(){
+  //init_lock(&test_lock, 'b');
+  //printf("test_full: lock %p\n", &test_lock);
+  int *p = NULL;
+  int *p_old = NULL;
+  int term = 0;
+  while((p = pmm->alloc(1000*sizeof(int)))){
+    //spin_lock(&test_lock);
+    printf("\33[1;35mtest_full: I'm at %#x, %d\n\33[0m", (uintptr_t)p,_cpu());
+    //Assert(test_lock.slock == 1, "test_full: test_lock.slock值为0");
+    //spin_unlock(&test_lock);
+    for(int i=0;i < 1000;i++){
+      //printf("test_full: I'm at %p, %d\n", p, i);
+      p[i] = i;
+    }
+    if(p_old != NULL){
+      for(int i=0;i < 1000;i++){
+        Assert(p_old[i] == i, "test_full: 旧值被改变");
+      }
+    }
+    if(p_old != NULL)
+      pmm->free(p_old);
+    p_old = p;
+    term++;
+    /*
+    if(term >= 5)
+      break;
+      */
+  }
+}
+
 static void alloc_test(){
 	printf("test begins~\n");
 	int i;
@@ -31,7 +63,7 @@ static void alloc_test(){
 
 static void os_run() {
   hello();
-  alloc_test();
+  test_full();
   _intr_write(1);
   while (1) {
     _yield();

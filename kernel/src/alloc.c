@@ -12,7 +12,7 @@ static void pmm_init() {
   pm_start = (uintptr_t)_heap.start; 
   pm_end   = (uintptr_t)_heap.end;
   lock_init(&mylock);
-  printf("start,end = %x %x\n",pm_start,pm_end);
+  //printf("start,end = %x %x\n",pm_start,pm_end);
 }
 
 static void *kalloc(size_t size) {
@@ -20,7 +20,7 @@ static void *kalloc(size_t size) {
   lock(&mylock);
   void *ret = (void*)pm_start;
   pm_start += size;  
-  printf("%x from cpu#%d\n",ret,_cpu()+1);
+  //printf("%x from cpu#%d\n",ret,_cpu()+1);
   unlock(&mylock);
   return ret;
 #else
