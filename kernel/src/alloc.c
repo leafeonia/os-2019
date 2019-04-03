@@ -12,6 +12,7 @@ static void pmm_init() {
   pm_start = (uintptr_t)_heap.start; 
   pm_end   = (uintptr_t)_heap.end;
   lock_init(&mylock);
+  printf("start,end = %x %x\n",pm_start,pm_end);
 }
 
 static void *kalloc(size_t size) {
