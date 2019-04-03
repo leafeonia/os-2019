@@ -37,7 +37,7 @@ void test_big_small(){
 
     if(p_old != NULL){
       for(int j=0;j < size[(i-1)%num];j++){
-        assert(p_old[j] == j,);
+        assert(p_old[j] == j);
       }
     }
     if(p_old != NULL)
