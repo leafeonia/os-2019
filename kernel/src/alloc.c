@@ -32,7 +32,7 @@ static void* fancy_alloc(size_t nbytes){
 		base.s.next = freep = prevp = &base;
 		base.s.size = 0;
 	}
-	for (p = prevp->s.next;;prevp = p,p = p.s->next){
+	for (p = prevp->s.next;;prevp = p,p = p->s.next){
 		if(p->s.size >= nunits){
 			if(p->s.size == nunits){
 				prevp->s.next = p->next;
@@ -82,7 +82,7 @@ static void kfree(void *ptr) {
 
 #else
   lock(&mem_lock);
-  free(ptr);
+  //free(ptr);
   unlock(&mem_lock);
 #endif
 }
