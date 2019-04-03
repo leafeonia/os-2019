@@ -35,7 +35,7 @@ static void* fancy_alloc(size_t nbytes){
 	for (p = prevp->s.next;;prevp = p,p = p->s.next){
 		if(p->s.size >= nunits){
 			if(p->s.size == nunits){
-				prevp->s.next = p->next;
+				prevp->s.next = p->s.next;
 			}
 			//suppose size of p is 70,nunits = 50,p = a(an address)
 			//after executing the following codes, prevp->s.next = a, a->s.size = 20
