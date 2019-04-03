@@ -15,7 +15,7 @@ static void hello() {
   _putc("12345678"[_cpu()]); _putc('\n');
 }
 
-static void* test_array[NR_CPU][NR_TEST];
+//static void* test_array[NR_CPU][NR_TEST];
 
 void test_full(){
   //init_lock(&test_lock, 'b');
@@ -34,7 +34,7 @@ void test_full(){
     }
     if(p_old != NULL){
       for(int i=0;i < 1000;i++){
-        assert(p_old[i] == i, "test_full: 旧值被改变");
+        assert(p_old[i] == i);
       }
     }
     if(p_old != NULL)
