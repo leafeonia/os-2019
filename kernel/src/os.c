@@ -15,7 +15,40 @@ static void hello() {
   _putc("12345678"[_cpu()]); _putc('\n');
 }
 
+#define KALLOC_BLOCK 1024
+void test_big_small(){
+  int *p = NULL;
+  int *p_old = NULL;
+  size_t size[] = {
+    KALLOC_BLOCK/sizeof(int)/10*3,
+    KALLOC_BLOCK/sizeof(int)/10*1
+  };
+  int num = sizeof(size)/sizeof(size[0]);
+  for(int i=0;;i++){
+    if((p = pmm->alloc(size[i%num]*sizeof(int))) == NULL)
+      break;
+    //printf("test_big_small: start: %d\n", (uintptr_t)p);
+    printf("\33[1;35mtest_big_small: I'm at %d, %d, %d\n\33[0m", (uintptr_t)p, i, _cpu());
+    for(int j=0;j < size[i%num];j++){
+      p[j] = j;
+    }
+    
+    //printf("test_big_small: %d %d\n", (uintptr_t)p, (uintptr_t)p_old);
 
+    if(p_old != NULL){
+      for(int j=0;j < size[(i-1)%num];j++){
+        assert(p_old[j] == j,);
+      }
+    }
+    if(p_old != NULL)
+      pmm->free(p_old);
+    p_old = p;
+    /*
+    if(i >= 10)
+      break;
+    */
+  }
+}
 
 void test_full(){
   //init_lock(&test_lock, 'b');
@@ -66,7 +99,7 @@ static void alloc_test(){
 
 static void os_run() {
   hello();
-  test_full();
+  test_big_small();
   _intr_write(1);
   while (1) {
     _yield();
