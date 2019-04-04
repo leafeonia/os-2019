@@ -28,7 +28,7 @@ void test_big_small(){
     if((p = pmm->alloc(size[i%num]*sizeof(int))) == NULL)
       break;
     //printf("test_big_small: start: %d\n", (uintptr_t)p);
-    printf("\33[1;35mtest_big_small: I'm at %d, %d, %d\n\33[0m", (uintptr_t)p, i, _cpu());
+    printf("\33[1;35mtest_big_small: I'm at %d, %d, %d\n\33[0m", (uintptr_t)p, i, _cpu()+1);
     for(int j=0;j < size[i%num];j++){
       p[j] = j;
     }

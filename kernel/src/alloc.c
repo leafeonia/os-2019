@@ -117,9 +117,9 @@ static void kfree(void *ptr) {
 #ifdef NAIVE
 
 #else
-  lock(&mem_lock);
+  //lock(&mem_lock);
   free(ptr);
-  unlock(&mem_lock);
+  //unlock(&mem_lock);
 #endif
 }
 
