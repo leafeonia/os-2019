@@ -80,9 +80,10 @@ void test_full(){
         }*/
       }
     }
-    if(p_old != NULL)
+    if(p_old != NULL){
       printf("free %x\n",(uintptr_t)p);
       pmm->free(p_old);
+    }
     p_old = p;
     term++;
     /*
