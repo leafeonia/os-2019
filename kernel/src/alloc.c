@@ -81,7 +81,7 @@ static void* fancy_alloc(size_t nbytes){
 			//return p+1 = a+21, as the available space.
 			else{
 				p->s.size -= nunits;
-				p += nunits;
+				p += p->s.size;
 				p->s.size = nunits;
 			}
 			freep = prevp;
