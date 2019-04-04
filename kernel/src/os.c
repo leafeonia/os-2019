@@ -81,8 +81,8 @@ void test_full(){
       }
     }
     if(p_old != NULL){
-      printf("free %x\n",(uintptr_t)p);
       pmm->free(p_old);
+      printf("free %x\n",(uintptr_t)p);
     }
     p_old = p;
     term++;
