@@ -31,10 +31,11 @@ static void free(void* ap){
 	LOG("start free");
 	HEADER *bp,*p;
 	bp = (HEADER*)ap - 1;
+	LOG("checkpoint1");
 	for(p = freep;!(bp > p && bp < p->s.next);p = p->s.next){
 		if(p >= p->s.next && (bp > p || bp < p->s.next)) break;
 	}
-	
+	LOG("checkpoint2");
 	if(bp + bp->s.size == p->s.next){
 		bp->s.size += p->s.next->s.size;
 		bp->s.next = p->s.next->s.next;
