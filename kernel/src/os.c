@@ -63,7 +63,7 @@ void test_full(){
   int term = 0;
   while((p = pmm->alloc(1000*sizeof(int)))){
     //spin_lock(&test_lock);
-    printf("\33[1;35mtest_full: I'm at %#x, %d\n\33[0m", (uintptr_t)p,_cpu());
+    if((uintptr_t)p % 100000 == 0)printf("\33[1;35mtest_full: I'm at %#x, %d\n\33[0m", (uintptr_t)p,_cpu());
     //Assert(test_lock.slock == 1, "test_full: test_lock.slock值为0");
     //spin_unlock(&test_lock);
     for(int i=0;i < 1000;i++){
@@ -73,10 +73,10 @@ void test_full(){
     if(p_old != NULL){
       for(int i=0;i < 1000;i++){
         //assert(p_old[i] == i);
-        /*if(p_old[i] != i){
+        if(p_old[i] != i){
         	LOG("assertion fail");
         	return;
-        }*/
+        }
       }
     }
     //if(p_old != NULL)
