@@ -30,7 +30,7 @@ static void pmm_init() {
 static void free(void* ap){
 	HEADER *bp,*p;
 	bp = (HEADER*)ap - 1;
-	for(p = freep;!(bp > p && bp->s.next < p);p = p->s.next){
+	for(p = freep;!(bp > p && bp < p->s.next);p = p->s.next){
 		if(p >= p->s.next && (bp > p || bp < p->s.next)) break;
 	}
 	
