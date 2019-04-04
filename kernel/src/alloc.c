@@ -120,9 +120,13 @@ static void kfree(void *ptr) {
 #ifdef NAIVE
 
 #else
+  LOG("enter free before lock");
   lock(&mem_lock);
+  LOG("enter free after lock");
   free(ptr);
+  LOG("leave free before unlock");
   unlock(&mem_lock);
+  LOG("leave free after unlock");
 #endif
 }
 
