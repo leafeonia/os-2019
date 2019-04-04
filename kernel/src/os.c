@@ -79,8 +79,8 @@ void test_full(){
         }*/
       }
     }
-    if(p_old != NULL)
-      pmm->free(p_old);
+    //if(p_old != NULL)
+      //pmm->free(p_old);
     p_old = p;
     term++;
     /*
