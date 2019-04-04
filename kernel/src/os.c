@@ -45,7 +45,7 @@ void test_big_small(){
       }
     }
     
-    //if(p_old != NULL)
+    if(p_old != NULL)
       //pmm->free(p_old);
     p_old = p;
     /*
