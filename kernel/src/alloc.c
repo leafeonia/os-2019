@@ -28,6 +28,7 @@ static void pmm_init() {
 }
 
 static void free(void* ap){
+	LOG("start free");
 	HEADER *bp,*p;
 	bp = (HEADER*)ap - 1;
 	for(p = freep;!(bp > p && bp < p->s.next);p = p->s.next){
@@ -46,6 +47,7 @@ static void free(void* ap){
 	}
 	else p->s.next = bp;
 	freep = p;
+	LOG("end free");
 	return;
 }
 
