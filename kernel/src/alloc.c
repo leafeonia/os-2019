@@ -85,7 +85,7 @@ static void* fancy_alloc(size_t nbytes){
 				p->s.size = nunits;
 			}
 			freep = prevp;
-			assert((uintptr_t)freep > 0x200000);
+			//assert((uintptr_t)freep > 0x200000);
 			
 			//sizeof(void*) != sizeof(HEADER),so return (void*)p+1 is wrong
 			return (void*)(p+1);
