@@ -46,6 +46,7 @@ static void free(void* ap){
 	}
 	else p->s.next = bp;
 	freep = p;
+	return;
 }
 
 static void* morecore(size_t nunits){
