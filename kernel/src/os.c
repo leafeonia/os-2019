@@ -72,11 +72,15 @@ void test_full(){
     }
     if(p_old != NULL){
       for(int i=0;i < 1000;i++){
-        assert(p_old[i] == i);
+        //assert(p_old[i] == i);
+        if(p_old[i] != i){
+        	LOG("assertion fail");
+        	return;
+        }
       }
     }
-   // if(p_old != NULL)
-     // pmm->free(p_old);
+    if(p_old != NULL)
+      pmm->free(p_old);
     p_old = p;
     term++;
     /*
