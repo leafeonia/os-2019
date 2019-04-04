@@ -33,7 +33,7 @@ static void free(void* ap){
 	bp = (HEADER*)ap - 1;
 	LOG("checkpoint1");
 	for(p = freep;!(bp > p && bp < p->s.next);p = p->s.next){
-		printf("p = %x,p->s.next = %x,bp = %x\n",(uintptr_t)p,(uintptr_t)p->s.next,(uintptr_t)bp);
+		printf("p = %x,p->s.next = %x,bp = %x,ap = %x\n",(uintptr_t)p,(uintptr_t)p->s.next,(uintptr_t)bp,(uintptr_t)ap);
 		if(p >= p->s.next && (bp > p || bp < p->s.next)) break;
 	}
 	LOG("checkpoint2");
