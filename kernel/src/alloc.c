@@ -56,7 +56,7 @@ static void* morecore(size_t nunits){
 	pm_start += sizeof(HEADER)*nunits;
 	ret->s.size = nunits;
 	free((void*)(ret+1));
-	return freep;
+	return (void*)freep;
 }
 
 static void* fancy_alloc(size_t nbytes){
