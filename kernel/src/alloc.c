@@ -114,6 +114,7 @@ static void *kalloc(size_t size) {
 #else
   lock(&mem_lock);
   ret = fancy_alloc(size);
+  prinf("malloc: %x\n",(uintptr_t)ret);
   unlock(&mem_lock);
 #endif
   return ret;
@@ -127,6 +128,7 @@ static void kfree(void *ptr) {
   lock(&mem_lock);
   //LOG("enter free after lock");
   free(ptr);
+  prinf("free: %x\n",(uintptr_t)ret);
   //LOG("leave free before unlock");
   unlock(&mem_lock);
   //LOG("leave free after unlock");
