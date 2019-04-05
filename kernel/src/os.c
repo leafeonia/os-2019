@@ -19,7 +19,6 @@ static void hello() {
 void alloc_test(){
   int *p = NULL;
   int *p_old = NULL;
-  int term = 0;
   while((p = pmm->alloc(1000*sizeof(int)))){
     //if((uintptr_t)p % 500 == 0)
     //printf("\33[1;35m malloc address:%x from cpu %d\n\33[0m", (uintptr_t)p,_cpu()+1);
