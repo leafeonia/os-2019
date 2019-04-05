@@ -2,8 +2,7 @@
 #include <klib.h>
 #include "my_os.h"
 
-#define NR_TEST 0x40
-#define NR_CPU 4
+
 static void os_init() {
   pmm->init();
 }
@@ -22,11 +21,11 @@ void alloc_test(){
   while((p = pmm->alloc(1000*sizeof(int)))){
     //if((uintptr_t)p % 500 == 0)
     //printf("\33[1;35m malloc address:%x from cpu %d\n\33[0m", (uintptr_t)p,_cpu()+1);
-    for(int i=0;i < 1000;i++){
+    for(int i = 0;i < 1000;i++){
       p[i] = i;
     }
     if(p_old != NULL){
-      for(int i=0;i < 1000;i++){
+      for(int i = 0;i < 1000;i++){
         assert(p_old[i] == i);
         /*if(p_old[i] != i){
         	LOG("assertion fail");
@@ -44,7 +43,8 @@ void alloc_test(){
 
 
 /*
-
+#define NR_TEST 0x40
+#define NR_CPU 4
 static void alloc_test(){
 	printf("test begins~\n");
 	int i;
