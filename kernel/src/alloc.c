@@ -8,6 +8,8 @@
 
 typedef long long ALIGN;
 
+
+//reference from: THE C PROGRAMMING LANGUAGE
 typedef union header{
 	struct{
 		union header *next;
@@ -107,6 +109,7 @@ static void *kalloc(size_t size) {
   void* ret;
 #ifdef NAIVE
   lock(&mem_lock);
+  fancy_alloc(1);
   ret = (void*)pm_start;
   pm_start += size;  
   //printf("%x from cpu#%d\n",ret,_cpu()+1);
@@ -115,7 +118,7 @@ static void *kalloc(size_t size) {
 #else
   lock(&mem_lock);
   ret = fancy_alloc(size);
-  printf("malloc: %x\n",(uintptr_t)ret);
+  //printf("malloc: %x\n",(uintptr_t)ret);
   unlock(&mem_lock);
 #endif
   return ret;
@@ -129,7 +132,7 @@ static void kfree(void *ptr) {
   lock(&mem_lock);
   //LOG("enter free after lock");
   free(ptr);
-  printf("free: %x\n",(uintptr_t)ptr);
+  //printf("free: %x\n",(uintptr_t)ptr);
   //LOG("leave free before unlock");
   unlock(&mem_lock);
   //LOG("leave free after unlock");
