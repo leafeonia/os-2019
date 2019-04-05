@@ -3,7 +3,7 @@
 #include <my_os.h>
 
 //#define NAIVE
-#define NALLOC 10240
+#define NALLOC 128
 
 
 typedef long long ALIGN;
