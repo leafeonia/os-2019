@@ -3,7 +3,7 @@
 #include <my_os.h>
 
 //#define NAIVE
-#define NALLOC 128
+//#define NALLOC 128
 
 
 typedef long long ALIGN;
@@ -54,7 +54,7 @@ static void free(void* ap){
 }
 
 static void* morecore(size_t nunits){
-	if(nunits < NALLOC) nunits = NALLOC;
+	//if(nunits < NALLOC) nunits = NALLOC;
 	HEADER* ret = (HEADER*)pm_start;
 	if(pm_start + sizeof(HEADER)*nunits >= pm_end) return NULL;
 	pm_start += sizeof(HEADER)*nunits;
