@@ -28,7 +28,7 @@ void test_big_small(){
     if((p = pmm->alloc(size[i%num]*sizeof(int))) == NULL)
       break;
     //printf("test_big_small: start: %d\n", (uintptr_t)p);
-    printf("\33[1;35mtest_big_small: I'm at %d, %d, %d\n\33[0m", (uintptr_t)p, i, _cpu()+1);
+    //printf("\33[1;35mtest_big_small: I'm at %d, %d, %d\n\33[0m", (uintptr_t)p, i, _cpu()+1);
     for(int j=0;j < size[i%num];j++){
       p[j] = j;
     }
@@ -37,11 +37,11 @@ void test_big_small(){
 
     if(p_old != NULL){
       for(int j=0;j < size[(i-1)%num];j++){
-        //assert(p_old[j] == j);
-        if(p_old[j] != j){
+        assert(p_old[j] == j);
+        /*if(p_old[j] != j){
         	LOG("assertion fail");
         	return;
-        }
+        }*/
       }
     }
     
@@ -64,7 +64,7 @@ void test_full(){
   while((p = pmm->alloc(1000*sizeof(int)))){
     //spin_lock(&test_lock);
     //if((uintptr_t)p % 500 == 0)
-    printf("\33[1;35m malloc address:%x from cpu %d\n\33[0m", (uintptr_t)p,_cpu()+1);
+    //printf("\33[1;35m malloc address:%x from cpu %d\n\33[0m", (uintptr_t)p,_cpu()+1);
     //Assert(test_lock.slock == 1, "test_full: test_lock.slock值为0");
     //spin_unlock(&test_lock);
     for(int i=0;i < 1000;i++){
@@ -82,7 +82,7 @@ void test_full(){
     }
     if(p_old != NULL){
       pmm->free(p_old);
-      printf("free %x\n",(uintptr_t)p);
+      //printf("free %x\n",(uintptr_t)p);
     }
     p_old = p;
     term++;
