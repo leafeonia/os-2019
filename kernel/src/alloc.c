@@ -28,15 +28,15 @@ static void pmm_init() {
 }
 
 static void free(void* ap){
-	LOG("start free");
+	//LOG("start free");
 	HEADER *bp,*p;
 	bp = (HEADER*)ap - 1;
-	LOG("checkpoint1");
+	//LOG("checkpoint1");
 	for(p = freep;!(bp > p && bp < p->s.next);p = p->s.next){
-		printf("p = %x,p->s.next = %x,bp = %x,ap = %x\n",(uintptr_t)p,(uintptr_t)p->s.next,(uintptr_t)bp,(uintptr_t)ap);
+		//printf("p = %x,p->s.next = %x,bp = %x,ap = %x\n",(uintptr_t)p,(uintptr_t)p->s.next,(uintptr_t)bp,(uintptr_t)ap);
 		if(p >= p->s.next && (bp > p || bp < p->s.next)) break;
 	}
-	LOG("checkpoint2");
+	//LOG("checkpoint2");
 	if(bp + bp->s.size == p->s.next){
 		bp->s.size += p->s.next->s.size;
 		bp->s.next = p->s.next->s.next;
@@ -49,7 +49,7 @@ static void free(void* ap){
 	}
 	else p->s.next = bp;
 	freep = p;
-	LOG("end free");
+	//LOG("end free");
 	return;
 }
 
