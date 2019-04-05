@@ -2,7 +2,7 @@
 #include <klib.h>
 #include <my_os.h>
 
-#define NAIVE
+//#define NAIVE
 #define NALLOC 1024
 
 
@@ -64,6 +64,7 @@ static void* morecore(size_t nunits){
 }
 
 static void* fancy_alloc(size_t nbytes){
+	assert(nbytes > 0);
 	HEADER *p, *prevp;
 	size_t nunits = (nbytes + sizeof (HEADER) - 1) / sizeof (HEADER) + 1;
 	if(freep == NULL){
@@ -106,7 +107,6 @@ static void *kalloc(size_t size) {
   void* ret;
 #ifdef NAIVE
   lock(&mem_lock);
-  fancy_alloc(100);
   ret = (void*)pm_start;
   pm_start += size;  
   //printf("%x from cpu#%d\n",ret,_cpu()+1);
