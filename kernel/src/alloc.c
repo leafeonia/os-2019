@@ -2,7 +2,7 @@
 #include <klib.h>
 #include <my_os.h>
 
-#define NAIVE
+//#define NAIVE
 //#define NALLOC 128
 
 
@@ -56,6 +56,9 @@ static void free(void* ap){
 }
 
 static void* morecore(size_t nunits){
+	/*
+		apply for memory from am is easy(requires very small amount of time), so no need to set buffer size (NALLOC)
+	*/
 	//if(nunits < NALLOC) nunits = NALLOC;
 	HEADER* ret = (HEADER*)pm_start;
 	if(pm_start + sizeof(HEADER)*nunits >= pm_end) return NULL;
@@ -109,7 +112,6 @@ static void *kalloc(size_t size) {
   void* ret;
 #ifdef NAIVE
   lock(&mem_lock);
-  fancy_alloc(1);
   ret = (void*)pm_start;
   pm_start += size;  
   //printf("%x from cpu#%d\n",ret,_cpu()+1);
