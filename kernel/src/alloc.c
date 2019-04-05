@@ -2,7 +2,7 @@
 #include <klib.h>
 #include <my_os.h>
 
-//#define NAIVE
+#define NAIVE
 //#define NALLOC 128
 
 
