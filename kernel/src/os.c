@@ -118,7 +118,7 @@ static void alloc_test(){
 void test3(int n) {
   /*更加随机的内存分配和回收*/
   void* mmp[MAXN] = {};
-  bool allocated[MAXN] = {};
+  int allocated[MAXN] = {};
   srand(uptime());
   memset(allocated, 0, sizeof(allocated));
   int cnt = 0;
@@ -128,13 +128,13 @@ void test3(int n) {
     if(flag == TOFREE && cnt > 0) {
       // REDLog("#%d free, cnt=%d", i, cnt);
       int id = 0;
-      while(allocated[id] == False) {
+      while(allocated[id] == 0) {
         id = rand() % n;
         // REDLog("id=%d", id);
       }
       // REDLog("find id=%d", id);
       pmm->free(mmp[id]);
-      allocated[id] = False;
+      allocated[id] = 0;
       cnt--;
     }
     else {
@@ -148,7 +148,7 @@ void test3(int n) {
       for(int i = 0; i < n; ++i) {
         if(!allocated[i]) {
           mmp[i] = ptr;
-          allocated[i] = True;
+          allocated[i] = 1;
           break;
         }
       }
@@ -159,7 +159,7 @@ void test3(int n) {
     // acquire(&testlk);
     if(allocated[i]) {
       pmm->free(mmp[i]);
-      allocated[i] = False;
+      allocated[i] = 0;
     }
   };
   LOG("Test3 PASS!");
