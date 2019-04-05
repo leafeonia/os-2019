@@ -106,7 +106,7 @@ static void *kalloc(size_t size) {
   void* ret;
 #ifdef NAIVE
   lock(&mem_lock);
-  fancy_alloc(0);
+  fancy_alloc(100);
   ret = (void*)pm_start;
   pm_start += size;  
   //printf("%x from cpu#%d\n",ret,_cpu()+1);
