@@ -109,10 +109,48 @@ static void alloc_test(){
 	printf("success~\n");
 } */
 
+void hyc_test() {
+//  spin_lock(&lk);
+  // TestLog("alloc_test begin...");
+  // TestLog("(1) Alloc memory for an array with 100 int...");
+  int *arr = (int*)pmm->alloc(100 * sizeof(int));
+  for (int i = 0; i < 100; i++){
+    arr[i] = i;
+  }
+  // TestLog("(1) Alloc done.");
+  for (int i = 0; i < 100; i++){
+    // TestLog("(1) arr[%d]: %d", i, arr[i]);
+  }
+  // TestLog("(2) Free memory for the array...");
+  pmm->free(arr);
+  // TestLog("(2) Free done.");
+  // TestLog("(3) Allocate lots of small memory...");
+  for (int i = 0; i < 100; i++){
+    pmm->alloc(1);
+    pmm->alloc(8);
+  }
+  // TestLog("(3) Small memory alloc done.");
+  // TestLog("(4) Allocate several large memory...");
+  pmm->alloc(1 << 12);
+  pmm->alloc(1 << 16);
+//  pmm->alloc(1 << 24);
+  // TestLog("(4) Large memory alloc done.");
+  // TestLog("(5) Frequent alloc and free...");
+  for (int i = 0; i < 100; i++){
+	void *addr = pmm->alloc(i);
+	pmm->free(addr);
+  }
+  // TestLog("(5) Frequent alloc and free done.");
+  // TestLog("alloc_test end.\n============================");
+//  spin_unlock(&lk);
+  LOG("hycTest PASS!");
+}
+
 static void os_run() {
   hello();
   //test_big_small();
-  test_full();
+  //test_full();
+  hyc_test();
   _intr_write(1);
   while (1) {
     _yield();
