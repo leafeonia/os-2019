@@ -53,14 +53,14 @@ static void free(void* ap){
 	return;
 }
 
-static void* morecore(size_t nunits){
+static HEADER* morecore(size_t nunits){
 	if(nunits < NALLOC) nunits = NALLOC;
 	HEADER* ret = (HEADER*)pm_start;
 	if(pm_start + sizeof(HEADER)*nunits >= pm_end) return NULL;
 	pm_start += sizeof(HEADER)*nunits;
 	ret->s.size = nunits;
 	free((void*)(ret+1));
-	return (void*)freep;
+	return freep;
 }
 
 static void* fancy_alloc(size_t nbytes){
@@ -92,7 +92,7 @@ static void* fancy_alloc(size_t nbytes){
 			return (void*)(p+1);
 		}
 		if (p == freep){
-			if((p = (HEADER*)morecore(nunits)) == NULL){
+			if((p = morecore(nunits)) == NULL){
 				LOG("The heap is full");
 				return NULL;
 			}
