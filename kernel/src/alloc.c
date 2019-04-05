@@ -128,7 +128,7 @@ static void kfree(void *ptr) {
   lock(&mem_lock);
   //LOG("enter free after lock");
   free(ptr);
-  prinf("free: %x\n",(uintptr_t)ret);
+  prinf("free: %x\n",(uintptr_t)ptr);
   //LOG("leave free before unlock");
   unlock(&mem_lock);
   //LOG("leave free after unlock");
