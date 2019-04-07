@@ -60,7 +60,7 @@ static void alloc_test(){
 
 static void os_run() {
   hello();
-  alloc_test();
+  //alloc_test();
   _intr_write(1);
   while (1) {
     _yield();
