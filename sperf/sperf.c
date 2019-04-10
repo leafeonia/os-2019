@@ -8,7 +8,7 @@
 
 int main(int argc, char *argv[]) {
 	printf("FUCK\n");
-	execl("strace","strace","-T","ls",NULL);
+	execlp("strace","strace","-T","ls",NULL);
 	/*
 	int fd[2];
 	if(pipe(fd) == -1) ERR("pipe fails");
