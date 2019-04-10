@@ -8,12 +8,10 @@
 
 int main(int argc, char *argv[]) {
 	printf("FUCK\n");
-	ERR("fork fails");
 	int fd[2];
 	if(pipe(fd) == -1) ERR("pipe fails");
   	int rc = fork();
-  	if(rc > 0){
-  		printf("FAACKK");
+  	if(rc < 0){
   		ERR("fork fails");
   	}
   	else if(rc == 0){ //child
