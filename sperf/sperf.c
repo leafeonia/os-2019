@@ -19,14 +19,14 @@ int main(int argc, char *argv[]) {
   		ERR("fork fails");
   	}
   	else if(rc == 0){ //child
-  		LOG("FUCK FROM CHILD");
+  		//LOG("FUCK FROM CHILD");
   		close(fd[0]);
   		dup2(fd[1],STDOUT_FILENO);
   		//execlp("strace","strace","-T","ls",NULL);
   		execlp("ls","ls",NULL);
   	}
   	else{
-  		LOG("FUCK FROM PARENT");
+  		//LOG("FUCK FROM PARENT");
   		close(fd[1]); //close stdout, only read in
   		dup2(fd[0],STDIN_FILENO);
   	}
