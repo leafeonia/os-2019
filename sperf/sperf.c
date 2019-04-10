@@ -8,6 +8,7 @@
 
 int main(int argc, char *argv[]) {
 	printf("FUCK\n");
+	ERR("fork fails");
 	int fd[2];
 	if(pipe(fd) == -1) ERR("pipe fails");
   	int rc = fork();
