@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
   		dup2(fd[0],STDIN_FILENO);
   		char s[1000000] = "";
   		for(int i = 0;i < 5;i++){
-  			scanf("%s",s));
+  			scanf("%s",s);
   			printf("%s\n",s);
   		}
   		
