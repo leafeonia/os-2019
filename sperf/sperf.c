@@ -22,8 +22,8 @@ int main(int argc, char *argv[]) {
   		//LOG("FUCK FROM CHILD");
   		close(fd[0]);
   		dup2(fd[1],STDOUT_FILENO);
-  		execlp("strace","strace","-T","ls",NULL);
-  		//execlp("ls","ls",NULL);
+  		//execlp("strace","strace","-T","ls",NULL);
+  		execlp("ls","ls",NULL);
   		assert(0);
   	}
   	else{
@@ -31,10 +31,10 @@ int main(int argc, char *argv[]) {
   		dup2(fd[0],STDIN_FILENO);
   		char s[1000000] = "";
   		LOG("FUCK FROM PARENT");
-  		for(int i = 0;i < 5;i++){
+  		/*for(int i = 0;i < 5;i++){
   			scanf("%s",s);
   			printf("%s\n",s);
-  		}
+  		}*/
   		
   		
   	}
