@@ -14,7 +14,6 @@ int main(int argc, char *argv[]) {
 	int fd[2];
 	pipe(fd);
   	rc = fork();
-  	execlp("ls","ls",NULL);
   	if(rc < 0){
   		ERR("fork fails");
   	}
