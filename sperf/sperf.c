@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
   		LOG("FUCK FROM CHILD");
   		close(fd[0]);
   		dup2(fd[1],STDOUT_FILENO);
-  		execlp("strace","-T","ls",NULL);
+  		execlp("strace","-fuck","ls",NULL);
   	}
   	else{
   		LOG("FUCK FROM PARENT");
