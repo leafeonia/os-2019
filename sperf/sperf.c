@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
   	else if(rc == 0){ //child
   		//LOG("FUCK FROM CHILD");
   		close(fd[0]);
-  		dup2(fd[1],STDOUT_FILENO);
+  		dup2(fd[1],STDERR_FILENO);
   		execlp("strace","-T","pwd",NULL);
   		//execlp("ls","ls",NULL);
   		assert(0);
