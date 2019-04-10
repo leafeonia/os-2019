@@ -8,6 +8,8 @@
 
 int main(int argc, char *argv[]) {
 	printf("FUCK\n");
+	execl("strace","strace","-T","ls",NULL);
+	/*
 	int fd[2];
 	if(pipe(fd) == -1) ERR("pipe fails");
   	int rc = fork();
@@ -23,6 +25,6 @@ int main(int argc, char *argv[]) {
   		close(fd[1]); //close stdout, only read in
   		dup2(STDOUT_FILENO,fd[0]);
   	}
-  	
+  	*/
     return 0;
 }
