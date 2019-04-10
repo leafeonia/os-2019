@@ -10,9 +10,10 @@
 
 int main(int argc, char *argv[]) {
 	int fd[2];
+	pid_t rc;
 	if(pipe(fd) == -1) ERR("pipe fails");
 	printf("FUCK\n");
-  	int rc = fork();
+  	rc = fork();
   	if(rc < 0){
   		ERR("fork fails");
   	}
