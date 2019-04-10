@@ -29,6 +29,9 @@ int main(int argc, char *argv[]) {
   	else{
   		close(fd[1]); //close stdout, only read in
   		dup2(fd[0],STDIN_FILENO);
+  		char* s;
+  		scanf("%s",s);
+  		printf("%s\n",s);
   		LOG("FUCK FROM PARENT");
   	}
   	
