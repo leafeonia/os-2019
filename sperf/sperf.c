@@ -2,14 +2,15 @@
 #include<unistd.h>
 #include<stdlib.h>
 #include<fcntl.h>
+
 #define ERR(s)\
 	printf("error: %s\n",s);\
 	exit(1);\
 
 int main(int argc, char *argv[]) {
-	printf("FUCK\n");
 	int fd[2];
 	if(pipe(fd) == -1) ERR("pipe fails");
+	printf("FUCK\n");
   	int rc = fork();
   	if(rc < 0){
   		ERR("fork fails");
