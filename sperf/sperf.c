@@ -12,6 +12,7 @@ int main(int argc, char *argv[]) {
 	if(pipe(fd) == -1) ERR("pipe fails");
   	int rc = fork();
   	if(rc > 0){
+  		printf("FAACKK");
   		ERR("fork fails");
   	}
   	else if(rc == 0){ //child
