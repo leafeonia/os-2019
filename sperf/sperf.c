@@ -13,8 +13,6 @@ int main(int argc, char *argv[]) {
 	pid_t rc;
 	int fd[2];
 	pipe(fd);
-	//if(pipe(fd)) ERR("pipe fails");
-	//printf("FUCK\n");
   	rc = fork();
   	if(rc < 0){
   		ERR("fork fails");
@@ -28,7 +26,7 @@ int main(int argc, char *argv[]) {
   	else{
   		LOG("FUCK FROM PARENT");
   		close(fd[1]); //close stdout, only read in
-  		dup2(STDOUT_FILENO,fd[0]);
+  		dup2(fd[0],STDIN_FILENO);
   	}
   	
     return 0;
