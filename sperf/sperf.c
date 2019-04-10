@@ -2,6 +2,7 @@
 #include<unistd.h>
 #include<stdlib.h>
 #include<fcntl.h>
+#include<sys/wait.h>
 
 #define ERR(s)\
 	printf("error: %s\n",s);\
