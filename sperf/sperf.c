@@ -3,7 +3,7 @@
 #include<stdlib.h>
 #include<fcntl.h>
 #include<sys/wait.h>
-#define LOG(s) printf("\33[0;31m%s\n\33[0m",s)
+#define LOG(s) printf("\33[1;31m%s\n\33[0m",s)
 
 #define ERR(s)\
 	printf("error: %s\n",s);\
