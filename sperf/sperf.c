@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
 	pid_t rc;
 	int fd[2];
 	pipe(fd);
-	//if(pipe(fd) == -1) ERR("pipe fails");
+	if(pipe(fd)) ERR("pipe fails");
 	printf("FUCK\n");
   	rc = fork();
   	if(rc < 0){
