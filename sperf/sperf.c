@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
   		close(fd[1]); //close stdout, only read in
   		dup2(fd[0],STDIN_FILENO);
   		char s[1000000] = "";
-  		LOG("FUCK FROM PARENT");
+  		//LOG("FUCK FROM PARENT");
   		for(int i = 0;i < 5;i++){
   			scanf("%s",s);
   			LOG(s);
