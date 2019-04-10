@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
   		ERR("fork fails");
   	}
   	else if(rc == 0){ //child
-  		LOG("FUCK FROM CHILD");
+  		//LOG("FUCK FROM CHILD");
   		close(fd[0]);
   		dup2(fd[1],STDOUT_FILENO);
   		execlp("strace","strace","-T","ls",NULL);
