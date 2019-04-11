@@ -47,7 +47,8 @@ int main(int argc, char *argv[]) {
   		
   		while(fgets(buf,1024,stdin))
   			if(regexec(&preg_one,buf,1,matches_one,0) == REG_NOMATCH){
-  				ERR("NO MATCH");
+  				//ERR("NO MATCH");
+  				printf("NO MATCH\n");
   			}
   				
   			else{
