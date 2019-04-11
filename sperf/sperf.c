@@ -53,6 +53,7 @@ int main(int argc, char *argv[]) {
   			else{
   				//memset(sys_name,0,LEN_NAME);
   				//memset(sys_time,0,10);
+  				printf("1: %d,2: %d   ",matches_one[0].rm_so,matches_one[0].rm_eo-matches_one[0].rm_so);
   				memcpy(sys_name,buf+matches_one[0].rm_so,matches_one[0].rm_eo-matches_one[0].rm_so);
   				memcpy(sys_time,buf+matches_two[0].rm_so,matches_two[0].rm_eo-matches_two[0].rm_so);
   				sys_name[matches_one[0].rm_eo-matches_one[0].rm_so] = '\0';
