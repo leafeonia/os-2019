@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
   		//LOG("FUCK FROM CHILD");
   		close(fd[0]);
   		dup2(fd[1],STDERR_FILENO);
-  		devnull = open("/dev/null",O_WRONLY)
+  		int devnull = open("/dev/null",O_WRONLY);
  		dup2(devnull,STDOUT_FILENO);
   		execlp("strace","-T","pstree",NULL);
   		//execlp("ls","ls",NULL);
