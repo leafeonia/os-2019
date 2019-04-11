@@ -37,6 +37,7 @@ void insert(char* name, double timee){
 }
 
 void sig_handler(int sig){
+	printf("enter\n");
 	if(sig == SIGCHLD){
 		exited = 1;
 	}
