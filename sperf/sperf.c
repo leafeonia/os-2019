@@ -4,6 +4,11 @@
 #include<fcntl.h>
 #include<sys/wait.h>
 #include<assert.h>
+#include<regex.h>
+#include<sys/type.h>
+
+#define LEN_NAME 64
+
 #define LOG(s) printf("\33[1;35m%s\n\33[0m",s)
 
 #define ERR(s)\
@@ -33,8 +38,22 @@ int main(int argc, char *argv[]) {
   		dup2(fd[0],STDIN_FILENO);
   		//LOG("FUCK FROM PARENT");
   		char buf[1024];
+  		regex_t preg_one, preg_two;//match syscall name, time, perspectively
+  		regmatch_t matches_one[1],matches_two[1];
+  		if(regcomp(&preg_one,"^[a-zA-Z]+",REG_EXTENDED) != 0)
+  			ERR("regcomp fails");
+  		
+  		
   		while(fgets(buf,1024,stdin))
-  			printf("%s",buf);	
+  			if(regexec(&preg_one,s,1,matches_one,0) == REG_NOMATCH)
+  				ERR("NO MATCH");
+  			else{
+  				char sysname[LEN_NAME];
+  				memcpy(sysname,s+matches_one[0].rm_so,matches_one[0].rm_eo-matches_one[0].rm_so);
+  				sysname[matches_one[0].rm_eo-matches_one[0].rm_so] = '\0';
+  				printf("%s\n",sysname);
+  			}
+  			//printf("%s",buf);	
   	}
   	
     return 0;
