@@ -23,6 +23,8 @@ typedef struct _sys_call{
 
 sys_call list[NR_SYS];
 int list_max = 0;
+int exited = 0;//father process quits after child process quits
+
 void insert(char* name, double timee){
 	for(int i = 0;i < list_max;i++){
 		if (strcmp(name,list[i].sys_name) == 0){
@@ -34,7 +36,11 @@ void insert(char* name, double timee){
 	list[list_max++].sys_time = timee;
 }
 
-
+void sig_handler(int sig){
+	if(sig == SIGCHLD){
+		exited = 1;
+	}
+}
 
 int main(int argc, char *argv[]) {
 	pid_t rc;
@@ -108,6 +114,7 @@ int main(int argc, char *argv[]) {
   		}
   		
   	}
+  	while(!exited);
   	
     return 0;
 }
