@@ -97,7 +97,7 @@ int main(int argc, char *argv[]) {
   				insert(sys_name,atof(sys_time));
   				//printf("%s %f\n",sys_name,atof(sys_time));
   			}
-  			//printf("%s",buf);	
+  			printf("%s",buf);	
   		}
   		
   		for(int i = 0;i < list_max;i++){
