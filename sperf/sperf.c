@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
   		dup2(fd[1],STDERR_FILENO);
   		int devnull = open("/dev/null",O_WRONLY);
  		dup2(devnull,STDOUT_FILENO);
-  		execlp("strace","strace","-T","-e","raw=all","ls",NULL);
+  		execlp("strace","strace","-T","-e","raw=all","pstree",NULL);
   		//execlp("ls","ls",NULL);
   		assert(0);
   	}
