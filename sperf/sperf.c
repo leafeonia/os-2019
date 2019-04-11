@@ -93,7 +93,7 @@ int main(int argc, char *argv[]) {
   		//signal(SIGCHLD,sig_handler);
   		
   		//set timer
-  		signal(SIGALRM, signalHandler);
+  		signal(SIGALRM, sig_handler);
     	struct itimerval new_value, old_value;
     	new_value.it_value.tv_sec = 0;
     	new_value.it_value.tv_usec = 100000;
