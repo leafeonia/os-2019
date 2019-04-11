@@ -64,6 +64,8 @@ int main(int argc, char *argv[]) {
   		close(fd[1]); //close stdout, only read in
   		dup2(fd[0],STDIN_FILENO);
   		//LOG("FUCK FROM PARENT");
+  		sig_handler(SIGCHLD,sig_handler);
+  		
   		
   		for(int i = 0;i < NR_SYS;i++)
   			list[i].sys_time = 0.0;
