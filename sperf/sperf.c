@@ -5,7 +5,7 @@
 #include<sys/wait.h>
 #include<assert.h>
 #include<regex.h>
-#include<sys/type.h>
+#include<sys/types.h>
 
 #define LEN_NAME 64
 
