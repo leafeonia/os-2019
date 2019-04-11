@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
   			ERR("regcomp fails");
   		
   		
-  		while(fgets(buf,1024,stdin))
+  		while(fgets(buf,1024,stdin)){
   			int is_matched = regexec(&preg_one,buf,1,matches_one,0);
   			if(is_matched == REG_NOMATCH){
   				printf("NO MATCH\n");
@@ -59,6 +59,7 @@ int main(int argc, char *argv[]) {
   				printf("%s\n",sysname);
   			}
   			//printf("%s",buf);	
+  		}
   	}
   	
     return 0;
