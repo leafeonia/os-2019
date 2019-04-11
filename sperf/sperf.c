@@ -8,17 +8,31 @@
 #include<sys/types.h>
 #include<string.h>
 
+#define LOG(s) printf("\33[1;35m%s\n\33[0m",s)
+#define ERR(s)\
+	printf("error: %s\n",s);\
+	exit(1);\
 #define LEN_NAME 64
+#define NR_SYS 1024
 typedef struct _sys_call{
 	char sys_name[LEN_NAME];
 	double sys_time;
 }sys_call;
 
-#define LOG(s) printf("\33[1;35m%s\n\33[0m",s)
+sys_call list[NR_SYS];
+int list_max = 0;
+void insert(char* name, double timee){
+	for(int i = 0;i < list_max;i++){
+		if (strcmp(name,list[i].sys_name) == 0){
+			list[i].time += time;
+			return;
+		}
+	}
+	strcpy(list[list_max].sys_name,name);
+	list[list_max++].sys_time = timee;
+}
 
-#define ERR(s)\
-	printf("error: %s\n",s);\
-	exit(1);\
+
 
 int main(int argc, char *argv[]) {
 	pid_t rc;
@@ -42,11 +56,15 @@ int main(int argc, char *argv[]) {
   		close(fd[1]); //close stdout, only read in
   		dup2(fd[0],STDIN_FILENO);
   		//LOG("FUCK FROM PARENT");
+  		
+  		for(int i = 0;i < NR_SYS;i++)
+  			list[i].sys_time = 0.0;
   		char buf[1024];
   		regex_t preg_one, preg_two;//match syscall name, time, perspectively
   		regmatch_t matches_one[1],matches_two[1];
   		regcomp(&preg_one,"^[a-zA-Z0-9_]+",REG_EXTENDED);
   		regcomp(&preg_two,"<.*>",REG_EXTENDED);
+  		
   		while(fgets(buf,1024,stdin)){
   			int is_matched_one = regexec(&preg_one,buf,1,matches_one,0);
   			int is_matched_two = regexec(&preg_two,buf,1,matches_two,0);
@@ -64,6 +82,7 @@ int main(int argc, char *argv[]) {
   				//memset has set '\0', no need to set again
   				//sys_name[matches_one[0].rm_eo-matches_one[0].rm_so] = '\0';
   				//sys_name[matches_one[0].rm_eo-matches_one[0].rm_so] = '\0';
+  				insert(sys_name,atof(sys_time));
   				printf("%s %f\n",sys_name,atof(sys_time));
   			}
   			//printf("%s",buf);	
