@@ -44,7 +44,6 @@ int main(int argc, char *argv[]) {
   		if(regcomp(&preg_one,"^[a-zA-Z]+",REG_EXTENDED) != 0)
   			ERR("regcomp fails");
   		
-  		
   		while(fgets(buf,1024,stdin)){
   			int is_matched = regexec(&preg_one,buf,1,matches_one,0);
   			if(is_matched == REG_NOMATCH){
