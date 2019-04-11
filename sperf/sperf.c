@@ -39,6 +39,7 @@ int main(int argc, char *argv[]) {
   		dup2(fd[0],STDIN_FILENO);
   		//LOG("FUCK FROM PARENT");
   		char buf[1024];
+  		char sys_name[LEN_NAME],sys_time[10];
   		regex_t preg_one, preg_two;//match syscall name, time, perspectively
   		regmatch_t matches_one[1],matches_two[1];
   		regcomp(&preg_one,"^[a-zA-Z]+",REG_EXTENDED);
@@ -50,7 +51,6 @@ int main(int argc, char *argv[]) {
   				printf("NO MATCH\n");
   			}	
   			else{
-  				char sys_name[LEN_NAME],sys_time[10];
   				memcpy(sys_name,buf+matches_one[0].rm_so,matches_one[0].rm_eo-matches_one[0].rm_so);
   				memcpy(sys_time,buf+matches_two[0].rm_so,matches_two[0].rm_eo-matches_two[0].rm_so);
   				sys_name[matches_two[0].rm_eo-matches_two[0].rm_so] = '\0';
