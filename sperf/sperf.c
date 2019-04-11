@@ -26,7 +26,7 @@ int list_max = 0;
 void insert(char* name, double timee){
 	for(int i = 0;i < list_max;i++){
 		if (strcmp(name,list[i].sys_name) == 0){
-			list[i].time += time;
+			list[i].sys_time += timee;
 			return;
 		}
 	}
