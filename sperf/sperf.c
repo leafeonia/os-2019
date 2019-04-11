@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
   		char sys_name[LEN_NAME],sys_time[10];
   		regex_t preg_one, preg_two;//match syscall name, time, perspectively
   		regmatch_t matches_one[1],matches_two[1];
-  		regcomp(&preg_one,"^\w+",REG_EXTENDED);
+  		regcomp(&preg_one,"^[\w]+",REG_EXTENDED);
   		regcomp(&preg_two,"<.*>",REG_EXTENDED);
   		while(fgets(buf,1024,stdin)){
   			int is_matched_one = regexec(&preg_one,buf,1,matches_one,0);
