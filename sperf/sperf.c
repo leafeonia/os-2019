@@ -116,9 +116,7 @@ int main(int argc, char *argv[]) {
   		}
   		
   	}
-  	while(!exited){
-  		//printf("?");
-  	}
+  	while(!exited);
   	printf("escape\n");
   	
     return 0;
