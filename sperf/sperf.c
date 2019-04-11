@@ -9,9 +9,11 @@
 #include<string.h>
 
 #define LOG(s) printf("\33[1;35m%s\n\33[0m",s)
+
 #define ERR(s)\
 	printf("error: %s\n",s);\
 	exit(1);\
+	
 #define LEN_NAME 64
 #define NR_SYS 1024
 typedef struct _sys_call{
