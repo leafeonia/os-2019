@@ -9,6 +9,10 @@
 #include<string.h>
 
 #define LEN_NAME 64
+typedef struct _sys_call{
+	char sys_name[LEN_NAME];
+	double sys_time;
+}sys_call;
 
 #define LOG(s) printf("\33[1;35m%s\n\33[0m",s)
 
@@ -60,7 +64,7 @@ int main(int argc, char *argv[]) {
   				//memset has set '\0', no need to set again
   				//sys_name[matches_one[0].rm_eo-matches_one[0].rm_so] = '\0';
   				//sys_name[matches_one[0].rm_eo-matches_one[0].rm_so] = '\0';
-  				printf("%s %s\n",sys_name,sys_time);
+  				printf("%s %f\n",sys_name,atof(sys_time));
   			}
   			//printf("%s",buf);	
   		}
