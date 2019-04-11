@@ -6,6 +6,7 @@
 #include<assert.h>
 #include<regex.h>
 #include<sys/types.h>
+#include<string.h>
 
 #define LEN_NAME 64
 
@@ -38,14 +39,14 @@ int main(int argc, char *argv[]) {
   		dup2(fd[0],STDIN_FILENO);
   		//LOG("FUCK FROM PARENT");
   		char buf[1024];
-  		regex_t preg_one, preg_two;//match syscall name, time, perspectively
-  		regmatch_t matches_one[1],matches_two[1];
+  		regex_t preg_one;//, preg_two;//match syscall name, time, perspectively
+  		regmatch_t matches_one[1];//,matches_two[1];
   		if(regcomp(&preg_one,"^[a-zA-Z]+",REG_EXTENDED) != 0)
   			ERR("regcomp fails");
   		
   		
   		while(fgets(buf,1024,stdin))
-  			if(regexec(&preg_one,s,1,matches_one,0) == REG_NOMATCH)
+  			if(regexec(&preg_one,buf,1,matches_one,0) == REG_NOMATCH)
   				ERR("NO MATCH");
   			else{
   				char sysname[LEN_NAME];
