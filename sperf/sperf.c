@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
   				char sys_name[LEN_NAME];
   				
   				memcpy(sys_name,buf+matches_one[0].rm_so,matches_one[0].rm_eo-matches_one[0].rm_so);
-  				sysname[matches_one[0].rm_eo-matches_one[0].rm_so] = '\0';
+  				sys_name[matches_one[0].rm_eo-matches_one[0].rm_so] = '\0';
   				printf("%s\n",sys_name);
   			}
   			//printf("%s",buf);	
