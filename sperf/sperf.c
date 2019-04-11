@@ -42,8 +42,7 @@ int main(int argc, char *argv[]) {
   		regex_t preg_one;//, preg_two;//match syscall name, time, perspectively
   		regmatch_t matches_one[1];//,matches_two[1];
   		if(regcomp(&preg_one,"^[a-zA-Z]+",REG_EXTENDED) != 0)
-  			ERR("regcomp fails");
-  		
+  			ERR("regcomp fails");	
   		while(fgets(buf,1024,stdin)){
   			int is_matched = regexec(&preg_one,buf,1,matches_one,0);
   			if(is_matched == REG_NOMATCH){
