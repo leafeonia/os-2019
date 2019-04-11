@@ -37,7 +37,6 @@ void insert(char* name, double timee){
 }
 
 void sig_handler(int sig){
-	printf("enter\n");
 	if(sig == SIGCHLD){
 		exited = 1;
 	}
@@ -117,7 +116,9 @@ int main(int argc, char *argv[]) {
   		}
   		
   	}
-  	while(!exited);
+  	while(!exited){
+  			printf("%d\n",exited);
+  	}
   	
     return 0;
 }
