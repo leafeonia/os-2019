@@ -52,9 +52,10 @@ int main(int argc, char *argv[]) {
   			else{
   				//printf("enter\n");
   				char sys_name[LEN_NAME];
-  				char sys_time[10];
+  				char sys_time[12];
   				memcpy(sys_name,buf+matches_one[0].rm_so,matches_one[0].rm_eo-matches_one[0].rm_so);
   				memcpy(sys_time,buf+matches_two[0].rm_so,matches_two[0].rm_eo-matches_two[0].rm_so);
+  				sys_name[matches_one[0].rm_eo-matches_one[0].rm_so] = '\0';
   				sys_name[matches_one[0].rm_eo-matches_one[0].rm_so] = '\0';
   				printf("%s %s\n",sys_name,sys_time);
   			}
