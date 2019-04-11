@@ -32,11 +32,8 @@ int main(int argc, char *argv[]) {
   		dup2(fd[0],STDIN_FILENO);
   		//LOG("FUCK FROM PARENT");
   		char buf[1024];
-  		fgets(buf,1024,stdin);
-  		printf("%s\n",buf);
-  		
-  		
-  		
+  		while(fgets(buf,1024,stdin))
+  			printf("%s\n",buf);	
   	}
   	
     return 0;
