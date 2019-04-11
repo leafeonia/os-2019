@@ -99,8 +99,12 @@ int main(int argc, char *argv[]) {
   				}
   			}
   		}
+  		double tot = 0.0;
   		for(int i = 0;i < list_max;i++){
-  			printf("%s %f\n",list[i].sys_name,list[i].sys_time);
+  			tot += list[i].sys_time;
+  		}
+  		for(int i = 0;i < list_max;i++){
+  			printf("%s \%%.02f\n",list[i].sys_name,list[i].sys_time/tot*100);
   		}
   		
   	}
