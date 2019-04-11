@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
   			int is_matched_one = regexec(&preg_one,buf,1,matches_one,0);
   			int is_matched_two = regexec(&preg_two,buf,1,matches_two,0);
   			if(is_matched_one == REG_NOMATCH || is_matched_two == REG_NOMATCH){
-  				printf("NO MATCH\n");
+  				//printf("NO MATCH\n");
   			}	
   			else{
   				//printf("enter\n");
