@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
   		//execlp("ls","ls",NULL);
   		assert(0);
   	}
-  	else{
+  	else{ //parent
   		close(fd[1]); //close stdout, only read in
   		dup2(fd[0],STDIN_FILENO);
   		//LOG("FUCK FROM PARENT");
@@ -85,9 +85,13 @@ int main(int argc, char *argv[]) {
   				//sys_name[matches_one[0].rm_eo-matches_one[0].rm_so] = '\0';
   				//sys_name[matches_one[0].rm_eo-matches_one[0].rm_so] = '\0';
   				insert(sys_name,atof(sys_time));
-  				printf("%s %f\n",sys_name,atof(sys_time));
+  				//printf("%s %f\n",sys_name,atof(sys_time));
   			}
   			//printf("%s",buf);	
+  		}
+  		
+  		for(int i = 0;i < list_max;i++){
+  			printf("%s %f\n",list[i].sys_name,list[i].sys_time);
   		}
   	}
   	
