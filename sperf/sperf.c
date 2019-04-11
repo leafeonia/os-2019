@@ -46,11 +46,13 @@ int main(int argc, char *argv[]) {
   		
   		
   		while(fgets(buf,1024,stdin))
-  			if(regexec(&preg_one,buf,1,matches_one,0) == REG_NOMATCH)
+  			if(regexec(&preg_one,buf,1,matches_one,0) == REG_NOMATCH){
   				ERR("NO MATCH");
+  			}
+  				
   			else{
   				char sysname[LEN_NAME];
-  				memcpy(sysname,s+matches_one[0].rm_so,matches_one[0].rm_eo-matches_one[0].rm_so);
+  				memcpy(sysname,buf+matches_one[0].rm_so,matches_one[0].rm_eo-matches_one[0].rm_so);
   				sysname[matches_one[0].rm_eo-matches_one[0].rm_so] = '\0';
   				printf("%s\n",sysname);
   			}
