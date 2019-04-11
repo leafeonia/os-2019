@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
   		//LOG("FUCK FROM PARENT");
   		char buf[1024];
   		fgets(buf,1024,stdin);
-  		printf("%s\n",buf)
+  		printf("%s\n",buf);
   		
   		
   		
