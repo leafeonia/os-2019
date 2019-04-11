@@ -51,10 +51,11 @@ int main(int argc, char *argv[]) {
   			}	
   			else{
   				//printf("enter\n");
-  				char sysname[LEN_NAME];
-  				memcpy(sysname,buf+matches_one[0].rm_so,matches_one[0].rm_eo-matches_one[0].rm_so);
+  				char sys_name[LEN_NAME];
+  				
+  				memcpy(sys_name,buf+matches_one[0].rm_so,matches_one[0].rm_eo-matches_one[0].rm_so);
   				sysname[matches_one[0].rm_eo-matches_one[0].rm_so] = '\0';
-  				printf("%s\n",sysname);
+  				printf("%s\n",sys_name);
   			}
   			//printf("%s",buf);	
   		}
