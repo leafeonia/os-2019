@@ -104,7 +104,7 @@ int main(int argc, char *argv[]) {
   			tot += list[i].sys_time;
   		}
   		for(int i = 0;i < list_max;i++){
-  			printf("%s %.02f\n",list[i].sys_name,list[i].sys_time/tot*100);
+  			printf("%s % %.02f\n",list[i].sys_name,list[i].sys_time/tot*100);
   		}
   		
   	}
