@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
   		char buf[1024];
   		regex_t preg_one, preg_two;//match syscall name, time, perspectively
   		regmatch_t matches_one[1],matches_two[1];
-  		regcomp(&preg_one,"^[a-zA-Z]+",REG_EXTENDED);
+  		regcomp(&preg_one,"^[a-zA-Z0-9_]+",REG_EXTENDED);
   		regcomp(&preg_two,"<.*>",REG_EXTENDED);
   		while(fgets(buf,1024,stdin)){
   			int is_matched_one = regexec(&preg_one,buf,1,matches_one,0);
@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
   				printf("NO MATCH\n");
   			}	
   			else{
-  				printf("enter\n");
+  				//printf("enter\n");
   				char sysname[LEN_NAME];
   				memcpy(sysname,buf+matches_one[0].rm_so,matches_one[0].rm_eo-matches_one[0].rm_so);
   				sysname[matches_one[0].rm_eo-matches_one[0].rm_so] = '\0';
