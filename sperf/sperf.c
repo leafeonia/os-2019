@@ -7,6 +7,7 @@
 #include<regex.h>
 #include<sys/types.h>
 #include<string.h>
+#include<sys/time.h>
 
 #define LOG(s) printf("\33[1;35m%s\n\33[0m",s)
 
@@ -36,13 +37,35 @@ void insert(char* name, double timee){
 	list[list_max++].sys_time = timee;
 }
 
-/*
+void update(){
+	for(int i = 0;i < list_max;i++){
+  		for(int j = i+1;j < list_max;j++){
+  			if(list[i].sys_time < list[j].sys_time){
+  				sys_call temp = list[i];
+  				list[i] = list[j];
+  				list[j] = temp;
+  			}
+  		}
+  	}
+  	double tot = 0.0;
+  	for(int i = 0;i < list_max;i++){
+  		tot += list[i].sys_time;
+  	}
+  	for(int i = 0;i < list_max;i++){
+  		printf("%s %.02f%%\n",list[i].sys_name,list[i].sys_time/tot*100);
+  	}
+}
+
+
 void sig_handler(int sig){
-	if(sig == SIGCHLD){
+	/*if(sig == SIGCHLD){
 		exited = 1;
+	}*/
+	if(sig == SIGALRM){
+		update();
 	}
 }
-*/
+
 
 int main(int argc, char *argv[]) {
 	pid_t rc;
@@ -62,12 +85,22 @@ int main(int argc, char *argv[]) {
   		//execlp("ls","ls",NULL);
   		assert(0);
   	}
+  	
   	else{ //parent
   		close(fd[1]); //close stdout, only read in
   		dup2(fd[0],STDIN_FILENO);
   		//LOG("FUCK FROM PARENT");
   		//signal(SIGCHLD,sig_handler);
   		
+  		//set timer
+  		signal(SIGALRM, signalHandler);
+    	struct itimerval new_value, old_value;
+    	new_value.it_value.tv_sec = 0;
+    	new_value.it_value.tv_usec = 100000;
+    	new_value.it_interval.tv_sec = 0;
+    	new_value.it_interval.tv_usec = 500000;
+    	setitimer(ITIMER_REAL, &new_value, &old_value);
+
   		
   		for(int i = 0;i < NR_SYS;i++)
   			list[i].sys_time = 0.0;
@@ -97,25 +130,10 @@ int main(int argc, char *argv[]) {
   				insert(sys_name,atof(sys_time));
   				//printf("%s %f\n",sys_name,atof(sys_time));
   			}
-  			printf("%s",buf);	
+  			//printf("%s",buf);	
   		}
+  		update();
   		
-  		for(int i = 0;i < list_max;i++){
-  			for(int j = i+1;j < list_max;j++){
-  				if(list[i].sys_time < list[j].sys_time){
-  					sys_call temp = list[i];
-  					list[i] = list[j];
-  					list[j] = temp;
-  				}
-  			}
-  		}
-  		double tot = 0.0;
-  		for(int i = 0;i < list_max;i++){
-  			tot += list[i].sys_time;
-  		}
-  		for(int i = 0;i < list_max;i++){
-  			printf("%s %.02f%%\n",list[i].sys_name,list[i].sys_time/tot*100);
-  		}
   		
   	}
   	//while(!exited);
