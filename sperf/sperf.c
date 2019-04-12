@@ -82,8 +82,8 @@ int main(int argc, char *argv[]) {
  		//dup2(devnull,STDOUT_FILENO);
   		//execlp("strace","strace","-T","-e","raw=all","python","-c","2**1000",NULL);
   		//printf("argv[0] = %s,argv[1] = %s,argv[2] = %s\n",argv[0],argv[1],argv[2]);
-  		LOG("FUCK FROM CHILD");
   		char * arg[] = {"strace","-T","-e raw=all",NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL};
+  		LOG("FUCK FROM CHILD");
   		for(int i = 1;i < argc;i++)
   			strcpy(arg[2+i],argv[i]);
   		for(int i = 0;i < 6;i++) printf("%s ",arg[i]);
