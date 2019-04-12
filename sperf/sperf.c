@@ -97,7 +97,7 @@ int main(int argc, char *argv[]) {
   		for(int i = 1;i < argc;i++)
   			strcpy(arg[3+i],argv[i]);
   		for(int i = 0;i < 6;i++) printf("%s ",arg[i]);
-  		printf("?\n");
+  		//printf("?\n");
   		//arg[3] = argv[1];
   		//argv[0] = "strace";
   		char * argv2[] = {"strace", "-T", "pstree", 0};
