@@ -46,7 +46,7 @@ char* blank(int n){
 	for(int i = 0;i < n;i++)
 		ret[i] = ' ';
 	ret[n] = '\0';
-	return ret;
+	return (char*)ret;
 }
 
 void update(){
