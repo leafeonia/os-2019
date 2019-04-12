@@ -84,7 +84,7 @@ int main(int argc, char *argv[]) {
   		//execlp("strace","strace","-T","-e","raw=all","python","-c","2**1000",NULL);
   		//printf("argv[0] = %s,argv[1] = %s,argv[2] = %s\n",argv[0],argv[1],argv[2]);
   		argv[0] = "strace";
-  		char * argv2[] = {"strace", "-T", "pstree", 0};
+  		//char * argv2[] = {"strace", "-T", "pstree", 0};
     	execvp("strace", argv);
   		//execlp("ls","ls",NULL);
   		assert(0);
