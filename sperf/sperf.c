@@ -76,7 +76,7 @@ void update(){
 	printf("\033c");
 	int color_id = 0;
   	for(int i = 0;i < to_show;i++){
-  		color_id = (color_id + 1) % 5;
+  		color_id = (color_id + 1) % 7;
   		used += list[i].sys_time;
   		double ratio = list[i].sys_time/tot;
   		printf("%s %.02f%%",list[i].sys_name,ratio*100);
@@ -86,7 +86,7 @@ void update(){
   	printf("others: %.02f%%",100 - used/tot*100);
   	printf("%s",blank(max_len - 11) + (used / tot <= 0.9));
 
-  	printf("%s%s%s\n",color[(color_id+1) % 5],
+  	printf("%s%s%s\n",color[(color_id+1) % 7],
   		blank((int)((1 - used/tot)*LEN_STICK)+1),normal);
 }
 
