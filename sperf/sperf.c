@@ -86,7 +86,7 @@ void update(){
   	printf("others: %.02f%%",100 - used/tot*100);
   	printf("%s",blank(max_len - 11) + (used / tot <= 0.9));
 
-  	printf("%s      %s\n",color[(color_id+1)%2],normal);
+  	printf("%s%s%s\n",color[(color_id+1)%2],blank((int)((1 - used)/tot*LEN_STICK)+1),normal);
 }
 
 
