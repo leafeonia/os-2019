@@ -76,6 +76,7 @@ int main(int argc, char *argv[]) {
   		ERR("fork fails");
   	}
   	else if(rc == 0){ //child
+  		LOG("FUCK FROM CHILD");
   		close(fd[0]);
   		dup2(fd[1],STDERR_FILENO);
   		//int devnull = open("/dev/null",O_WRONLY);
@@ -86,8 +87,8 @@ int main(int argc, char *argv[]) {
   		
   		for(int i = 1;i < argc;i++)
   			strcpy(arg[2+i],argv[i]);
-  		LOG("FUCK FROM CHILD");
   		for(int i = 0;i < 6;i++) printf("%s ",arg[i]);
+  		printf("?\n");
   		//arg[3] = argv[1];
   		//argv[0] = "strace";
   		//char * argv2[] = {"strace", "-T", "pstree", 0};
