@@ -20,6 +20,8 @@
 #define LEN_STICK 80
 #define PAINT(i) printf("%s",color[i]);
 #define NORMALIZE() printf("\33[0m");
+#define CLEAR() printf("\033c");
+char *color[] = {"\33[46m","\33[44m","\33[45m"};
 
 typedef struct _sys_call{
 	char sys_name[LEN_NAME];
@@ -70,15 +72,13 @@ void update(){
   		if(7 + strlen(list[i].sys_name) > max_len)
   			max_len = 7 + strlen(list[i].sys_name);
   	}
-  	char *color[] = {"\33[46m","\33[44m","\33[45m"};
-  	//char normal[] = "\33[0m";
-	printf("\033c");
+
+	CLEAR();
 	int color_id = 0;
   	for(int i = 0;i < to_show;i++){
   		color_id = (color_id + 1) % 3;
   		used += list[i].sys_time;
   		double ratio = list[i].sys_time/tot;
-  		//int le = max_len - 4 - strlen(list[i].sys_name) + (ratio >= 0.1);
   		printf("%s %.02f%%",list[i].sys_name,ratio*100);
   		blank(max_len - 4 - strlen(list[i].sys_name) - (ratio >= 0.1));
   		PAINT(color_id);
