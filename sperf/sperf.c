@@ -62,7 +62,7 @@ void update(){
   		used += list[i].sys_time;
   		printf("%s%s %.02f%%%s\n",color[color_id],list[i].sys_name,list[i].sys_time/tot*100,normal);
   	}
-  	printf("%sothers: %.02f%%%s\n",color[color_id],100 - used/tot*100,normal);
+  	printf("%sothers: %.02f%%%s\n",color[(color_id+1)%2],100 - used/tot*100,normal);
 }
 
 
