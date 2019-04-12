@@ -54,7 +54,7 @@ void update(){
   	}
   	
 
-	printf("\033c");
+	printf("\033J");
 
   	for(int i = 0;i < list_max;i++){
   		if (list[i].sys_time / tot < 0.01) break;
