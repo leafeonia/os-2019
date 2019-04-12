@@ -58,7 +58,7 @@ void update(){
 	int color_id = 0;
   	for(int i = 0;i < list_max;i++){
   		if (list[i].sys_time / tot < 0.01) break;
-  		color_id = (color_id + 1) % 2
+  		color_id = (color_id + 1) % 2;
   		used += list[i].sys_time;
   		printf("%s%s %.02f%%%s\n",color[color_id],list[i].sys_name,list[i].sys_time/tot*100,normal);
   	}
