@@ -82,9 +82,7 @@ int main(int argc, char *argv[]) {
   		int devnull = open("/dev/null",O_WRONLY);
  		dup2(devnull,STDOUT_FILENO);
   		//execlp("strace","strace","-T","-e","raw=all","python","-c","2**1000",NULL);
-  		char* tmp[3];// = malloc(3*sizeof(char*));
-  		tmp[0] = "strace";
-  		tmp[1] = "ls";
+  		char* tmp[] = {"strace","ls"}; 
   		execvp("strace",tmp);
   		//execlp("ls","ls",NULL);
   		assert(0);
