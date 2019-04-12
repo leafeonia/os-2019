@@ -19,6 +19,7 @@
 #define NR_SYS 1024
 #define LEN_STICK 80
 #define PAINT(i) printf("%s",color[i]);
+#define NORMALIZE() printf("\33[0m");
 
 typedef struct _sys_call{
 	char sys_name[LEN_NAME];
@@ -40,13 +41,9 @@ void insert(char* name, double timee){
 	list[list_max++].sys_time = timee;
 }
 
-char* blank(int n){
-	if(n <= 0) return "";
-	char* ret = (char*)malloc(n*sizeof(char));
-	for(int i = 0;i < n;i++)
-		ret[i] = ' ';
-	ret[n] = '\0';
-	return ret;
+void blank(int n){
+	if(n <= 0) return;
+	for(int i = 0;i < n;i++) printf(" ");
 }
 
 void update(){
@@ -89,8 +86,8 @@ void update(){
   		printf("others: %.02f%%",100 - used/tot*100);
   		printf("%s",blank(max_len - 11) + (used / tot <= 0.9));
 		PAINT((color_id+1) % 3);
-  		printf("%s%s\n",
-  			blank((int)((1 - used/tot)*LEN_STICK)+1),normal);  	
+  		blank((int)((1 - used/tot)*LEN_STICK)+1);
+  		NORMALIZE();  	
   	}
 
 }
