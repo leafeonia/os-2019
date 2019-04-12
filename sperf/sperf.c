@@ -19,7 +19,7 @@
 #define NR_SYS 1024
 #define LEN_STICK 80
 #define BLANK(n)\
-for(int i = 0;i < n;i++) printf(" ");\
+	for(int i = 0;i < n;i++) printf(" ");\
 
 typedef struct _sys_call{
 	char sys_name[LEN_NAME];
