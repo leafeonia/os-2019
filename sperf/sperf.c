@@ -83,7 +83,7 @@ int main(int argc, char *argv[]) {
  		dup2(devnull,STDOUT_FILENO);
   		//execlp("strace","strace","-T","-e","raw=all","python","-c","2**1000",NULL);
   		//printf("argv[0] = %s,argv[1] = %s,argv[2] = %s\n",argv[0],argv[1],argv[2]);
-  		char * arg[] = {"strace","-T","-e raw=all"};
+  		char * arg[] = {"strace","-T","-e raw=all",NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL};
   		arg[3] = argv[1];
   		//argv[0] = "strace";
   		//char * argv2[] = {"strace", "-T", "pstree", 0};
