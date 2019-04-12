@@ -48,12 +48,16 @@ void update(){
   		}
   	}
   	double tot = 0.0;
+  	double used = 0.0;
   	for(int i = 0;i < list_max;i++){
   		tot += list[i].sys_time;
   	}
   	for(int i = 0;i < list_max;i++){
+  		if (list[i].sys_time / tot < 0.01) break;
+  		used += list[i].sys_time;
   		printf("%s %.02f%%\n",list[i].sys_name,list[i].sys_time/tot*100);
   	}
+  	printf("others: %.02f%%\n",100 - used/tot*100);
 }
 
 
@@ -91,8 +95,8 @@ int main(int argc, char *argv[]) {
   		arg[3] = "raw=all";
   		for(int i = 1;i < argc;i++)
   			strcpy(arg[3+i],argv[i]);
-  		for(int i = 0;i < 6;i++) printf("%s ",arg[i]);
-  		printf("?\n");
+  		//for(int i = 0;i < 6;i++) printf("%s ",arg[i]);
+  		//printf("?\n");
   		//arg[3] = argv[1];
   		//argv[0] = "strace";
   		//char * argv2[] = {"strace", "-T", "pstree", 0};
