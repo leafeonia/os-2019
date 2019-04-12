@@ -94,7 +94,7 @@ int main(int argc, char *argv[]) {
   		arg[2] = "-e";
   		arg[3] = "raw=all";
   		
-  		for(int i = 1;i < argc;i++)
+  		for(int i = 1;i <= argc;i++)
   			arg[3+i] = argv[i];
   		for(int i = 0;i < 10;i++) printf("%s ",arg[i]);
   		//printf("?\n");
@@ -117,7 +117,7 @@ int main(int argc, char *argv[]) {
   		signal(SIGALRM, sig_handler);
     	struct itimerval new_value, old_value;
     	new_value.it_value.tv_sec = 0;
-    	new_value.it_value.tv_usec = 100000;
+    	new_value.it_value.tv_usec = 500000;
     	new_value.it_interval.tv_sec = 0;
     	new_value.it_interval.tv_usec = 500000;
     	setitimer(ITIMER_REAL, &new_value, &old_value);
