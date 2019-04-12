@@ -79,13 +79,14 @@ int main(int argc, char *argv[]) {
   		//LOG("FUCK FROM CHILD");
   		close(fd[0]);
   		dup2(fd[1],STDERR_FILENO);
-  		int devnull = open("/dev/null",O_WRONLY);
- 		dup2(devnull,STDOUT_FILENO);
+  		//int devnull = open("/dev/null",O_WRONLY);
+ 		//dup2(devnull,STDOUT_FILENO);
   		//execlp("strace","strace","-T","-e","raw=all","python","-c","2**1000",NULL);
   		//printf("argv[0] = %s,argv[1] = %s,argv[2] = %s\n",argv[0],argv[1],argv[2]);
   		char * arg[] = {"strace","-T","-e raw=all",NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL};
   		for(int i = 1;i < argc;i++)
   			strcpy(arg[2+i],argv[i]);
+  		for(int i = 0;i < 6;i++) printf("%s ",arg[i]);
   		//arg[3] = argv[1];
   		//argv[0] = "strace";
   		//char * argv2[] = {"strace", "-T", "pstree", 0};
