@@ -90,7 +90,7 @@ int main(int argc, char *argv[]) {
   		arg[2] = "-e";
   		arg[3] = "raw=all";
   		for(int i = 1;i < argc;i++)
-  			strcpy(arg[2+i],argv[i]);
+  			strcpy(arg[3+i],argv[i]);
   		for(int i = 0;i < 6;i++) printf("%s ",arg[i]);
   		printf("?\n");
   		//arg[3] = argv[1];
