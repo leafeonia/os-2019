@@ -87,7 +87,7 @@ int main(int argc, char *argv[]) {
   	}
   	
   	else{ //parent
-  		printf("argc = %d\n",argc);
+  		printf("argc = %d,argv[0] = %s\n",argc,argv[0]);
   		close(fd[1]); //close stdout, only read in
   		dup2(fd[0],STDIN_FILENO);
   		//LOG("FUCK FROM PARENT");
