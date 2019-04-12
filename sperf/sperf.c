@@ -48,16 +48,16 @@ void update(){
   		}
   	}
   	double tot = 0.0;
-  	double used = 0.0;
+  	//double used = 0.0;
   	for(int i = 0;i < list_max;i++){
   		tot += list[i].sys_time;
   	}
   	for(int i = 0;i < list_max;i++){
-  		if (list[i].sys_time / tot < 0.01) break;
-  		used += list[i].sys_time;
+  		//if (list[i].sys_time / tot < 0.01) break;
+  		//used += list[i].sys_time;
   		printf("%s %.02f%%\n",list[i].sys_name,list[i].sys_time/tot*100);
   	}
-  	printf("others: %.02f%%\n",100 - used/tot*100);
+  	//printf("others: %.02f%%\n",100 - used/tot*100);
 }
 
 
