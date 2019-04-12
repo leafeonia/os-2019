@@ -80,7 +80,7 @@ void update(){
   		double ratio = list[i].sys_time/tot;
   		//int le = max_len - 4 - strlen(list[i].sys_name) + (ratio >= 0.1);
   		printf("%s %.02f%%",list[i].sys_name,ratio*100);
-  		blank(max_len - 4 - strlen(list[i].sys_name) + (ratio >= 0.1));
+  		blank(max_len - 4 - strlen(list[i].sys_name) - (ratio >= 0.1));
   		PAINT(color_id);
   		blank((int)(LEN_STICK*ratio)+1);
   		printf("\n");
