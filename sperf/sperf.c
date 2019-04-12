@@ -69,6 +69,8 @@ void update(){
   		color_id = (color_id + 1) % 2;
   		used += list[i].sys_time;
   		printf("%s %.02f%%",list[i].sys_name,list[i].sys_time/tot*100);
+  		for(int j = 0;j < max_len - 7 - strlen(list[i].sys_name))
+  			printf(" ");
   		printf("%s       %s\n",color[color_id],normal);
   	}
   	printf("%sothers: %.02f%%%s\n",color[(color_id+1)%2],100 - used/tot*100,normal);
