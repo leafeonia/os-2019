@@ -79,8 +79,10 @@ void update(){
   		used += list[i].sys_time;
   		double ratio = list[i].sys_time/tot;
   		printf("%s %.02f%%",list[i].sys_name,ratio*100);
-  		printf("%s",blank(max_len - 4 - strlen(list[i].sys_name)) + (ratio >= 0.1));
-  		printf("%s%s%s\n",color[color_id],blank((int)(LEN_STICK*ratio)+1),normal);
+  		blank((max_len - 4 - strlen(list[i].sys_name)) + (ratio >= 0.1));
+  		PRINT(color_id);
+  		blank((int)(LEN_STICK*ratio)+1);
+  		NORMALIZE();
   	}
   	if(tot > used){
   		printf("others: %.02f%%",100 - used/tot*100);
