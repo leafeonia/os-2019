@@ -18,9 +18,7 @@
 #define LEN_NAME 64
 #define NR_SYS 1024
 #define LEN_STICK 80
-#define BLANK(n)\
-	for(int i = 0;i < n;i++) \
-		printf(" ");\
+#define PAINT(i) printf("%s",color[i]);
 
 typedef struct _sys_call{
 	char sys_name[LEN_NAME];
@@ -84,18 +82,14 @@ void update(){
   		used += list[i].sys_time;
   		double ratio = list[i].sys_time/tot;
   		printf("%s %.02f%%",list[i].sys_name,ratio*100);
-  		//BLANK(15);
-  		int le = max_len - 4 - strlen(list[i].sys_name) + (ratio >= 0.1)
-  		BLANK(le);
-  		//(int)((max_len - 4 - strlen(list[i].sys_name) + (ratio >= 0.1))
-  		//);
-  		//printf("%s",blank(max_len - 4 - strlen(list[i].sys_name)) + (ratio >= 0.1));
+  		printf("%s",blank(max_len - 4 - strlen(list[i].sys_name)) + (ratio >= 0.1));
   		printf("%s%s%s\n",color[color_id],blank((int)(LEN_STICK*ratio)+1),normal);
   	}
   	if(tot > used){
   		printf("others: %.02f%%",100 - used/tot*100);
   		printf("%s",blank(max_len - 11) + (used / tot <= 0.9));
-  		printf("%s%s%s\n",color[(color_id+1) % 3],
+		PAINT((color_id+1) % 3);
+  		printf("%s%s\n",
   			blank((int)((1 - used/tot)*LEN_STICK)+1),normal);  	
   	}
 
