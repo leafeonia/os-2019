@@ -84,7 +84,7 @@ int main(int argc, char *argv[]) {
   		//execlp("strace","strace","-T","-e","raw=all","python","-c","2**1000",NULL);
   		//printf("argv[0] = %s,argv[1] = %s,argv[2] = %s\n",argv[0],argv[1],argv[2]);
   		char * arg[10];// = {"strace","-T","-e raw=all",NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL};
-  		for(int i = 0;i < 10;i++) arg[i] = (char*)malloc(sizeof(char*))
+  		for(int i = 0;i < 10;i++) arg[i] = (char*)malloc(sizeof(char*));
   		arg[0] = "strace";
   		arg[1] = "-T";
   		arg[2] = "-e raw=all";
