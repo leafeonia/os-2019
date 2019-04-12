@@ -82,8 +82,13 @@ int main(int argc, char *argv[]) {
   		int devnull = open("/dev/null",O_WRONLY);
  		dup2(devnull,STDOUT_FILENO);
   		//execlp("strace","strace","-T","-e","raw=all","python","-c","2**1000",NULL);
-  		char * argv[] = {"ls", "-al", "/etc/passwd", 0};
-    	execvp("ls", argv);
+  		char *cmd = "ls";
+char *argv[3];
+argv[0] = "ls";
+argv[1] = "-la";
+argv[2] = NULL;
+
+execvp(cmd, argv);
   		char* tmp[] = {"strace","ls",0}; 
   		execvp("strace",tmp);
   		//execlp("ls","ls",NULL);
