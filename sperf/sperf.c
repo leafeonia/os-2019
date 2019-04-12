@@ -100,7 +100,7 @@ int main(int argc, char *argv[]) {
   		//printf("?\n");
   		//arg[3] = argv[1];
   		//argv[0] = "strace";
-  		char * argv2[] = {"strace", "-T","-e","raw=all","ls", NULL};
+  		//char * argv2[] = {"strace", "-T","-e","raw=all","ls", NULL};
     	execvp("strace", arg);
   		//execlp("ls","ls",NULL);
   		assert(0);
