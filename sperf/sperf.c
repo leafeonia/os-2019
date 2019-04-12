@@ -80,7 +80,10 @@ void update(){
   		printf("%s",blank(max_len - 4 - strlen(list[i].sys_name)) + (list[i].sys_time / tot >= 0.1));
   		printf("%s       %s\n",color[color_id],normal);
   	}
-  	printf("%sothers: %.02f%%%s\n",color[(color_id+1)%2],100 - used/tot*100,normal);
+  	printf("others: %.02f%%",100 - used/tot*100);
+  	printf("%s\n",blank(max_len - 11) + (used / tot <= 0.9));
+
+  	printf("%s      %s\n",color[(color_id+1)%2],normal);
 }
 
 
