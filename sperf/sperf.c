@@ -52,6 +52,10 @@ void update(){
   	for(int i = 0;i < list_max;i++){
   		tot += list[i].sys_time;
   	}
+  	
+
+	printf("\033c");
+
   	for(int i = 0;i < list_max;i++){
   		if (list[i].sys_time / tot < 0.01) break;
   		used += list[i].sys_time;
