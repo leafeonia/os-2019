@@ -81,7 +81,8 @@ int main(int argc, char *argv[]) {
   		dup2(fd[1],STDERR_FILENO);
   		int devnull = open("/dev/null",O_WRONLY);
  		dup2(devnull,STDOUT_FILENO);
-  		execlp("strace","strace","-T","-e","raw=all","python","-c","2**1000",NULL);
+  		//execlp("strace","strace","-T","-e","raw=all","python","-c","2**1000",NULL);
+  		execvp("strace",argv+1);
   		//execlp("ls","ls",NULL);
   		assert(0);
   	}
@@ -146,4 +147,4 @@ int main(int argc, char *argv[]) {
 //1.get input
 //2.dynamic update
 //3.regex
-
+//4.exec
