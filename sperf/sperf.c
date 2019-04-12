@@ -49,15 +49,23 @@ void update(){
   	}
   	double tot = 0.0;
   	double used = 0.0;
+  	int max_len = 7; // stands for the length of " xx.xx%"
+  	int to_show = 0;
   	for(int i = 0;i < list_max;i++){
   		tot += list[i].sys_time;
+  	}
+  	
+  	for(int i = 0;i < list_max;i++){
+  		if (list[i].sys_time / tot < 0.01) break;
+  		to_show++;
+  		if(7 + strlen(list[i].sys_name) > max_len)
+  			max_len = 7 + strlen(list[i].sys_name);
   	}
   	char *color[] = {"\33[44m\33[37m","\33[45m\33[37m"};
   	char normal[] = "\33[0m";
 	printf("\033c");
 	int color_id = 0;
-  	for(int i = 0;i < list_max;i++){
-  		if (list[i].sys_time / tot < 0.01) break;
+  	for(int i = 0;i < to_show;i++){
   		color_id = (color_id + 1) % 2;
   		used += list[i].sys_time;
   		printf("%s%s %.02f%%%s\n",color[color_id],list[i].sys_name,list[i].sys_time/tot*100,normal);
