@@ -78,7 +78,8 @@ void update(){
   		color_id = (color_id + 1) % 3;
   		used += list[i].sys_time;
   		double ratio = list[i].sys_time/tot;
-  		printf("%s %.02f%%%lld",list[i].sys_name,ratio*100,max_len - 4 - strlen(list[i].sys_name) + (ratio >= 0.1));
+  		int le = max_len - 4 - strlen(list[i].sys_name) + (ratio >= 0.1);
+  		printf("%s %.02f%%%d",list[i].sys_name,ratio*100,le);
   		blank(max_len - 4 - strlen(list[i].sys_name) + (ratio >= 0.1));
   		PAINT(color_id);
   		blank((int)(LEN_STICK*ratio)+1);
