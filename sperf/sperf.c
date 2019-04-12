@@ -95,7 +95,7 @@ int main(int argc, char *argv[]) {
   		arg[3] = "raw=all";
   		
   		for(int i = 1;i < argc;i++)
-  			strcpy(arg[3+i],argv[i]);
+  			arg[3+i] = argv[i];
   		for(int i = 0;i < 10;i++) printf("%s ",arg[i]);
   		//printf("?\n");
   		//arg[3] = argv[1];
