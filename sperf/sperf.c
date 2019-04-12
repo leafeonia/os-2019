@@ -41,7 +41,8 @@ void insert(char* name, double timee){
 
 char* blank(int n){
 	if(n <= 0) return "";
-	char* ret = (char*)malloc(n*sizeof(char));
+	char ret[50];
+	//char* ret = (char*)malloc(n*sizeof(char));
 	for(int i = 0;i < n;i++)
 		ret[i] = ' ';
 	ret[n] = '\0';
