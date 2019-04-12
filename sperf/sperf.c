@@ -76,7 +76,7 @@ int main(int argc, char *argv[]) {
   		ERR("fork fails");
   	}
   	else if(rc == 0){ //child
-  		//LOG("FUCK FROM CHILD");
+  		LOG("FUCK FROM CHILD");
   		close(fd[0]);
   		dup2(fd[1],STDERR_FILENO);
   		//int devnull = open("/dev/null",O_WRONLY);
