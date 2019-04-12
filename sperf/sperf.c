@@ -87,7 +87,8 @@ int main(int argc, char *argv[]) {
   		for(int i = 0;i < 10;i++) arg[i] = (char*)malloc(sizeof(char*));
   		arg[0] = "strace";
   		arg[1] = "-T";
-  		arg[2] = "-e raw=all";
+  		arg[2] = "-e";
+  		arg[3] = "raw=all";
   		for(int i = 1;i < argc;i++)
   			strcpy(arg[2+i],argv[i]);
   		for(int i = 0;i < 6;i++) printf("%s ",arg[i]);
