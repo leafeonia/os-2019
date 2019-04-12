@@ -71,7 +71,7 @@ void update(){
   			max_len = 7 + strlen(list[i].sys_name);
   	}
   	char *color[] = {"\33[46m","\33[44m","\33[45m"};
-  	char normal[] = "\33[0m";
+  	//char normal[] = "\33[0m";
 	printf("\033c");
 	int color_id = 0;
   	for(int i = 0;i < to_show;i++){
@@ -80,7 +80,7 @@ void update(){
   		double ratio = list[i].sys_time/tot;
   		printf("%s %.02f%%",list[i].sys_name,ratio*100);
   		blank((max_len - 4 - strlen(list[i].sys_name)) + (ratio >= 0.1));
-  		PRINT(color_id);
+  		PAINT(color_id);
   		blank((int)(LEN_STICK*ratio)+1);
   		NORMALIZE();
   	}
