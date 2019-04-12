@@ -86,7 +86,7 @@ void update(){
   	}
   	if(tot > used){
   		printf("others: %.02f%%",100 - used/tot*100);
-  		printf("%s",blank(max_len - 11) + (used / tot <= 0.9));
+  		blank((max_len - 11) + (used / tot <= 0.9));
 		PAINT((color_id+1) % 3);
   		blank((int)((1 - used/tot)*LEN_STICK)+1);
   		NORMALIZE();  	
