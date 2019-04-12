@@ -84,8 +84,7 @@ void update(){
   		printf("%s%s%s\n",color[color_id],blank((int)(LEN_STICK*ratio)+1),normal);
   	}
   	printf("others: %.02f%%",100 - used/tot*100);
-  	printf("%s",blank(max_len - 11) + (used / tot <= 0.9));
-
+  	if(max_len > 11)printf("%s",blank(max_len - 11) + (used / tot <= 0.9));
   	printf("%s%s%s\n",color[(color_id+1) % 3],
   		blank((int)((1 - used/tot)*LEN_STICK)+1),normal);
 }
