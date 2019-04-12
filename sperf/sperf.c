@@ -52,14 +52,15 @@ void update(){
   	for(int i = 0;i < list_max;i++){
   		tot += list[i].sys_time;
   	}
-  	char color[] = "\33[44m\33[37m";
+  	char *color[] = {"\33[44m\33[37m","\33[45m\33[37m"};
   	char normal[] = "\33[0m";
 	printf("\033c");
+	int color_id = 0;
   	for(int i = 0;i < list_max;i++){
   		if (list[i].sys_time / tot < 0.01) break;
+  		color_id = (color_id + 1) % 2
   		used += list[i].sys_time;
-  		printf("%sjsdfgjdf%s\n",color,normal);
-  		printf("\33[44m\33[37m%s %.02f%%\33[0m\n",list[i].sys_name,list[i].sys_time/tot*100);
+  		printf("%s%s %.02f%%%s\n",color[color_id],list[i].sys_name,list[i].sys_time/tot*100,normal);
   	}
   	printf("others: %.02f%%\n\n\n\n",100 - used/tot*100);
 }
