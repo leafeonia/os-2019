@@ -164,7 +164,7 @@ int main(int argc, char *argv[]) {
   		while(fgets(buf,1024,stdin)){
   			
   			if(strncmp(buf,"strace: Can't stat",18) == 0){
-  				printf("command not found\n");
+  				printf("command not found: %s\n",argv[1]);
   				exit(1);
   			}
   			
