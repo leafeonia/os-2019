@@ -88,7 +88,7 @@ int main(int argc, char *argv[]) {
   		arg[0] = "strace";
   		arg[1] = "-T";
   		arg[2] = "-e raw=all";
-  		for(int i = 1;i <= argc;i++)
+  		for(int i = 1;i < argc;i++)
   			strcpy(arg[2+i],argv[i]);
   		for(int i = 0;i < 6;i++) printf("%s ",arg[i]);
   		printf("?\n");
