@@ -17,7 +17,7 @@
 	
 #define LEN_NAME 64
 #define NR_SYS 1024
-#define LEN_STICK 100
+#define LEN_STICK 80
 
 typedef struct _sys_call{
 	char sys_name[LEN_NAME];
