@@ -82,7 +82,7 @@ int main(int argc, char *argv[]) {
   		int devnull = open("/dev/null",O_WRONLY);
  		dup2(devnull,STDOUT_FILENO);
   		//execlp("strace","strace","-T","-e","raw=all","python","-c","2**1000",NULL);
-  		execvp("strace",argv+1);
+  		execvp("strace",argv);
   		//execlp("ls","ls",NULL);
   		assert(0);
   	}
