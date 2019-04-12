@@ -59,7 +59,7 @@ void update(){
   	for(int i = 0;i < list_max;i++){
   		if (list[i].sys_time / tot < 0.01) break;
   		used += list[i].sys_time;
-  		printf("%s %.02f%%\n",list[i].sys_name,list[i].sys_time/tot*100);
+  		printf("\33[45m\33[31m%s %.02f%%\33[0m\n",list[i].sys_name,list[i].sys_time/tot*100);
   	}
   	printf("others: %.02f%%\n\n\n\n",100 - used/tot*100);
 }
