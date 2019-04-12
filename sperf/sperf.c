@@ -81,7 +81,7 @@ void update(){
   		printf("%s       %s\n",color[color_id],normal);
   	}
   	printf("others: %.02f%%",100 - used/tot*100);
-  	printf("%s\n",blank(max_len - 11) + (used / tot <= 0.9));
+  	printf("%s",blank(max_len - 11) + (used / tot <= 0.9));
 
   	printf("%s      %s\n",color[(color_id+1)%2],normal);
 }
