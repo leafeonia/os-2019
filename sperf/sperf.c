@@ -96,7 +96,7 @@ int main(int argc, char *argv[]) {
   		
   		for(int i = 1;i <= argc;i++)
   			arg[3+i] = argv[i];
-  		for(int i = 0;i < 10;i++) printf("%s ",arg[i]);
+  		//for(int i = 0;i < 10;i++) printf("%s ",arg[i]);
   		//printf("?\n");
   		//arg[3] = argv[1];
   		//argv[0] = "strace";
@@ -107,7 +107,6 @@ int main(int argc, char *argv[]) {
   	}
   	
   	else{ //parent
-  		printf("argc = %d,argv[0] = %s\n",argc,argv[0]);
   		close(fd[1]); //close stdout, only read in
   		dup2(fd[0],STDIN_FILENO);
   		//LOG("FUCK FROM PARENT");
