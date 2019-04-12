@@ -41,6 +41,7 @@ char* blank(int n){
 	char* ret = (char*)malloc(n*sizeof(char));
 	for(int i = 0;i < n;i++)
 		ret[i] = ' ';
+	ret[n] = '\0';
 	return ret;
 }
 
