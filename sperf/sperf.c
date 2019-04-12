@@ -37,6 +37,13 @@ void insert(char* name, double timee){
 	list[list_max++].sys_time = timee;
 }
 
+char* blank(int n){
+	char* ret = (char*)malloc(n*sizeof(char));
+	for(int i = 0;i < n;i++)
+		ret[i] = " ";
+	return ret;
+}
+
 void update(){
 	for(int i = 0;i < list_max;i++){
   		for(int j = i+1;j < list_max;j++){
@@ -69,8 +76,7 @@ void update(){
   		color_id = (color_id + 1) % 2;
   		used += list[i].sys_time;
   		printf("%s %.02f%%",list[i].sys_name,list[i].sys_time/tot*100);
-  		for(int j = 0;j < max_len - 7 - strlen(list[i].sys_name);j++)
-  			printf(" ");
+  		printf("%s",blank(max_len - 7 - strlen(list[i].sys_name)))
   		printf("%s       %s\n",color[color_id],normal);
   	}
   	printf("%sothers: %.02f%%%s\n",color[(color_id+1)%2],100 - used/tot*100,normal);
