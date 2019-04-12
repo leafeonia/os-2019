@@ -162,6 +162,12 @@ int main(int argc, char *argv[]) {
   		regcomp(&preg_two,"<.*>",REG_EXTENDED);
   		
   		while(fgets(buf,1024,stdin)){
+  			
+  			if(strncmp(buf,"strace: Can't stat",18) == 0){
+  				printf("command not found\n");
+  				exit(1);
+  			}
+  			
   			int is_matched_one = regexec(&preg_one,buf,1,matches_one,0);
   			int is_matched_two = regexec(&preg_two,buf,1,matches_two,0);
   			if(is_matched_one == REG_NOMATCH || is_matched_two == REG_NOMATCH){
