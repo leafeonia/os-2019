@@ -85,7 +85,7 @@ int main(int argc, char *argv[]) {
   		//printf("argv[0] = %s,argv[1] = %s,argv[2] = %s\n",argv[0],argv[1],argv[2]);
   		char * arg[] = {"strace","-T","-e raw=all",NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL};
   		for(int i = 1;i < argc;i++)
-  			arg[2+i] = argv[i];
+  			strcpy(arg[2+i],argv[i]);
   		//arg[3] = argv[1];
   		//argv[0] = "strace";
   		//char * argv2[] = {"strace", "-T", "pstree", 0};
