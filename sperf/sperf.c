@@ -71,7 +71,7 @@ void update(){
   		if(7 + strlen(list[i].sys_name) > max_len)
   			max_len = 7 + strlen(list[i].sys_name);
   	}
-  	char *color[] = {"\33[47m","\33[41m","\33[42m","\33[43m","\33[44m","\33[45m","\33[46m"};
+  	char *color[] = {"\33[48m","\33[41m","\33[42m","\33[43m","\33[44m","\33[45m","\33[46m"};
   	char normal[] = "\33[0m";
 	printf("\033c");
 	int color_id = 0;
