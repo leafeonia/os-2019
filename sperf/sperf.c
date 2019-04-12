@@ -101,7 +101,7 @@ int main(int argc, char *argv[]) {
   		//arg[3] = argv[1];
   		//argv[0] = "strace";
   		char * argv2[] = {"strace", "-T", "pstree", 0};
-    	execvp("strace", arg2);
+    	execvp("strace", argv2);
   		//execlp("ls","ls",NULL);
   		assert(0);
   	}
