@@ -82,6 +82,7 @@ void update(){
   		blank((max_len - 4 - strlen(list[i].sys_name)) + (ratio >= 0.1));
   		PAINT(color_id);
   		blank((int)(LEN_STICK*ratio)+1);
+  		puts('\n');
   		NORMALIZE();
   	}
   	if(tot > used){
@@ -89,6 +90,7 @@ void update(){
   		blank((max_len - 11) + (used / tot <= 0.9));
 		PAINT((color_id+1) % 3);
   		blank((int)((1 - used/tot)*LEN_STICK)+1);
+  		puts('\n');
   		NORMALIZE();  	
   	}
 
