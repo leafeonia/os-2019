@@ -23,7 +23,8 @@ void upload_so(char* source_name,char* lib_name){
 		assert(0);
 	}
 	else{
-		wait(NULL);
+		if(wait(NULL) == -1)
+			printf("compile error\n");
 		/*close(fd[1]); 
   		dup2(fd[0],STDIN_FILENO);
   		char error[512];
