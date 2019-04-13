@@ -17,11 +17,13 @@ int main(int argc, char *argv[]) {
     while(1){
     	memset(command,0,sizeof(command));
     	fgets(command,sizeof(command),stdin);
+    	if(strcmp(command,"\n") == 0) continue;
+    	printf("FA");
     	if(strcmp(command,"q\n") == 0) break;
     	if(write(fd, command, strlen(command)) == -1) ERR("write fails");
     }
-    read(fd,command,sizeof(command));
-    printf("%s\n",command);
+    //read(fd,command,sizeof(command));
+    //printf("%s\n",command);
     unlink(template);
     close(fd);
     return 0;
