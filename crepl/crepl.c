@@ -3,6 +3,7 @@
 #include<stdlib.h>
 #include<sys/unistd.h>
 #include<sys/wait.h>
+#include<sys/types.h>
 #include<string.h>
 #include<assert.h>
 
