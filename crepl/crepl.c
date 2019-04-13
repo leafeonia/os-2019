@@ -12,9 +12,6 @@ int main(int argc, char *argv[]) {
     if (fd == -1) printf("FUCK");//ERR("mkstemp fails");
     printf("?\n");
     printf("template=%s,fd = %d\n", template, fd); 
-    while(1){
-    	
-    }
     unlink(template);
     close(fd);
     return 0;
