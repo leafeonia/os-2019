@@ -14,13 +14,14 @@ int main(int argc, char *argv[]) {
     if (fd == -1) ERR("mkstemp fails");
     printf("template=%s,fd = %d\n", template, fd); 
     char command[512];
+    printf(">> ");
     while(1){
     	memset(command,0,sizeof(command));
     	fgets(command,sizeof(command),stdin);
     	if(strcmp(command,"\n") == 0) continue;
-    	printf("FA");
     	if(strcmp(command,"q\n") == 0) break;
     	if(write(fd, command, strlen(command)) == -1) ERR("write fails");
+    	printf(">> ");
     }
     //read(fd,command,sizeof(command));
     //printf("%s\n",command);
