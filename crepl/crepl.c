@@ -24,7 +24,7 @@ void upload_so(char* source_name,char* lib_name){
 	}
 	else{
 		wait(NULL);
-		close(fd[1]); //close stdout, only read in
+		close(fd[1]); 
   		dup2(fd[0],STDIN_FILENO);
   		char error[512];
   		fgets(error,512,stdin);
@@ -49,6 +49,7 @@ int main(int argc, char *argv[]) {
     	memset(command,0,sizeof(command));
     	fgets(command,sizeof(command),stdin);
     	if(strcmp(command,"\n") == 0) continue;
+    	if(strcmp(command,"") == 0) continue;
     	if(strcmp(command,"q\n") == 0) break;
     	if(write(fd, command, strlen(command)) == -1) ERR("write fails");
     	upload_so(template_source,template_lib);
