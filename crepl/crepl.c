@@ -1,11 +1,17 @@
 #include<stdlib.h>
 #include<stdio.h>
 
-int main(int argc, char *argv[]) {
-    char template[] = "/tmp/template-XXXXXX";
-    int fd = mkstemp(template);
-    printf("template=%s,fd = %d\n", template, fd); 
+#define ERR(s)\
+	printf("error: %s\n",s);\
+	exit(1);\
 	
-    while(1);
+int main(int argc, char *argv[]) {
+    char template[] = "template-XXXXXX.c";
+    int fd = mkstemps(template,2);
+    if (fd == -1) ERR("mkstemp fails");
+    printf("template=%s,fd = %d\n", template, fd); 
+    while(1){
+    	
+    }
     return 0;
 }
