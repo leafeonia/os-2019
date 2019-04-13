@@ -12,22 +12,18 @@
 
 void upload_so(char* source_name,char* lib_name){
 	int rc = fork();
-	int fd[2];
-	if(pipe(fd) == -1) ERR("pipe fails");
 	
 	if(rc < 0) ERR("fork fails");
 	if(rc == 0){
-		//close(fd[0]);
-  		//dup2(fd[1],STDERR_FILENO);
+		int devnull = open("/dev/null",O_WRONLY);
+ 		dup2(devnull,STDOUT_FILENO);
 		execlp("gcc","gcc","-fPIC","-shared",source_name,"-o",lib_name,NULL);
 		assert(0);
 	}
 	else{
 		int status = 0;
 		wait(&status);
-		printf("status = %d\n",status);
-		printf("WEXITSTATUS(status) = %d\n",WEXITSTATUS(status));
-		if(WEXITSTATUS(status) == -1)printf("compile error\n");
+		if(WEXITSTATUS(status) == 1)printf("compile error\n");
 		/*close(fd[1]); 
   		dup2(fd[0],STDIN_FILENO);
   		char error[512];
