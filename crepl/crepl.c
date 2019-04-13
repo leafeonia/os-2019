@@ -1,7 +1,8 @@
 #include<stdlib.h>
 #include<stdio.h>
 #include<stdlib.h>
-#include <sys/unistd.h>
+#include<sys/unistd.h>
+#include<string.h>
 
 #define ERR(s)\
 	{printf("error: %s\n",s);\
