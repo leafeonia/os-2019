@@ -25,6 +25,7 @@ void upload_so(char* source_name,char* lib_name){
 	else{
 		int status = 0;
 		wait(&status);
+		printf("status = %d\n",status);
 		if(WEXITSTATUS(status) == -1)printf("compile error\n");
 		/*close(fd[1]); 
   		dup2(fd[0],STDIN_FILENO);
