@@ -13,14 +13,14 @@
 void upload_so(char* source_name){
 	int rc = fork();
 	if(rc < 0) ERR("fork fails");
-	else if(rc == 0){
-		execlp("gcc","gcc","-fPIC","-shared",source_name,"-o"," libfunc.so");
+	if(rc == 0){
+		execlp("gcc","gcc","-fPIC","-shared",source_name,"-o"," libfunc.so",NULL);
 		assert(0);
 	}
 	else{
-		int wc = wait(NULL);
+		wait(NULL);
 	}
-	return 0;
+	return;;
 } 
 
 int main(int argc, char *argv[]) {
