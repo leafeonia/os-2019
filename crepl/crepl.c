@@ -16,6 +16,7 @@ int main(int argc, char *argv[]) {
     char command[512];
     while(1){
     	scanf("%[^\n]",command);
+    	printf("%s\n",command);
     	if(strcmp(command,"q") == 0) break;
     	if(write(fd, command, strlen(command)) == -1) ERR("write fails");
     }
