@@ -15,4 +15,4 @@ int main(int argc, char *argv[]) {
     unlink(template);
     close(fd);
     return 0;
-}
+} 
