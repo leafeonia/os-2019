@@ -17,7 +17,7 @@ void upload_so(char* source_name,char* lib_name){
 	if(rc < 0) ERR("fork fails");
 	if(rc == 0){
 		int devnull = open("/dev/null",O_WRONLY);
- 		dup2(devnull,STDOUT_FILENO);
+ 		dup2(devnull,STDERR_FILENO);
 		execlp("gcc","gcc","-fPIC","-shared",source_name,"-o",lib_name,NULL);
 		assert(0);
 	}
