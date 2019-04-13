@@ -10,24 +10,25 @@
 	{printf("error: %s\n",s);\
 	exit(1);}\
 
-void upload_so(char* source_name){
+void upload_so(char* source_name,char* lib_name){
 	int rc = fork();
 	if(rc < 0) ERR("fork fails");
 	if(rc == 0){
-		execlp("gcc","gcc","-fPIC","-shared",source_name,"-o"," libfunc.so",NULL);
+		execlp("gcc","gcc","-fPIC","-shared",source_name,"-o",lib_name,NULL);
 		assert(0);
 	}
 	else{
 		wait(NULL);
 	}
-	return;;
+	return;
 } 
 
 int main(int argc, char *argv[]) {
-    char template[] = "temp-XXXXXX.c";
-    int fd = mkstemps(template,2);
-    if (fd == -1) ERR("mkstemp fails");
-    printf("template=%s,fd = %d\n", template, fd); 
+    char template_source[] = "temp-XXXXXX.c";
+    char template_lib[] = "temp-XXXXXX.so";
+    int fd = mkstemps(template_source,2);
+    int fd2 = mkstemps(template_lib,3);
+    if (fd == -1 || fd2 == -1) ERR("mkstemp fails");
     char command[512];
     printf(">> ");
     while(1){
@@ -36,12 +37,14 @@ int main(int argc, char *argv[]) {
     	if(strcmp(command,"\n") == 0) continue;
     	if(strcmp(command,"q\n") == 0) break;
     	if(write(fd, command, strlen(command)) == -1) ERR("write fails");
-    	upload_so(template);
+    	upload_so(template_source,template_lib);
     	printf(">> ");
     }
     //read(fd,command,sizeof(command));
     //printf("%s\n",command);
-    unlink(template);
+    unlink(template_lib);
+    unlink(template_source);
     close(fd);
+    close(fd2);
     return 0;
 }  
