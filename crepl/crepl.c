@@ -8,6 +8,7 @@
 int main(int argc, char *argv[]) {
     char template[] = "template-XXXXXX.c";
     int fd = mkstemps(template,2);
+    printf("?");
     if (fd == -1) ERR("mkstemp fails");
     printf("template=%s,fd = %d\n", template, fd); 
     while(1){
