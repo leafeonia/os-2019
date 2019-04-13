@@ -15,6 +15,7 @@ int main(int argc, char *argv[]) {
     while(1){
     	
     }
+    unlink(template);
     close(fd);
     return 0;
 }
