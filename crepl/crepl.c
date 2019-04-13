@@ -1,5 +1,6 @@
 #include<stdlib.h>
 #include<stdio.h>
+#include<stdlib.h>
 
 #define ERR(s)\
 	printf("error: %s\n",s);\
