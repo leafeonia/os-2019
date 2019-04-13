@@ -24,7 +24,7 @@ void upload_so(char* source_name,char* lib_name){
 	else{
 		int status = 0;
 		wait(&status);
-		if(WEXITSTATUS(status) == 1) printf("\033[31mcompile error\33[0m\n");
+		if(WEXITSTATUS(status) == 1) printf("\033[32mcompile error\33[0m\n");
 		/*close(fd[1]); 
   		dup2(fd[0],STDIN_FILENO);
   		char error[512];
