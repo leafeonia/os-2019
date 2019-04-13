@@ -3,8 +3,8 @@
 
 int main(int argc, char *argv[]) {
     char template[] = "template-XXXXXX";
-    mkstemp(template);
-    printf("template=%s\n", template); 
+    int fd = mkstemp(template);
+    printf("template=%s,fd = %d\n", template, fd); 
     while(1);
     return 0;
 }
