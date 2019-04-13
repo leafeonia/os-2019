@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
     printf("template=%s,fd = %d\n", template, fd); 
     char command[512];
     while(1){
-    	scanf("%s",command);
+    	scanf("%[^\n]",command);
     	if(strcmp(command,"q") == 0) break;
     	if(write(fd, command, strlen(command)) == -1) ERR("write fails");
     }
