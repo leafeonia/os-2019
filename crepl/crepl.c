@@ -31,7 +31,7 @@ void upload_so(char* source_name,char* lib_name,int command_len){
 			fputc('*',fp);
 			//printf("command len = %d\n",command_len);
 			fseek(fp,-1,SEEK_END);
-			printf("%lld\n",ftell(fp));
+			printf("%ld\n",ftell(fp));
 			fputc('/',fp);
 		}
 		/*close(fd[1]); 
