@@ -27,7 +27,7 @@ void upload_so(char* source_name,char* lib_name,int command_len){
 		if(WEXITSTATUS(status) == 1) {
 			printf("\033[31mcompile error\33[0m\n");
 			FILE* fp = fopen(source_name,"r+");
-			fseek(fp,-command_len,SEEK_END);
+			fseek(fp,-1,SEEK_END);
 			fputc('/',fp);
 		}
 		/*close(fd[1]); 
