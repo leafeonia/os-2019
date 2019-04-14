@@ -24,14 +24,13 @@ void upload_so(char* source_name,char* lib_name,int command_len){
 	else{
 		int status = 0;
 		wait(&status);
-		printf("%d\n",WEXITSTATUS(status));
 		if(WEXITSTATUS(status) == 1) {
 			printf("\033[31mcompile error\33[0m\n");
 			FILE* fp = fopen(source_name,"r+");
 			if(fp == NULL) ERR("fopen fails");
 			fputc('*',fp);
 			//printf("command len = %d\n",command_len);
-			fseek(fp,1,SEEK_END);
+			fseek(fp,-1L,SEEK_END);
 			fputc('/',fp);
 		}
 		/*close(fd[1]); 
