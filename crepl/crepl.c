@@ -12,7 +12,7 @@
 	{printf("error: %s\n",s);\
 	exit(1);}\
 
-void upload_so(char* source_name,char* lib_name,int command_len){
+int upload_so(char* source_name,char* lib_name,int command_len){
 	int rc = fork();
 	
 	if(rc < 0) ERR("fork fails");
@@ -33,6 +33,7 @@ void upload_so(char* source_name,char* lib_name,int command_len){
 			fputs("//",fp); //comment the uncompliable command
 			fflush(fp);
 			fclose(fp);
+			return 1;
 		}
 		/*close(fd[1]); 
   		dup2(fd[0],STDIN_FILENO);
@@ -45,7 +46,7 @@ void upload_so(char* source_name,char* lib_name,int command_len){
   			exit(1);
   		}*/
 	}
-	return;
+	return 0;
 } 
 
 int main(int argc, char *argv[]) {
@@ -87,7 +88,7 @@ int main(int argc, char *argv[]) {
     		command[strlen(command)-1] = '\0'; //replace '\n' to '\0'
     		sprintf(expr,"int __expr_wrap_%d() {return %s;}\n",expr_id,command);
     		if(write(fd, expr, strlen(expr)) == -1) ERR("write fails");
-    		upload_so(template_source,template_lib,strlen(expr));
+    		if(upload_so(template_source,template_lib,strlen(expr))) continue;
     		
     		void *handle;
     		handle = dlopen(template_lib,RTLD_LAZY);
