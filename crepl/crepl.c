@@ -77,7 +77,7 @@ int main(int argc, char *argv[]) {
     		//fputs(command,fp);
     		//fflush(fp);
     		if(write(fd, command, strlen(command)) == -1) ERR("write fails");
-    		if(!upload_so(template_source,template_lib,strlen(command))) printf("added: %s\n",command);
+    		if(!upload_so(template_source,template_lib,strlen(command))) printf("added: %s",command);
     	}
     	
     	//expression
