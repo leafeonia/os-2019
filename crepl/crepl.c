@@ -26,7 +26,7 @@ int upload_so(char* source_name,char* lib_name,int command_len){
 		int status = 0;
 		wait(&status);
 		if(WEXITSTATUS(status) == 1) {
-			printf("\033[31mcompile error\33[0m\n");
+			printf("\033[1;31mcompile error\33[0m\n");
 			FILE* fp = fopen(source_name,"r+");
 			if(fp == NULL) ERR("fopen fails");
 			fseek(fp,-command_len,SEEK_END);
@@ -77,7 +77,7 @@ int main(int argc, char *argv[]) {
     		//fputs(command,fp);
     		//fflush(fp);
     		if(write(fd, command, strlen(command)) == -1) ERR("write fails");
-    		if(!upload_so(template_source,template_lib,strlen(command))) printf("\033[32madded: %s\33[0m",command);
+    		if(!upload_so(template_source,template_lib,strlen(command))) printf("\033[1;32madded: %s\33[0m",command);
     	}
     	
     	//expression
