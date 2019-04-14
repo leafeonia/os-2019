@@ -99,13 +99,14 @@ int main(int argc, char *argv[]) {
     		sprintf(lib_name,"./%s",template_lib);
     		if((handle = dlopen(lib_name,RTLD_LAZY)) == NULL) {
     			printf("%s\n",dlerror());
-    			ERR("dlopen fails"); 
+    			ERR("dlopen fails");
+    			
     		}
     		char func_name[20];
     		sprintf(func_name,"__expr_wrap_%d",expr_id);
     		int (*func)() = dlsym(handle,func_name);
     		if(dlerror() != NULL) printf("%s\n",dlerror());
-    		printf(">> %s = %d\n",command,(*func)());
+    		printf(">> %d\n",(*func)());
     	}
     	printf(">> ");
     }
