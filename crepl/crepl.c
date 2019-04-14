@@ -31,7 +31,7 @@ void upload_so(char* source_name,char* lib_name,int command_len){
 			fseek(fp,-command_len,SEEK_END);
 			fputs("//",fp); //comment the uncompliable command
 			fseek(fp,0,SEEK_END);
-			fputs("\n");
+			fputc('\n',fp);
 			fflush(fp);
 		}
 		/*close(fd[1]); 
