@@ -93,7 +93,7 @@ int main(int argc, char *argv[]) {
     		if((handle = dlopen(template_lib,RTLD_LAZY)) == NULL) ERR("dlopen fails");
     		char func_name[20];
     		sprintf(func_name,"__expr_wrap_%d",expr_id);
-    		int (*func) = dlsym(handle,func_name);
+    		int (*func)() = dlsym(handle,func_name);
     		printf(">> %d\n",(*func)());
     	}
     	printf(">> ");
