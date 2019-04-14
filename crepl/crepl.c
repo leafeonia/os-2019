@@ -12,6 +12,8 @@
 	{printf("error: %s\n",s);\
 	exit(1);}\
 
+static int m64 = 1;
+
 int upload_so(char* source_name,char* lib_name,int command_len){
 	int rc = fork();
 	
@@ -50,6 +52,8 @@ int upload_so(char* source_name,char* lib_name,int command_len){
 } 
 
 int main(int argc, char *argv[]) {
+	if(sizeof(long) == 4) m64 = 0;
+	printf("%d\n",m64);
     char template_source[] = "temp-XXXXXX.c";
     char template_lib[] = "temp-XXXXXX.so";
     int fd = mkstemps(template_source,2);
