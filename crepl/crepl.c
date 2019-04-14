@@ -21,7 +21,8 @@ int upload_so(char* source_name,char* lib_name,int command_len){
 	if(rc == 0){
 		int devnull = open("/dev/null",O_WRONLY);
  		dup2(devnull,STDERR_FILENO);
-		execlp("gcc","gcc","-shared","-fPIC",source_name,"-o",lib_name,"-ldl",NULL);
+ 		if(m64 == 1) execlp("gcc","gcc","-shared","-fPIC",source_name,"-o",lib_name,"-ldl",NULL);
+ 		else execlp("gcc","gcc","-shared","-fPIC","-m32",source_name,"-o",lib_name,"-ldl",NULL);
 		assert(0);
 	}
 	else{
@@ -53,7 +54,6 @@ int upload_so(char* source_name,char* lib_name,int command_len){
 
 int main(int argc, char *argv[]) {
 	if(sizeof(long) == 4) m64 = 0;
-	printf("%d\n",m64);
     char template_source[] = "temp-XXXXXX.c";
     char template_lib[] = "temp-XXXXXX.so";
     int fd = mkstemps(template_source,2);
