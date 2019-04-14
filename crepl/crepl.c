@@ -32,7 +32,8 @@ void upload_so(char* source_name,char* lib_name,int command_len){
 			//printf("command len = %d\n",command_len);
 			fseek(fp,-2,SEEK_END);
 			printf("%ld\n",ftell(fp));
-			assert(fputs("//",fp) != EOF);
+			fputs("//",fp);
+			fflush(fp);
 		}
 		/*close(fd[1]); 
   		dup2(fd[0],STDIN_FILENO);
