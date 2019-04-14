@@ -83,6 +83,7 @@ int main(int argc, char *argv[]) {
     		//fputs(command,fp2);
     		//fflush(fp2);
     		expr_id++;
+    		command[strlen(command)] = '\0';
     		sprintf(expr,"int __expr_wrap_%d() {return %s;}",expr_id,command);
     		if(write(fd, expr, strlen(expr)) == -1) ERR("write fails");
     		upload_so(template_source,template_lib,strlen(command));
