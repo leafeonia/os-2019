@@ -51,12 +51,10 @@ int upload_so(char* source_name,char* lib_name,int command_len){
 
 int main(int argc, char *argv[]) {
     char template_source[] = "temp-XXXXXX.c";
-    //char template_lib[] = "temp-XXXXXX.so";
-    char template_lib[] = "temp-1.so";
+    char template_lib[] = "temp-XXXXXX.so";
     int fd = mkstemps(template_source,2);
-    //int fd2 = mkstemps(template_lib,3);
-    //if (fd == -1 || fd2 == -1) ERR("mkstemp fails");
-    
+    int fd2 = mkstemps(template_lib,3);
+    if (fd == -1 || fd2 == -1) ERR("mkstemp fails");
     /*char template_source[] = "temp-1.c";
     char template_lib[] = "temp-1.so";
     char template_func[] = "temp_func.c";
@@ -97,9 +95,9 @@ int main(int argc, char *argv[]) {
     		
     		void *handle;
     		handle = dlopen(template_lib,RTLD_LAZY);
-    		if((handle = dlopen("temp-1.so",RTLD_LAZY)) == NULL) {
+    		if((handle = dlopen(template_lib,RTLD_LAZY)) == NULL) {
     			ERR("dlopen fails");
-    			printf("%s\n",dlerror());
+    			printf("fuck %s\n",dlerror());
     		}
     		char func_name[20];
     		sprintf(func_name,"__expr_wrap_%d",expr_id);
@@ -115,6 +113,6 @@ int main(int argc, char *argv[]) {
     unlink(template_lib);
     unlink(template_source);
     close(fd);
-    //close(fd2);
+    close(fd2);
     return 0;
 }  
