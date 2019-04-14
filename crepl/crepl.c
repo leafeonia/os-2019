@@ -54,7 +54,9 @@ int main(int argc, char *argv[]) {
     //if (fd == -1 || fd2 == -1) ERR("mkstemp fails");
     char template_source[] = "temp-1.c";
     char template_lib[] = "temp-1.so";
+    char template_func[] = "temp_func.c";
     FILE* fp = fopen(template_source,"a");
+    FILE* fp2 = fopen(template_func,"w");
     
     char command[512];
     printf("type in 'q' to quit.\n>> ");
@@ -65,10 +67,14 @@ int main(int argc, char *argv[]) {
     	if(strcmp(command,"q\n") == 0) break;
     	if(strncmp(command, "int ",4) == 0){
     		fputs(command,fp);
+    		fflush(fp);
     		//if(write(fd, command, strlen(command)) == -1) ERR("write fails");
     		upload_so(template_source,template_lib,strlen(command));
     	}
-    	
+    	else{
+    		fputs(command,fp2);
+    		fflush(fp2);
+    	}
     	printf(">> ");
     }
     //read(fd,command,sizeof(command));
