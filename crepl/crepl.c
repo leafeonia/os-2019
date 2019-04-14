@@ -94,10 +94,9 @@ int main(int argc, char *argv[]) {
     		}
     		
     		void *handle;
-    		handle = dlopen(template_lib,RTLD_LAZY);
     		char lib_name_local[25];
     		sprintf(lib_name_local,"./%s",template_lib);
-    		if((handle = dlopen(lib_name,RTLD_LAZY)) == NULL) {
+    		if((handle = dlopen(lib_name_local,RTLD_LAZY)) == NULL) {
     			printf("%s\n",dlerror());
     			ERR("dlopen fails");
     		}
