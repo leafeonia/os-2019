@@ -31,6 +31,7 @@ void upload_so(char* source_name,char* lib_name,int command_len){
 			fseek(fp,-command_len,SEEK_END);
 			fputs("//",fp); //comment the uncompliable command
 			fflush(fp);
+			fclose(fp);
 		}
 		/*close(fd[1]); 
   		dup2(fd[0],STDIN_FILENO);
@@ -59,21 +60,33 @@ int main(int argc, char *argv[]) {
     FILE* fp2 = fopen(template_func,"w");*/
     
     char command[512];
+    char expr[512];
+    int expr_id = 0;
+    
     printf("type in 'q' to quit.\n>> ");
     while(1){
     	memset(command,0,sizeof(command));
     	fgets(command,sizeof(command),stdin);
     	if(strcmp(command,"\n") == 0) continue;
     	if(strcmp(command,"q\n") == 0) break;
+    	
+    	//function
     	if(strncmp(command, "int ",4) == 0){
     		//fputs(command,fp);
     		//fflush(fp);
     		if(write(fd, command, strlen(command)) == -1) ERR("write fails");
     		upload_so(template_source,template_lib,strlen(command));
     	}
+    	
+    	//expression
     	else{
     		//fputs(command,fp2);
     		//fflush(fp2);
+    		expr_id++;
+    		sprintf(expr,"int __expr_wrap_%d() {return %s;}",expr_id,command);
+    		if(write(fd, command, strlen(command)) == -1) ERR("write fails");
+    		upload_so(template_source,template_lib,strlen(command));
+    			
     	}
     	printf(">> ");
     }
