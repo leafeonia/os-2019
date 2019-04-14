@@ -99,7 +99,7 @@ int main(int argc, char *argv[]) {
     		sprintf(lib_name,"./%s",template_lib);
     		if((handle = dlopen(lib_name,RTLD_LAZY)) == NULL) {
     			printf("%s\n",dlerror());
-    			ERR("dlopen fails");
+    			ERR("dlopen fails"); 
     			
     		}
     		char func_name[20];
