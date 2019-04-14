@@ -105,7 +105,6 @@ int main(int argc, char *argv[]) {
     		sprintf(func_name,"__expr_wrap_%d",expr_id);
     		int (*func)() = dlsym(handle,func_name);
     		if(dlerror() != NULL) printf("%s\n",dlerror());
-    		printf("fuck %s\n\n",command);
     		printf(">> %s = %d\n",command,(*func)());
     		
     		dlclose(handle);// !!! bug producer 
