@@ -16,8 +16,8 @@ void upload_so(char* source_name,char* lib_name,int command_len){
 	
 	if(rc < 0) ERR("fork fails");
 	if(rc == 0){
-		//int devnull = open("/dev/null",O_WRONLY);
- 		//dup2(devnull,STDERR_FILENO);
+		int devnull = open("/dev/null",O_WRONLY);
+ 		dup2(devnull,STDERR_FILENO);
 		execlp("gcc","gcc","-fPIC","-shared",source_name,"-o",lib_name,NULL);
 		assert(0);
 	}
@@ -47,11 +47,15 @@ void upload_so(char* source_name,char* lib_name,int command_len){
 } 
 
 int main(int argc, char *argv[]) {
-    char template_source[] = "temp-XXXXXX.c";
-    char template_lib[] = "temp-XXXXXX.so";
-    int fd = mkstemps(template_source,2);
-    int fd2 = mkstemps(template_lib,3);
-    if (fd == -1 || fd2 == -1) ERR("mkstemp fails");
+    //char template_source[] = "temp-XXXXXX.c";
+    //char template_lib[] = "temp-XXXXXX.so";
+    //int fd = mkstemps(template_source,2);
+    //int fd2 = mkstemps(template_lib,3);
+    //if (fd == -1 || fd2 == -1) ERR("mkstemp fails");
+    char template_source[] = "temp-1.c";
+    char template_lib[] = "temp-1.so";
+    FILE* fp = fopen(template_source,"a");
+    
     char command[512];
     printf("type in 'q' to quit.\n>> ");
     while(1){
@@ -60,7 +64,8 @@ int main(int argc, char *argv[]) {
     	if(strcmp(command,"\n") == 0) continue;
     	if(strcmp(command,"q\n") == 0) break;
     	if(strncmp(command, "int ",4) == 0){
-    		if(write(fd, command, strlen(command)) == -1) ERR("write fails");
+    		fputs(command,fp);
+    		//if(write(fd, command, strlen(command)) == -1) ERR("write fails");
     		upload_so(template_source,template_lib,strlen(command));
     	}
     	
@@ -68,9 +73,10 @@ int main(int argc, char *argv[]) {
     }
     //read(fd,command,sizeof(command));
     //printf("%s\n",command);
-    unlink(template_lib);
-    unlink(template_source);
-    close(fd);
-    close(fd2);
+    
+    //unlink(template_lib);
+    //unlink(template_source);
+    //close(fd);
+    //close(fd2);
     return 0;
 }  
