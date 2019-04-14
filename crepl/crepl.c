@@ -86,7 +86,7 @@ int main(int argc, char *argv[]) {
     		sprintf(expr,"int __expr_wrap_%d() {return %s;}",expr_id,command);
     		if(write(fd, expr, strlen(expr)) == -1) ERR("write fails");
     		upload_so(template_source,template_lib,strlen(command));
-    		if(handle = dlopen(template_lib,RTLD_LAZY)) ERR("dlopen fails");
+    		//if(handle = dlopen(template_lib,RTLD_LAZY)) ERR("dlopen fails");
     		/*char func_name[20];
     		sprintf()
     		int (*func) = dlsym(handle)*/
