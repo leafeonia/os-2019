@@ -90,7 +90,10 @@ int main(int argc, char *argv[]) {
     		upload_so(template_source,template_lib,strlen(expr));
     		
     		void *handle;
-    		if((handle = dlopen(template_lib,RTLD_LAZY)) == NULL) ERR("dlopen fails");
+    		if((handle = dlopen(template_lib,RTLD_LAZY)) == NULL) {
+    			ERR("dlopen fails");
+    			printf("%s\n",dlerror());
+    		}
     		char func_name[20];
     		sprintf(func_name,"__expr_wrap_%d",expr_id);
     		int (*func)() = dlsym(handle,func_name);
