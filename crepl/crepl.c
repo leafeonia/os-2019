@@ -96,8 +96,9 @@ int main(int argc, char *argv[]) {
     		void *handle;
     		handle = dlopen(template_lib,RTLD_LAZY);
     		if((handle = dlopen(template_lib,RTLD_LAZY)) == NULL) {
-    			ERR("dlopen fails");
     			printf("fuck %s\n",dlerror());
+    			ERR("dlopen fails");
+    			
     		}
     		char func_name[20];
     		sprintf(func_name,"__expr_wrap_%d",expr_id);
