@@ -88,7 +88,10 @@ int main(int argc, char *argv[]) {
     		command[strlen(command)-1] = '\0'; //replace '\n' to '\0'
     		sprintf(expr,"int __expr_wrap_%d() {return %s;}\n",expr_id,command);
     		if(write(fd, expr, strlen(expr)) == -1) ERR("write fails");
-    		if(upload_so(template_source,template_lib,strlen(expr))) continue;
+    		if(upload_so(template_source,template_lib,strlen(expr))){
+    			printf(">> ");
+    			continue;
+    		}
     		
     		void *handle;
     		handle = dlopen(template_lib,RTLD_LAZY);
