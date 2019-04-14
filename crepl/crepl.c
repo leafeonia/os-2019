@@ -30,7 +30,7 @@ void upload_so(char* source_name,char* lib_name,int command_len){
 			if(fp == NULL) ERR("fopen fails");
 			fputc('*',fp);
 			//printf("command len = %d\n",command_len);
-			fseek(fp,-1,SEEK_END);
+			fseek(fp,-2,SEEK_END);
 			printf("%ld\n",ftell(fp));
 			fputc('/',fp);
 		}
