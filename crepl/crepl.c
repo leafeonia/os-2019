@@ -16,8 +16,8 @@ void upload_so(char* source_name,char* lib_name,int command_len){
 	
 	if(rc < 0) ERR("fork fails");
 	if(rc == 0){
-		int devnull = open("/dev/null",O_WRONLY);
- 		dup2(devnull,STDERR_FILENO);
+		//int devnull = open("/dev/null",O_WRONLY);
+ 		//dup2(devnull,STDERR_FILENO);
 		execlp("gcc","gcc","-fPIC","-shared",source_name,"-o",lib_name,NULL);
 		assert(0);
 	}
@@ -29,7 +29,7 @@ void upload_so(char* source_name,char* lib_name,int command_len){
 			FILE* fp = fopen(source_name,"r+");
 			if(fp == NULL) ERR("fopen fails");
 			fseek(fp,-command_len,SEEK_END);
-			fputs("//",fp);
+			fputs("//",fp); //comment the uncompliable command
 			fflush(fp);
 		}
 		/*close(fd[1]); 
