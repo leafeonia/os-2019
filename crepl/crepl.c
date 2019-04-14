@@ -18,7 +18,7 @@ void upload_so(char* source_name,char* lib_name,int command_len){
 	if(rc == 0){
 		int devnull = open("/dev/null",O_WRONLY);
  		dup2(devnull,STDERR_FILENO);
-		execlp("gcc","gcc","-fPIC","-shared",source_name,"-o",lib_name,NULL);
+		execlp("gcc","gcc","-fPIC","-shared",source_name,"-o",lib_name,"-ldl",NULL);
 		assert(0);
 	}
 	else{
