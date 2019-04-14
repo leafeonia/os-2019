@@ -101,7 +101,7 @@ int main(int argc, char *argv[]) {
     			ERR("dlopen fails");
     		}
     		char func_name[20];
-    		printf("expr_id = %d\n",expr_id);
+    		//printf("expr_id = %d\n",expr_id);
     		sprintf(func_name,"__expr_wrap_%d",expr_id);
     		int (*func)() = dlsym(handle,func_name);
     		if(dlerror() != NULL) printf("%s\n",dlerror());
