@@ -17,8 +17,8 @@ int upload_so(char* source_name,char* lib_name,int command_len){
 	
 	if(rc < 0) ERR("fork fails");
 	if(rc == 0){
-		int devnull = open("/dev/null",O_WRONLY);
- 		dup2(devnull,STDERR_FILENO);
+		//int devnull = open("/dev/null",O_WRONLY);
+ 		//dup2(devnull,STDERR_FILENO);
 		execlp("gcc","gcc","-shared","-fPIC",source_name,"-o",lib_name,"-ldl",NULL);
 		assert(0);
 	}
@@ -95,8 +95,8 @@ int main(int argc, char *argv[]) {
     		
     		void *handle;
     		handle = dlopen(template_lib,RTLD_LAZY);
-    		char lib_name[20];
-    		sprintf(lib_name,"./%s",template_lib);
+    		char lib_name_local[25];
+    		sprintf(lib_name_local,"./%s",template_lib);
     		if((handle = dlopen(lib_name,RTLD_LAZY)) == NULL) {
     			printf("%s\n",dlerror());
     			ERR("dlopen fails");
