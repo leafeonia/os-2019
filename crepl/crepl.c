@@ -29,7 +29,7 @@ void upload_so(char* source_name,char* lib_name,int command_len){
 			FILE* fp = fopen(source_name,"r+");
 			if(fp == NULL) ERR("fopen fails");
 			fseek(fp,-command_len,SEEK_END);
-			fputs("//",fp); //comment the uncompliable command
+			fputs("//\n",fp); //comment the uncompliable command
 			fflush(fp);
 		}
 		/*close(fd[1]); 
