@@ -28,7 +28,7 @@ void upload_so(char* source_name,char* lib_name,int command_len){
 			printf("\033[31mcompile error\33[0m\n");
 			FILE* fp = fopen(source_name,"r+");
 			fseek(fp,-command_len,SEEK_END);
-			fputc('/');
+			fputc('/',fp);
 		}
 		/*close(fd[1]); 
   		dup2(fd[0],STDIN_FILENO);
