@@ -6,6 +6,7 @@
 #include<string.h>
 #include<assert.h>
 #include<fcntl.h>
+#include<dlfcn.h>
 
 #define ERR(s)\
 	{printf("error: %s\n",s);\
