@@ -51,7 +51,7 @@ int upload_so(char* source_name,char* lib_name,int command_len){
 
 int main(int argc, char *argv[]) {
     char template_source[] = "temp-XXXXXX.c";
-    char template_lib[] = "/usr/lib/temp-XXXXXX.so";
+    char template_lib[] = "temp-XXXXXX.so";
     int fd = mkstemps(template_source,2);
     int fd2 = mkstemps(template_lib,3);
     if (fd == -1 || fd2 == -1) ERR("mkstemp fails");
@@ -95,7 +95,9 @@ int main(int argc, char *argv[]) {
     		
     		void *handle;
     		handle = dlopen(template_lib,RTLD_LAZY);
-    		if((handle = dlopen(template_lib,RTLD_LAZY)) == NULL) {
+    		char lib_name[20];
+    		sprintf(lib_name,"./%s",template_lib);
+    		if((handle = dlopen(lib_name,RTLD_LAZY)) == NULL) {
     			printf("%s\n",dlerror());
     			ERR("dlopen fails");
     			
