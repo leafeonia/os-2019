@@ -11,7 +11,7 @@
 	{printf("error: %s\n",s);\
 	exit(1);}\
 
-void upload_so(char* source_name,char* lib_name){
+void upload_so(char* source_name,char* lib_name,int command_len){
 	int rc = fork();
 	
 	if(rc < 0) ERR("fork fails");
@@ -24,7 +24,12 @@ void upload_so(char* source_name,char* lib_name){
 	else{
 		int status = 0;
 		wait(&status);
-		if(WEXITSTATUS(status) == 1) printf("\033[31mcompile error\33[0m\n");
+		if(WEXITSTATUS(status) == 1) {
+			printf("\033[31mcompile error\33[0m\n");
+			FILE* fp = fopen(source_name,"r+");
+			fseek(fp,-command_len,SEEK_END);
+			fputc('/');
+		}
 		/*close(fd[1]); 
   		dup2(fd[0],STDIN_FILENO);
   		char error[512];
@@ -53,7 +58,7 @@ int main(int argc, char *argv[]) {
     	if(strcmp(command,"\n") == 0) continue;
     	if(strcmp(command,"q\n") == 0) break;
     	if(write(fd, command, strlen(command)) == -1) ERR("write fails");
-    	upload_so(template_source,template_lib);
+    	upload_so(template_source,template_lib,strlen(command));
     	printf(">> ");
     }
     //read(fd,command,sizeof(command));
