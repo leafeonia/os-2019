@@ -106,6 +106,7 @@ int main(int argc, char *argv[]) {
     		int (*func)() = dlsym(handle,func_name);
     		if(dlerror() != NULL) printf("%s\n",dlerror());
     		printf(">> %d\n",(*func)());
+    		dlclose(handle);
     	}
     	printf(">> ");
     }
