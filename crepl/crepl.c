@@ -30,8 +30,6 @@ void upload_so(char* source_name,char* lib_name,int command_len){
 			if(fp == NULL) ERR("fopen fails");
 			fseek(fp,-command_len,SEEK_END);
 			fputs("//",fp); //comment the uncompliable command
-			fseek(fp,0,SEEK_END);
-			fputc('\n',fp);
 			fflush(fp);
 		}
 		/*close(fd[1]); 
@@ -55,14 +53,17 @@ int main(int argc, char *argv[]) {
     int fd2 = mkstemps(template_lib,3);
     if (fd == -1 || fd2 == -1) ERR("mkstemp fails");
     char command[512];
-    printf(">> ");
+    printf("type in 'q' to quit.\n>> ");
     while(1){
     	memset(command,0,sizeof(command));
     	fgets(command,sizeof(command),stdin);
     	if(strcmp(command,"\n") == 0) continue;
     	if(strcmp(command,"q\n") == 0) break;
-    	if(write(fd, command, strlen(command)) == -1) ERR("write fails");
-    	upload_so(template_source,template_lib,strlen(command));
+    	if(strncmp(command, "int ",4) == 0){
+    		if(write(fd, command, strlen(command)) == -1) ERR("write fails");
+    		upload_so(template_source,template_lib,strlen(command));
+    	}
+    	
     	printf(">> ");
     }
     //read(fd,command,sizeof(command));
