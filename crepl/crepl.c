@@ -66,14 +66,14 @@ int main(int argc, char *argv[]) {
     	if(strcmp(command,"\n") == 0) continue;
     	if(strcmp(command,"q\n") == 0) break;
     	if(strncmp(command, "int ",4) == 0){
-    		fputs(command,fp);
-    		fflush(fp);
+    		//fputs(command,fp);
+    		//fflush(fp);
     		if(write(fd, command, strlen(command)) == -1) ERR("write fails");
     		upload_so(template_source,template_lib,strlen(command));
     	}
     	else{
-    		fputs(command,fp2);
-    		fflush(fp2);
+    		//fputs(command,fp2);
+    		//fflush(fp2);
     	}
     	printf(">> ");
     }
