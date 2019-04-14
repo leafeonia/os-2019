@@ -115,6 +115,6 @@ int main(int argc, char *argv[]) {
     unlink(template_lib);
     unlink(template_source);
     close(fd);
-    close(fd2);
+    //close(fd2);
     return 0;
 }  
