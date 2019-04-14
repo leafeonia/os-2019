@@ -77,7 +77,7 @@ int main(int argc, char *argv[]) {
     		//fputs(command,fp);
     		//fflush(fp);
     		if(write(fd, command, strlen(command)) == -1) ERR("write fails");
-    		if(!upload_so(template_source,template_lib,strlen(command))) printf("\033[36madded: %s\33[0m",command);
+    		if(!upload_so(template_source,template_lib,strlen(command))) printf("\033[32madded: %s\33[0m",command);
     	}
     	
     	//expression
