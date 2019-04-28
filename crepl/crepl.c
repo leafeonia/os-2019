@@ -111,7 +111,7 @@ int main(int argc, char *argv[]) {
     		if(dlerror() != NULL) printf("%s\n",dlerror());
     		printf(">> %s = %d\n",command,(*func)());
     		
-    		dlclose(handle);// !!! bug producer 
+    		//dlclose(handle);// !!! bug producer 
     	}
     	printf(">> ");
     }
