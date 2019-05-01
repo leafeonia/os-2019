@@ -1,6 +1,7 @@
 #include <common.h>
 #include <klib.h>
 #include <devices.h>
+#include <common.h>
 #include "my_os.h"
 
 #define NR_TASK 17
