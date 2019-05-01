@@ -20,7 +20,7 @@ typedef union header{
 
 static uintptr_t pm_start, pm_end;
 static lock_t mem_lock;
-static HEADER base;
+//static HEADER base;
 static HEADER* freep = NULL;
 
 static void pmm_init() {
@@ -54,11 +54,11 @@ static void free(void* ap){
 	//LOG("end free");
 	return;
 }
-
+/*
 static void* morecore(size_t nunits){
 	/*
 		apply for memory from am is easy(requires very small amount of time), so no need to set buffer size (NALLOC)
-	*/
+	
 	//if(nunits < NALLOC) nunits = NALLOC;
 	HEADER* ret = (HEADER*)pm_start;
 	if(pm_start + sizeof(HEADER)*nunits >= pm_end) return NULL;
@@ -66,7 +66,7 @@ static void* morecore(size_t nunits){
 	ret->s.size = nunits;
 	free((void*)(ret+1));
 	return (void*)freep;
-}
+}*/
 
 /*
 static void* fancy_alloc(size_t nbytes){
