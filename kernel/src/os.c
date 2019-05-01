@@ -25,6 +25,7 @@ static void os_init() {
   LOG("os_init");
   #ifdef L2_TEST
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty1");
+  LOG("point1");
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty2");
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty3");
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty4");
