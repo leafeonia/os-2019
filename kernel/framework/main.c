@@ -1,5 +1,6 @@
 #include <kernel.h>
 #include <klib.h>
+#include "my_os.h"
 
 int main() {
   _ioe_init();
