@@ -1,5 +1,5 @@
 #include <devices.h>
-#include <klib.h>
+#include <string.h>
 
 #define TTY_COOK_BUF_SZ 1024
 
