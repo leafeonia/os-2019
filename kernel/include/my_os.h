@@ -14,5 +14,4 @@
 			printf("Assertion fails at %s:%d\n",__FILE__, __LINE__);\
 			_halt(1);\
 		}\
-		while(0);\
-	}
+	} while(0)
