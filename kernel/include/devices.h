@@ -1,6 +1,7 @@
 #include <common.h>
 #include <amdev.h>
 #include <klib.h>
+#include <kernel.h>
 
 #define LENGTH(arr) ((sizeof(arr) / sizeof(arr[0])))
 
