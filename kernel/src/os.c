@@ -19,17 +19,23 @@ void echo_task(void *name){
 	}
 }
 
+void dummy_test(){
+	for(volatile int i = 0;i < 10000000;i++);
+	printf("FA\n");
+}
+
 static void os_init() {
   LOG("os_init");
   pmm->init();
   kmt->init();
   //_vme_init(pmm->alloc,pmm->free);
-  dev->init();
+  //dev->init();
   #ifdef L2_TEST
-  kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty1");
+  /*kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty1");
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty2");
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty3");
-  kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty4");
+  kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty4");*/
+  kmt->create(pmm->alloc(sizeof(task_t)), "dummy", dummy_test,NULL);
   #endif
 }
 
