@@ -6,6 +6,7 @@
 
 #define NR_TASK 17
 static task_t tasks[NR_TASK];
+static int task_id = 0;
 
 static void kmt_init(){
 	/*for(int i = 0;i < NR_TASK;i++){
@@ -19,6 +20,7 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 
 	//LOCKKKKKKKKKKKKKKKKKK
 	LOG("enter kmt_create");
+	tasks[task_id++] = task;
 	_Area stack = (_Area){task->stack, task->fence2};
 	task->context = *_kcontext(stack, entry, arg);
 	return 0;
