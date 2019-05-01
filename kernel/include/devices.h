@@ -101,6 +101,8 @@ typedef struct {
   uint8_t *dirty;
 } tty_t;
 
+ssize_t tty_write(device_t *dev, off_t offset, const void *buf, size_t count)
+
 extern char keymap[], keymap_shift[];
 
 #define TERM_FONT font_sans
