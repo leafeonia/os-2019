@@ -68,6 +68,7 @@ static void* morecore(size_t nunits){
 	return (void*)freep;
 }
 
+/*
 static void* fancy_alloc(size_t nbytes){
 	assert(nbytes > 0);
 	HEADER *p, *prevp;
@@ -103,7 +104,7 @@ static void* fancy_alloc(size_t nbytes){
 			}
 		}
 	}
-}
+}*/
 
 
 
