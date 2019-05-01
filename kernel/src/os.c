@@ -16,11 +16,13 @@ void echo_task(void *name){
 		line[nread - 1] = '\0';
 		sprintf(text, "Echo %s.\n", line);
 		tty_write(tty, 0, text, strlen(text));
+		
 	}
 }
 
 static void os_init() {
   pmm->init();
+  LOG("os_init");
   #ifdef L2_TEST
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty1");
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty2");
