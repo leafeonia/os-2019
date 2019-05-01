@@ -20,7 +20,7 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 
 	//LOCKKKKKKKKKKKKKKKKKK
 	LOG("enter kmt_create");
-	tasks[task_id++] = task;
+	&tasks[task_id++] = task;
 	_Area stack = (_Area){task->stack, task->fence2};
 	task->context = *_kcontext(stack, entry, arg);
 	return 0;
