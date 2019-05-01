@@ -10,7 +10,7 @@
 
 #define Assert(cond) \
 	do { \
-		if (!cond) { \
+		if (!(cond)) { \
 			printf("Assertion fails at %s:%d\n",__FILE__, __LINE__);\
 			_halt(1);\
 		}\
