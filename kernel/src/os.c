@@ -16,7 +16,6 @@ void echo_task(void *name){
 		line[nread - 1] = '\0';
 		sprintf(text, "Echo %s.\n", line);
 		tty_write(tty, 0, text, strlen(text));
-		
 	}
 }
 
