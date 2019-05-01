@@ -1,4 +1,7 @@
 #include "lock.h"
 
-#define LOG(s) printf("\33[1;35m%s\n\33[0m",s)
-
+#ifdef DEBUG
+	#define LOG(s) printf("\33[1;35m%s\n\33[0m",s)
+#else
+	#define LOG(s) ((void)0)
+#endif
