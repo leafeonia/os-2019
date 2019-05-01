@@ -5,7 +5,7 @@
 #include "my_os.h"
 
 #define NR_TASK 17
-static task tasks[NR_TASK];
+static task_t tasks[NR_TASK];
 
 static void kmt_init(){
 	/*for(int i = 0;i < NR_TASK;i++){
