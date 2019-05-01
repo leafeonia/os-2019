@@ -3,11 +3,23 @@
 #include <devices.h>
 #include "my_os.h"
 
-static void kmt_init(){
+#define NR_TASK 17
+static task tasks[NR_TASK];
 
+static void kmt_init(){
+	/*for(int i = 0;i < NR_TASK;i++){
+		task_t* task = &tasks[i];
+		_Area stack = (_Area){task->stack,task->fence2};
+		task->context = *_kcontext(stack, ) 
+	}*/
 }
 static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void *arg){
+
+
+	//LOCKKKKKKKKKKKKKKKKKK
 	LOG("enter kmt_create");
+	Area stack = (_Area){task->stack, task->fence2};
+	task->context = *_kcontext(stack, entry, arg);
 	return 0;
 }
 static void kmt_teardown(task_t *task){

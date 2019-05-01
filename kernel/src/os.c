@@ -10,7 +10,6 @@ void echo_task(void *name){
 	device_t *tty = dev_lookup(name);
 	while(1){
 		char line[128], text[128];
-		LOG(name);
 		sprintf(text, "(%s) $ ",name);
 		tty_write(tty, 0, text, strlen(name));
 		int nread = tty->ops->read(tty, 0, line, sizeof(line));
@@ -21,8 +20,11 @@ void echo_task(void *name){
 }
 
 static void os_init() {
-  pmm->init();
   LOG("os_init");
+  pmm->init();
+  kmt->init();
+  _vme_init(pmm->alloc,pmm->free);
+  dev->init();
   #ifdef L2_TEST
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty1");
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty2");
