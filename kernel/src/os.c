@@ -1,5 +1,6 @@
 #include <common.h>
 #include <klib.h>
+#include "device.h"
 #include "my_os.h"
 
 #define L2_TEST
