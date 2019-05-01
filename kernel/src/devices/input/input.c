@@ -1,5 +1,4 @@
 #include <devices.h>
-#include <../../../framework/kernel.h>
 
 #define NEVENTS 128
 sem_t sem_kbdirq;
