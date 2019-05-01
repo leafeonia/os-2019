@@ -23,7 +23,7 @@ static void os_init() {
   LOG("os_init");
   pmm->init();
   kmt->init();
-  //_vme_init(pmm->alloc,pmm->free);
+  _vme_init(pmm->alloc,pmm->free);
   //dev->init();
   #ifdef L2_TEST
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty1");
