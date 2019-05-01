@@ -2,7 +2,7 @@
 
 #define NEVENTS 128
 sem_t sem_kbdirq;
-extern mod_kmt_t *kmt;
+mod_kmt_t *kmt;
 
 static struct input_event event(int ctrl, int alt, int data) {
   return (struct input_event) {
