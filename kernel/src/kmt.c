@@ -45,7 +45,7 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 	task->context = *_kcontext(stack, entry, arg);
 	task->name = name;
 	
-	LOG("kmt_create: A task has been created. Name: %s, func_entry: 0x%x\n",name, entry);
+	printf("kmt_create: A task has been created. Name: %s, func_entry: 0x%x\n",name, entry);
 	current = task;
 	//printf("current->context.eip = 0x%x\n",current->context.eip);
 	//printf("func_entry = 0x%x\n",entry);
