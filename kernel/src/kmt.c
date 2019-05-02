@@ -24,7 +24,7 @@ static task_t **current = NULL;
 
 
 static _Context* kmt_context_switch(_Event ev, _Context *ctx){
-	LOG("kmt_context_switch");
+	//LOG("kmt_context_switch");
 	if(!current) return NULL;
 	printf("task_id = %d,*current = 0x%x\n",task_id,*current);
 	(*current)->context = *ctx;
