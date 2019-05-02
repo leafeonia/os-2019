@@ -114,7 +114,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
   		if(next) ret = next;
   	}
   }
-  printf("ret = 0x%x\n",ret);
+  //printf("ret = 0x%x\n",ret);
   return ret;
 }
 
