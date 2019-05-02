@@ -119,7 +119,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
   return ret;
 }
 
-int irqcmp(const irq i1, const irq i2){
+int irqcmp(const struct irq i1, const struct irq i2){
 	return i1.seq < i2.seq;
 }
 
