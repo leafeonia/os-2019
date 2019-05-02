@@ -119,15 +119,20 @@ static _Context *os_trap(_Event ev, _Context *context) {
   return ret;
 }
 
-int irqcmp(const struct irq i1, const struct irq i2){
-	return i1.seq < i2.seq;
-}
 
 static void os_on_irq(int seq, int event, handler_t handler) {
 	irqs[irq_id].seq = seq;
 	irqs[irq_id].event = event;
 	irqs[irq_id++].handler = handler;
-	qsort(irqs,irq_id,sizeof(struct irq),irqcmp);
+	for(int i = 0;i < irq_id;i++){
+		for(int j = i + 1;j < irq_id;j++){
+			if(irqs[i].seq > irqs[j].seq){
+				struct irq temp = irqs[i];
+				irqs[i] = irqs[j];
+				irqs[j] = temp;
+			}
+		}
+	}
 }
 
 MODULE_DEF(os) {
