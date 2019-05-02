@@ -107,8 +107,6 @@ static void os_run() {
 }
 
 static _Context *os_trap(_Event ev, _Context *context) {
-  LOG("os_trapped");
-  printf("%d\n",ev.event);
   _Context* ret = context;
   for(int i = 0;i < irq_id;i++){
   	if(irqs[i].event == _EVENT_NULL || irqs[i].event == ev.event){
