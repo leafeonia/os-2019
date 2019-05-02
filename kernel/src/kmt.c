@@ -13,6 +13,7 @@ static task_t **current;
 	current-----
 			   |
 		  	   v
+		  	   (cur_deref)
 	============================
 	| tasks[0] | tasks[1] | ...  
 	============================
@@ -25,18 +26,19 @@ static task_t **current;
 
 static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	//LOG("kmt_context_switch");
-	if(!(*current)) return NULL;
-	printf("task_id = %d,*current = 0x%x\n",task_id,*current);
-	(*current)->context = *ctx;
+	task_t* cur_deref = *current;
+	if(!cur_deref) return NULL;
+	printf("task_id = %d,cur_deref = 0x%x\n",task_id,cur_deref);
+	cur_deref->context = *ctx;
 	LOG("checkpoint 1");
-	if(current + 1 == &tasks[task_id]){
+	if(cur_deref + 1 == &tasks[task_id]){
 		LOG("checkpoint 2");
-		current = &tasks[0];
+		cur_deref = &tasks[0];
 	}
 	else
-		current++;
-	printf("*current = 0x%x, task_name: %s\n",*current, (*current)->name);
-	return &(*current)->context;
+		cur_deref++;
+	printf("cur_deref = 0x%x, task_name: %s\n",cur_deref, cur_deref->name);
+	return &cur_deref->context;
 }
 
 static void kmt_init(){
