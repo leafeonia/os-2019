@@ -12,7 +12,7 @@ static task_t *current = NULL;
 
 static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	LOG("kmt_context_switch");
-	printf("task_id = %d\n",task_id);
+	printf("task_id = %d,current = 0x%x\n",task_id,current);
 	if(!current) return NULL;
 	current->context = *ctx;
 	LOG("checkpoint 1");
