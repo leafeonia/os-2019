@@ -117,7 +117,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
   }
   
   return context;
-  //return ret;
+  return ret;
 }
 
 
