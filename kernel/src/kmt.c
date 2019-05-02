@@ -31,7 +31,7 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 	//LOCKKKKKKKKKKKKKKKKKK
 	LOG("enter kmt_create");
 	tasks[task_id++] = task;
-	_Area stack = (_Area){task->stack, task->fence2};
+	_Area stack = (_Area){task->stack, task + 1};
 	task->context = *_kcontext(stack, entry, arg);
 	current = task;
 	printf("current->context.eip = 0x%x\n",current->context.eip);
