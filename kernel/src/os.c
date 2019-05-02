@@ -4,7 +4,14 @@
 #include "my_os.h"
 
 #define L2_TEST
+#define NR_IRQ 20
 
+struct irq{
+	int event, seq;
+	handler_t handler;
+} irqs[NR_IRQ];
+
+static int irq_id = 0;
 
 void echo_task(void *name){
 	device_t *tty = dev_lookup(name);
@@ -102,10 +109,25 @@ static void os_run() {
 static _Context *os_trap(_Event ev, _Context *context) {
   LOG("os_trapped");
   printf("%d\n",ev.event);
-  return context;
+  _Context* ret = context;
+  for(int i = 0;i < irq_id;i++){
+  	if(irqs[i].event == _EVENT_NULL || irqs[i].event == ev.event){
+  		_Context *next = irqs[i].handler(ev,context);
+  		if(next) ret = next;
+  	}
+  }
+  return ret;
+}
+
+int irqcmp(const irq i1, const irq i2){
+	return i1.seq < i2.seq;
 }
 
 static void os_on_irq(int seq, int event, handler_t handler) {
+	irqs[irq_id].seq = seq;
+	irqs[irq_id].event = event;
+	irqs[irq_id++].handler = handler;
+	qsort(irqs,irq_id,sizeof(irq),irqcmp);
 }
 
 MODULE_DEF(os) {
