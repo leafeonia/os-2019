@@ -22,6 +22,7 @@ static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	}
 	else
 		current++;
+	printf("task_name: %s\n",current->name);
 	return &(current->context);
 }
 
@@ -42,6 +43,8 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 	tasks[task_id++] = task;
 	_Area stack = (_Area){task->stack, task->fence2};
 	task->context = *_kcontext(stack, entry, arg);
+	task->name = name;
+	
 	current = task;
 	//printf("current->context.eip = 0x%x\n",current->context.eip);
 	//printf("func_entry = 0x%x\n",entry);

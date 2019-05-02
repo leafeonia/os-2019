@@ -5,7 +5,7 @@
 #include <nanos.h>
 
 struct task {
-	int id;
+	char* name;
 	_Context context;
 	uint8_t fence1[32];
 	uint8_t stack[4096];
