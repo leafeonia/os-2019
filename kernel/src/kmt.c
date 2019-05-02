@@ -11,7 +11,7 @@ static task_t *current = NULL;
 
 
 static _Context* kmt_context_switch(){
-	return current->context;
+	return &current->context;
 }
 
 static void kmt_init(){
