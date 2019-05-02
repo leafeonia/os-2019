@@ -108,7 +108,7 @@ static void os_run() {
 
 static _Context *os_trap(_Event ev, _Context *context) {
   _Context* ret = context;
-  printf("context.eip = 0x%x\n",context.eip);
+  printf("context->eip = 0x%x\n",context->eip);
   for(int i = 0;i < irq_id;i++){
   	if(irqs[i].event == _EVENT_NULL || irqs[i].event == ev.event){
   		_Context *next = irqs[i].handler(ev,context);
