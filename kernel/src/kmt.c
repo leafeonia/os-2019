@@ -34,8 +34,8 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 	_Area stack = (_Area){task->stack, task->fence2};
 	task->context = *_kcontext(stack, entry, arg);
 	current = task;
-	printf("current->context.eip = 0x%x\n",current->context.eip);
-	printf("func_entry = 0x%x\n",entry);
+	//printf("current->context.eip = 0x%x\n",current->context.eip);
+	//printf("func_entry = 0x%x\n",entry);
 	return 0;
 }
 static void kmt_teardown(task_t *task){
