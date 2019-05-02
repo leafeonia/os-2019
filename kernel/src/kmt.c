@@ -4,13 +4,14 @@
 #include "my_os.h"
 
 #define NR_TASK 17
+
 static task_t* tasks[NR_TASK];
 static int task_id = 0;
 static task_t *current = NULL;
 
 
 static _Context* kmt_context_switch(){
-	return current;
+	return current->context;
 }
 
 static void kmt_init(){

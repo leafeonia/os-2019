@@ -15,3 +15,6 @@
 			_halt(1);\
 		}\
 	} while(0)
+	
+#define INT_MAX 2147483647
+#define INT_MIN -2147483648
