@@ -127,7 +127,7 @@ static void os_on_irq(int seq, int event, handler_t handler) {
 	irqs[irq_id].seq = seq;
 	irqs[irq_id].event = event;
 	irqs[irq_id++].handler = handler;
-	qsort(irqs,irq_id,sizeof(irq),irqcmp);
+	qsort(irqs,irq_id,sizeof(struct irq),irqcmp);
 }
 
 MODULE_DEF(os) {
