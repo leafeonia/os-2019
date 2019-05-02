@@ -1,14 +1,20 @@
 #include <common.h>
 #include <klib.h>
 #include <devices.h>
-#include <common.h>
 #include "my_os.h"
 
 #define NR_TASK 17
 static task_t* tasks[NR_TASK];
 static int task_id = 0;
+static task_t *current = NULL;
+
+
+static _Context* kmt_context_switch(){
+	return current;
+}
 
 static void kmt_init(){
+	os->on_irq(INT_MAX, _EVENT_NULL, kmt_context_switch);
 	/*for(int i = 0;i < NR_TASK;i++){
 		task_t* task = &tasks[i];
 		_Area stack = (_Area){task->stack,task->fence2};
@@ -23,6 +29,7 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 	tasks[task_id++] = task;
 	_Area stack = (_Area){task->stack, task->fence2};
 	task->context = *_kcontext(stack, entry, arg);
+	current = task;
 	return 0;
 }
 static void kmt_teardown(task_t *task){
