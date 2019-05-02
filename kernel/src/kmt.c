@@ -31,10 +31,10 @@ static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	LOG("checkpoint 1");
 	if(current + 1 == &tasks[task_id]){
 		LOG("checkpoint 2");
-		current = &tasks[0];
+		*current = &tasks[0];
 	}
 	else
-		current++;
+		(*current)++;
 	printf("*current = 0x%x, task_name: %s\n",*current, (*current)->name);
 	return &(*current)->context;
 }
