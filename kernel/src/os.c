@@ -101,6 +101,7 @@ static void os_run() {
 
 static _Context *os_trap(_Event ev, _Context *context) {
   LOG("os_trapped");
+  printf("%d\n",ev.event);
   return context;
 }
 
