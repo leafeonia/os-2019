@@ -26,8 +26,8 @@ void echo_task(void *name){
 	}
 }
 
-void dummy_test(){
-	while(1) LOG("FA");
+void dummy_test(int arg){
+	while(1) printf("FA%d\n",arg);
 	//for(volatile int i = 0;i < 10000000;i++);
 	//printf("FA\n");
 }
@@ -43,7 +43,8 @@ static void os_init() {
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty2");
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty3");
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty4");*/
-  kmt->create(pmm->alloc(sizeof(task_t)), "dummy", dummy_test,NULL);
+  kmt->create(pmm->alloc(sizeof(task_t)), "dummy", dummy_test, 1);
+  kmt->create(pmm->alloc(sizeof(task_t)), "dummy", dummy_test, 2);
   #endif
 }
 
