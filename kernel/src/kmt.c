@@ -39,12 +39,13 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 
 
 	//LOCKKKKKKKKKKKKKKKKKK
-	LOG("enter kmt_create");
+	
 	tasks[task_id++] = task;
 	_Area stack = (_Area){task->stack, task->fence2};
 	task->context = *_kcontext(stack, entry, arg);
 	task->name = name;
 	
+	LOG("kmt_create: A task has been created. Name: %s, func_entry: 0x%x\n",name, entry);
 	current = task;
 	//printf("current->context.eip = 0x%x\n",current->context.eip);
 	//printf("func_entry = 0x%x\n",entry);
