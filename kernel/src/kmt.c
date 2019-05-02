@@ -14,6 +14,7 @@ static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	LOG("kmt_context_switch");
 	if(!current) return NULL;
 	current->context = *ctx;
+	LOG("checkpoint 1");
 	if(current + 1 == tasks[task_id])
 		current = tasks[0];
 	else
