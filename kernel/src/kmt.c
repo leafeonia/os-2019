@@ -7,22 +7,35 @@
 
 static task_t* tasks[NR_TASK];
 static int task_id = 0;
-static task_t *current = NULL;
+static task_t **current = NULL;
+
+/*
+	current-----
+			   |
+		  	   v
+	============================
+	| tasks[0] | tasks[1] | ...  
+	============================
+		|			|			
+		v			v	
+	0x200008    0x201098
+	(&dummy1)	(&dummy2)
+*/
 
 
 static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	LOG("kmt_context_switch");
 	if(!current) return NULL;
-	printf("task_id = %d,current = 0x%x\n",task_id,current);
-	current->context = *ctx;
+	printf("task_id = %d,*current = 0x%x\n",task_id,*current);
+	*current->context = *ctx;
 	LOG("checkpoint 1");
-	if(current + 1 == tasks[task_id]){
+	if(current + 1 == &tasks[task_id]){
 		LOG("checkpoint 2");
-		current = tasks[0];
+		current = &tasks[0];
 	}
 	else
 		current++;
-	printf("task_name: %s\n",current->name);
+	printf("*current = 0x%x, task_name: %s\n",*current, *current->name);
 	return &(current->context);
 }
 
@@ -46,7 +59,7 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 	task->name = name;
 	
 	printf("kmt_create: A task has been created. Position: 0x%x, Name: %s, func_entry: 0x%x\n",task, name, entry);
-	current = task;
+	*current = task;
 	//printf("current->context.eip = 0x%x\n",current->context.eip);
 	//printf("func_entry = 0x%x\n",entry);
 	return 0;
