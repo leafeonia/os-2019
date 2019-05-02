@@ -26,8 +26,9 @@ void echo_task(void *name){
 	}
 }
 
-void dummy_test(int arg){
-	while(1) printf("FA%d\n",arg);
+void dummy_test(void* arg){
+	int i = (intptr_t)arg;
+	while(1) printf("FA%d\n",i);
 	//for(volatile int i = 0;i < 10000000;i++);
 	//printf("FA\n");
 }
