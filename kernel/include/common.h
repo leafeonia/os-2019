@@ -7,9 +7,9 @@
 struct task {
 	int id;
 	_Context context;
-	//uint8_t fence1[32];
+	uint8_t fence1[32];
 	uint8_t stack[4096];
-	//uint8_t fence2[32];
+	uint8_t fence2[32];
 };
 struct spinlock {};
 struct semaphore {};
