@@ -35,6 +35,7 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 	task->context = *_kcontext(stack, entry, arg);
 	current = task;
 	printf("&current->context = 0x%x\n",&current->context);
+	printf("func_entry = 0x%x\n",entry);
 	return 0;
 }
 static void kmt_teardown(task_t *task){
