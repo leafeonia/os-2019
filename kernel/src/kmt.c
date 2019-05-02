@@ -22,7 +22,7 @@ static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	}
 	else
 		current++;
-	return current->context;
+	return &(current->context);
 }
 
 static void kmt_init(){
