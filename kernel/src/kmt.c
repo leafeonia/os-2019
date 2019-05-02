@@ -13,8 +13,8 @@ static task_t *current = NULL;
 static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	if(!current) return NULL;
 	current->context = *ctx;
-	if(current + 1 == &tasks[task_id])
-		current = &tasks[0];
+	if(current + 1 == tasks[task_id])
+		current = tasks[0];
 	else
 		current++;
 	return &current->context;
