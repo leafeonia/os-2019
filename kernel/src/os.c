@@ -28,7 +28,7 @@ void echo_task(void *name){
 
 void dummy_test(){
 	LOG("ENTER");
-	for(volatile int i = 0;i < 10000000;i++);
+	//for(volatile int i = 0;i < 10000000;i++);
 	printf("FA\n");
 }
 
