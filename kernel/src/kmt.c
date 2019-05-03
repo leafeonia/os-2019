@@ -26,7 +26,6 @@ static task_t **current;
 
 static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	LOG("kmt_context_switch");
-	if(!current) return NULL;
 	task_t* cur_deref = *current;
 	if(!cur_deref) return NULL;
 	printf("task_id = %d,cur_deref = 0x%x\n",task_id,cur_deref);
@@ -52,9 +51,7 @@ static void kmt_init(){
 	LOG("kmt_init");
 	printf("tasks[0] = 0x%x, &tasks[0] = 0x%x, tasks[1] = 0x%x, &tasks[1] = 0x%x\n", tasks[0], &tasks[0], tasks[1], &tasks[1]);
 	current = tasks;
-	LOG("kmt_init_checkpoint");
 	os->on_irq(INT_MAX, _EVENT_NULL, kmt_context_switch);
-	LOG("kmt_init_finished");
 	/*for(int i = 0;i < NR_TASK;i++){
 		task_t* task = &tasks[i];
 		_Area stack = (_Area){task->stack,task->fence2};
