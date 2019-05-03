@@ -100,6 +100,7 @@ static _Context* kmt_context_save(_Event ev, _Context *ctx){
 
 static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	kmt_spin_lock(&lk_kmt_switch);
+	kmt_spin_unlock(&lk_kmt_switch);
 	if(*current) assert((*current)->fence1 == MAGIC1 && (*current)->fence2 == MAGIC2);
 	//LOG("kmt_context_switch");
 	//printf("ctx = 0x%x\n",ctx);
@@ -123,7 +124,7 @@ static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 		current++;
 	//printf("current = 0x%x, task_name: %s\n",current, (*current)->name);
 	_Context* ret = &(*current)->context;
-	kmt_spin_unlock(&lk_kmt_switch);
+	
 	return ret;
 }
 
