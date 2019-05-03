@@ -13,14 +13,14 @@ static spinlock_t lk_kmt_create;
 
 
 static void pushcli(){
-	_intr_write(0);  //cli
+	intr_write(0);  //cli
 	cpu_ncli[_cpu()] += 1;
 }
 
 static void popcli(){
 	if(--cpu_ncli[_cpu()] < 0)
     	panic("popcli");
-	if(!cpu_ncli[_cpu()]) _intr_write(1);  //sti
+	if(!cpu_ncli[_cpu()]) intr_write(1);  //sti
 }
 
 static int holding(spinlock_t* lk){
