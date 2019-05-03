@@ -39,7 +39,7 @@ void dummy_test(void* arg){
 	//printf("FA\n");
 }
 
-task_t* temp = pmm->alloc(sizeof(task_t));
+task_t* temp; 
 static void os_init() {
   LOG("os_init");
   pmm->init();
@@ -52,6 +52,7 @@ static void os_init() {
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty3");
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty4");*/
   kmt->create(pmm->alloc(sizeof(task_t)), "dummy1", dummy_test, (void*)1);
+  temp = pmm->alloc(sizeof(task_t));
   kmt->create(temp, "dummy2", dummy_test, (void*)2);
   #endif
 }
