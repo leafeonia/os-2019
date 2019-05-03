@@ -33,7 +33,7 @@ static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	
 	//LOG("checkpoint0");
 	//printf("task_id = %d,cur_deref = 0x%x\n",task_id,cur_deref);
-	cur_deref->context = *ctx;
+	//cur_deref->context = *ctx;
 	//LOG("checkpoint 1");
 	//printf("cur_deref + 1 = 0x%x, ")
 	if(current + 1 == &tasks[task_id]){
