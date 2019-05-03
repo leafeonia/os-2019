@@ -32,8 +32,12 @@ void dummy_test(void* arg){
 		LOG("help me");
 		return;
 	}*/
+	int num = 0;
 	while(1) {
-		printf("FA%d\n",i);
+		if(i == 2)
+			printf("FA%d\n",i);
+		else
+			printf("%d ",num++);
 		for(volatile int i = 0;i < 100000;i++);
 	}
 	//printf("FA\n");
