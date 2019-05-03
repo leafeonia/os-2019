@@ -10,6 +10,8 @@ static int task_id = 0;
 static task_t **current;
 static int cpu_ncli[16];
 static spinlock_t lk_kmt_create;
+static spinlock_t lk_kmt_save;
+static spinlock_t lk_kmt_switch;
 
 
 static void pushcli(){
@@ -80,6 +82,7 @@ static void kmt_sem_signal(sem_t *sem){
 */
 
 static _Context* kmt_context_save(_Event ev, _Context *ctx){
+	kmt_spin_lock(&lk_kmt_save);
 	if(*current) assert((*current)->fence1 == MAGIC1 && (*current)->fence2 == MAGIC2);
 	//printf("BEFORE:ctx->eip = 0x%x, *current = 0x%x, &tasks[0] = 0x%x, tasks[0]->context.eip = 0x%x, &tasks[1] = 0x%x, tasks[1]->context.eip = 0x%x\n\n",ctx->eip, *current, &tasks[0], tasks[0]->context.eip, &tasks[1], tasks[1]->context.eip);
 	//LOG("enter kmt_context_save");
@@ -88,10 +91,12 @@ static _Context* kmt_context_save(_Event ev, _Context *ctx){
 		//(*current)->context = *ctx;
 	}
 	//printf("AFTER :ctx->eip = 0x%x, *current = 0x%x, &tasks[0] = 0x%x, tasks[0]->context.eip = 0x%x, &tasks[1] = 0x%x, tasks[1]->context.eip = 0x%x\n\n\n",ctx->eip, *current, &tasks[0], tasks[0]->context.eip, &tasks[1], tasks[1]->context.eip);
+	kmt_spin_unlock(&lk_kmt_save);
 	return NULL;
 }
 
 static _Context* kmt_context_switch(_Event ev, _Context *ctx){
+	kmt_spin_lock(&lk_kmt_switch);
 	if(*current) assert((*current)->fence1 == MAGIC1 && (*current)->fence2 == MAGIC2);
 	//LOG("kmt_context_switch");
 	//printf("ctx = 0x%x\n",ctx);
@@ -114,7 +119,9 @@ static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	else
 		current++;
 	//printf("current = 0x%x, task_name: %s\n",current, (*current)->name);
-	return &(*current)->context;
+	_Context* ret = &(*current)->context;
+	kmt_spin_unlock(&lk_kmt_switch);
+	return ret;
 }
 
 static void kmt_init(){
@@ -126,6 +133,8 @@ static void kmt_init(){
 	os->on_irq(INT_MAX, _EVENT_NULL, kmt_context_switch);
 	LOG("kmt_init");
 	kmt_spin_init(&lk_kmt_create,"kmt_create");
+	kmt_spin_init(&lk_kmt_save,"kmt_save");
+	kmt_spin_init(&lk_kmt_switch,"kmt_switch");
 	/*for(int i = 0;i < NR_TASK;i++){
 		task_t* task = &tasks[i];
 		_Area stack = (_Area){task->stack,task->fence2};
