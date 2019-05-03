@@ -39,7 +39,6 @@ void dummy_test(void* arg){
 	//printf("FA\n");
 }
 
-task_t* temp = pmm->alloc(sizeof(task_t));
 static void os_init() {
   LOG("os_init");
   pmm->init();
