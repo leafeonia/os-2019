@@ -28,7 +28,7 @@ static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	task_t* cur_deref = *current;
 	printf("task_id = %d,cur_deref = 0x%x\n",task_id,cur_deref);
 	LOG("kmt_context_switch");
-	task_t* cur_deref = *current;
+	
 	
 	if(!cur_deref) return NULL;
 	LOG("checkpoint0");
