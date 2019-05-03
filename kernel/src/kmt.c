@@ -16,12 +16,15 @@ static spinlock_t lk_kmt_switch;
 
 
 static void pushcli(){
-	int eflags = _get_efl(); 
 	_intr_write(0);  //cli
+	if(cpu_ncli[_cpu()] == 0)
+    	cpu_intena[_cpu()] = _intr_read();
 	cpu_ncli[_cpu()] += 1;
 }
 
 static void popcli(){
+	if(_intr_read())
+		panic("popcli - interruptible");
 	if(--cpu_ncli[_cpu()] < 0)
     	panic("popcli");
 	if(!cpu_ncli[_cpu()]) _intr_write(1);  //sti
