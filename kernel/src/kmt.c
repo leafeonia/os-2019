@@ -9,12 +9,14 @@ static task_t* tasks[NR_TASK];
 static int task_id = 0;
 static task_t **current;
 static int cpu_ncli[16];
+static int cpu_intena[16];
 static spinlock_t lk_kmt_create;
 static spinlock_t lk_kmt_save;
 static spinlock_t lk_kmt_switch;
 
 
 static void pushcli(){
+	int eflags = get_efl(); 
 	_intr_write(0);  //cli
 	cpu_ncli[_cpu()] += 1;
 }
