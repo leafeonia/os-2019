@@ -7,9 +7,9 @@
 struct task {
 	const char* name;
 	_Context context;
-	uint8_t fence1[32];
+	long long fence1;
 	uint8_t stack[4096];
-	uint8_t fence2[32];
+	long long fence2;
 };
 struct spinlock {};
 struct semaphore {};

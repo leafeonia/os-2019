@@ -24,6 +24,7 @@ static task_t **current;
 */
 
 static _Context* kmt_context_save(_Event ev, _Context *ctx){
+	assert((*current)->fence1 == MAGIC1 && (*current)->fence2 = MAGIC2);
 	//if(*current) (*current)->context = *ctx;
 	return NULL;
 }
@@ -31,6 +32,7 @@ static _Context* kmt_context_save(_Event ev, _Context *ctx){
 static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	//LOG("kmt_context_switch");
 	//printf("ctx = 0x%x\n",ctx);
+	assert((*current)->fence1 == MAGIC1 && (*current)->fence2 = MAGIC2);
 	task_t* cur_deref = *current;
 	if(!cur_deref) return NULL;
 	//printf("tasks[0] = 0x%x, &tasks[0] = 0x%x, tasks[1] = 0x%x, &tasks[1] = 0x%x\n", tasks[0], &tasks[0], tasks[1], &tasks[1]);
@@ -71,6 +73,8 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 	_Area stack = (_Area){task->stack, task->fence2};
 	task->context = *_kcontext(stack, entry, arg);
 	task->name = name;
+	task->fence1 = MAGIC1;
+	task->fence2 = MAGIC2;
 	
 	printf("kmt_create: A task has been created. Position: 0x%x, Name: %s, func_entry: 0x%x\n",task, name, entry);
 	printf("tasks[0] = 0x%x, &tasks[0] = 0x%x, tasks[1] = 0x%x, &tasks[1] = 0x%x\n", tasks[0], &tasks[0], tasks[1], &tasks[1]);
