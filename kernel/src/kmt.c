@@ -100,16 +100,15 @@ static _Context* kmt_context_save(_Event ev, _Context *ctx){
 
 static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	kmt_spin_lock(&lk_kmt_switch);
-	printf("intr_read = %d\n",_intr_read());
-	kmt_spin_unlock(&lk_kmt_switch);
-	printf("outside: intr_read = %d\n",_intr_read());
+	//printf("intr_read = %d\n",_intr_read());
+	//printf("outside: intr_read = %d\n",_intr_read());
 	if(*current) assert((*current)->fence1 == MAGIC1 && (*current)->fence2 == MAGIC2);
 	//LOG("kmt_context_switch");
 	//printf("ctx = 0x%x\n",ctx);
 	
 	task_t* cur_deref = *current;
 	if(!cur_deref) return NULL;
-	
+	kmt_spin_unlock(&lk_kmt_switch);
 	//printf("tasks[0] = 0x%x, &tasks[0] = 0x%x, tasks[1] = 0x%x, &tasks[1] = 0x%x\n", tasks[0], &tasks[0], tasks[1], &tasks[1]);
 	
 	//LOG("checkpoint0");
