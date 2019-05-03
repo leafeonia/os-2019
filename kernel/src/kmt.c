@@ -11,6 +11,58 @@ static task_t **current;
 static int cpu_ncli[16];
 static spinlock_t* lk_kmt_create;
 
+
+static void pushcli(){
+	_intr_write(0);  //cli
+	cpu_ncli[_cpu()] += 1;
+}
+
+static void popcli(){
+	if(--cpu_ncli[_cpu()] < 0)
+    	panic("popcli");
+	if(!cpu_ncli[_cpu()]) _intr_write(1);  //sti
+}
+
+static void holding(spinlock_t* lk){
+	int r;
+  	pushcli();
+  	r = lock->locked && lock->cpu == _cpu();
+  	popcli();
+  	return r;
+}
+
+static void kmt_spin_init(spinlock_t *lk, const char *name){
+	lk->name = name;
+	lk->cpu = 0;
+	lk->locked = 0;
+}
+
+static void kmt_spin_lock(spinlock_t *lk){
+	if(holding(lk))
+    	panic("acquire");
+	while(_atomic_xchg(&lock->flag,1));
+	lk->cpu = _cpu();
+}
+
+static void kmt_spin_unlock(spinlock_t *lk){
+	if(!holding(lk))
+    	panic("release");
+    lk->cpu = 0;
+    _atomic_xchg(&lock->flag,0);
+	popcli();
+}
+static void kmt_sem_init(sem_t *sem, const char *name, int value){
+
+}
+static void kmt_sem_wait(sem_t *sem){
+
+}
+static void kmt_sem_signal(sem_t *sem){
+
+}
+
+
+
 /*
 	current-----
 			   |
@@ -107,54 +159,7 @@ static void kmt_teardown(task_t *task){
 
 
 
-static void pushcli(){
-	_intr_write(0);  //cli
-	cpu_ncli[_cpu()] += 1;
-}
 
-static void popcli(){
-	if(--cpu_ncli[_cpu()] < 0)
-    	panic("popcli");
-	if(!cpu_ncli[_cpu()]) _intr_write(1);  //sti
-}
-
-static void holding(spinlock_t* lk){
-	int r;
-  	pushcli();
-  	r = lock->locked && lock->cpu == _cpu();
-  	popcli();
-  	return r;
-}
-
-static void kmt_spin_init(spinlock_t *lk, const char *name){
-	lk->name = name;
-	lk->cpu = 0;
-	lk->locked = 0;
-}
-
-static void kmt_spin_lock(spinlock_t *lk){
-	if(holding(lk))
-    	panic("acquire");
-	while(_atomic_xchg(&lock->flag,1));
-	lk->cpu = _cpu();
-}
-
-static void kmt_spin_unlock(spinlock_t *lk){
-	if(!holding(lk))
-    	panic("release");
-    lk->cpu = 0;
-    _atomic_xchg(&lock->flag,0);
-	popcli();
-}
-static void kmt_sem_init(sem_t *sem, const char *name, int value){
-
-}
-static void kmt_sem_wait(sem_t *sem){
-
-}
-static void kmt_sem_signal(sem_t *sem){
-
-}
 
 MODULE_DEF(kmt) {
   .init   = kmt_init,
