@@ -41,7 +41,7 @@ static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	}
 	else
 		current++;
-	//printf("cur_deref = 0x%x, task_name: %s\n",cur_deref, cur_deref->name);
+	printf("current = 0x%x, task_name: %s\n",current, *current->name);
 	return &(*current)->context;
 }
 
