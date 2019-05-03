@@ -25,7 +25,11 @@ static task_t **current;
 
 static _Context* kmt_context_save(_Event ev, _Context *ctx){
 	if(*current) assert((*current)->fence1 == MAGIC1 && (*current)->fence2 == MAGIC2);
-	if(*current) (*current)->context = *ctx;
+	LOG("enter kmt_context_save");
+	if(*current) {
+		printf("*current = 0x%x\n",*current);
+		(*current)->context = *ctx;
+	}
 	return NULL;
 }
 

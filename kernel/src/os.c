@@ -34,7 +34,7 @@ void dummy_test(void* arg){
 	}*/
 	int num = 0;
 	while(1) {
-		if(i == 1)
+		if(i == 2)
 			printf("FA%d\n",i);
 		else
 			printf("%d ",num++);
