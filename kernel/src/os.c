@@ -30,7 +30,7 @@ void dummy_test(void* arg){
 	int i = (intptr_t)arg;
 	while(1) {
 		printf("FA%d\n",i);
-		for(volatile int i = 0;i < 1000;i++);
+		for(volatile int i = 0;i < 100000;i++);
 	}
 	//printf("FA\n");
 }
