@@ -16,9 +16,9 @@
 		}\
 	} while(0)
 
-#define panic(format, ...) \
+#define panic(s) \
   do { \
-    printf("\33[1;31msystem panic: " format, ## __VA_ARGS__); \
+    printf("\33[1;31msystem panic: %s\n",s); \
     _halt(1); \
   } while (0)
 
