@@ -28,7 +28,7 @@ void echo_task(void *name){
 
 void dummy_test(void* arg){
 	int i = (intptr_t)arg;
-	if(i == 2){
+	if(i == 1){
 		LOG("help me");
 		return;
 	}
