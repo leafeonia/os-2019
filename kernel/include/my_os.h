@@ -15,7 +15,13 @@
 			_halt(1);\
 		}\
 	} while(0)
-	
+
+#define panic(format, ...) \
+  do { \
+    Log("\33[1;31msystem panic: " format, ## __VA_ARGS__); \
+    _halt(1); \
+  } while (0)
+
 #define INT_MAX 2147483647
 #define INT_MIN -2147483648
 #define MAGIC1 0x123456789012345

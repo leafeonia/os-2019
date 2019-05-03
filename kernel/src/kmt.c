@@ -8,6 +8,8 @@
 static task_t* tasks[NR_TASK];
 static int task_id = 0;
 static task_t **current;
+static int cpu_ncli[16];
+static spin_lock* lk_kmt_create;
 
 /*
 	current-----
@@ -65,9 +67,12 @@ static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 static void kmt_init(){
 	//LOG("kmt_init");
 	//printf("tasks[0] = 0x%x, &tasks[0] = 0x%x, tasks[1] = 0x%x, &tasks[1] = 0x%x\n", tasks[0], &tasks[0], tasks[1], &tasks[1]);
+	memset(cpu_ncli,0,sizeof(cpu_ncli));
 	current = tasks;
 	os->on_irq(INT_MIN, _EVENT_NULL, kmt_context_save);
 	os->on_irq(INT_MAX, _EVENT_NULL, kmt_context_switch);
+	
+	spin_init(lk_kmt_create);
 	/*for(int i = 0;i < NR_TASK;i++){
 		task_t* task = &tasks[i];
 		_Area stack = (_Area){task->stack,task->fence2};
@@ -78,7 +83,7 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 
 
 	//LOCKKKKKKKKKKKKKKKKKK
-	
+	spin_lock(lk_kmt_create);
 	tasks[task_id] = task;
 	_Area stack = (_Area){task->stack, &(task->fence2)};
 	task->context = *_kcontext(stack, entry, arg);
@@ -92,19 +97,54 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 	//printf("*current = 0x%x\n",*current);
 	//printf("current->context.eip = 0x%x\n",current->context.eip);
 	//printf("func_entry = 0x%x\n",entry);
+	spin_unlock(lk_kmt_create);
 	return 0;
 }
 static void kmt_teardown(task_t *task){
 
 }
+
+
+
+
+static void pushcli(){
+	_intr_write(0);  //cli
+	cpu_ncli[_cpu()] += 1;
+}
+
+static void popcli(){
+	if(--mycpu()->ncli < 0)
+    	panic("popcli");
+	if(!cpu_ncli[_cpu()]) _intr_write(1);  //sti
+}
+
+static void holding(spinlock_t* lk){
+	int r;
+  	pushcli();
+  	r = lock->locked && lock->cpu == _cpu();
+  	popcli();
+  	return r;
+}
+
 static void kmt_spin_init(spinlock_t *lk, const char *name){
-
+	lk->name = name;
+	lk->cpu = 0;
+	lk->locked = 0;
 }
+
 static void kmt_spin_lock(spinlock_t *lk){
-
+	if(holding(lk))
+    	panic("acquire");
+	while(_atomic_xchg(&lock->flag,1));
+	lk->cpu = _cpu();
 }
-static void kmt_spin_unlock(spinlock_t *lk){
 
+static void kmt_spin_unlock(spinlock_t *lk){
+	if(!holding(lk))
+    	panic("release");
+    lk->cpu = 0;
+    _atomic_xchg(&lock->flag,0);
+	popcli();
 }
 static void kmt_sem_init(sem_t *sem, const char *name, int value){
 

@@ -11,7 +11,11 @@ struct task {
 	uint8_t stack[4096];
 	long long fence2;
 };
-struct spinlock {};
+struct spinlock {
+	const char* name;
+	int locked;
+	int cpu;
+};
 struct semaphore {};
 
 #endif
