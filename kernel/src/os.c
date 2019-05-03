@@ -126,7 +126,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
   }
   
   //return context;
-  printf("os_trap returns task: 0x%x\n",ret);
+  //printf("os_trap returns task: 0x%x\n",ret);
   return ret;
 }
 
