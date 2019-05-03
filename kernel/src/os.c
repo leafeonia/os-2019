@@ -46,8 +46,8 @@ static void os_init() {
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty2");
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty3");
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty4");*/
-  kmt->create(pmm->alloc(sizeof(task_t)), "dummy1", dummy_test, (void*)2);
-  kmt->create(pmm->alloc(sizeof(task_t)), "dummy2", dummy_test, (void*)1);
+  kmt->create(pmm->alloc(sizeof(task_t)), "dummy1", dummy_test, (void*)1);
+  kmt->create(pmm->alloc(sizeof(task_t)), "dummy2", dummy_test, (void*)2);
   #endif
 }
 
@@ -122,6 +122,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
   }
   
   //return context;
+  printf("os_trap returns task: 0x%x\n",ret);
   return ret;
 }
 
