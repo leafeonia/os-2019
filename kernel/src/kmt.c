@@ -106,9 +106,10 @@ static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	//LOG("kmt_context_switch");
 	//printf("ctx = 0x%x\n",ctx);
 	kmt_spin_lock(&lk_kmt_switch);
+	kmt_spin_unlock(&lk_kmt_switch);
 	task_t* cur_deref = *current;
 	if(!cur_deref) return NULL;
-	kmt_spin_unlock(&lk_kmt_switch);
+	
 	//printf("tasks[0] = 0x%x, &tasks[0] = 0x%x, tasks[1] = 0x%x, &tasks[1] = 0x%x\n", tasks[0], &tasks[0], tasks[1], &tasks[1]);
 	
 	//LOG("checkpoint0");
