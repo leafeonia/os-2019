@@ -100,6 +100,7 @@ static _Context* kmt_context_save(_Event ev, _Context *ctx){
 
 static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	kmt_spin_lock(&lk_kmt_switch);
+	printf("intr_read = %d\n",_intr_read());
 	kmt_spin_unlock(&lk_kmt_switch);
 	if(*current) assert((*current)->fence1 == MAGIC1 && (*current)->fence2 == MAGIC2);
 	//LOG("kmt_context_switch");
