@@ -42,7 +42,7 @@ static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	}
 	else
 		current++;
-	printf("current = 0x%x, task_name: %s\n",current, (*current)->name);
+	//printf("current = 0x%x, task_name: %s\n",current, (*current)->name);
 	return &(*current)->context;
 }
 
