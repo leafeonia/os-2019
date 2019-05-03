@@ -28,7 +28,7 @@ static _Context* kmt_context_save(_Event ev, _Context *ctx){
 	//LOG("enter kmt_context_save");
 	if(*current) {
 		//printf("*current = 0x%x\n",*current);
-		(*current)->context = *ctx;
+		//(*current)->context = *ctx;
 	}
 	return NULL;
 }
