@@ -123,7 +123,7 @@ static void kmt_init(){
 	current = tasks;
 	os->on_irq(INT_MIN, _EVENT_NULL, kmt_context_save);
 	os->on_irq(INT_MAX, _EVENT_NULL, kmt_context_switch);
-	
+	LOG("FA");
 	kmt_spin_init(lk_kmt_create,"kmt_create");
 	/*for(int i = 0;i < NR_TASK;i++){
 		task_t* task = &tasks[i];
@@ -135,7 +135,6 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 
 
 	//LOCKKKKKKKKKKKKKKKKKK
-	LOG("FA");
 	kmt_spin_lock(lk_kmt_create);
 	tasks[task_id] = task;
 	_Area stack = (_Area){task->stack, &(task->fence2)};
