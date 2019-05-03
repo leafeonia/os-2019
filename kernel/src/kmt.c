@@ -9,7 +9,7 @@ static task_t* tasks[NR_TASK];
 static int task_id = 0;
 static task_t **current;
 static int cpu_ncli[16];
-static spinlock_t* lk_kmt_create;
+static spinlock_t lk_kmt_create;
 
 
 static void pushcli(){
@@ -135,7 +135,7 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 
 
 	//LOCKKKKKKKKKKKKKKKKKK
-	kmt_spin_lock(lk_kmt_create);
+	kmt_spin_lock(&lk_kmt_create);
 	tasks[task_id] = task;
 	_Area stack = (_Area){task->stack, &(task->fence2)};
 	task->context = *_kcontext(stack, entry, arg);
@@ -149,7 +149,7 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 	//printf("*current = 0x%x\n",*current);
 	//printf("current->context.eip = 0x%x\n",current->context.eip);
 	//printf("func_entry = 0x%x\n",entry);
-	kmt_spin_unlock(lk_kmt_create);
+	kmt_spin_unlock(&lk_kmt_create);
 	return 0;
 }
 static void kmt_teardown(task_t *task){
