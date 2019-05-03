@@ -18,7 +18,7 @@
 
 #define panic(s) \
   do { \
-    printf("\33[1;31msystem panic: %s\n",s); \
+    printf("\33[1;31msystem panic: %s\33[0m\n",s); \
     _halt(1); \
   } while (0)
 
