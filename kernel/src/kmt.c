@@ -70,7 +70,7 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 	//LOCKKKKKKKKKKKKKKKKKK
 	
 	tasks[task_id] = task;
-	_Area stack = (_Area){task->stack, (void*)(task->fence2)};
+	_Area stack = (_Area){task->stack, &(task->fence2)};
 	task->context = *_kcontext(stack, entry, arg);
 	task->name = name;
 	task->fence1 = MAGIC1;
