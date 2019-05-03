@@ -52,6 +52,7 @@ static void kmt_init(){
 	LOG("kmt_init");
 	printf("tasks[0] = 0x%x, &tasks[0] = 0x%x, tasks[1] = 0x%x, &tasks[1] = 0x%x\n", tasks[0], &tasks[0], tasks[1], &tasks[1]);
 	*current = NULL;
+	LOG("kmt_init_checkpoint");
 	os->on_irq(INT_MAX, _EVENT_NULL, kmt_context_switch);
 	LOG("kmt_init_finished");
 	/*for(int i = 0;i < NR_TASK;i++){
