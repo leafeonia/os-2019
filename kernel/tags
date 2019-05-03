@@ -1,0 +1,43 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+AM_HOME	Makefile	/^export AM_HOME := $(PWD)\/..\/abstract-machine$/;"	m
+ARCH	Makefile	/^export ARCH := x86-qemu$/;"	m
+INC_DIR	Makefile	/^INC_DIR        := include\/ framework\/$/;"	m
+MODULE	framework/kernel.h	/^} MODULE(os);$/;"	t	typeref:struct:__anon1
+MODULE	framework/kernel.h	/^} MODULE(pmm);$/;"	t	typeref:struct:__anon2
+MODULE	framework/kernel.h	7;"	d
+MODULE_DEF	framework/kernel.h	10;"	d
+MODULE_DEF	src/alloc.c	/^MODULE_DEF(pmm) {$/;"	f
+MODULE_DEF	src/os.c	/^MODULE_DEF(os) {$/;"	f
+NAME	Makefile	/^NAME           := kernel$/;"	m
+PREBUILD	Makefile	/^PREBUILD := git$/;"	m
+QEMU_FLAGS	Makefile	/^QEMU_FLAGS := -serial stdio -machine accel=kvm:tcg -drive format=raw,file=$(BINARY)$/;"	m
+SRCS	Makefile	/^SRCS           := framework\/main.c $(shell find -L .\/src\/ -name "*.c")$/;"	m
+__KERNEL_H__	framework/kernel.h	2;"	d
+__NANOS_H__	framework/nanos.h	2;"	d
+alloc	framework/kernel.h	/^  void *(*alloc)(size_t size);$/;"	m	struct:__anon2
+free	framework/kernel.h	/^  void (*free)(void *ptr);$/;"	m	struct:__anon2
+handler_t	framework/kernel.h	/^typedef _Context *(*handler_t)(_Event, _Context *);$/;"	t
+hello	src/os.c	/^static void hello() {$/;"	f	file:
+init	framework/kernel.h	/^  void (*init)();$/;"	m	struct:__anon1
+init	framework/kernel.h	/^  void (*init)();$/;"	m	struct:__anon2
+kalloc	src/alloc.c	/^static void *kalloc(size_t size) {$/;"	f	file:
+kfree	src/alloc.c	/^static void kfree(void *ptr) {$/;"	f	file:
+main	framework/main.c	/^int main() {$/;"	f
+off_t	framework/nanos.h	/^typedef intptr_t off_t;$/;"	t
+on_irq	framework/kernel.h	/^  void (*on_irq)(int seq, int event, handler_t handler);$/;"	m	struct:__anon1
+os_init	src/os.c	/^static void os_init() {$/;"	f	file:
+os_on_irq	src/os.c	/^static void os_on_irq(int seq, int event, handler_t handler) {$/;"	f	file:
+os_run	src/os.c	/^static void os_run() {$/;"	f	file:
+os_trap	src/os.c	/^static _Context *os_trap(_Event ev, _Context *context) {$/;"	f	file:
+pid_t	framework/nanos.h	/^typedef int32_t pid_t;$/;"	t
+pm_end	src/alloc.c	/^static uintptr_t pm_start, pm_end;$/;"	v	file:
+pm_start	src/alloc.c	/^static uintptr_t pm_start, pm_end;$/;"	v	file:
+pmm_init	src/alloc.c	/^static void pmm_init() {$/;"	f	file:
+run	framework/kernel.h	/^  void (*run)();$/;"	m	struct:__anon1
+ssize_t	framework/nanos.h	/^typedef intptr_t ssize_t;$/;"	t
+trap	framework/kernel.h	/^  _Context *(*trap)(_Event ev, _Context *context);$/;"	m	struct:__anon1
