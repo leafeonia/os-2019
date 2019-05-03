@@ -23,10 +23,10 @@ static void popcli(){
 	if(!cpu_ncli[_cpu()]) _intr_write(1);  //sti
 }
 
-static void holding(spinlock_t* lk){
+static int holding(spinlock_t* lk){
 	int r;
   	pushcli();
-  	r = lock->locked && lock->cpu == _cpu();
+  	r = lk->locked && lk->cpu == _cpu();
   	popcli();
   	return r;
 }
@@ -40,7 +40,7 @@ static void kmt_spin_init(spinlock_t *lk, const char *name){
 static void kmt_spin_lock(spinlock_t *lk){
 	if(holding(lk))
     	panic("acquire");
-	while(_atomic_xchg(&lock->flag,1));
+	while(_atomic_xchg(&lk->flag,1));
 	lk->cpu = _cpu();
 }
 
@@ -48,7 +48,7 @@ static void kmt_spin_unlock(spinlock_t *lk){
 	if(!holding(lk))
     	panic("release");
     lk->cpu = 0;
-    _atomic_xchg(&lock->flag,0);
+    _atomic_xchg(&lk->flag,0);
 	popcli();
 }
 static void kmt_sem_init(sem_t *sem, const char *name, int value){
