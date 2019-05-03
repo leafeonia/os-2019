@@ -14,19 +14,19 @@ static task_t **current;
 			   |
 		  	   v
 		  	   (cur_deref)
-    0x114740    0x114744
+    0x114740    0x114744           (task_t**)
 	============================
-	| tasks[0] | tasks[1] | ...  
+	| tasks[0] | tasks[1] | ...    (tasks_t*)
 	============================
 		|			|			
 		v			v	
-	0x200008    0x201098
+	0x200008    0x201098           (task_t*)
 	(&dummy1)	(&dummy2)
 */
 
 static _Context* kmt_context_save(_Event ev, _Context *ctx){
 	if(*current) assert((*current)->fence1 == MAGIC1 && (*current)->fence2 == MAGIC2);
-	printf("BEFORE:ctx = 0x%x, *current = 0x%x, &tasks[0] = 0x%x, &tasks[0]->context = 0x%x, &tasks[1] = 0x%x, &tasks[1]->context = 0x%x\n",ctx, *current, &tasks[0], &tasks[0]->context, &tasks[1], &tasks[1]->context);
+	printf("BEFORE:ctx->eip = 0x%x, *current = 0x%x, &tasks[0] = 0x%x, tasks[0]->context.eip = 0x%x, &tasks[1] = 0x%x, tasks[1]->context.eip = 0x%x\n",ctx->eip, *current, &tasks[0], tasks[0]->context.eip, &tasks[1], tasks[1]->context.eip);
 	//LOG("enter kmt_context_save");
 	if(*current) {
 		//printf("*current = 0x%x\n",*current);
