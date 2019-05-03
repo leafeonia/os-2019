@@ -38,6 +38,7 @@ static void kmt_spin_init(spinlock_t *lk, const char *name){
 }
 
 static void kmt_spin_lock(spinlock_t *lk){
+	pushcli();
 	if(holding(lk))
     	panic("acquire");
 	while(_atomic_xchg(&lk->locked,1));
