@@ -28,26 +28,26 @@ static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	//LOG("kmt_context_switch");
 	task_t* cur_deref = *current;
 	if(!cur_deref) return NULL;
-	printf("tasks[0] = 0x%x, &tasks[0] = 0x%x, tasks[1] = 0x%x, &tasks[1] = 0x%x\n", tasks[0], &tasks[0], tasks[1], &tasks[1]);
+	//printf("tasks[0] = 0x%x, &tasks[0] = 0x%x, tasks[1] = 0x%x, &tasks[1] = 0x%x\n", tasks[0], &tasks[0], tasks[1], &tasks[1]);
 	
-	LOG("checkpoint0");
-	printf("task_id = %d,cur_deref = 0x%x\n",task_id,cur_deref);
+	//LOG("checkpoint0");
+	//printf("task_id = %d,cur_deref = 0x%x\n",task_id,cur_deref);
 	cur_deref->context = *ctx;
-	LOG("checkpoint 1");
+	//LOG("checkpoint 1");
 	//printf("cur_deref + 1 = 0x%x, ")
 	if(current + 1 == &tasks[task_id]){
-		LOG("checkpoint 2");
+		//LOG("checkpoint 2");
 		current = &tasks[0];
 	}
 	else
 		current++;
-	printf("cur_deref = 0x%x, task_name: %s\n",cur_deref, cur_deref->name);
+	//printf("cur_deref = 0x%x, task_name: %s\n",cur_deref, cur_deref->name);
 	return &(*current)->context;
 }
 
 static void kmt_init(){
-	LOG("kmt_init");
-	printf("tasks[0] = 0x%x, &tasks[0] = 0x%x, tasks[1] = 0x%x, &tasks[1] = 0x%x\n", tasks[0], &tasks[0], tasks[1], &tasks[1]);
+	//LOG("kmt_init");
+	//printf("tasks[0] = 0x%x, &tasks[0] = 0x%x, tasks[1] = 0x%x, &tasks[1] = 0x%x\n", tasks[0], &tasks[0], tasks[1], &tasks[1]);
 	current = tasks;
 	os->on_irq(INT_MAX, _EVENT_NULL, kmt_context_switch);
 	/*for(int i = 0;i < NR_TASK;i++){
@@ -66,10 +66,10 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 	task->context = *_kcontext(stack, entry, arg);
 	task->name = name;
 	
-	printf("kmt_create: A task has been created. Position: 0x%x, Name: %s, func_entry: 0x%x\n",task, name, entry);
-	printf("tasks[0] = 0x%x, &tasks[0] = 0x%x, tasks[1] = 0x%x, &tasks[1] = 0x%x\n", tasks[0], &tasks[0], tasks[1], &tasks[1]);
+	//printf("kmt_create: A task has been created. Position: 0x%x, Name: %s, func_entry: 0x%x\n",task, name, entry);
+	//printf("tasks[0] = 0x%x, &tasks[0] = 0x%x, tasks[1] = 0x%x, &tasks[1] = 0x%x\n", tasks[0], &tasks[0], tasks[1], &tasks[1]);
 	current = &tasks[task_id++];
-	printf("*current = 0x%x\n",*current);
+	//printf("*current = 0x%x\n",*current);
 	//printf("current->context.eip = 0x%x\n",current->context.eip);
 	//printf("func_entry = 0x%x\n",entry);
 	return 0;
