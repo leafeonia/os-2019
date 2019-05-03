@@ -9,7 +9,7 @@ static task_t* tasks[NR_TASK];
 static int task_id = 0;
 static task_t **current;
 static int cpu_ncli[16];
-static spin_lock_t* lk_kmt_create;
+static spinlock_t* lk_kmt_create;
 
 /*
 	current-----
