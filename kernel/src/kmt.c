@@ -25,13 +25,13 @@ static task_t **current;
 
 static _Context* kmt_context_save(_Event ev, _Context *ctx){
 	if(*current) assert((*current)->fence1 == MAGIC1 && (*current)->fence2 == MAGIC2);
-	printf("BEFORE: *current = 0x%x, &tasks[0] = 0x%x, &tasks[0]->context = 0x%x, &tasks[1] = 0x%x, &tasks[1]->context = 0x%x\n",*current, &tasks[0], &tasks[0]->context, &tasks[1], &tasks[1]->context);
+	printf("BEFORE:ctx = 0x%x, *current = 0x%x, &tasks[0] = 0x%x, &tasks[0]->context = 0x%x, &tasks[1] = 0x%x, &tasks[1]->context = 0x%x\n",ctx, *current, &tasks[0], &tasks[0]->context, &tasks[1], &tasks[1]->context);
 	//LOG("enter kmt_context_save");
 	if(*current) {
 		//printf("*current = 0x%x\n",*current);
 		(*current)->context = *ctx;
 	}
-	printf("AFTER: *current = 0x%x, &tasks[0] = 0x%x, &tasks[0]->context = 0x%x, &tasks[1] = 0x%x, &tasks[1]->context = 0x%x\n",*current, &tasks[0], &tasks[0]->context, &tasks[1], &tasks[1]->context);
+	printf("AFTER: *current = 0x%x, &tasks[0] = 0x%x, &tasks[0]->context = 0x%x, &tasks[1] = 0x%x, &tasks[1]->context = 0x%x\n\n",*current, &tasks[0], &tasks[0]->context, &tasks[1], &tasks[1]->context);
 	return NULL;
 }
 
