@@ -25,7 +25,8 @@ static task_t **current;
 
 
 static _Context* kmt_context_switch(_Event ev, _Context *ctx){
-printf("task_id = %d,cur_deref = 0x%x\n",task_id,cur_deref);
+	task_t* cur_deref = *current;
+	printf("task_id = %d,cur_deref = 0x%x\n",task_id,cur_deref);
 	LOG("kmt_context_switch");
 	task_t* cur_deref = *current;
 	
