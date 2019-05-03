@@ -16,7 +16,7 @@ static spinlock_t lk_kmt_switch;
 
 
 static void pushcli(){
-	int eflags = get_efl(); 
+	int eflags = _get_efl(); 
 	_intr_write(0);  //cli
 	cpu_ncli[_cpu()] += 1;
 }
