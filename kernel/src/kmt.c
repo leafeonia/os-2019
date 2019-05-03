@@ -68,6 +68,7 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 	printf("kmt_create: A task has been created. Position: 0x%x, Name: %s, func_entry: 0x%x\n",task, name, entry);
 	printf("tasks[0] = 0x%x, &tasks[0] = 0x%x, tasks[1] = 0x%x, &tasks[1] = 0x%x\n", tasks[0], &tasks[0], tasks[1], &tasks[1]);
 	*current = tasks[task_id++];
+	printf("tasks[0] = 0x%x, &tasks[0] = 0x%x, tasks[1] = 0x%x, &tasks[1] = 0x%x\n", tasks[0], &tasks[0], tasks[1], &tasks[1]);
 	printf("*current = 0x%x\n",*current);
 	//printf("current->context.eip = 0x%x\n",current->context.eip);
 	//printf("func_entry = 0x%x\n",entry);
