@@ -40,7 +40,7 @@ static void kmt_spin_init(spinlock_t *lk, const char *name){
 static void kmt_spin_lock(spinlock_t *lk){
 	if(holding(lk))
     	panic("acquire");
-	while(_atomic_xchg(&lk->flag,1));
+	while(_atomic_xchg(&lk->locked,1));
 	lk->cpu = _cpu();
 }
 
@@ -48,7 +48,7 @@ static void kmt_spin_unlock(spinlock_t *lk){
 	if(!holding(lk))
     	panic("release");
     lk->cpu = 0;
-    _atomic_xchg(&lk->flag,0);
+    _atomic_xchg(&lk->locked,0);
 	popcli();
 }
 static void kmt_sem_init(sem_t *sem, const char *name, int value){
@@ -124,7 +124,7 @@ static void kmt_init(){
 	os->on_irq(INT_MIN, _EVENT_NULL, kmt_context_save);
 	os->on_irq(INT_MAX, _EVENT_NULL, kmt_context_switch);
 	
-	kmt_spin_init(lk_kmt_create);
+	kmt_spin_init(lk_kmt_create,"kmt_create");
 	/*for(int i = 0;i < NR_TASK;i++){
 		task_t* task = &tasks[i];
 		_Area stack = (_Area){task->stack,task->fence2};
