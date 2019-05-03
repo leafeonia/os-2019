@@ -26,13 +26,13 @@ static task_t **current;
 
 static _Context* kmt_context_save(_Event ev, _Context *ctx){
 	if(*current) assert((*current)->fence1 == MAGIC1 && (*current)->fence2 == MAGIC2);
-	printf("BEFORE:ctx->eip = 0x%x, *current = 0x%x, &tasks[0] = 0x%x, tasks[0]->context.eip = 0x%x, &tasks[1] = 0x%x, tasks[1]->context.eip = 0x%x\n\n",ctx->eip, *current, &tasks[0], tasks[0]->context.eip, &tasks[1], tasks[1]->context.eip);
+	//printf("BEFORE:ctx->eip = 0x%x, *current = 0x%x, &tasks[0] = 0x%x, tasks[0]->context.eip = 0x%x, &tasks[1] = 0x%x, tasks[1]->context.eip = 0x%x\n\n",ctx->eip, *current, &tasks[0], tasks[0]->context.eip, &tasks[1], tasks[1]->context.eip);
 	//LOG("enter kmt_context_save");
 	if(*current && *(current + 1)) {
 		//printf("*current = 0x%x\n",*current);
 		(*current)->context = *ctx;
 	}
-	printf("AFTER :ctx->eip = 0x%x, *current = 0x%x, &tasks[0] = 0x%x, tasks[0]->context.eip = 0x%x, &tasks[1] = 0x%x, tasks[1]->context.eip = 0x%x\n\n\n",ctx->eip, *current, &tasks[0], tasks[0]->context.eip, &tasks[1], tasks[1]->context.eip);
+	//printf("AFTER :ctx->eip = 0x%x, *current = 0x%x, &tasks[0] = 0x%x, tasks[0]->context.eip = 0x%x, &tasks[1] = 0x%x, tasks[1]->context.eip = 0x%x\n\n\n",ctx->eip, *current, &tasks[0], tasks[0]->context.eip, &tasks[1], tasks[1]->context.eip);
 	return NULL;
 }
 
@@ -51,7 +51,7 @@ static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	//cur_deref->context = *ctx;
 	//LOG("checkpoint 1");
 	//printf("cur_deref + 1 = 0x%x, ")
-	printf("current = 0x%x, current + 1 =0x%x\n",current, current+1);
+	//printf("current = 0x%x, current + 1 =0x%x\n",current, current+1);
 	if(current + 1 == &tasks[task_id]){
 		//LOG("checkpoint 2");
 		current = &tasks[0];
