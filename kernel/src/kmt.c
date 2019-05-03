@@ -37,12 +37,12 @@ static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	//printf("cur_deref + 1 = 0x%x, ")
 	if(current + 1 == &tasks[task_id]){
 		LOG("checkpoint 2");
-		cur_deref = tasks[0];
+		current = &tasks[0];
 	}
 	else
-		cur_deref++;
+		current++;
 	printf("cur_deref = 0x%x, task_name: %s\n",cur_deref, cur_deref->name);
-	return &cur_deref->context;
+	return (*current)->context;
 }
 
 static void kmt_init(){
