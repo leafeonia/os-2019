@@ -85,7 +85,7 @@ static _Context* kmt_context_save(_Event ev, _Context *ctx){
 	//LOG("enter kmt_context_save");
 	if(*current) {
 		//printf("*current = 0x%x\n",*current);
-		//(*current)->context = *ctx;
+		(*current)->context = *ctx;
 	}
 	//printf("AFTER :ctx->eip = 0x%x, *current = 0x%x, &tasks[0] = 0x%x, tasks[0]->context.eip = 0x%x, &tasks[1] = 0x%x, tasks[1]->context.eip = 0x%x\n\n\n",ctx->eip, *current, &tasks[0], tasks[0]->context.eip, &tasks[1], tasks[1]->context.eip);
 	return NULL;
