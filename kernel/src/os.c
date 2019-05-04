@@ -48,6 +48,7 @@ static void os_init() {
   printf("begin of os_init. intr_read = %d\n",_intr_read());
   pmm->init();
   kmt->init();
+  printf("checkpoint 1 of os_init. intr_read = %d\n",_intr_read());
   //_vme_init(pmm->alloc,pmm->free);
   //dev->init();
   #ifdef L2_TEST
