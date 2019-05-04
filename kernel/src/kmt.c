@@ -148,8 +148,8 @@ static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	else assert((*current)->fence1 == MAGIC1 && (*current)->fence2 == MAGIC2);
 	kmt_spin_lock(&lk_kmt_switch);
 	do{
-		if(!(*current) || current + 1 == &tasks[task_id]){
-			current = &tasks[0];
+		if(!(*current) || current + 1 == &tasks[_cpu()][task_id / _ncpu() + 1]){
+			current = &tasks[_cpu()][0];
 		}
 		else
 			current++;
