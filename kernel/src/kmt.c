@@ -183,7 +183,7 @@ static void kmt_init(){
 }
 static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void *arg){
 
-
+	printf("intr_read = %d\n",_intr_read());
 	//LOCKKKKKKKKKKKKKKKKKK
 	kmt_spin_lock(&lk_kmt_create);
 	//tasks[task_id] = task; //one core
