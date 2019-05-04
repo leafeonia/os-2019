@@ -124,6 +124,7 @@ static void *kalloc(size_t size) {
   //printf("malloc: %x\n",(uintptr_t)ret);
   kmt->spin_unlock(&mem_lock);
 #endif
+	printf("after kalloc, _intr_read = %d\n",_intr_read());
   return ret;
 }
 
