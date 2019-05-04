@@ -29,7 +29,7 @@ static void popcli(){
 		panic("popcli - interruptible");
 	if(--cpu_ncli[_cpu()] < 0)
     	panic("popcli");
-	if(!cpu_ncli[_cpu()]) _intr_write(1);  //sti
+	if(!cpu_ncli[_cpu()] && cpu_intena[_cpu()]) _intr_write(1);  //sti
 }
 
 static int holding(spinlock_t* lk){
