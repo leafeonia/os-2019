@@ -209,6 +209,7 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 	for(int i = 0;i < 4;i++){
 		for(int j = 0;j < 2 ;j++){
 			printf("tasks[%d][%d] = 0x%x\n",i,j,tasks[i][j]);
+			printf("&tasks[%d][%d] = 0x%x\n",i,j,&tasks[i][j]);
 		}
 	}
 	//kmt_spin_unlock(&lk_kmt_create);
