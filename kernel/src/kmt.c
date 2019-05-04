@@ -169,6 +169,8 @@ static void kmt_init(){
 	for(int i = 0;i < _ncpu();i++){
 		current_task[i] = &tasks[i][0];
 	}
+	for(int i = 0;i < _ncpu();i++)
+		printf("current_task[%d] = 0x%x\n",i,current_task[i]);
 	os->on_irq(INT_MIN, _EVENT_NULL, kmt_context_save);
 	os->on_irq(INT_MAX, _EVENT_NULL, kmt_context_switch);
 	LOG("kmt_init");
