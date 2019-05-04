@@ -197,7 +197,7 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 	task->fence1 = MAGIC1;
 	task->fence2 = MAGIC2;
 	
-	printf("kmt_create: A task has been created. address: 0x%x, Name: %s, func_entry: 0x%x,task_id = %d, located at tasks[%d][%d]\n",task, name, entry,task_id, task_id % _ncpu(), task_id / _ncpu());
+	printf("kmt_create: A task has been created. address: 0x%x, Name: %s, func_entry: 0x%x,task_id = %d, located at tasks[%d][%d](address: 0x%x)\n",task, name, entry,task_id, task_id % _ncpu(), task_id / _ncpu(), &tasks[task_id % _ncpu()][task_id / _ncpu()]);
 	//printf("tasks[0] = 0x%x, &tasks[0] = 0x%x, tasks[1] = 0x%x, &tasks[1] = 0x%x\n", tasks[0], &tasks[0], tasks[1], &tasks[1]);
 	current_task[task_id % _ncpu()] = &tasks[task_id % _ncpu()][task_id / _ncpu()] ;
 	task_id++;
