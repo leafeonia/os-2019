@@ -8,7 +8,6 @@
 
 typedef long long ALIGN;
 
-extern void kmt_spin_init(spinlock_t *lk, const char *name);
 
 //reference from: THE C PROGRAMMING LANGUAGE
 typedef union header{
@@ -28,7 +27,7 @@ static HEADER* freep = NULL;
 static void pmm_init() {
   pm_start = (uintptr_t)_heap.start; 
   pm_end   = (uintptr_t)_heap.end;
-  kmt->spin_init(&mem_lock,"memory lock");
+  kmt->spin_init(mem_lock,"memory lock");
 }
 
 static void free(void* ap){
