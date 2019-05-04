@@ -106,6 +106,7 @@ static _Context* kmt_context_save(_Event ev, _Context *ctx){
 
 static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	LOG("kmt_context_switch");
+	printf("intr_read = %d\n",_intr_read());
 	//printf("intr_read = %d\n",_intr_read());
 	//printf("outside: intr_read = %d\n",_intr_read());
 	kmt_spin_lock(&lk_kmt_switch);
