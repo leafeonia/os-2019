@@ -188,7 +188,6 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 	kmt_spin_lock(&lk_kmt_create);
 	//tasks[task_id] = task; //one core
 	tasks[task_id % _ncpu()][task_id / _ncpu()] = task;
-	task_id++;
 	_Area stack = (_Area){task->stack, &(task->fence2)};
 	task->context = *_kcontext(stack, entry, arg);
 	task->name = name;
