@@ -150,7 +150,7 @@ static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	kmt_spin_lock(&lk_kmt_switch);
 	printf("task_id = %d, _ncpu() = %d, task_id / _ncpu() + 1 = %d, current + 1 = 0x%x, &tasks[_cpu()][task_id / _ncpu() + 1] = 0x%x\n",task_id,_ncpu(),task_id / _ncpu() + 1, current + 1,&tasks[_cpu()][task_id / _ncpu() + 1]);
 	do{
-		if(!(*current) || current + 1 == &tasks[_cpu()][task_id / _ncpu() + 1]){
+		if(!(*current) || !(*current + 1)/*current + 1 == &tasks[_cpu()][task_id / _ncpu() + 1]*/){
 			current = &tasks[_cpu()][0];
 		}
 		else
