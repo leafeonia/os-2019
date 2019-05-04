@@ -141,7 +141,7 @@ static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	kmt_spin_unlock(&lk_kmt_switch);
 	return ret;
 	*/
-	assert((*current)->fence1 == MAGIC1 && (*current)->fence2 == MAGIC2);
+	if(*current) assert((*current)->fence1 == MAGIC1 && (*current)->fence2 == MAGIC2);
 	kmt_spin_lock(&lk_kmt_switch);
 	do{
 		if(!(*current) || current + 1 == &tasks[task_id]){
