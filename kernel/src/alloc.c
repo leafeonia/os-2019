@@ -28,7 +28,7 @@ static HEADER* freep = NULL;
 static void pmm_init() {
   pm_start = (uintptr_t)_heap.start; 
   pm_end   = (uintptr_t)_heap.end;
-  kmt->spin_init(&mem_lock);
+  kmt->spin_init(&mem_lock,"memory lock");
 }
 
 static void free(void* ap){
