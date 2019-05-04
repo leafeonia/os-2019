@@ -20,14 +20,14 @@ typedef union header{
 
 static uintptr_t pm_start, pm_end;
 //static lock_t mem_lock;
-static spinlock_t *mem_lock;
+static spinlock_t mem_lock;
 static HEADER base;
 static HEADER* freep = NULL;
 
 static void pmm_init() {
   pm_start = (uintptr_t)_heap.start; 
   pm_end   = (uintptr_t)_heap.end;
-  kmt->spin_init(mem_lock,"memory lock");
+  kmt->spin_init(&mem_lock,"memory lock");
 }
 
 static void free(void* ap){
@@ -112,17 +112,17 @@ static void* fancy_alloc(size_t nbytes){
 static void *kalloc(size_t size) {
   void* ret;
 #ifdef NAIVE
-  kmt_spin_lock(&mem_lock);
+  kmt->spin_lock(&mem_lock);
   ret = (void*)pm_start;
   pm_start += size;  
   //printf("%x from cpu#%d\n",ret,_cpu()+1);
-  kmt_spin_unlock(&mem_lock);
+  kmt->spin_unlock(&mem_lock);
   return ret;
 #else
-  kmt_spin_lock(&mem_lock);
+  kmt->spin_lock(&mem_lock);
   ret = fancy_alloc(size);
   //printf("malloc: %x\n",(uintptr_t)ret);
-  kmt_spin_unlock(&mem_lock);
+  kmt->spin_unlock(&mem_lock);
 #endif
   return ret;
 }
