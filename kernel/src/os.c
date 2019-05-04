@@ -120,6 +120,7 @@ static void os_run() {
 }
 
 static _Context *os_trap(_Event ev, _Context *context) {
+  _intr_write(0);
   _Context* ret = context;
   //printf("context->eip = 0x%x\n",context->eip);
   for(int i = 0;i < irq_id;i++){
@@ -131,6 +132,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
   
   //return context;
   //printf("os_trap returns task: 0x%x\n",ret);
+  _intr_write(1);
   return ret;
 }
 
