@@ -40,13 +40,13 @@ static int holding(spinlock_t* lk){
   	return r;
 }
 
-static void kmt_spin_init(spinlock_t *lk, const char *name){
+void kmt_spin_init(spinlock_t *lk, const char *name){
 	lk->name = name;
 	lk->cpu = 0;
 	lk->locked = 0;
 }
 
-static void kmt_spin_lock(spinlock_t *lk){
+void kmt_spin_lock(spinlock_t *lk){
 	pushcli();
 	if(holding(lk)){
 		printf("murderer: %s\n",lk->name);
@@ -57,7 +57,7 @@ static void kmt_spin_lock(spinlock_t *lk){
 	lk->cpu = _cpu();
 }
 
-static void kmt_spin_unlock(spinlock_t *lk){
+void kmt_spin_unlock(spinlock_t *lk){
 	if(!holding(lk))
     	panic("release");
     lk->cpu = 0;
