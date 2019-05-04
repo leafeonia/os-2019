@@ -7,7 +7,9 @@
 
 static task_t* tasks[NR_TASK];
 static int task_id = 0;
-static task_t **current;
+//static task_t **current;
+task_t **current_task[16];
+#define current (current_task[_cpu()])
 static int cpu_ncli[16];
 static int cpu_intena[16];
 static spinlock_t lk_kmt_create;
@@ -105,6 +107,7 @@ static _Context* kmt_context_save(_Event ev, _Context *ctx){
 }
 
 static _Context* kmt_context_switch(_Event ev, _Context *ctx){
+	/*
 	//LOG("kmt_context_switch");
 	//printf("intr_read = %d\n",_intr_read());
 	//printf("intr_read = %d\n",_intr_read());
@@ -137,6 +140,21 @@ static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	_Context* ret = &(*current)->context;
 	kmt_spin_unlock(&lk_kmt_switch);
 	return ret;
+	*/
+	assert((*current)->fence1 == MAGIC1 && (*current)->fence2 == MAGIC2);
+	kmt_spin_lock(&lk_kmt_switch);
+	do{
+		if(!(*current) || current + 1 == &tasks[task_id]){
+			current = &tasks[0];
+		}
+		else
+			current++;
+	} while ((current - tasks) % _ncpu() != _cpu())
+	_Context* ret = &(*current)->context;
+	kmt_spin_unlock(&lk_kmt_switch);
+	printf("\n[cpu-%d] Schedule: %s\n", _cpu(), (*current)->name);
+	return ret;
+	
 }
 
 static void kmt_init(){
