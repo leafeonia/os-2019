@@ -186,7 +186,6 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 	printf("intr_read = %d\n",_intr_read());
 	//LOCKKKKKKKKKKKKKKKKKK
 	kmt_spin_lock(&lk_kmt_create);
-	printf("intr_read = %d\n",_intr_read());
 	//tasks[task_id] = task; //one core
 	tasks[task_id % _ncpu()][task_id / _ncpu()] = task;
 	_Area stack = (_Area){task->stack, &(task->fence2)};
