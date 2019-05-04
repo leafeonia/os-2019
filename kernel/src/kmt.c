@@ -156,7 +156,7 @@ static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	} while ((current - tasks[_cpu()]) % _ncpu() != _cpu());
 	_Context* ret = &(*current)->context;
 	kmt_spin_unlock(&lk_kmt_switch);
-	printf("\n*current = 0x%x, [cpu-%d] Schedule: %s\n",*current, _cpu(), (*current)->name);
+	printf("\ncurrent = 0x%x, *current = 0x%x, [cpu-%d] Schedule: %s\n",current, *current, _cpu(), (*current)->name);
 	return ret;
 	
 }
