@@ -132,12 +132,12 @@ static void kfree(void *ptr) {
 
 #else
   //LOG("enter free before lock");
-  lock(&mem_lock);
+  kmt->spin_lock(&mem_lock);
   //LOG("enter free after lock");
   free(ptr);
   //printf("free: %x\n",(uintptr_t)ptr);
   //LOG("leave free before unlock");
-  unlock(&mem_lock);
+  kmt->spin_unlock(&mem_lock);
   //LOG("leave free after unlock");
 #endif
 }
