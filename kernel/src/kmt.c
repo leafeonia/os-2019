@@ -93,7 +93,7 @@ static void kmt_sem_signal(sem_t *sem){
 
 static _Context* kmt_context_save(_Event ev, _Context *ctx){
 	//LOG("enter kmt_context_save");
-	if(*current) {
+	if(current && *current) {
 		printf("current = 0x%x\n",current);
 		assert((*current)->fence1 == MAGIC1 && (*current)->fence2 == MAGIC2);
 	}
@@ -166,6 +166,9 @@ static void kmt_init(){
 	//printf("tasks[0] = 0x%x, &tasks[0] = 0x%x, tasks[1] = 0x%x, &tasks[1] = 0x%x\n", tasks[0], &tasks[0], tasks[1], &tasks[1]);
 	memset(cpu_ncli,0,sizeof(cpu_ncli));
 	//current = tasks;
+	for(int i = 0;i < _ncpu();i++){
+		current_task[i] = &tasks[i][0];
+	}
 	os->on_irq(INT_MIN, _EVENT_NULL, kmt_context_save);
 	os->on_irq(INT_MAX, _EVENT_NULL, kmt_context_switch);
 	LOG("kmt_init");
