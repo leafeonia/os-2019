@@ -90,7 +90,7 @@ static void kmt_sem_signal(sem_t *sem){
 */
 
 static _Context* kmt_context_save(_Event ev, _Context *ctx){
-	LOG("enter kmt_context_save");
+	//LOG("enter kmt_context_save");
 	if(*current) assert((*current)->fence1 == MAGIC1 && (*current)->fence2 == MAGIC2);
 	//printf("BEFORE:ctx->eip = 0x%x, *current = 0x%x, &tasks[0] = 0x%x, tasks[0]->context.eip = 0x%x, &tasks[1] = 0x%x, tasks[1]->context.eip = 0x%x\n\n",ctx->eip, *current, &tasks[0], tasks[0]->context.eip, &tasks[1], tasks[1]->context.eip);
 	
@@ -105,7 +105,7 @@ static _Context* kmt_context_save(_Event ev, _Context *ctx){
 }
 
 static _Context* kmt_context_switch(_Event ev, _Context *ctx){
-	LOG("kmt_context_switch");
+	//LOG("kmt_context_switch");
 	//printf("intr_read = %d\n",_intr_read());
 	//printf("intr_read = %d\n",_intr_read());
 	//printf("outside: intr_read = %d\n",_intr_read());
