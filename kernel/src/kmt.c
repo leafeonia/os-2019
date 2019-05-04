@@ -156,7 +156,7 @@ static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 			current++;
 	} while ((current - tasks[_cpu()]) % _ncpu() != _cpu());
 	_Context* ret = &(*current)->context;
-	//kmt_spin_unlock(&lk_kmt_switch);
+	kmt_spin_unlock(&lk_kmt_switch);
 	printf("\ncurrent = 0x%x, *current = 0x%x, [cpu-%d] Schedule: %s\n",current, *current, _cpu(), (*current)->name);
 	return ret;
 	
@@ -204,12 +204,13 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 	//printf("*current = 0x%x\n",*current);
 	//printf("current->context.eip = 0x%x\n",current->context.eip);
 	//printf("func_entry = 0x%x\n",entry);
-	kmt_spin_unlock(&lk_kmt_create);
+	
 	for(int i = 0;i < 4;i++){
 		for(int j = 0;j < 2 ;j++){
 			printf("tasks[%d][%d] = 0x%x\n",i,j,tasks[i][j]);
 		}
 	}
+	kmt_spin_unlock(&lk_kmt_create);
 	return 0;
 }
 static void kmt_teardown(task_t *task){
