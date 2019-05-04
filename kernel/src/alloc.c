@@ -123,6 +123,7 @@ printf("before kalloc, _intr_read = %d\n",_intr_read());
   kmt->spin_lock(&mem_lock);
   ret = fancy_alloc(size);
   //printf("malloc: %x\n",(uintptr_t)ret);
+  printf("before unlock, _intr_read = %d\n",_intr_read());
   kmt->spin_unlock(&mem_lock);
 #endif
 	printf("after kalloc, _intr_read = %d\n",_intr_read());
