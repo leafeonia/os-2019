@@ -144,6 +144,7 @@ static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	kmt_spin_unlock(&lk_kmt_switch);
 	return ret;
 	*/
+	printf("enter kmt_context_switch. _cpu() = %d, current = 0x%x, *current = 0x%x, current_task[%d] = 0x%x\n\n",_cpu(),current,*current,_cpu(),current_task[_cpu()]);
 	if(!(*current)) return NULL;
 	else assert((*current)->fence1 == MAGIC1 && (*current)->fence2 == MAGIC2);
 	kmt_spin_lock(&lk_kmt_switch);
