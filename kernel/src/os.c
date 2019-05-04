@@ -49,7 +49,7 @@ static void os_init() {
   //printf("begin of os_init. intr_read = %d\n",_intr_read());
   pmm->init();
   kmt->init();
-  kmt->spin_init(&lk_trap);
+  kmt->spin_init(&lk_trap,"lk_trap");
   //_vme_init(pmm->alloc,pmm->free);
   //dev->init();
   #ifdef L2_TEST
