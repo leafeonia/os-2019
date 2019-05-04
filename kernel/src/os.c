@@ -12,7 +12,7 @@ struct irq{
 } irqs[NR_IRQ];
 
 static int irq_id = 0;
-static spinlock_t* lk_trap;
+static spinlock_t lk_trap;
 
 void echo_task(void *name){
 	device_t *tty = dev_lookup(name);
