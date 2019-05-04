@@ -188,7 +188,7 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 
 	printf("intr_read = %d\n",_intr_read());
 	//LOCKKKKKKKKKKKKKKKKKK
-	kmt_spin_lock(&lk_kmt_create);
+	//kmt_spin_lock(&lk_kmt_create);
 	//tasks[task_id] = task; //one core
 	tasks[task_id % _ncpu()][task_id / _ncpu()] = task;
 	_Area stack = (_Area){task->stack, &(task->fence2)};
@@ -210,7 +210,7 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 			printf("tasks[%d][%d] = 0x%x\n",i,j,tasks[i][j]);
 		}
 	}
-	kmt_spin_unlock(&lk_kmt_create);
+	//kmt_spin_unlock(&lk_kmt_create);
 	return 0;
 }
 static void kmt_teardown(task_t *task){
