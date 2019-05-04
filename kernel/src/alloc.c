@@ -8,6 +8,7 @@
 
 typedef long long ALIGN;
 
+extern void kmt_spin_init(spinlock_t *lk, const char *name);
 
 //reference from: THE C PROGRAMMING LANGUAGE
 typedef union header{
