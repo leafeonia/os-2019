@@ -144,7 +144,7 @@ static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	kmt_spin_unlock(&lk_kmt_switch);
 	return ret;
 	*/
-	printf("enter kmt_context_switch. _cpu() = %d, current = 0x%x, *current = 0x%x, current_task[%d] = 0x%x, intr_read() = %d\n\n",_cpu(),current,*current,_cpu(),current_task[_cpu()], _intr_read());
+	printf("\n\n\nenter kmt_context_switch. _cpu() = %d, current = 0x%x, *current = 0x%x, current_task[%d] = 0x%x, intr_read() = %d\n",_cpu(),current,*current,_cpu(),current_task[_cpu()], _intr_read());
 	if(!(*current)) return NULL;
 	else assert((*current)->fence1 == MAGIC1 && (*current)->fence2 == MAGIC2);
 	kmt_spin_lock(&lk_kmt_switch);
@@ -158,7 +158,7 @@ static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	} while ((current - tasks[_cpu()]) % _ncpu() != _cpu());
 	_Context* ret = &(*current)->context;
 	kmt_spin_unlock(&lk_kmt_switch);
-	printf("\ncurrent = 0x%x, *current = 0x%x, [cpu-%d] Schedule: %s\n",current, *current, _cpu(), (*current)->name);
+	printf("current = 0x%x, *current = 0x%x, [cpu-%d] Schedule: %s\n\n\n",current, *current, _cpu(), (*current)->name);
 	return ret;
 	
 }
