@@ -5,7 +5,7 @@
 
 #define NR_TASK 17
 
-static task_t* tasks[NR_TASK];
+static task_t* tasks[16][NR_TASK];
 static int task_id = 0;
 //static task_t **current;
 task_t **current_task[16];
@@ -76,7 +76,7 @@ static void kmt_sem_signal(sem_t *sem){
 
 
 
-/*
+/*  (chart for one core)
 	current-----
 			   |
 		  	   v
@@ -183,20 +183,28 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 
 	//LOCKKKKKKKKKKKKKKKKKK
 	kmt_spin_lock(&lk_kmt_create);
-	tasks[task_id] = task;
+	//tasks[task_id] = task; //one core
+	tasks[task_id % _ncpu()][task_id / _ncpu()] = task;
+	task_id++;
 	_Area stack = (_Area){task->stack, &(task->fence2)};
 	task->context = *_kcontext(stack, entry, arg);
 	task->name = name;
 	task->fence1 = MAGIC1;
 	task->fence2 = MAGIC2;
 	
-	printf("kmt_create: A task has been created. Position: 0x%x, Name: %s, func_entry: 0x%x\n",task, name, entry);
-	printf("tasks[0] = 0x%x, &tasks[0] = 0x%x, tasks[1] = 0x%x, &tasks[1] = 0x%x\n", tasks[0], &tasks[0], tasks[1], &tasks[1]);
-	current = &tasks[task_id++];
+	printf("kmt_create: A task has been created. address: 0x%x, Name: %s, func_entry: 0x%x,task_id = %d, located at tasks[%d][%d]\n",task, name, entry,task_id, task_id % _ncpu(), task_id / _ncpu());
+	//printf("tasks[0] = 0x%x, &tasks[0] = 0x%x, tasks[1] = 0x%x, &tasks[1] = 0x%x\n", tasks[0], &tasks[0], tasks[1], &tasks[1]);
+	current_task[task_id % _ncpu()] = &task;
+	task_id++;
 	//printf("*current = 0x%x\n",*current);
 	//printf("current->context.eip = 0x%x\n",current->context.eip);
 	//printf("func_entry = 0x%x\n",entry);
 	kmt_spin_unlock(&lk_kmt_create);
+	for(int i = 0;i < 4;i++){
+		for(int j = 0;j < 2 ;j++){
+			printf("tasks[%d][%d] = 0x%x\n",i,j,tasks[i][j]);
+		}
+	}
 	return 0;
 }
 static void kmt_teardown(task_t *task){
