@@ -92,20 +92,20 @@ static void kmt_sem_signal(sem_t *sem){
 */
 
 static _Context* kmt_context_save(_Event ev, _Context *ctx){
-	//LOG("enter kmt_context_save");
+	LOG("enter kmt_context_save");
 	if(*current) {
 		//printf("current = 0x%x\n",current);
 		assert((*current)->fence1 == MAGIC1 && (*current)->fence2 == MAGIC2);
 	}
 	//printf("BEFORE:ctx->eip = 0x%x, *current = 0x%x, &tasks[0] = 0x%x, tasks[0]->context.eip = 0x%x, &tasks[1] = 0x%x, tasks[1]->context.eip = 0x%x\n\n",ctx->eip, *current, &tasks[0], tasks[0]->context.eip, &tasks[1], tasks[1]->context.eip);
 	
-	//kmt_spin_lock(&lk_kmt_save);
+	kmt_spin_lock(&lk_kmt_save);
 	if(*current) {
 		//printf("*current = 0x%x\n",*current);
 		(*current)->context = *ctx;
 	}
 	//printf("AFTER :ctx->eip = 0x%x, *current = 0x%x, &tasks[0] = 0x%x, tasks[0]->context.eip = 0x%x, &tasks[1] = 0x%x, tasks[1]->context.eip = 0x%x\n\n\n",ctx->eip, *current, &tasks[0], tasks[0]->context.eip, &tasks[1], tasks[1]->context.eip);
-	//kmt_spin_unlock(&lk_kmt_save);
+	kmt_spin_unlock(&lk_kmt_save);
 	return NULL;
 }
 
@@ -144,7 +144,7 @@ static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	kmt_spin_unlock(&lk_kmt_switch);
 	return ret;
 	*/
-	
+	LOG("kmt_context_switch");
 	if(!(*current)) return NULL;
 	else assert((*current)->fence1 == MAGIC1 && (*current)->fence2 == MAGIC2);
 	kmt_spin_lock(&lk_kmt_switch);
