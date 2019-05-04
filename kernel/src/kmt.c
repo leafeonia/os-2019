@@ -148,11 +148,11 @@ static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	if(!(*current)) return NULL;
 	else assert((*current)->fence1 == MAGIC1 && (*current)->fence2 == MAGIC2);
 	kmt_spin_lock(&lk_kmt_switch);
-	printf("\n\n\nenter kmt_context_switch. _cpu() = %d, current = 0x%x, *current = 0x%x, current_task[%d] = 0x%x, intr_read() = %d\n",_cpu(),current,*current,_cpu(),current_task[_cpu()], _intr_read());
-	printf("task_id = %d, _ncpu() = %d, task_id / _ncpu() + 1 = %d, current + 1 = 0x%x, &tasks[_cpu()][task_id / _ncpu() + 1] = 0x%x, (*(current + 1) = 0x%x\n",task_id,_ncpu(),task_id / _ncpu() + 1, current + 1,&tasks[_cpu()][task_id / _ncpu() + 1],*(current + 1));
+	//printf("\n\n\nenter kmt_context_switch. _cpu() = %d, current = 0x%x, *current = 0x%x, current_task[%d] = 0x%x, intr_read() = %d\n",_cpu(),current,*current,_cpu(),current_task[_cpu()], _intr_read());
+	//printf("task_id = %d, _ncpu() = %d, task_id / _ncpu() + 1 = %d, current + 1 = 0x%x, &tasks[_cpu()][task_id / _ncpu() + 1] = 0x%x, (*(current + 1) = 0x%x\n",task_id,_ncpu(),task_id / _ncpu() + 1, current + 1,&tasks[_cpu()][task_id / _ncpu() + 1],*(current + 1));
 	//do{
 		if(!(*current) || !(*(current + 1))/*  current + 1 == &tasks[_cpu()][task_id / _ncpu() + 1]*/){
-			LOG("go back now");
+			//LOG("go back now");
 			current = &tasks[_cpu()][0];
 		}
 		else
@@ -160,7 +160,7 @@ static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	//} while ((current - tasks[_cpu()]) % _ncpu() != _cpu());
 	_Context* ret = &(*current)->context;
 	
-	printf("current = 0x%x, *current = 0x%x, [cpu-%d] Schedule: %s\n\n\n",current, *current, _cpu(), (*current)->name);
+	//printf("current = 0x%x, *current = 0x%x, [cpu-%d] Schedule: %s\n\n\n",current, *current, _cpu(), (*current)->name);
 	kmt_spin_unlock(&lk_kmt_switch);
 	return ret;
 	
