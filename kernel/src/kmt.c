@@ -102,7 +102,7 @@ static _Context* kmt_context_save(_Event ev, _Context *ctx){
 	kmt_spin_lock(&lk_kmt_save);
 	if(*current) {
 		//printf("*current = 0x%x\n",*current);
-		(*current)->context = *ctx;
+		//(*current)->context = *ctx;
 	}
 	//printf("AFTER :ctx->eip = 0x%x, *current = 0x%x, &tasks[0] = 0x%x, tasks[0]->context.eip = 0x%x, &tasks[1] = 0x%x, tasks[1]->context.eip = 0x%x\n\n\n",ctx->eip, *current, &tasks[0], tasks[0]->context.eip, &tasks[1], tasks[1]->context.eip);
 	kmt_spin_unlock(&lk_kmt_save);
@@ -148,6 +148,7 @@ static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	if(!(*current)) return NULL;
 	else assert((*current)->fence1 == MAGIC1 && (*current)->fence2 == MAGIC2);
 	kmt_spin_lock(&lk_kmt_switch);
+	printf("current + 1 = 0x%x, &tasks[_cpu()][task_id / _ncpu() + 1] = 0x%x", current + 1,&tasks[_cpu()][task_id / _ncpu() + 1]);
 	do{
 		if(!(*current) || current + 1 == &tasks[_cpu()][task_id / _ncpu() + 1]){
 			current = &tasks[_cpu()][0];
