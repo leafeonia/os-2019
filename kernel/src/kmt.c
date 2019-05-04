@@ -199,7 +199,7 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 	
 	printf("kmt_create: A task has been created. address: 0x%x, Name: %s, func_entry: 0x%x,task_id = %d, located at tasks[%d][%d]\n",task, name, entry,task_id, task_id % _ncpu(), task_id / _ncpu());
 	//printf("tasks[0] = 0x%x, &tasks[0] = 0x%x, tasks[1] = 0x%x, &tasks[1] = 0x%x\n", tasks[0], &tasks[0], tasks[1], &tasks[1]);
-	current_task[task_id % _ncpu()] = task;
+	current_task[task_id % _ncpu()] = &tasks[task_id % _ncpu()][task_id / _ncpu()] ;
 	task_id++;
 	//printf("*current = 0x%x\n",*current);
 	//printf("current->context.eip = 0x%x\n",current->context.eip);
