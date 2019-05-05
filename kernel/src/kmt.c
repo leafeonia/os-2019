@@ -102,7 +102,7 @@ static _Context* kmt_context_save(_Event ev, _Context *ctx){
 	kmt_spin_lock(&lk_kmt_save);
 	if(*current) {
 		printf("In kmt_save: *current = 0x%x, ctx = 0x%x\n",*current, ctx);
-		if(ctx < _heap.start){
+		if(ctx < (uintptr_t)_heap.start){
 			LOG("Fxxk off!");
 			return NULL;
 		}
