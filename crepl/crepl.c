@@ -70,13 +70,14 @@ int main(int argc, char *argv[]) {
     int expr_id = 0;
     
     printf("type in 'q' to quit.\n>> ");
-    while(fgets(command,sizeof(command),stdin)){
+    while(fgets(command,sizeof(command),stdin)!=NULL){
     	//memset(command,0,sizeof(command));
     	
-    	if(strcmp(command,"\n") == 0) continue;
-    	if(strcmp(command,"q\n") == 0) break;
+    	
     	char temp_buf[100];
     	sscanf(command,"%s",temp_buf);
+    	if(strncmp(temp_buf,"\n",1) == 0) continue;
+    	if(strncmp(temp_buf,"q\n",2) == 0) break;
     	//function
     	if(strncmp(temp_buf, "int",3) == 0){
     		//fputs(command,fp);
