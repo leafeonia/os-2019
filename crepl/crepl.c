@@ -83,8 +83,8 @@ int main(int argc, char *argv[]) {
     	sscanf(command,"%s",temp_buf);
     	int blank = 1;
     	for(int i = 0;i < strlen(temp_buf);i++){
-    		printf("%d ",temp_buf[i]);
-    		if(!isspace(temp_buf[i])){
+    		//printf("%d ",temp_buf[i]);
+    		if(temp_buf[i] != ' '){
     			blank = 0;
     			break;
     		}
