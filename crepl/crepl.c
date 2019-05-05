@@ -75,7 +75,7 @@ int main(int argc, char *argv[]) {
     	//memset(command,0,sizeof(command));
     	
     	if(strcmp(command,"\n") == 0) {
-    		printf(">>");
+    		printf(">> ");
     		continue;
     	}
     	if(strcmp(command,"q\n") == 0) break;
