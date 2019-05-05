@@ -86,7 +86,7 @@ int main(int argc, char *argv[]) {
     		}
     	}
     	if(blank) continue;
-    	printf("%s\n",temp_buf);
+    	//printf("%s\n",temp_buf);
     	//function
     	if(strncmp(temp_buf, "int",3) == 0){
     		//fputs(command,fp);
