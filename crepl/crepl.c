@@ -70,7 +70,7 @@ int main(int argc, char *argv[]) {
     int expr_id = 0;
     
     printf("type in 'q' to quit.\n>> ");
-    while(fgets(command,sizeof(command),stdin) != EOF){
+    while(fgets(command,sizeof(command),stdin)){
     	//memset(command,0,sizeof(command));
     	
     	if(strcmp(command,"\n") == 0) continue;
