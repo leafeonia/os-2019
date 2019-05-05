@@ -82,6 +82,7 @@ int main(int argc, char *argv[]) {
     	char temp_buf[100];
     	sscanf(command,"%s",temp_buf);
     	if(temp_buf[0] == '\0'){
+    		printf("enter");
     		printf(">> ");
     		continue;
     	}
