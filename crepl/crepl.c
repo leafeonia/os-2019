@@ -81,15 +81,10 @@ int main(int argc, char *argv[]) {
     	if(strcmp(command,"q\n") == 0) break;
     	char temp_buf[100];
     	sscanf(command,"%s",temp_buf);
-    	int blank = 1;
-    	for(int i = 0;i < strlen(temp_buf);i++){
-    		//printf("%d ",temp_buf[i]);
-    		if(temp_buf[i] != ' '){
-    			blank = 0;
-    			break;
-    		}
+    	if(command[0] = '\0'){
+    		printf(">> ");
+    		continue;
     	}
-    	if(blank) continue;
     	//printf("%s\n",temp_buf);
     	//function
     	if(strncmp(temp_buf, "int",3) == 0){
