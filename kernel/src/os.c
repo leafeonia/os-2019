@@ -50,6 +50,7 @@ static void os_init() {
   pmm->init();
   kmt->init();
   kmt->spin_init(&lk_trap,"lk_trap");
+  task_t* test;
   //_vme_init(pmm->alloc,pmm->free);
   //dev->init();
   #ifdef L2_TEST
@@ -68,7 +69,7 @@ static void os_init() {
   kmt->create(pmm->alloc(sizeof(task_t)), "dummy8", dummy_test, (void*)8);
   kmt->create(pmm->alloc(sizeof(task_t)), "dummy9", dummy_test, (void*)9);
   kmt->create(pmm->alloc(sizeof(task_t)), "dummy10", dummy_test, (void*)10);
-  kmt->create(pmm->alloc(sizeof(task_t)), "dummy11", dummy_test, (void*)11);
+  kmt->create(test, "dummy11", dummy_test, (void*)11);
   #endif
   //printf("end of os_init. intr_read = %d\n",_intr_read());
 }
