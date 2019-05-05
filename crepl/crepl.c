@@ -79,13 +79,21 @@ int main(int argc, char *argv[]) {
     		continue;
     	}
     	if(strcmp(command,"q\n") == 0) break;
-    	char temp_buf[100];
-    	sscanf(command,"%s",temp_buf);
-    	if(temp_buf[0] == '\0'){
-    		printf("enter");
+    	int blank = 1;
+    	for(int i = 0;i < strlen(command);i++){
+    		//printf("%d ",temp_buf[i]);
+    		if(command[i] != ' '){
+    			blank = 0;
+    			break;
+    		}
+    	}
+    	if(blank) {
     		printf(">> ");
     		continue;
     	}
+    	char temp_buf[100];
+    	sscanf(command,"%s",temp_buf);
+    	
     	//printf("%s\n",temp_buf);
     	//function
     	if(strncmp(temp_buf, "int",3) == 0){
