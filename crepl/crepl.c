@@ -70,14 +70,15 @@ int main(int argc, char *argv[]) {
     int expr_id = 0;
     
     printf("type in 'q' to quit.\n>> ");
-    while(1){
-    	memset(command,0,sizeof(command));
-    	fgets(command,sizeof(command),stdin);
+    while(fgets(command,sizeof(command),stdin) != EOF){
+    	//memset(command,0,sizeof(command));
+    	
     	if(strcmp(command,"\n") == 0) continue;
     	if(strcmp(command,"q\n") == 0) break;
-    	
+    	char temp_buf[100];
+    	sscanf(command,"%s",temp_buf);
     	//function
-    	if(strncmp(command, "int ",4) == 0){
+    	if(strncmp(temp_buf, "int",3) == 0){
     		//fputs(command,fp);
     		//fflush(fp);
     		if(write(fd, command, strlen(command)) == -1) ERR("write fails");
