@@ -7,6 +7,7 @@
 #include<assert.h>
 #include<fcntl.h>
 #include<dlfcn.h>
+#include<ctype.h>
 
 #define ERR(s)\
 	{printf("error: %s\n",s);\
@@ -73,10 +74,18 @@ int main(int argc, char *argv[]) {
     while(fgets(command,sizeof(command),stdin)!=NULL){
     	//memset(command,0,sizeof(command));
     	
-    	if(strcmp(command,"\n") == 0) continue;
+    	//if(strcmp(command,"\n") == 0) continue;
     	if(strcmp(command,"q\n") == 0) break;
     	char temp_buf[100];
     	sscanf(command,"%s",temp_buf);
+    	int blank = 1;
+    	for(int i = 0;i < strlen(temp_buf);i++){
+    		if(!isspace(temp_buf[i])){
+    			blank = 0;
+    			break;
+    		}
+    	}
+    	if(blank) continue;
     	printf("%s\n",temp_buf);
     	//function
     	if(strncmp(temp_buf, "int",3) == 0){
