@@ -82,7 +82,7 @@ int main(int argc, char *argv[]) {
     	int blank = 1;
     	for(int i = 0;i < strlen(command);i++){
     		printf("%d ",command[i] - '\0');
-    		if(command[i] != ' '){
+    		if(!isspace(command[i])){
     			blank = 0;
     			break;
     		}
