@@ -81,7 +81,7 @@ int main(int argc, char *argv[]) {
     	if(strcmp(command,"q\n") == 0) break;
     	int blank = 1;
     	for(int i = 0;i < strlen(command);i++){
-    		printf("%d ",command[i] - '\0');
+    		//printf("%d ",command[i] - '\0');
     		if(!isspace(command[i])){
     			blank = 0;
     			break;
