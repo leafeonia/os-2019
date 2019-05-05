@@ -74,7 +74,10 @@ int main(int argc, char *argv[]) {
     while(fgets(command,sizeof(command),stdin)!=NULL){
     	//memset(command,0,sizeof(command));
     	
-    	if(strcmp(command,"\n") == 0) continue;
+    	if(strcmp(command,"\n") == 0) {
+    		printf(">>");
+    		continue;
+    	}
     	if(strcmp(command,"q\n") == 0) break;
     	char temp_buf[100];
     	sscanf(command,"%s",temp_buf);
