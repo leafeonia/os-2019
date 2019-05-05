@@ -76,8 +76,8 @@ int main(int argc, char *argv[]) {
     	
     	char temp_buf[100];
     	sscanf(command,"%s",temp_buf);
-    	if(strncmp(temp_buf,"\n",1) == 0) continue;
-    	if(strncmp(temp_buf,"q\n",2) == 0) break;
+    	if(command == NULL) continue;
+    	if(strncmp(command,"q",1) == 0) break;
     	//function
     	if(strncmp(temp_buf, "int",3) == 0){
     		//fputs(command,fp);
