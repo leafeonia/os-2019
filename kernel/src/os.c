@@ -63,6 +63,10 @@ static void os_init() {
   kmt->create(pmm->alloc(sizeof(task_t)), "dummy3", dummy_test, (void*)3);
   kmt->create(pmm->alloc(sizeof(task_t)), "dummy4", dummy_test, (void*)4);
   kmt->create(pmm->alloc(sizeof(task_t)), "dummy5", dummy_test, (void*)5);
+  kmt->create(pmm->alloc(sizeof(task_t)), "dummy6", dummy_test, (void*)6);
+  kmt->create(pmm->alloc(sizeof(task_t)), "dummy7", dummy_test, (void*)7);
+  kmt->create(pmm->alloc(sizeof(task_t)), "dummy8", dummy_test, (void*)8);
+  kmt->create(pmm->alloc(sizeof(task_t)), "dummy9", dummy_test, (void*)9);
   #endif
   //printf("end of os_init. intr_read = %d\n",_intr_read());
 }
