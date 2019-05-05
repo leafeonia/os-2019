@@ -104,6 +104,7 @@ static _Context* kmt_context_save(_Event ev, _Context *ctx){
 		printf("In kmt_save: *current = 0x%x, ctx = 0x%x\n",*current, ctx);
 		if(ctx < (_Context*)_heap.start){
 			LOG("Fxxk off!");
+			kmt_spin_unlock(&lk_kmt_save);
 			return NULL;
 		}
 		(*current)->context = *ctx;
