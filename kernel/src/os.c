@@ -145,7 +145,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
   }
   
   //return context;
-  printf("os_trap returns task: 0x%x\n",ret - 4);
+  printf("os_trap returns task->context: 0x%x\n",ret);
   kmt->spin_unlock(&lk_trap);
   return ret;
 }
