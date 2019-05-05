@@ -104,7 +104,7 @@ static _Context* kmt_context_save(_Event ev, _Context *ctx){
 	if(*current) {
 		//printf("In kmt_save: *current = 0x%x, ctx = 0x%x\n",*current, ctx);
 		if(!cpu_start[_cpu()]){
-			LOG("Fxxk off!");
+			//LOG("Fxxk off!");
 			cpu_start[_cpu()] = 1;
 			kmt_spin_unlock(&lk_kmt_save);
 			return NULL;

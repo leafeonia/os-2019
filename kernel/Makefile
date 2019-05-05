@@ -22,3 +22,9 @@ run2: image
 
 run4: image
 	qemu-system-i386 -smp 4 $(QEMU_FLAGS)
+	
+run1: image
+	qemu-system-i386 $(QEMU_FLAGS)
+	
+debug:
+	qemu-system-i386 -smp 2 -serial -stdio -machine accel=tcg -gdb tcp::1234 -S build/kernel-x86-qemu & gdb
