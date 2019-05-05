@@ -81,7 +81,7 @@ int main(int argc, char *argv[]) {
     	if(strcmp(command,"q\n") == 0) break;
     	char temp_buf[100];
     	sscanf(command,"%s",temp_buf);
-    	if(command[0] == '\0'){
+    	if(temp_buf[0] == '\0'){
     		printf(">> ");
     		continue;
     	}
