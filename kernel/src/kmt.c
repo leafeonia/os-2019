@@ -10,6 +10,7 @@ static int task_id = 0;
 //static task_t **current;
 task_t **current_task[16];
 #define current (current_task[_cpu()])
+static int cpu_start[16];
 static int cpu_ncli[16];
 static int cpu_intena[16];
 static spinlock_t lk_kmt_create;
@@ -102,8 +103,9 @@ static _Context* kmt_context_save(_Event ev, _Context *ctx){
 	kmt_spin_lock(&lk_kmt_save);
 	if(*current) {
 		//printf("In kmt_save: *current = 0x%x, ctx = 0x%x\n",*current, ctx);
-		if(ctx < (_Context*)_heap.start){
+		if(!cpu_start[_cpu()]){
 			LOG("Fxxk off!");
+			cpu_start[_cpu()] = 1;
 			kmt_spin_unlock(&lk_kmt_save);
 			return NULL;
 		}
@@ -175,6 +177,7 @@ static void kmt_init(){
 	//LOG("kmt_init");
 	//printf("tasks[0] = 0x%x, &tasks[0] = 0x%x, tasks[1] = 0x%x, &tasks[1] = 0x%x\n", tasks[0], &tasks[0], tasks[1], &tasks[1]);
 	memset(cpu_ncli,0,sizeof(cpu_ncli));
+	memset(cpu_start,0,sizeof(cpu_start));
 	//current = tasks;
 	for(int i = 0;i < _ncpu();i++){
 		current_task[i] = &tasks[i][0];
