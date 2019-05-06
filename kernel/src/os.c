@@ -43,7 +43,7 @@ void dummy_test(void* arg){
 			printf("FA%d\n",i);
 		else
 			printf("%d ",num++);
-		for(volatile int i = 0;i < 100000;i++);
+		for(volatile int j = 0;j < 100000;j++);
 	}
 	//printf("FA\n");
 }
@@ -57,10 +57,10 @@ static void os_init() {
   //_vme_init(pmm->alloc,pmm->free);
   dev->init();
   #ifdef L2_TEST
-  /*kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty1");
+  kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty1");
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty2");
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty3");
-  kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty4");*/
+  kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty4");
   //printf("checkpoint 1 of os_init. intr_read = %d\n",_intr_read());
   /*kmt->create(pmm->alloc(sizeof(task_t)), "dummy1", dummy_test, (void*)1);
   kmt->create(pmm->alloc(sizeof(task_t)), "dummy2", dummy_test, (void*)2);
