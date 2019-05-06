@@ -1,5 +1,6 @@
 #include <common.h>
 #include <devices.h>
+#include "my_os.h"
 
 extern devops_t tty_ops, fb_ops, rd_ops, input_ops;
 
