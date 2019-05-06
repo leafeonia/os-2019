@@ -136,7 +136,6 @@ static void os_run() {
   //alloc_test();
   _intr_write(1);
   while (1) {
-  	LOG("alive");
     _yield();
   }
 }
@@ -145,6 +144,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
   printf("os_trap: event = %d\n",ev.event);
   if(ev.event == _EVENT_IRQ_TIMER) return context;
   if(!holding(&lk_trap)) kmt->spin_lock(&lk_trap);
+  else LOG("???????");
   _Context* ret = context;
   //if(ev.event != 5)printf("ev = %d\n",ev.event);
   /*if(ev.event == 2) {
