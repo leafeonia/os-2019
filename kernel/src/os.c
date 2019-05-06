@@ -22,12 +22,12 @@ void echo_task(void *name){
 		char line[128], text[128];
 		sprintf(text, "(%s) $ ",name);
 		//printf("strlen = %d\n",strlen(name));
-		tty_write(tty, 0, text, strlen(text));
+		tty->ops->write(tty, 0, text, strlen(text));
 		int nread = tty->ops->read(tty, 0, line, sizeof(line));
 		//printf("checkpoint %s\n",name);
 		line[nread - 1] = '\0';
 		sprintf(text, "Echo %s.\n", line);
-		tty_write(tty, 0, text, strlen(text));
+		tty->ops->write(tty, 0, text, strlen(text));
 		//printf("finish %s\n",name);
 	}
 }
