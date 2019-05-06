@@ -15,6 +15,7 @@ static int irq_id = 0;
 static spinlock_t lk_trap;
 
 void echo_task(void *name){
+	printf("echo %s\n",name);
 	device_t *tty = dev_lookup(name);
 	while(1){
 		char line[128], text[128];
@@ -48,10 +49,8 @@ static void os_init() {
   LOG("os_init");
   //printf("begin of os_init. intr_read = %d\n",_intr_read());
   pmm->init();
-  kmt->init();
-  LOG("??");
+  kmt->init(); 
   kmt->spin_init(&lk_trap,"lk_trap");
-  LOG("???");
   //_vme_init(pmm->alloc,pmm->free);
   dev->init();
   #ifdef L2_TEST
