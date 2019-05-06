@@ -13,6 +13,7 @@ struct irq{
 
 static int irq_id = 0;
 static spinlock_t lk_trap;
+extern int holding(spinlock_t* lk);
 
 void echo_task(void *name){
 	device_t *tty = dev_lookup(name);
