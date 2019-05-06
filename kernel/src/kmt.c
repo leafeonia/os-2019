@@ -73,18 +73,18 @@ static void kmt_sem_init(sem_t *sem, const char *name, int value){
 static void kmt_sem_wait(sem_t *sem){
 	
 	kmt_spin_lock(&sem->lock);
-	printf("enter kmt_sem_wait, sem->name = %s\n",sem->name);
+	//printf("enter kmt_sem_wait, sem->name = %s\n",sem->name);
 	while(1){
 		
 		if(sem->value > 0){
 			
 			sem->value--;
-			printf("wait: %s: value = %d\n",sem->name,sem->value);
-			LOG("leave kmt_sem_wait");
+			//printf("wait: %s: value = %d\n",sem->name,sem->value);
+			//LOG("leave kmt_sem_wait");
 			kmt_spin_unlock(&sem->lock);
 			return;
 		}
-		printf("wait and yield: %s: value = %d\n",sem->name,sem->value);
+		//printf("wait and yield: %s: value = %d\n",sem->name,sem->value);
 		kmt_spin_unlock(&sem->lock);
 		_yield();
 		kmt_spin_lock(&sem->lock);
@@ -93,10 +93,10 @@ static void kmt_sem_wait(sem_t *sem){
 static void kmt_sem_signal(sem_t *sem){
 	
 	kmt_spin_lock(&sem->lock);
-	printf("enter kmt_sem_signal, sem->name = %s\n", sem->name);
+	//printf("enter kmt_sem_signal, sem->name = %s\n", sem->name);
 	sem->value++;
-	printf("signal: %s: value = %d\n",sem->name,sem->value);
-	LOG("leave kmt_sem_signal");
+	//printf("signal: %s: value = %d\n",sem->name,sem->value);
+	//LOG("leave kmt_sem_signal");
 	kmt_spin_unlock(&sem->lock);
 }
 
