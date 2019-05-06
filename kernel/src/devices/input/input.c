@@ -81,6 +81,7 @@ void input_keydown(device_t *dev, int code) {
 }
 
 static _Context *input_notify(_Event ev, _Context *context) {
+  printf("input notify\n");
   kmt->sem_signal(&sem_kbdirq);
   return NULL;
 }
