@@ -49,10 +49,11 @@ void kmt_spin_init(spinlock_t *lk, const char *name){
 
 void kmt_spin_lock(spinlock_t *lk){
 	pushcli();
-	if(holding(lk)){
+	/*if(holding(lk)){
 		printf("murderer: %s\n",lk->name);
-		//panic("acquire");
-	}
+		panic("acquire");
+	}*/
+	while(holding(lk));
     	
 	while(_atomic_xchg(&lk->locked,1));
 	lk->cpu = _cpu();
