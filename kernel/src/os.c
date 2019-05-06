@@ -144,8 +144,8 @@ static _Context *os_trap(_Event ev, _Context *context) {
   _Context* ret = context;
   //if(ev.event != 5)printf("ev = %d\n",ev.event);
   if(ev.event == 2) {
-  	if holding(&lk_trap);
-  	return context;
+  	if (holding(&lk_trap))
+  		return context;
   }
   //printf("context->eip = 0x%x\n",context->eip);
   for(int i = 0;i < irq_id;i++){
