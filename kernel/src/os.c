@@ -13,7 +13,6 @@ struct irq{
 
 static int irq_id = 0;
 static spinlock_t lk_trap;
-extern int holding(spinlock_t* lk);
 
 void echo_task(void *name){
 	device_t *tty = dev_lookup(name);
@@ -141,13 +140,13 @@ static void os_run() {
 }
 
 static _Context *os_trap(_Event ev, _Context *context) {
-  printf("os_trap: event = %d\n",ev.event);
+  //printf("os_trap: event = %d\n",ev.event);
   _Context* ret = context;
   //if(ev.event != 5)printf("ev = %d\n",ev.event);
-  if(ev.event == 2) {
-  	if (holding(&lk_trap))
-  		return context;
-  }
+  /*if(ev.event == 2) {
+  	kmt->spin_unlock(&lk_trap);
+  	return context;
+  }*/
   //printf("context->eip = 0x%x\n",context->eip);
   for(int i = 0;i < irq_id;i++){
     kmt->spin_lock(&lk_trap);
