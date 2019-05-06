@@ -89,7 +89,7 @@ static void kmt_sem_wait(sem_t *sem){
 static void kmt_sem_signal(sem_t *sem){
 	
 	kmt_spin_lock(&sem->lock);
-	LOG("enter kmt_sem_signal");
+	printf("enter kmt_sem_signal, sem->name = %s\n", sem->name);
 	sem->value++;
 	LOG("leave kmt_sem_signal");
 	kmt_spin_unlock(&sem->lock);
