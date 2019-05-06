@@ -16,7 +16,7 @@ static int cpu_intena[16];
 static spinlock_t lk_kmt_create;
 static spinlock_t lk_kmt_save;
 static spinlock_t lk_kmt_switch;
-extern task_t* taskss[21];
+task_t* taskss[21];
 
 
 static void pushcli(){
