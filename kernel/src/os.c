@@ -142,7 +142,7 @@ static void os_run() {
 static _Context *os_trap(_Event ev, _Context *context) {
   kmt->spin_lock(&lk_trap);
   _Context* ret = context;
-  if(ev.event != 5)printf("ev = %d\n",ev.event);
+  //if(ev.event != 5)printf("ev = %d\n",ev.event);
   /*if(ev.event == 2) {
   	kmt->spin_unlock(&lk_trap);
   	return context;
