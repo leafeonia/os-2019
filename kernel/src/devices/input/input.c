@@ -32,6 +32,7 @@ static struct input_event pop_event(input_t *in) {
 }
 
 void input_keydown(device_t *dev, int code) {
+  printf("keydown detected\n");
   input_t *in = dev->ptr;
   int key = code & ~0x8000, ch;
 
