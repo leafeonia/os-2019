@@ -143,15 +143,15 @@ static _Context *os_trap(_Event ev, _Context *context) {
   kmt->spin_lock(&lk_trap);
   _Context* ret = context;
   if(ev.event != 5)printf("ev = %d\n",ev.event);
-  if(ev.event == 2) {
+  /*if(ev.event == 2) {
   	kmt->spin_unlock(&lk_trap);
   	return context;
-  }
+  }*/
   //printf("context->eip = 0x%x\n",context->eip);
   for(int i = 0;i < irq_id;i++){
     
   	if(irqs[i].event == _EVENT_NULL || irqs[i].event == ev.event){
-  		if(irqs[i].event != _EVENT_NULL) LOG("BOOM");
+  		//if(irqs[i].event != _EVENT_NULL) LOG("BOOM");
   		_Context *next = irqs[i].handler(ev,context);
   		if(next) ret = next;
   	}
