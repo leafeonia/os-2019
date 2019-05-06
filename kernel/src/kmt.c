@@ -3,7 +3,7 @@
 #include <devices.h>
 #include "my_os.h"
 
-#define NR_TASK 17
+#define NR_TASK 21
 
 static task_t* tasks[16][NR_TASK];
 static int task_id = 0;
@@ -198,29 +198,9 @@ static _Context* kmt_context_switch(_Event ev, _Context *ctx){
 	
 }
 
-static void kmt_init(){
-	//LOG("kmt_init");
-	//printf("tasks[0] = 0x%x, &tasks[0] = 0x%x, tasks[1] = 0x%x, &tasks[1] = 0x%x\n", tasks[0], &tasks[0], tasks[1], &tasks[1]);
-	memset(cpu_ncli,0,sizeof(cpu_ncli));
-	memset(cpu_start,0,sizeof(cpu_start));
-	//current = tasks;
-	for(int i = 0;i < _ncpu();i++){
-		current_task[i] = &tasks[i][0];
-	}
-	//for(int i = 0;i < _ncpu();i++)
-		//printf("current_task[%d] = 0x%x\n",i,current_task[i]);
-	os->on_irq(INT_MIN, _EVENT_NULL, kmt_context_save);
-	os->on_irq(INT_MAX, _EVENT_NULL, kmt_context_switch);
-	LOG("kmt_init");
-	kmt_spin_init(&lk_kmt_create,"kmt_create");
-	kmt_spin_init(&lk_kmt_save,"kmt_save");
-	kmt_spin_init(&lk_kmt_switch,"kmt_switch");
-	/*for(int i = 0;i < NR_TASK;i++){
-		task_t* task = &tasks[i];
-		_Area stack = (_Area){task->stack,task->fence2};
-		task->context = *_kcontext(stack, ) 
-	}*/
-}
+
+
+
 static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void *arg){
 
 	//printf("intr_read = %d\n",_intr_read());
@@ -251,6 +231,37 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 	//kmt_spin_unlock(&lk_kmt_create);
 	return 0;
 }
+
+void do_nothing(){}
+
+static void kmt_init(){
+	//LOG("kmt_init");
+	//printf("tasks[0] = 0x%x, &tasks[0] = 0x%x, tasks[1] = 0x%x, &tasks[1] = 0x%x\n", tasks[0], &tasks[0], tasks[1], &tasks[1]);
+	memset(cpu_ncli,0,sizeof(cpu_ncli));
+	memset(cpu_start,0,sizeof(cpu_start));
+	//current = tasks;
+	for(int i = 0;i < _ncpu();i++){
+		current_task[i] = &tasks[i][0];
+	}
+	//for(int i = 0;i < _ncpu();i++)
+		//printf("current_task[%d] = 0x%x\n",i,current_task[i]);
+	os->on_irq(INT_MIN, _EVENT_NULL, kmt_context_save);
+	os->on_irq(INT_MAX, _EVENT_NULL, kmt_context_switch);
+	LOG("kmt_init");
+	kmt_spin_init(&lk_kmt_create,"kmt_create");
+	kmt_spin_init(&lk_kmt_save,"kmt_save");
+	kmt_spin_init(&lk_kmt_switch,"kmt_switch");
+	/*for(int i = 0;i < NR_TASK;i++){
+		task_t* task = &tasks[i];
+		_Area stack = (_Area){task->stack,task->fence2};
+		task->context = *_kcontext(stack, ) 
+	}*/
+	kmt_create(pmm->alloc(sizeof(task_t)), "idle1", do_nothing, NULL);
+	kmt_create(pmm->alloc(sizeof(task_t)), "idle2", do_nothing, NULL);
+	kmt_create(pmm->alloc(sizeof(task_t)), "idle3", do_nothing, NULL);
+	kmt_create(pmm->alloc(sizeof(task_t)), "idle4", do_nothing, NULL);
+}
+
 static void kmt_teardown(task_t *task){
 
 }
