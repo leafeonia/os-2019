@@ -138,19 +138,21 @@ static void os_run() {
 }
 
 static _Context *os_trap(_Event ev, _Context *context) {
-  kmt->spin_lock(&lk_trap);
+  
   _Context* ret = context;
   //printf("context->eip = 0x%x\n",context->eip);
   for(int i = 0;i < irq_id;i++){
+    kmt->spin_lock(&lk_trap);
   	if(irqs[i].event == _EVENT_NULL || irqs[i].event == ev.event){
   		_Context *next = irqs[i].handler(ev,context);
   		if(next) ret = next;
   	}
+  	kmt->spin_unlock(&lk_trap);
   }
   
   //return context;
   //printf("os_trap returns task with context address: 0x%x\n",ret);
-  kmt->spin_unlock(&lk_trap);
+  
   return ret;
 }
 
