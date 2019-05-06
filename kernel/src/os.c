@@ -15,9 +15,9 @@ static int irq_id = 0;
 static spinlock_t lk_trap;
 
 void echo_task(void *name){
-	printf("echo %s\n",name);
 	device_t *tty = dev_lookup(name);
 	while(1){
+		printf("echo %s\n",name);
 		char line[128], text[128];
 		sprintf(text, "(%s) $ ",name);
 		tty_write(tty, 0, text, strlen(name));
