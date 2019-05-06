@@ -239,6 +239,7 @@ void do_nothing(){while(1){_yield();}}
 static void kmt_init(){
 	//LOG("kmt_init");
 	//printf("tasks[0] = 0x%x, &tasks[0] = 0x%x, tasks[1] = 0x%x, &tasks[1] = 0x%x\n", tasks[0], &tasks[0], tasks[1], &tasks[1]);
+	task_id = 0;
 	memset(cpu_ncli,0,sizeof(cpu_ncli));
 	memset(cpu_start,0,sizeof(cpu_start));
 	//current = tasks;
