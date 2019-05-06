@@ -151,7 +151,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
     return context;
   }
   if (current_t[_cpu()] && *current_t[_cpu()]) {
-    (*current_t[_cpu()])->ctx = *context;
+    (*current_t[_cpu()])->context = *context;
   }
 
   if (ev.event == _EVENT_IRQ_IODEV) {
@@ -160,14 +160,14 @@ static _Context *os_trap(_Event ev, _Context *context) {
   }
 
   do {
-    if (!current_t[_cpu()] || current_t[_cpu()] + 1 == tasks + task_id) {
-      current_t[_cpu()] = &tasks[0];
+    if (!current_t[_cpu()] || current_t[_cpu()] + 1 == taskss + task_id) {
+      current_t[_cpu()] = &taskss[0];
     } else {
       current_t[_cpu()]++;
     }
-  } while (current_t[_cpu()] == NULL || (current_t[_cpu()] - tasks) % _ncpu() != _cpu());
+  } while (current_t[_cpu()] == NULL || (current_t[_cpu()] - taskss) % _ncpu() != _cpu());
 
-  return &((*current_t[_cpu()])->ctx);
+  return &((*current_t[_cpu()])->context);
  
  
  /* //printf("os_trap: event = %d\n",ev.event);
