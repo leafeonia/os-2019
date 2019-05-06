@@ -46,11 +46,13 @@ void input_task(void *arg);
   devices[id]->ops->init(devices[id]);
 
 static void dev_init() {
+  printf("enter dev_init");
   DEVICES(CREATE);
   DEVICES(INIT);
 
   kmt->create(pmm->alloc(sizeof(task_t)), "input-task", input_task, NULL);
   kmt->create(pmm->alloc(sizeof(task_t)), "tty-task", tty_task, NULL);
+  printf("leave dev_init");
 }
 
 MODULE_DEF(dev) {
