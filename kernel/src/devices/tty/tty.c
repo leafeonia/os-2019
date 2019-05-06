@@ -215,6 +215,7 @@ ssize_t tty_write(device_t *dev, off_t offset, const void *buf, size_t count) {
   kmt->sem_signal(&tty->lock);
   printf("cpt 2\n");
   tty_render(tty);
+  printf("cpt 3\n");
   return count;
 }
 
