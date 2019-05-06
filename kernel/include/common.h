@@ -16,6 +16,10 @@ struct spinlock {
 	int locked;
 	int cpu;
 };
-struct semaphore {};
+struct semaphore {
+	const char* name;
+	struct spinlock lock;
+	int value;
+};
 
 #endif

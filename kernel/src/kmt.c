@@ -66,13 +66,27 @@ void kmt_spin_unlock(spinlock_t *lk){
 	popcli();
 }
 static void kmt_sem_init(sem_t *sem, const char *name, int value){
-
+	sem->value = value;
+	sem->name = name;
+	kmt_spin_init(sem->lock);
 }
 static void kmt_sem_wait(sem_t *sem){
-
+	kmt_spin_lock(sem->lock);
+	while(1){
+		if(sem->value > 0){
+			sem->value--;
+			kmt_spin_unlock(sem->lock);
+			return;
+		}
+		kmt_spin_unlock(sem->lock);
+		_yield();
+		kmt_spin_lock(sem->lock);
+	}
 }
 static void kmt_sem_signal(sem_t *sem){
-
+	kmt_spin_lock(sem->lock);
+	sem->value++;
+	kmt_spin_unlock(sem->lock);
 }
 
 
