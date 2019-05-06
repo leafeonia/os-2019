@@ -19,8 +19,11 @@ device_t *devices[0 DEVICES(DEV_CNT)];
 
 device_t *dev_lookup(const char *name) {
   for (int i = 0; i < LENGTH(devices); i++) 
-    if (strcmp(devices[i]->name, name) == 0)
-      return devices[i];
+    if (strcmp(devices[i]->name, name) == 0){
+    	printf("dev find %d\n",i);
+    	return devices[i];
+    }
+      
   panic("lookup device failed.");
   return NULL;
 }
