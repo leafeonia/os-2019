@@ -20,8 +20,8 @@ void echo_task(void *name){
 		printf("echo %s\n",name);
 		char line[128], text[128];
 		sprintf(text, "(%s) $ ",name);
-		tty_write(tty, 0, text, strlen(name));
 		printf("checkpoint %s\n",name);
+		tty_write(tty, 0, text, strlen(name));
 		int nread = tty->ops->read(tty, 0, line, sizeof(line));
 		line[nread - 1] = '\0';
 		sprintf(text, "Echo %s.\n", line);
