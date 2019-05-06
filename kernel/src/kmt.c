@@ -202,8 +202,8 @@ static void kmt_init(){
 	for(int i = 0;i < _ncpu();i++){
 		current_task[i] = &tasks[i][0];
 	}
-	for(int i = 0;i < _ncpu();i++)
-		printf("current_task[%d] = 0x%x\n",i,current_task[i]);
+	//for(int i = 0;i < _ncpu();i++)
+		//printf("current_task[%d] = 0x%x\n",i,current_task[i]);
 	os->on_irq(INT_MIN, _EVENT_NULL, kmt_context_save);
 	os->on_irq(INT_MAX, _EVENT_NULL, kmt_context_switch);
 	LOG("kmt_init");
@@ -218,7 +218,7 @@ static void kmt_init(){
 }
 static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void *arg){
 
-	printf("intr_read = %d\n",_intr_read());
+	//printf("intr_read = %d\n",_intr_read());
 	//LOCKKKKKKKKKKKKKKKKKK
 	//kmt_spin_lock(&lk_kmt_create);
 	//tasks[task_id] = task; //one core
@@ -229,7 +229,7 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 	task->fence1 = MAGIC1;
 	task->fence2 = MAGIC2;
 	
-	printf("kmt_create: A task has been created. address: 0x%x, Name: %s, func_entry: 0x%x,task_id = %d, located at tasks[%d][%d](address: 0x%x)\n",task, name, entry,task_id, task_id % _ncpu(), task_id / _ncpu(), tasks[task_id % _ncpu()][task_id / _ncpu()]);
+	//printf("kmt_create: A task has been created. address: 0x%x, Name: %s, func_entry: 0x%x,task_id = %d, located at tasks[%d][%d](address: 0x%x)\n",task, name, entry,task_id, task_id % _ncpu(), task_id / _ncpu(), tasks[task_id % _ncpu()][task_id / _ncpu()]);
 	//printf("tasks[0] = 0x%x, &tasks[0] = 0x%x, tasks[1] = 0x%x, &tasks[1] = 0x%x\n", tasks[0], &tasks[0], tasks[1], &tasks[1]);
 	current_task[task_id % _ncpu()] = &tasks[task_id % _ncpu()][task_id / _ncpu()] ;
 	task_id++;
@@ -237,12 +237,12 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 	//printf("current->context.eip = 0x%x\n",current->context.eip);
 	//printf("func_entry = 0x%x\n",entry);
 	
-	for(int i = 0;i < 4;i++){
+	/*for(int i = 0;i < 4;i++){
 		for(int j = 0;j < 2 ;j++){
 			printf("tasks[%d][%d] = 0x%x\n",i,j,tasks[i][j]);
 			printf("&tasks[%d][%d] = 0x%x\n",i,j,&tasks[i][j]);
 		}
-	}
+	}*/
 	//kmt_spin_unlock(&lk_kmt_create);
 	return 0;
 }
