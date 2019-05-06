@@ -110,7 +110,7 @@ static void* fancy_alloc(size_t nbytes){
 
 
 static void *kalloc(size_t size) {
-printf("before kalloc, _intr_read = %d\n",_intr_read());
+//printf("before kalloc, _intr_read = %d\n",_intr_read());
   void* ret;
 #ifdef NAIVE
   kmt->spin_lock(&mem_lock);
@@ -123,10 +123,10 @@ printf("before kalloc, _intr_read = %d\n",_intr_read());
   kmt->spin_lock(&mem_lock);
   ret = fancy_alloc(size);
   //printf("malloc: %x\n",(uintptr_t)ret);
-  printf("before unlock, _intr_read = %d\n",_intr_read());
+  //printf("before unlock, _intr_read = %d\n",_intr_read());
   kmt->spin_unlock(&mem_lock);
 #endif
-	printf("after kalloc, _intr_read = %d\n",_intr_read());
+	//printf("after kalloc, _intr_read = %d\n",_intr_read());
   return ret;
 }
 
