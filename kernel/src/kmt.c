@@ -232,7 +232,7 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 	return 0;
 }
 
-void do_nothing(){while(1);}
+void do_nothing(){while(1){_yield()};}
 
 static void kmt_init(){
 	//LOG("kmt_init");
