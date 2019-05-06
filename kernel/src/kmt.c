@@ -73,10 +73,10 @@ static void kmt_sem_init(sem_t *sem, const char *name, int value){
 static void kmt_sem_wait(sem_t *sem){
 	
 	kmt_spin_lock(&sem->lock);
-	//LOG("enter kmt_sem_wait");
+	LOG("enter kmt_sem_wait");
 	while(1){
 		if(sem->value > 0){
-			//LOG("leave kmt_sem_wait");
+			LOG("leave kmt_sem_wait");
 			sem->value--;
 			kmt_spin_unlock(&sem->lock);
 			return;
@@ -89,9 +89,9 @@ static void kmt_sem_wait(sem_t *sem){
 static void kmt_sem_signal(sem_t *sem){
 	
 	kmt_spin_lock(&sem->lock);
-	//LOG("enter kmt_sem_signal");
+	LOG("enter kmt_sem_signal");
 	sem->value++;
-	//LOG("leave kmt_sem_signal");
+	LOG("leave kmt_sem_signal");
 	kmt_spin_unlock(&sem->lock);
 }
 
