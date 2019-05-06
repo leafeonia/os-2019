@@ -89,7 +89,6 @@ static void tty_render(tty_t *tty) {
   struct character *ch = tty->buf;
   uint8_t *d = tty->dirty;
   kmt->sem_wait(&tty->lock);
-  LOG("render1");
   for (int y = 0; y < tty->lines; y++) {
     for (int x = 0; x < tty->columns; x++) {
       if (*d) {
@@ -106,7 +105,6 @@ static void tty_render(tty_t *tty) {
     }
   }
   kmt->sem_signal(&tty->lock);
-  LOG("render2");
 }
 
 static void tty_mark(tty_t *tty, struct character *ch) {
