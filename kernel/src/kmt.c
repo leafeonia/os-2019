@@ -6,7 +6,7 @@
 #define NR_TASK 21
 
 static task_t* tasks[16][NR_TASK];
-extern int task_id = 0;
+int task_id = 0;
 //static task_t **current;
 task_t **current_task[16];
 #define current (current_task[_cpu()])
