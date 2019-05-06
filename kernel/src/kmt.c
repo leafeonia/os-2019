@@ -6,7 +6,7 @@
 #define NR_TASK 21
 
 static task_t* tasks[16][NR_TASK];
-static int task_id = 0;
+extern int task_id = 0;
 //static task_t **current;
 task_t **current_task[16];
 #define current (current_task[_cpu()])
@@ -16,6 +16,7 @@ static int cpu_intena[16];
 static spinlock_t lk_kmt_create;
 static spinlock_t lk_kmt_save;
 static spinlock_t lk_kmt_switch;
+extern task_t* taskss[21];
 
 
 static void pushcli(){
@@ -217,6 +218,7 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 	//printf("kmt_create: A task has been created. address: 0x%x, Name: %s, func_entry: 0x%x,task_id = %d, located at tasks[%d][%d](address: 0x%x)\n",task, name, entry,task_id, task_id % _ncpu(), task_id / _ncpu(), tasks[task_id % _ncpu()][task_id / _ncpu()]);
 	//printf("tasks[0] = 0x%x, &tasks[0] = 0x%x, tasks[1] = 0x%x, &tasks[1] = 0x%x\n", tasks[0], &tasks[0], tasks[1], &tasks[1]);
 	current_task[task_id % _ncpu()] = &tasks[task_id % _ncpu()][task_id / _ncpu()] ;
+	taskss[task_id] = task;
 	task_id++;
 	//printf("*current = 0x%x\n",*current);
 	//printf("current->context.eip = 0x%x\n",current->context.eip);

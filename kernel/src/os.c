@@ -141,18 +141,42 @@ static void os_run() {
 }
 
 
+task_t **current_t[16];
+handler_t input_notify;
+extern int task_id;
+extern task_t* taskss[21];
 
 static _Context *os_trap(_Event ev, _Context *context) {
-  //printf("os_trap: event = %d\n",ev.event);
+  if (task_id <= _cpu()) {
+    return context;
+  }
+  if (current_t[_cpu()] && *current_t[_cpu()]) {
+    (*current_t[_cpu()])->ctx = *context;
+  }
+
+  if (ev.event == _EVENT_IRQ_IODEV) {
+    assert(input_notify);
+    input_notify(ev, context);
+  }
+
+  do {
+    if (!current_t[_cpu()] || current_t[_cpu()] + 1 == tasks + task_id) {
+      current_t[_cpu()] = &tasks[0];
+    } else {
+      current_t[_cpu()]++;
+    }
+  } while (current_t[_cpu()] == NULL || (current_t[_cpu()] - tasks) % _ncpu() != _cpu());
+
+  return &((*current_t[_cpu()])->ctx);
+ 
+ 
+ /* //printf("os_trap: event = %d\n",ev.event);
   if(ev.event == _EVENT_IRQ_TIMER) return context;
   if(!holding(&lk_trap)) kmt->spin_lock(&lk_trap);
   else LOG("???????");
   _Context* ret = context;
   //if(ev.event != 5)printf("ev = %d\n",ev.event);
-  /*if(ev.event == 2) {
-  	kmt->spin_unlock(&lk_trap);
-  	return context;
-  }*/
+  
   //printf("context->eip = 0x%x\n",context->eip);
   for(int i = 0;i < irq_id;i++){
   	if(irqs[i].event == _EVENT_NULL || irqs[i].event == ev.event){
@@ -166,12 +190,15 @@ static _Context *os_trap(_Event ev, _Context *context) {
   //return context;
   //printf("os_trap returns task with context address: 0x%x\n",ret);
   
-  return ret;
+  return ret;*/
 }
 
 
 static void os_on_irq(int seq, int event, handler_t handler) {
-	irqs[irq_id].seq = seq;
+  if (event == _EVENT_IRQ_IODEV) {
+    input_notify = handler;
+  }
+	/*irqs[irq_id].seq = seq;
 	irqs[irq_id].event = event;
 	irqs[irq_id++].handler = handler;
 	for(int i = 0;i < irq_id;i++){
@@ -182,7 +209,7 @@ static void os_on_irq(int seq, int event, handler_t handler) {
 				irqs[j] = temp;
 			}
 		}
-	}
+	}*/
 }
 
 MODULE_DEF(os) {
