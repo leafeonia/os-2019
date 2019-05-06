@@ -26,5 +26,10 @@ run4: image
 run1: image
 	qemu-system-i386 $(QEMU_FLAGS)
 	
-debug:
-	qemu-system-i386 -smp 2 -serial -stdio -machine accel=tcg -gdb tcp::1234 -S build/kernel-x86-qemu & gdb
+gdb: $(IMG)
+	@gdb -ex "target remote 127.0.0.1:1234" -ex "symbol $(BINARY).o"
+	
+debug: $(IMG)
+	qemu-system-i386 -smp 4 -S -s -monitor telnet:127.0.0.1:1111,server,nowait -serial stdio -drive format=raw,file=$(BINARY)
+#debug:
+#	qemu-system-i386 -smp 2 -serial -stdio -machine accel=tcg -gdb tcp::1234 -S build/kernel-x86-qemu & gdb
