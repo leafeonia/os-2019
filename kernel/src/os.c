@@ -143,6 +143,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
   kmt->spin_lock(&lk_trap);
   _Context* ret = context;
   if(ev.event != 5)printf("ev = %d\n",ev.event);
+  if(ev.event == 2) return context;
   //printf("context->eip = 0x%x\n",context->eip);
   for(int i = 0;i < irq_id;i++){
     
