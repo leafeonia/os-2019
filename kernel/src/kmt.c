@@ -51,7 +51,7 @@ void kmt_spin_lock(spinlock_t *lk){
 	pushcli();
 	if(holding(lk)){
 		printf("murderer: %s\n",lk->name);
-		panic("acquire");
+		//panic("acquire");
 	}
     	
 	while(_atomic_xchg(&lk->locked,1));
