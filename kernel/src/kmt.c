@@ -43,7 +43,7 @@ int holding(spinlock_t* lk){
 
 void kmt_spin_init(spinlock_t *lk, const char *name){
 	lk->name = name;
-	lk->cpu = 0;
+	lk->cpu = -1;
 	lk->locked = 0;
 }
 
@@ -61,7 +61,7 @@ void kmt_spin_lock(spinlock_t *lk){
 void kmt_spin_unlock(spinlock_t *lk){
 	if(!holding(lk))
     	panic("release");
-    lk->cpu = 0;
+    lk->cpu = -1;
     _atomic_xchg(&lk->locked,0);
 	popcli();
 }
