@@ -20,7 +20,7 @@ device_t *devices[0 DEVICES(DEV_CNT)];
 device_t *dev_lookup(const char *name) {
   for (int i = 0; i < LENGTH(devices); i++) 
     if (strcmp(devices[i]->name, name) == 0){
-    	printf("dev find %d\n",i);
+    	//printf("dev find %d\n",i);
     	return devices[i];
     }
       
@@ -50,13 +50,13 @@ void input_task(void *arg);
   devices[id]->ops->init(devices[id]);
 
 static void dev_init() {
-  LOG("enter dev_init");
+  //LOG("enter dev_init");
   DEVICES(CREATE);
   DEVICES(INIT);
 
   kmt->create(pmm->alloc(sizeof(task_t)), "input-task", input_task, NULL);
   kmt->create(pmm->alloc(sizeof(task_t)), "tty-task", tty_task, NULL);
-  LOG("leave dev_init");
+  //LOG("leave dev_init");
 }
 
 MODULE_DEF(dev) {

@@ -52,7 +52,7 @@ void dummy_test(void* arg){
 }
 
 static void os_init() {
-  LOG("os_init");
+  //LOG("os_init");
   //printf("begin of os_init. intr_read = %d\n",_intr_read());
   pmm->init();
   kmt->init(); 
