@@ -17,7 +17,7 @@ static spinlock_t lk_trap;
 
 static sem_t empty,full,mutex;
 static void producer(){
-	for(int i = 0;i < 50;i++){
+	for(int i = 0;i < 5000;i++){
 		kmt->sem_wait(&empty);
 		kmt->sem_wait(&mutex);
 		printf("(");
@@ -30,7 +30,7 @@ static void producer(){
 }
 
 static void consumer(){
-	for(int i = 0;i < 50;i++){
+	for(int i = 0;i < 5000;i++){
 		kmt->sem_wait(&full);
 		kmt->sem_wait(&mutex);
 		printf(")");
@@ -40,9 +40,7 @@ static void consumer(){
 	}
 	//printf("empty: %d %d, full: %d %d, mutex: %d %d\n",empty.lock.locked,empty.value,full.lock.locked,full.value,mutex.lock.locked,mutex.value);
 	//printf("consumer: _intr_read() = %d\n",_intr_read());
-	while(1){
-		printf("consumer finished. cpu() = %d\n",_cpu());
-	};
+	while(1);
 }
 
 void echo_task(void *name){
@@ -179,8 +177,8 @@ static void os_run() {
 
 
 static _Context *os_trap(_Event ev, _Context *context) {
-  printf("os_trap: event = %d\n",ev.event);
-  printf("cpu() = %d\n",_cpu());
+  //printf("os_trap: event = %d\n",ev.event);
+  //printf("cpu() = %d\n",_cpu());
   //if(ev.event == _EVENT_IRQ_TIMER) return context;
   //if(!holding(&lk_trap)) kmt->spin_lock(&lk_trap);
   //else LOG("???????");
