@@ -108,16 +108,16 @@ static void os_init() {
   //_vme_init(pmm->alloc,pmm->free);
   dev->init();
   #ifdef L2_TEST
-  //kmt->create(pmm->alloc(sizeof(task_t)), "producer", producer, NULL);
-  //kmt->create(pmm->alloc(sizeof(task_t)), "consumer", consumer, NULL);
+  kmt->create(pmm->alloc(sizeof(task_t)), "producer", producer, NULL);
+  /kmt->create(pmm->alloc(sizeof(task_t)), "consumer", consumer, NULL);
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty1");
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty2");
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty3");
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty4");
   //printf("checkpoint 1 of os_init. intr_read = %d\n",_intr_read());
-  kmt->create(pmm->alloc(sizeof(task_t)), "dummy1", dummy_test, (void*)1);
+  /*kmt->create(pmm->alloc(sizeof(task_t)), "dummy1", dummy_test, (void*)1);
   kmt->create(pmm->alloc(sizeof(task_t)), "dummy2", dummy_test, (void*)2);
-  /*kmt->create(pmm->alloc(sizeof(task_t)), "dummy3", dummy_test, (void*)3);
+  kmt->create(pmm->alloc(sizeof(task_t)), "dummy3", dummy_test, (void*)3);
   kmt->create(pmm->alloc(sizeof(task_t)), "dummy4", dummy_test, (void*)4);
   kmt->create(pmm->alloc(sizeof(task_t)), "dummy5", dummy_test, (void*)5);
   kmt->create(pmm->alloc(sizeof(task_t)), "dummy6", dummy_test, (void*)6);
