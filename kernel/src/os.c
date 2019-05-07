@@ -25,6 +25,7 @@ static void producer(){
 		kmt->sem_signal(&mutex);
 		kmt->sem_signal(&full);
 	}
+	printf("_intr_read() = %d\n",_intr_read());
 	while(1);
 }
 
