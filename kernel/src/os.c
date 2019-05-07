@@ -15,7 +15,7 @@ static int irq_id = 0;
 static spinlock_t lk_trap;
 //extern int holding(spinlock_t* lk);
 
-static sem_t empty,full,mutex;
+/*static sem_t empty,full,mutex;
 static void producer(){
 	for(int i = 0;i < 30;i++){
 		kmt->sem_wait(&empty);
@@ -41,7 +41,7 @@ static void consumer(){
 	//printf("empty: %d %d, full: %d %d, mutex: %d %d\n",empty.lock.locked,empty.value,full.lock.locked,full.value,mutex.lock.locked,mutex.value);
 	//printf("consumer: _intr_read() = %d\n",_intr_read());
 	while(1);
-}
+}*/
 
 void echo_task(void *name){
 	device_t *tty = dev_lookup(name);
