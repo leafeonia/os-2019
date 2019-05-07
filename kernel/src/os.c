@@ -16,7 +16,7 @@ static spinlock_t lk_trap;
 //extern int holding(spinlock_t* lk);
 
 static sem_t empty,full,mutex;
-/*static void producer(){
+static void producer(){
 	for(int i = 0;i < 50;i++){
 		kmt->sem_wait(&empty);
 		kmt->sem_wait(&mutex);
@@ -58,7 +58,7 @@ void print(const char *s) {
   }
   while (1) {
   }
-}*/
+}
 
 void echo_task(void *name){
 	device_t *tty = dev_lookup(name);
