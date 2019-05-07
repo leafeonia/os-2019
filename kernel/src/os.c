@@ -17,27 +17,27 @@ static spinlock_t lk_trap;
 
 static sem_t empty,full,mutex;
 static void producer(){
-	/*for(int i = 0;i < 5000;i++){
+	for(int i = 0;i < 5000;i++){
 		kmt->sem_wait(&empty);
 		kmt->sem_wait(&mutex);
 		printf("(");
 		for(volatile int j = 0;j < 200000;j++);
 		kmt->sem_signal(&mutex);
 		kmt->sem_signal(&full);
-	}*/
+	}
 	//printf("_intr_read() = %d\n",_intr_read());
 	while(1);
 }
 
 static void consumer(){
-	/*for(int i = 0;i < 5000;i++){
+	for(int i = 0;i < 5000;i++){
 		kmt->sem_wait(&full);
 		kmt->sem_wait(&mutex);
 		printf(")");
 		for(volatile int j = 0;j < 200000;j++);
 		kmt->sem_signal(&mutex);
 		kmt->sem_signal(&empty);
-	}*/
+	}
 	//printf("empty: %d %d, full: %d %d, mutex: %d %d\n",empty.lock.locked,empty.value,full.lock.locked,full.value,mutex.lock.locked,mutex.value);
 	//printf("consumer: _intr_read() = %d\n",_intr_read());
 	while(1);
