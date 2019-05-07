@@ -249,7 +249,7 @@ static void kmt_init(){
 	}
 	//for(int i = 0;i < _ncpu();i++)
 		//printf("current_task[%d] = 0x%x\n",i,current_task[i]);
-	os->on_irq(INT_MIN, _EVENT_NULL, kmt_context_save);
+	os->on_irq(INT_MAX - 1, _EVENT_NULL, kmt_context_save);
 	os->on_irq(INT_MAX, _EVENT_NULL, kmt_context_switch);
 	//os->on_irq(INT_MIN, _EVENT_IRQ_TIMER, kmt_context_save);
 	//os->on_irq(INT_MAX, _EVENT_IRQ_TIMER, kmt_context_switch);
