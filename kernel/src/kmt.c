@@ -24,7 +24,6 @@ static void pushcli(){
 		cpu_intena[_cpu()] = _intr_read();
 		//printf("intena[%d] = %d\n",_cpu(),cpu_intena[_cpu()]);
 	}
-    	
 	cpu_ncli[_cpu()] += 1;
 	_intr_write(0);  //cli
 }
