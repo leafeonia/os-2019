@@ -41,7 +41,7 @@ static void consumer(){
 	//printf("empty: %d %d, full: %d %d, mutex: %d %d\n",empty.lock.locked,empty.value,full.lock.locked,full.value,mutex.lock.locked,mutex.value);
 	//printf("consumer: _intr_read() = %d\n",_intr_read());
 	while(1);
-}*/
+}
 
 /*
 void print(const char *s) {
@@ -58,7 +58,7 @@ void print(const char *s) {
   }
   while (1) {
   }
-}
+}*/
 
 void echo_task(void *name){
 	device_t *tty = dev_lookup(name);
