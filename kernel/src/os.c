@@ -39,6 +39,7 @@ static void consumer(){
 		kmt->sem_signal(&empty);
 	}
 	printf("empty: %d, full: %d, mutex: %d\n",empty.lock.locked,full.lock.locked,mutex.lock.locked);
+	printf("consumer: _intr_read() = %d\n",_intr_read());
 	while(1);
 }
 
