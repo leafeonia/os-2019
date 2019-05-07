@@ -132,12 +132,12 @@ static _Context* kmt_context_save(_Event ev, _Context *ctx){
 	kmt_spin_lock(&lk_kmt_save);
 	if(*current) {
 		//printf("In kmt_save: *current = 0x%x, ctx = 0x%x\n",*current, ctx);
-		if(!cpu_start[_cpu()]){
+		/*if(!cpu_start[_cpu()]){
 			//LOG("Fxxk off!");
 			cpu_start[_cpu()] = 1;
 			kmt_spin_unlock(&lk_kmt_save);
 			return NULL;
-		}
+		}*/
 		(*current)->context = *ctx;
 	}
 	//printf("AFTER :ctx->eip = 0x%x, *current = 0x%x, &tasks[0] = 0x%x, tasks[0]->context.eip = 0x%x, &tasks[1] = 0x%x, tasks[1]->context.eip = 0x%x\n\n\n",ctx->eip, *current, &tasks[0], tasks[0]->context.eip, &tasks[1], tasks[1]->context.eip);
