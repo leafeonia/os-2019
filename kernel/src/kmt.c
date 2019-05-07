@@ -19,13 +19,14 @@ static spinlock_t lk_kmt_switch;
 
 
 static void pushcli(){
-	_intr_write(0);  //cli
+	
 	if(cpu_ncli[_cpu()] == 0){
 		cpu_intena[_cpu()] = _intr_read();
 		printf("intena[%d] = %d\n",_cpu(),cpu_intena[_cpu()]);
 	}
     	
 	cpu_ncli[_cpu()] += 1;
+	_intr_write(0);  //cli
 }
 
 static void popcli(){
