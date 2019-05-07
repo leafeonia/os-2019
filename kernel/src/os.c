@@ -94,10 +94,10 @@ static void os_init() {
   kmt->sem_init(&mutex,"mutex",1);
   kmt->create(pmm->alloc(sizeof(task_t)), "producer", producer, NULL);
   kmt->create(pmm->alloc(sizeof(task_t)), "consumer", consumer, NULL);
-  kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty1");
-  kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty2");
-  kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty3");
-  kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty4");
+  kmt->create(pmm->alloc(sizeof(task_t)), "print1", echo_task, "tty1");
+  kmt->create(pmm->alloc(sizeof(task_t)), "print2", echo_task, "tty2");
+  kmt->create(pmm->alloc(sizeof(task_t)), "print3", echo_task, "tty3");
+  kmt->create(pmm->alloc(sizeof(task_t)), "print4", echo_task, "tty4");
   //printf("checkpoint 1 of os_init. intr_read = %d\n",_intr_read());
   /*kmt->create(pmm->alloc(sizeof(task_t)), "dummy1", dummy_test, (void*)1);
   kmt->create(pmm->alloc(sizeof(task_t)), "dummy2", dummy_test, (void*)2);
@@ -177,7 +177,7 @@ static void os_run() {
 
 
 static _Context *os_trap(_Event ev, _Context *context) {
-  //printf("os_trap: event = %d\n",ev.event);
+  printf("os_trap: event = %d\n",ev.event);
   //if(ev.event == _EVENT_IRQ_TIMER) return context;
   //if(!holding(&lk_trap)) kmt->spin_lock(&lk_trap);
   //else LOG("???????");
