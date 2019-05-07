@@ -22,7 +22,7 @@ static void pushcli(){
 	
 	if(cpu_ncli[_cpu()] == 0){
 		cpu_intena[_cpu()] = _intr_read();
-		printf("intena[%d] = %d\n",_cpu(),cpu_intena[_cpu()]);
+		//printf("intena[%d] = %d\n",_cpu(),cpu_intena[_cpu()]);
 	}
     	
 	cpu_ncli[_cpu()] += 1;
