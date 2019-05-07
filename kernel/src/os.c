@@ -43,23 +43,6 @@ static void consumer(){
 	while(1);
 }
 
-/*
-void print(const char *s) {
-  for (int i = 0; i < 10; ++i) {
-    if (strcmp(s, ")") == 0) {
-      kmt->sem_wait(&paren_sem);
-    }    
-    for (const char *p = s; *p; ++p) {
-      _putc(*p);
-    }
-    if (strcmp(s, "(") == 0) {
-      kmt->sem_signal(&paren_sem);
-    }
-  }
-  while (1) {
-  }
-}*/
-
 void echo_task(void *name){
 	device_t *tty = dev_lookup(name);
 	while(1){
@@ -102,12 +85,13 @@ static void os_init() {
   pmm->init();
   kmt->init(); 
   kmt->spin_init(&lk_trap,"lk_trap");
-  kmt->sem_init(&empty,"empty",5);
-  kmt->sem_init(&full,"full", 0);
-  kmt->sem_init(&mutex,"mutex",1);
+  
   //_vme_init(pmm->alloc,pmm->free);
   dev->init();
   #ifdef L2_TEST
+  kmt->sem_init(&empty,"empty",5);
+  kmt->sem_init(&full,"full", 0);
+  kmt->sem_init(&mutex,"mutex",1);
   kmt->create(pmm->alloc(sizeof(task_t)), "producer", producer, NULL);
   kmt->create(pmm->alloc(sizeof(task_t)), "consumer", consumer, NULL);
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty1");
