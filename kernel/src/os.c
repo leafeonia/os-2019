@@ -178,6 +178,7 @@ static void os_run() {
 
 static _Context *os_trap(_Event ev, _Context *context) {
   printf("os_trap: event = %d\n",ev.event);
+  printf("cpu() = %d\n",_cpu());
   //if(ev.event == _EVENT_IRQ_TIMER) return context;
   //if(!holding(&lk_trap)) kmt->spin_lock(&lk_trap);
   //else LOG("???????");
