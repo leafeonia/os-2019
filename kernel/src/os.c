@@ -16,7 +16,7 @@ static spinlock_t lk_trap;
 //extern int holding(spinlock_t* lk);
 
 static sem_t empty,full,mutex;
-/*static void producer(){
+static void producer(){
 	for(int i = 0;i < 50;i++){
 		kmt->sem_wait(&empty);
 		kmt->sem_wait(&mutex);
@@ -41,7 +41,7 @@ static void consumer(){
 	printf("empty: %d %d, full: %d %d, mutex: %d %d\n",empty.lock.locked,empty.value,full.lock.locked,full.value,mutex.lock.locked,mutex.value);
 	printf("consumer: _intr_read() = %d\n",_intr_read());
 	while(1);
-}*/
+}
 
 /*
 void print(const char *s) {
@@ -108,9 +108,9 @@ static void os_init() {
   //_vme_init(pmm->alloc,pmm->free);
   dev->init();
   #ifdef L2_TEST
-  //kmt->create(pmm->alloc(sizeof(task_t)), "producer", producer, NULL);
-  //kmt->create(pmm->alloc(sizeof(task_t)), "consumer", consumer, NULL);
-  kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty1");
+  kmt->create(pmm->alloc(sizeof(task_t)), "producer", producer, NULL);
+  kmt->create(pmm->alloc(sizeof(task_t)), "consumer", consumer, NULL);
+  /*kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty1");
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty2");
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty3");
   kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty4");
@@ -125,7 +125,7 @@ static void os_init() {
   kmt->create(pmm->alloc(sizeof(task_t)), "dummy8", dummy_test, (void*)8);
   kmt->create(pmm->alloc(sizeof(task_t)), "dummy9", dummy_test, (void*)9);
   kmt->create(pmm->alloc(sizeof(task_t)), "dummy10", dummy_test, (void*)10);
-  kmt->create(pmm->alloc(sizeof(task_t)), "dummy11", dummy_test, (void*)11);
+  kmt->create(pmm->alloc(sizeof(task_t)), "dummy11", dummy_test, (void*)11);*/
   #endif
   //printf("end of os_init. intr_read = %d\n",_intr_read());
 }
