@@ -145,8 +145,8 @@ static void os_run() {
 static _Context *os_trap(_Event ev, _Context *context) {
   //printf("os_trap: event = %d\n",ev.event);
   if(ev.event == _EVENT_IRQ_TIMER) return context;
-  if(!holding(&lk_trap)) kmt->spin_lock(&lk_trap);
-  else LOG("???????");
+  //if(!holding(&lk_trap)) kmt->spin_lock(&lk_trap);
+  //else LOG("???????");
   _Context* ret = context;
   //if(ev.event != 5)printf("ev = %d\n",ev.event);
   /*if(ev.event == 2) {
@@ -161,7 +161,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
   		if(next) ret = next;
   	}
   }
-  kmt->spin_unlock(&lk_trap);
+  //kmt->spin_unlock(&lk_trap);
   
   //return context;
   //printf("os_trap returns task with context address: 0x%x\n",ret);
