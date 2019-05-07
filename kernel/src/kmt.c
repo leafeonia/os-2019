@@ -20,8 +20,11 @@ static spinlock_t lk_kmt_switch;
 
 static void pushcli(){
 	_intr_write(0);  //cli
-	if(cpu_ncli[_cpu()] == 0)
-    	cpu_intena[_cpu()] = _intr_read();
+	if(cpu_ncli[_cpu()] == 0){
+		cpu_intena[_cpu()] = _intr_read();
+		printf("intena[%d] = %d\n",_cpu(),cpu_intena[_cpu()]);
+	}
+    	
 	cpu_ncli[_cpu()] += 1;
 }
 
@@ -31,7 +34,7 @@ static void popcli(){
 	if(--cpu_ncli[_cpu()] < 0)
     	panic("popcli");
 	if(!cpu_ncli[_cpu()] && cpu_intena[_cpu()]) _intr_write(1);  //sti
-	printf("ncli[%d] = %d, intena[%d] = %d\n",_cpu(),cpu_ncli[_cpu()],_cpu(),cpu_intena[_cpu()]);
+	//printf("ncli[%d] = %d, intena[%d] = %d\n",_cpu(),cpu_ncli[_cpu()],_cpu(),cpu_intena[_cpu()]);
 }
 
 int holding(spinlock_t* lk){
