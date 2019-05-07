@@ -38,7 +38,7 @@ static void consumer(){
 		kmt->sem_signal(&mutex);
 		kmt->sem_signal(&empty);
 	}
-	printf("empty: %d, full: %d, mutex: %d\n",empty.lock.locked,full.lock.locked,mutex.lock.locked);
+	printf("empty: %d %d, full: %d %d, mutex: %d %d\n",empty.lock.locked,empty.value,full.lock.locked,full.value,mutex.lock.locked,mutex.value);
 	printf("consumer: _intr_read() = %d\n",_intr_read());
 	while(1);
 }
@@ -193,7 +193,7 @@ static void os_run() {
 
 
 static _Context *os_trap(_Event ev, _Context *context) {
-  printf("os_trap: event = %d\n",ev.event);
+  //printf("os_trap: event = %d\n",ev.event);
   //if(ev.event == _EVENT_IRQ_TIMER) return context;
   //if(!holding(&lk_trap)) kmt->spin_lock(&lk_trap);
   //else LOG("???????");
