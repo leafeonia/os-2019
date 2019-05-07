@@ -54,7 +54,7 @@ void kmt_spin_init(spinlock_t *lk, const char *name){
 void kmt_spin_lock(spinlock_t *lk){
 	pushcli();
 	if(holding(lk)){
-		printf("murderer: %s\n",lk->name);
+		//printf("murderer: %s\n",lk->name);
 		panic("acquire");
 	}
     	
@@ -107,18 +107,17 @@ static void kmt_sem_signal(sem_t *sem){
 
 
 /*  (chart for one core)
-	current-----
-			   |
-		  	   v
-		  	   (cur_deref)
-    0x114740    0x114744           (task_t**)
-	============================
-	| tasks[0] | tasks[1] | ...    (tasks_t*)
-	============================
-		|			|			
-		v			v	
-	0x200008    0x201098           (task_t*)
-	(&dummy1)	(&dummy2)
+	current---------
+			       |
+		  	       v
+    0x114740       0x114744           (task_t**)
+	=============================
+	| tasks[i][0] | tasks[i][1] | ... (tasks_t*)
+	=============================
+		|			  |			
+		v			  v	
+	0x200008       0x201098           (task_t*)
+	(&dummy1)	   (&dummy2)
 */
 
 static _Context* kmt_context_save(_Event ev, _Context *ctx){

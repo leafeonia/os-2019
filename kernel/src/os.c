@@ -3,7 +3,7 @@
 #include <devices.h>
 #include "my_os.h"
 
-#define L2_TEST
+//#define L2_TEST
 #define NR_IRQ 20
 
 struct irq{
