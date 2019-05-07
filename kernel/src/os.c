@@ -17,7 +17,7 @@ static spinlock_t lk_trap;
 
 static sem_t empty,full,mutex;
 static void producer(){
-	for(int i = 0;i < 5000;i++){
+	for(int i = 0;i < 30;i++){
 		kmt->sem_wait(&empty);
 		kmt->sem_wait(&mutex);
 		printf("(");
@@ -30,7 +30,7 @@ static void producer(){
 }
 
 static void consumer(){
-	for(int i = 0;i < 5000;i++){
+	for(int i = 0;i < 30;i++){
 		kmt->sem_wait(&full);
 		kmt->sem_wait(&mutex);
 		printf(")");
