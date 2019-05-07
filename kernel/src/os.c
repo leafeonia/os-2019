@@ -40,7 +40,9 @@ static void consumer(){
 	}
 	//printf("empty: %d %d, full: %d %d, mutex: %d %d\n",empty.lock.locked,empty.value,full.lock.locked,full.value,mutex.lock.locked,mutex.value);
 	//printf("consumer: _intr_read() = %d\n",_intr_read());
-	while(1);
+	while(1){
+		printf("consumer finished. cpu() = %d\n",_cpu());
+	};
 }
 
 void echo_task(void *name){
