@@ -21,6 +21,7 @@ static void producer(){
 		kmt->sem_wait(&empty);
 		kmt->sem_wait(&mutex);
 		printf("(");
+		for(volatile int j = 0;j < 100000;j++);
 		kmt->sem_signal(&mutex);
 		kmt->sem_signal(&full);
 	}
@@ -32,6 +33,7 @@ static void consumer(){
 		kmt->sem_wait(&full);
 		kmt->sem_wait(&mutex);
 		printf(")");
+		for(volatile int j = 0;j < 100000;j++);
 		kmt->sem_signal(&mutex);
 		kmt->sem_signal(&empty);
 	}
