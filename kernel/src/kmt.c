@@ -247,6 +247,8 @@ static void kmt_init(){
 		//printf("current_task[%d] = 0x%x\n",i,current_task[i]);
 	os->on_irq(INT_MIN, _EVENT_NULL, kmt_context_save);
 	os->on_irq(INT_MAX, _EVENT_NULL, kmt_context_switch);
+	os->on_irq(INT_MIN, _EVENT_IRQ_TIMER, kmt_context_save);
+	os->on_irq(INT_MAX, _EVENT_IRQ_TIMER, kmt_context_switch);
 	//LOG("kmt_init");
 	kmt_spin_init(&lk_kmt_create,"kmt_create");
 	kmt_spin_init(&lk_kmt_save,"kmt_save");
