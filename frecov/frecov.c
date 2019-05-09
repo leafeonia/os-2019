@@ -10,7 +10,7 @@
 
 int main(int argc, char *argv[]) {
 	void* p;
-	int fd = open(argv,O_RDONLY);
+	int fd = open(argv[1],O_RDONLY);
 	if(fd == -1){
 		ERR("open file failed");
 	}
