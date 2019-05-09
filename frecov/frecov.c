@@ -25,8 +25,8 @@ int main(int argc, char *argv[]) {
 		close(fd);
 		ERR("mmap failed");
 	}
-	for(int i =0;i < 100;i++){
-		printf("%x ",(unsigned int)(*((int*)p+i)));
+	for(int i = 0;i < 100;i++){
+		printf("%08x ",(unsigned int)(*((int*)p+i)));
 	}
 	printf("yeah\n");
     return 0;
