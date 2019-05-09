@@ -25,5 +25,6 @@ int main(int argc, char *argv[]) {
 		close(fd);
 		ERR("mmap failed");
 	}
+	printf("yeah\n");
     return 0;
 }
