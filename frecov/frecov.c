@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
 		ERR("mmap failed");
 	}
 	for(int i =0;i < 100;i++){
-		printf("%x ",(unsigned int)*(p+i));
+		printf("%x ",(unsigned int)(*(p+i)));
 	}
 	printf("yeah\n");
     return 0;
