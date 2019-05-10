@@ -65,8 +65,8 @@ int main(int argc, char *argv[]) {
     for(char* ptr = (char*)p;ptr < (char*)p + length - 2;ptr++){
         if(*ptr == 'B' && *(ptr+1) == 'M' && *(ptr+2) == 'P' && *(ptr+3) == ' ') {
             //printf("%x\n",ptr - (char*)p);
-            struct short_entry* shortEntry = (short_entry*)(ptr - 8);
-            struct long_entry* longEntry = (long_entry*)(ptr - 40);
+            struct short_entry* shortEntry = (struct short_entry*)(ptr - 8);
+            struct long_entry* longEntry = (struct long_entry*)(ptr - 40);
             if(!shortEntry->cluster) continue;
             char filename[50];
             memset(filename,0, sizeof(filename));
@@ -108,7 +108,7 @@ int main(int argc, char *argv[]) {
                 }
                 if(flag == 1 || !longEntry->check) break;
 
-                longEntry = (long_entry*)((char*)longEntry - 32;)
+                longEntry = (struct long_entry*)((char*)longEntry - 32;)
             };
 
             if(flag == 2){
