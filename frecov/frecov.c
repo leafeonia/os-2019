@@ -108,7 +108,7 @@ int main(int argc, char *argv[]) {
                 }
                 if(flag == 1 || !longEntry->check) break;
 
-                longEntry = (struct long_entry*)((char*)longEntry - 32;)
+                longEntry = (struct long_entry*)((char*)longEntry - 32);
             };
 
             if(flag == 2){
