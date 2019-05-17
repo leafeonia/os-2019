@@ -123,10 +123,10 @@ int main(int argc, char *argv[]) {
                         fprintf(fp, "%c", *(fptr));
                     }
                 }
+                fclose(fp);
                 char command[50];
                 sprintf(command,"sha1sum %s",filename);
                 system(command);
-
             }
         }
     }
