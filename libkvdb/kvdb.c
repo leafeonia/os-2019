@@ -16,6 +16,6 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
 
 char tmp[] = {'f','a'}; 
 char *kvdb_get(kvdb_t *db, const char *key){
-	printf("get and pet my \033[35m fluffy tail~ \033[0m\n");
+	printf("get and pet my \033[35mfluffy tail~ \033[0m\n");
 	return tmp;
 }
