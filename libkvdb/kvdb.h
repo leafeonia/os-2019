@@ -4,6 +4,7 @@
 
 struct kvdb {  
 	FILE* fp; 
+	int open; //mark whether fp has been successfully opened.
 };   
 typedef struct kvdb kvdb_t;   
   

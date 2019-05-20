@@ -6,14 +6,14 @@ int kvdb_open(kvdb_t *db, const char *filename){
 	FILE* fp = fopen(filename,"a+");
 	if(fp == NULL){
 		printf("error: fopen %s fails\n",filename);
-		db->fp = NULL;
 		return 1;
 	}
+	db->open = 1;
 	db->fp = fp;
 	return 0;
 }
 int kvdb_close(kvdb_t *db){
-	if(db->fp == NULL){
+	if(db->opened != 1){
 		printf("error: current kvdb has not successfully opened a db file yet\n");
 		return 1;
 	}
