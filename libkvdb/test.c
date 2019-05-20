@@ -12,6 +12,6 @@ int main() {
   value = kvdb_get(&db, key);
   kvdb_close(&db);
   printf("[%s]: [%s]\n", key, value);
-  free(value);
+  //free(value);
   return 0;
 }
