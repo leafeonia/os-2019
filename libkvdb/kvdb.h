@@ -1,9 +1,9 @@
 #ifndef __KVDB_H__
 #define __KVDB_H__
-
+#include <stdio.h>
 
 struct kvdb {  
-	int fd; 
+	FILE* fp; 
 };   
 typedef struct kvdb kvdb_t;   
   

@@ -3,9 +3,21 @@
 
 int kvdb_open(kvdb_t *db, const char *filename){
 	printf("open~\n");
+	FILE* fp = fopen(filename,"a+");
+	if(fp == NULL){
+		printf("error: fopen %s fails\n",filename);
+		db->file = NULL;
+		return 1;
+	}
+	db->file = fp;
 	return 0;
 }
 int kvdb_close(kvdb_t *db){
+	if(db->file == NULL){
+		printf("error: current kvdb has not successfully opened a db file yet\n");
+		return 1;
+	}
+	fclose(db->file);
 	printf("close~\n");
 	return 0;
 }

@@ -3,6 +3,8 @@
 #include <stdlib.h> 
 
 int main() {
+  FILE* fp;
+  fclose(fp);
   kvdb_t db;
   const char *key = "operating-systems";
   char *value;
