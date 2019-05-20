@@ -22,7 +22,7 @@ int kvdb_close(kvdb_t *db){
 	return 0;
 }
 int kvdb_put(kvdb_t *db, const char *key, const char *value){
-	printf("put it inside me~\n");
+	printf("put~\n");
 	return 0;
 }
 
