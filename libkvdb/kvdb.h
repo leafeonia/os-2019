@@ -4,7 +4,7 @@
 
 struct kvdb {
 	int fd; 
-};
+}; 
 typedef struct kvdb kvdb_t; 
 
 int kvdb_open(kvdb_t *db, const char *filename);
