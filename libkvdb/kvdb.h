@@ -3,7 +3,7 @@
 
 
 struct kvdb {
-	int fd;
+	int fd; 
 };
 typedef struct kvdb kvdb_t;
 
