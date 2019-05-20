@@ -3,7 +3,7 @@
 
 int kvdb_open(kvdb_t *db, const char *filename){
 	printf("open~\n");
-	return 0; 
+	return 0;
 }
 int kvdb_close(kvdb_t *db){
 	printf("close~\n");
