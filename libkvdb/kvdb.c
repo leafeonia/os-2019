@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "kvdb.h"
 
 int kvdb_open(kvdb_t *db, const char *filename){
@@ -14,5 +15,6 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
 }
 char *kvdb_get(kvdb_t *db, const char *key){
 	printf("get and pet my fluffy tail~\n");
-	return 'a';
+	char ret = a;
+	return &ret;
 }
