@@ -8,7 +8,7 @@ int kvdb_open(kvdb_t *db, const char *filename){
 		printf("error: fopen %s fails\n",filename);
 		return 1;
 	}
-	db->open = 1;
+	db->opened = 1;
 	db->fp = fp;
 	return 0;
 }
