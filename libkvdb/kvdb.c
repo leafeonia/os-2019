@@ -11,7 +11,7 @@ struct file{
 	FILE* fp;
 	file* next;
 }
-typedef file file_t;
+typedef struct file file_t;
 file_t* file_list = NULL;
 
 
