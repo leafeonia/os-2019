@@ -52,8 +52,8 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
             fprintf(fp2, "%s\n", value);
         }
         else{
-            fprintf(fp2, "%s", key_string);
-            fprintf(fp2, "%s", value_string);
+            fprintf(fp2, "%s\n", key_string);
+            fprintf(fp2, "%s\n", value_string);
         }
     }
     if(!matched){
@@ -74,6 +74,6 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
 
 char tmp[] = {'f','a'}; 
 char *kvdb_get(kvdb_t *db, const char *key){
-	printf("get and pet my \033[32mfluffy tail~ \033[0m\n");
+	printf("get and pet my \033[33mfluffy tail~ \033[0m\n");
 	return tmp;
 }
