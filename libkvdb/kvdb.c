@@ -2,6 +2,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <assert.h>
+#include <stdlib.h>
 #include "kvdb.h"
 
 int kvdb_open(kvdb_t *db, const char *filename){
