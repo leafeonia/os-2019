@@ -6,7 +6,7 @@
 void* test1(){
 	printf("FA1\n");
 	kvdb_t db;
-	kvdb_open(&db, "a.db"); // BUG: should check for errors  
+	kvdb_open(&db, "a.db"); 
     kvdb_put(&db, "operating systems", "three-easy-pieces");
     kvdb_close(&db);
 	return NULL;
@@ -15,7 +15,7 @@ void* test1(){
 void* test2(){
 	printf("FA2\n");
 	kvdb_t db;
-	kvdb_open(&db, "a.db"); // BUG: should check for errors  
+	kvdb_open(&db, "a.db"); 
     kvdb_put(&db, "leafeon", "470");
     kvdb_close(&db);
 	return NULL;

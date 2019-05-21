@@ -6,9 +6,8 @@
 struct kvdb {   
 	FILE* fp; 
 	const char* filename;
-	int opened; //mark whether fp has been successfully opened.
-	pthread_mutex_t lk;
-	int initialized;
+	//int opened; //mark whether fp has been successfully opened.
+	pthread_mutex_t *lk;
 };   
 typedef struct kvdb kvdb_t;   
   
