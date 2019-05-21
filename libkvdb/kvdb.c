@@ -55,7 +55,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     int matched = 0;
     while(!feof(fp)){
         char key_string[130];
-        char value_string[16000002];
+        char value_string[16000002] = (char*)malloc(16000002*sizeof(char));
         fgets(key_string,130,fp);
         fgets(value_string,16000002,fp);
         if(key_string[strlen(key_string)-1] == '\n') key_string[strlen(key_string)-1] = '\0';
@@ -70,6 +70,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
             fprintf(fp2, "%s\n", key_string);
             fprintf(fp2, "%s\n", value_string);
         }
+        free(value_string);
     }
     if(!matched){
         fprintf(fp2, "%s\n", key);
@@ -99,10 +100,10 @@ char *kvdb_get(kvdb_t *db, const char *key){
     FILE* fp = db->fp;
     rewind(fp);
     while(!feof(fp)){
-        char key_string[50000];
-        char value_string[50000];
-        fgets(key_string,50000,fp);
-        fgets(value_string,50000,fp);
+        char key_string[130];
+        char value_string[16000002] = (char*)malloc(16000002*sizeof(char));
+        fgets(key_string,130,fp);
+        fgets(value_string,16000002,fp);
         if(key_string[strlen(key_string)-1] == '\n') key_string[strlen(key_string)-1] = '\0';
         if(value_string[strlen(value_string)-1] == '\n') value_string[strlen(value_string)-1] = '\0';
         if(feof(fp)) break;
@@ -110,11 +111,14 @@ char *kvdb_get(kvdb_t *db, const char *key){
             char* ret = (char*)malloc(sizeof(char)*strlen(value_string)+1);
             if(!ret){
                 printf("error: malloc space for return value fails\n");
+                free(value_string);
                 return NULL;
             }
             strcpy(ret,value_string);
+            free(value_string);
             return ret;
         }
+        free(value_string);
     }
     printf("error: key [%s] does not exist\n",key);
     return NULL;
