@@ -57,7 +57,6 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
 		fprintf(fp2, "%s", value);
 	}
 	fclose(fp);
-	fclose(fp2);
 	remove(db->filename);
 	rename(temp,db->filename);
 	db->fp = fp2;
