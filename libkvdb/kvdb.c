@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <assert.h>
 #include "kvdb.h"
 
 int kvdb_open(kvdb_t *db, const char *filename){
@@ -28,8 +29,10 @@ int kvdb_close(kvdb_t *db){
 		pthread_mutex_unlock(&db->lk);
 		return -1;
 	}
+	assert(db->fp);
 	db->opened = 0;
 	fclose(db->fp);
+	db->fp = NULL;
 	pthread_mutex_unlock(&db->lk);
 	return 0;
 }
