@@ -57,14 +57,15 @@ int kvdb_open(kvdb_t *db, const char *filename){
 int kvdb_close(kvdb_t *db){
 	printf("close~\n");
 	pthread_mutex_lock(&close_lk);
+	printf("size = %d\n",sizeof(db->fp));
 	if(!db->fp){
 		printf("error: current kvdb has not successfully opened a db file yet\n");
 		return -1;
 	}
 	fclose(db->fp);
-	
 	db->fp = NULL;
 	printf("close1\n");
+	
 	file_t* bye;
 	if(strcmp(file_list->filename,db->filename) == 0){
 		bye = file_list;
