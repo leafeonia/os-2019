@@ -24,7 +24,6 @@ int kvdb_open(kvdb_t *db, const char *filename){
 			db->filename = filename;
 			db->lk = cur->lk;
 			db->fp = cur->fp;
-			db->opened = 1;
 			return 0;
 		}
 		prev = cur;
