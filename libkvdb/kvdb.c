@@ -29,10 +29,9 @@ int kvdb_close(kvdb_t *db){
 		pthread_mutex_unlock(&db->lk);
 		return -1;
 	}
-	assert(db->fp);
 	db->opened = 0;
 	printf("opened = %d\n",db->opened);
-	fclose(db->fp);
+	if(db->fp) fclose(db->fp);
 	db->fp = NULL;
 	pthread_mutex_unlock(&db->lk);
 	return 0;
