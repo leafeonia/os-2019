@@ -3,12 +3,14 @@
 #include <stdlib.h> 
 #include <pthread.h>
 
-void test1(){
+void* test1(){
 	printf("FA1\n");
+	return NULL;
 }
 
-void test2(){
+void* test2(){
 	printf("FA2\n");
+	return NULL;
 }
 
 int main() {
