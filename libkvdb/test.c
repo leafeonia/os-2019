@@ -3,37 +3,17 @@
 #include <stdlib.h> 
 #include <pthread.h>
 
-void* test1(void* arg){
+void* test1(){
 	printf("FA1\n");
-	kvdb_t* db = (kvdb_t*)arg;
-	kvdb_open(db, "a.db"); // BUG: should check for errors  
-    kvdb_put(db, "operating systems", "three-easy-pieces");
-    kvdb_close(db);
-	return NULL;
-}
-
-void* test2(void* arg){
-	printf("FA2\n");
-	kvdb_t* db = (kvdb_t*)arg;
-	kvdb_open(db, "a.db"); // BUG: should check for errors  
-    kvdb_put(db, "leafeon", "470");
-    kvdb_close(db);
-	return NULL;
-}
-
-void* test3(){
-	printf("FA3\n");
-	kvdb_t db;
 	kvdb_open(&db, "a.db"); // BUG: should check for errors  
     kvdb_put(&db, "operating systems", "three-easy-pieces");
     kvdb_close(&db);
 	return NULL;
 }
 
-void* test4(){
-	printf("FA4\n");
-	kvdb_t db;
-	kvdb_open(&db, "b.db"); // BUG: should check for errors  
+void* test2(){
+	printf("FA2\n");
+	kvdb_open(&db, "a.db"); // BUG: should check for errors  
     kvdb_put(&db, "leafeon", "470");
     kvdb_close(&db);
 	return NULL;
@@ -41,18 +21,15 @@ void* test4(){
 
 int main() {
   pthread_t p1,p2;
-  //kvdb_t db;
-  //pthread_create(&p1,NULL,test1,(void*)&db);
-  //pthread_create(&p2,NULL,test2,(void*)&db);
-  pthread_create(&p1,NULL,test3,NULL);
-  pthread_create(&p2,NULL,test4,NULL);
+  pthread_create(&p1,NULL,test1,NULL);
+  pthread_create(&p2,NULL,test2,NULL);
   pthread_join(p1,NULL);
   pthread_join(p2,NULL);
   /*kvdb_t db;
   const char *key = "operating-systems";
   char *value1,*value2,*value3,*value4;
 
-  kvdb_open(&db, "a.db"); // BUG: should check for errors  
+  /*kvdb_open(&db, "a.db"); // BUG: should check for errors  
   kvdb_put(&db, key, "three-easy-pieces");
   kvdb_put(&db, "leafeon", "470");
   kvdb_put(&db, "leafeon", "471");
