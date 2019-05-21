@@ -88,7 +88,9 @@ int kvdb_close(kvdb_t *db){
 		}
 		assert(cur);//shouldn't reach end of list, which means no valid filename found
 	}
+	printf("close5\n");
 	free(bye);
+	printf("close6\n");
 	pthread_mutex_unlock(&close_lk);
 	return 0;
 }
