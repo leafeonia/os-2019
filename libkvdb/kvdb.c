@@ -118,6 +118,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     FILE* fp = db->fp;
     int matched = 0;
     while(!feof(fp)){
+    	printf("oho1\n");
         char key_string[130];
         char *value_string = (char*)malloc(16000002*sizeof(char));
         fgets(key_string,130,fp);
@@ -153,7 +154,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     db->fp = fopen(db->filename,"r+");
     file_t* cur = file_list;
     while(cur){
-        	printf("oho\n");
+        	printf("oho2\n");
     	if(strcmp(file_list->filename,db->filename) == 0){
 			cur->fp = db->fp;
 			break;
