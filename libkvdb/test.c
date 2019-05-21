@@ -20,15 +20,16 @@ void* test2(){
 }
 
 int main() {
-  kvdb_t db;
-  const char *key = "operating-systems";
-  char *value1,*value2,*value3,*value4;
   pthread_t p1,p2;
   pthread_create(&p1,NULL,test1,NULL);
   pthread_create(&p2,NULL,test2,NULL);
   pthread_join(p1,NULL);
   pthread_join(p2,NULL);
-  /*kvdb_open(&db, "a.db"); // BUG: should check for errors  
+  /*kvdb_t db;
+  const char *key = "operating-systems";
+  char *value1,*value2,*value3,*value4;
+
+  kvdb_open(&db, "a.db"); // BUG: should check for errors  
   kvdb_put(&db, key, "three-easy-pieces");
   kvdb_put(&db, "leafeon", "470");
   kvdb_put(&db, "leafeon", "471");
