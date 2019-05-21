@@ -57,7 +57,11 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
 		fprintf(fp2, "%s", value);
 	}
 	fclose(fp);
-	remove(db->filename);
+	if(remove(db->filename) == -1){
+		printf("remove origin file fails\n");
+		fopen(fp,"w+");
+		return -1;
+	}
 	rename(temp,db->filename);
 	db->fp = fp2;
 	return 0;
