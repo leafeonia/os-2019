@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <assert.h>
 #include <stdlib.h>
+#include <sys/file.h>
 #include "kvdb.h"
 
 int kvdb_open(kvdb_t *db, const char *filename){
@@ -40,6 +41,8 @@ int kvdb_close(kvdb_t *db){
 	pthread_mutex_unlock(&db->lk);
 	return 0;
 }
+
+
 int kvdb_put(kvdb_t *db, const char *key, const char *value){
     printf("put~\n");
     pthread_mutex_lock(&db->lk);
@@ -48,11 +51,14 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         pthread_mutex_unlock(&db->lk);
         return -1;
     }
+    int fd = fileno(db->fp);
+    flock(fd,LOCK_EX);
     char temp[] = "temp.txt";
     FILE* fp2 = fopen(temp,"w");
     if(fp2 == NULL){
         printf("error: create temporary file fails\n");
         pthread_mutex_unlock(&db->lk);
+        flock(fd,LOCK_UN);
         return -1;
     }
     FILE* fp = db->fp;
@@ -86,12 +92,14 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         printf("remove origin file fails\n");
         fopen(db->filename,"w+");
         pthread_mutex_unlock(&db->lk);
+        flock(fd,LOCK_UN);
         return -1;
     }
     rename(temp,db->filename);
     db->fp = fopen(db->filename,"r+");
     sync();
     pthread_mutex_unlock(&db->lk);
+    flock(fd,LOCK_UN);
     return 0;
 }
 
