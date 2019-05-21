@@ -5,6 +5,7 @@
 
 void* test1(){
 	printf("FA1\n");
+	kvdb_t db;
 	kvdb_open(&db, "a.db"); // BUG: should check for errors  
     kvdb_put(&db, "operating systems", "three-easy-pieces");
     kvdb_close(&db);
@@ -13,6 +14,7 @@ void* test1(){
 
 void* test2(){
 	printf("FA2\n");
+	kvdb_t db;
 	kvdb_open(&db, "a.db"); // BUG: should check for errors  
     kvdb_put(&db, "leafeon", "470");
     kvdb_close(&db);
@@ -29,7 +31,7 @@ int main() {
   const char *key = "operating-systems";
   char *value1,*value2,*value3,*value4;
 
-  /*kvdb_open(&db, "a.db"); // BUG: should check for errors  
+  kvdb_open(&db, "a.db"); // BUG: should check for errors  
   kvdb_put(&db, key, "three-easy-pieces");
   kvdb_put(&db, "leafeon", "470");
   kvdb_put(&db, "leafeon", "471");
