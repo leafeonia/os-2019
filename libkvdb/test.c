@@ -5,11 +5,17 @@
 
 void* test1(){
 	printf("FA1\n");
+	kvdb_open(&db, "a.db"); // BUG: should check for errors  
+    kvdb_put(&db, "operating systems", "three-easy-pieces");
+    kvdb_close(&db);
 	return NULL;
 }
 
 void* test2(){
 	printf("FA2\n");
+	kvdb_open(&db, "a.db"); // BUG: should check for errors  
+    kvdb_put(&db, "leafeon", "470");
+    kvdb_close(&db);
 	return NULL;
 }
 
@@ -22,7 +28,7 @@ int main() {
   pthread_create(&p2,NULL,test2,NULL);
   pthread_join(p1,NULL);
   pthread_join(p2,NULL);
-  kvdb_open(&db, "a.db"); // BUG: should check for errors  
+  /*kvdb_open(&db, "a.db"); // BUG: should check for errors  
   kvdb_put(&db, key, "three-easy-pieces");
   kvdb_put(&db, "leafeon", "470");
   kvdb_put(&db, "leafeon", "471");
@@ -36,5 +42,5 @@ int main() {
   printf("[%s]: [%s]\n", "glaceon", value3);
   printf("[%s]: [%s]\n", "leafeon", value4);
   free(value1);
-  return 0;
+  */return 0;
 }
