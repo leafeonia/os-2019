@@ -153,6 +153,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     db->fp = fopen(db->filename,"r+");
     file_t* cur = file_list;
     while(cur){
+        	printf("oho\n");
     	if(strcmp(file_list->filename,db->filename) == 0){
 			cur->fp = db->fp;
 			break;
