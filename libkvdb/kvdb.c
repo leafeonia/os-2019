@@ -10,7 +10,7 @@ struct file{
 	pthread_mutex_t* lk;
 	FILE* fp;
 	struct file* next;
-}
+};
 typedef struct file file_t;
 file_t* file_list = NULL;
 
