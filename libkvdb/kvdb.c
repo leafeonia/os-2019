@@ -72,7 +72,7 @@ int kvdb_close(kvdb_t *db){
 	}
 	else{
 		file_t* cur = file_list;
-		file_t* prev;
+		file_t* prev = file_list;
 		while(cur){
 			printf("close2~\n");
 			if(strcmp(cur->filename,db->filename) == 0){
