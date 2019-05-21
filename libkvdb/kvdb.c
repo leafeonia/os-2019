@@ -14,9 +14,11 @@ struct file{
 typedef struct file file_t;
 file_t* file_list = NULL;
 
+pthread_mutex_t open_lk = PTHREAD_MUTEX_INITIALIZER;
 
 int kvdb_open(kvdb_t *db, const char *filename){
 	printf("open~\n");
+	pthread_mutex_lock(&open_lk);
 	file_t* cur = file_list;
 	file_t* prev = file_list;
 	while(cur != NULL){
@@ -48,6 +50,7 @@ int kvdb_open(kvdb_t *db, const char *filename){
 	db->filename = filename;
 	db->lk = lk;
 	//db->opened = 1;
+	pthread_mutex_unlock(&open_lk);
 	return 0;
 }
 int kvdb_close(kvdb_t *db){
