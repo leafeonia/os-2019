@@ -105,7 +105,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         return -1;
     }
     pthread_mutex_lock(db->lk);
-    int fd = fileno(db->fp);
+    //int fd = fileno(db->fp);
     //flock(fd,LOCK_EX);
     char temp[] = "temp.txt";
     FILE* fp2 = fopen(temp,"w");
