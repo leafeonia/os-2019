@@ -57,7 +57,7 @@ int kvdb_open(kvdb_t *db, const char *filename){
 int kvdb_close(kvdb_t *db){
 	printf("close~\n");
 	pthread_mutex_lock(&close_lk);
-	printf("size = %d\n",(int)sizeof(db->fp));
+	printf("db->fp = %p, size = %d\n",db->fp,(int)sizeof(db->fp));
 	if(!db->fp){
 		printf("error: current kvdb has not successfully opened a db file yet\n");
 		return -1;
@@ -168,7 +168,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
 }
 
 char *kvdb_get(kvdb_t *db, const char *key){
-    //printf("get and pet my \033[33mfluffy tail~ \033[0m\n");
+    printf("get and pet my \033[33mfluffy tail~ \033[0m\n");
     if(!db->fp){
         printf("error: current kvdb has not successfully opened a db file yet\n");
         return NULL;
