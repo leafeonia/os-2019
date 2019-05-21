@@ -31,7 +31,7 @@ int kvdb_close(kvdb_t *db){
 	}
 	assert(db->fp);
 	db->opened = 0;
-	printf("db->opened changed: %d\n",db->changed);
+	printf("db->opened changed: %d\n",db->opened);
 	fclose(db->fp);
 	db->fp = NULL;
 	pthread_mutex_unlock(&db->lk);
