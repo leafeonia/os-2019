@@ -43,6 +43,8 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         char value_string[50000];
         fgets(key_string,50000,fp);
         fgets(value_string,50000,fp);
+        if(key_string[strlen(key_string)-1] == '\n') key_string[strlen(key_string)-1] = '\0';
+        if(value_string[strlen(value_string)-1] == '\n') value_string[strlen(value_string)-1] = '\0';
         if(feof(fp)) break;
         if(strcmp(key, key_string) == 0){
             matched = 1;
@@ -72,6 +74,6 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
 
 char tmp[] = {'f','a'}; 
 char *kvdb_get(kvdb_t *db, const char *key){
-	printf("get and pet my \033[34mfluffy tail~ \033[0m\n");
+	printf("get and pet my \033[32mfluffy tail~ \033[0m\n");
 	return tmp;
 }
