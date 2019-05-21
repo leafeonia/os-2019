@@ -60,6 +60,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
 	fclose(fp2);
 	remove(db->filename);
 	rename(temp,db->filename);
+	db->fp = fp2;
 	return 0;
 }
 
