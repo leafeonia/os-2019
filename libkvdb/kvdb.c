@@ -26,8 +26,8 @@ int kvdb_close(kvdb_t *db){
 		pthread_mutex_unlock(&db->lk);
 		return -1;
 	}
-	fclose(db->fp);
 	db->opened = 0;
+	fclose(db->fp);
 	pthread_mutex_unlock(&db->lk);
 	return 0;
 }
