@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 #include "kvdb.h"
 
 int kvdb_open(kvdb_t *db, const char *filename){
@@ -77,6 +78,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     }
     rename(temp,db->filename);
     db->fp = fopen(db->filename,"r+");
+    sync();
     return 0;
 }
 
