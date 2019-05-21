@@ -92,6 +92,7 @@ int kvdb_close(kvdb_t *db){
 	free(bye);
 	printf("close6\n");
 	pthread_mutex_unlock(&close_lk);
+	printf("close7\n");
 	return 0;
 }
 
@@ -105,13 +106,13 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     }
     pthread_mutex_lock(db->lk);
     int fd = fileno(db->fp);
-    flock(fd,LOCK_EX);
+    //flock(fd,LOCK_EX);
     char temp[] = "temp.txt";
     FILE* fp2 = fopen(temp,"w");
     if(fp2 == NULL){
         printf("error: create temporary file fails\n");
         pthread_mutex_unlock(db->lk);
-        flock(fd,LOCK_UN);
+        //flock(fd,LOCK_UN);
         return -1;
     }
     FILE* fp = db->fp;
@@ -145,7 +146,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         printf("remove origin file fails\n");
         fopen(db->filename,"w+");
         pthread_mutex_unlock(db->lk);
-        flock(fd,LOCK_UN);
+        //flock(fd,LOCK_UN);
         return -1;
     }
     rename(temp,db->filename);
@@ -162,7 +163,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
 
     printf("update: filename = %s,db->fp = %p\n",db->filename,db->fp);
     pthread_mutex_unlock(db->lk);
-    flock(fd,LOCK_UN);
+    //flock(fd,LOCK_UN);
     return 0;
 }
 
