@@ -15,6 +15,7 @@ typedef struct file file_t;
 file_t* file_list = NULL;
 
 pthread_mutex_t open_lk = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t close_lk = PTHREAD_MUTEX_INITIALIZER;
 
 int kvdb_open(kvdb_t *db, const char *filename){
 	printf("open~\n");
@@ -55,6 +56,7 @@ int kvdb_open(kvdb_t *db, const char *filename){
 }
 int kvdb_close(kvdb_t *db){
 	printf("close~\n");
+	pthread_mutex_lock(&close_lk);
 	if(!db->fp){
 		printf("error: current kvdb has not successfully opened a db file yet\n");
 		return -1;
@@ -81,6 +83,7 @@ int kvdb_close(kvdb_t *db){
 		assert(cur);//shouldn't reach end of list, which means no valid filename found
 	}
 	free(bye);
+	pthread_mutex_unlock(&close_lk);
 	return 0;
 }
 
