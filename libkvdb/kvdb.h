@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <pthread.h>
 
-struct kvdb {  
+struct kvdb {   
 	FILE* fp; 
 	const char* filename;
 	int opened; //mark whether fp has been successfully opened.
