@@ -146,6 +146,16 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     }
     rename(temp,db->filename);
     db->fp = fopen(db->filename,"r+");
+    file_t* cur = file_list;
+    while(cur){
+    	if(strcmp(file_list->filename,db->filename) == 0){
+			cur->fp = db->fp;
+			break;
+		}
+		cur = cur->next;
+    }
+    assert(cur);
+
     printf("update: filename = %s,db->fp = %p\n",db->filename,db->fp);
     pthread_mutex_unlock(db->lk);
     flock(fd,LOCK_UN);
