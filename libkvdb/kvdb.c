@@ -18,7 +18,7 @@ file_t* file_list = NULL;
 int kvdb_open(kvdb_t *db, const char *filename){
 	printf("open~\n");
 	file_t* cur = file_list;
-	file_t* prev;
+	file_t* prev = file_list;
 	while(cur != NULL){
 		if(strcmp(cur->filename,filename) == 0){
 			db->filename = filename;
@@ -37,7 +37,7 @@ int kvdb_open(kvdb_t *db, const char *filename){
 	}
 	pthread_mutex_t *lk = (pthread_mutex_t*)malloc(sizeof(pthread_mutex_t));
 	pthread_mutex_init(lk,NULL);
-	file_t *new_file;
+	file_t *new_file = (file_t*)malloc(sizeof(file_t));
 	new_file->filename = filename;
 	new_file->fp = fp;
 	new_file->lk = lk;
