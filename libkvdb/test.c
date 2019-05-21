@@ -13,11 +13,11 @@ void* test1(){
 }
 
 void* test2(){
-	printf("FA2\n");
+	/*printf("FA2\n");
 	kvdb_t db;
 	kvdb_open(&db, "a.db"); 
     kvdb_put(&db, "leafeon", "470");
-    kvdb_close(&db);
+    kvdb_close(&db);*/
 	return NULL;
 }
 
