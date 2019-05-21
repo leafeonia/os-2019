@@ -4,7 +4,7 @@
 
 int kvdb_open(kvdb_t *db, const char *filename){
 	printf("open~\n");
-	FILE* fp = fopen(filename,"r");
+	FILE* fp = fopen(filename,"w+");
 	if(fp == NULL){
 		printf("error: fopen %s fails\n",filename);
 		return -1;
