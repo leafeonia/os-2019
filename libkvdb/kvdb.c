@@ -9,7 +9,7 @@ struct file{
 	const char* filename;
 	pthread_mutex_t* lk;
 	FILE* fp;
-	file* next;
+	struct file* next;
 }
 typedef struct file file_t;
 file_t* file_list = NULL;
