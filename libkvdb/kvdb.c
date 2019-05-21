@@ -4,7 +4,7 @@
 
 int kvdb_open(kvdb_t *db, const char *filename){
 	printf("open~\n");
-	pthread_mutex_init(&db->lk,NULL);
+	//pthread_mutex_init(&db->lk,NULL);
 	pthread_mutex_lock(&db->lk);
 	FILE* fp = fopen(filename,"w+");
 	if(fp == NULL){
