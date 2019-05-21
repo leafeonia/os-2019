@@ -22,7 +22,7 @@ void* test2(void* arg){
 }
 
 void* test3(){
-	printf("FA1\n");
+	printf("FA3\n");
 	kvdb_t db;
 	kvdb_open(&db, "a.db"); // BUG: should check for errors  
     kvdb_put(&db, "operating systems", "three-easy-pieces");
@@ -31,9 +31,9 @@ void* test3(){
 }
 
 void* test4(){
-	printf("FA1\n");
+	printf("FA4\n");
 	kvdb_t db;
-	kvdb_open(&db, "a.db"); // BUG: should check for errors  
+	kvdb_open(&db, "b.db"); // BUG: should check for errors  
     kvdb_put(&db, "leafeon", "470");
     kvdb_close(&db);
 	return NULL;
