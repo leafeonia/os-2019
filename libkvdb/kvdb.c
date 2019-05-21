@@ -14,10 +14,14 @@ int kvdb_open(kvdb_t *db, const char *filename){
 		pthread_mutex_unlock(&db->lk);
 		return -1;
 	}
+	printf("1\n");
 	db->opened = 1;
+	printf("2\n");
 	db->fp = fp;
 	db->filename = filename;
+	printf("3\n");
 	pthread_mutex_unlock(&db->lk);
+	printf("4\n");
 	return 0;
 }
 int kvdb_close(kvdb_t *db){
