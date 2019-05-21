@@ -72,8 +72,33 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     return 0;
 }
 
-char tmp[] = {'f','a'}; 
 char *kvdb_get(kvdb_t *db, const char *key){
-	printf("get and pet my \033[33mfluffy tail~ \033[0m\n");
-	return tmp;
+    printf("get and pet my \033[33mfluffy tail~ \033[0m\n");
+    if(db->opened != 1){
+        printf("error: current kvdb has not successfully opened a db file yet\n");
+        return NULL;
+    }
+    FILE* fp = db->fp;
+    rewind(fp);
+    while(!feof(fp)){
+        char key_string[50000];
+        char value_string[50000];
+        fgets(key_string,50000,fp);
+        fgets(value_string,50000,fp);
+        if(key_string[strlen(key_string)-1] == '\n') key_string[strlen(key_string)-1] = '\0';
+        if(value_string[strlen(value_string)-1] == '\n') value_string[strlen(value_string)-1] = '\0';
+        if(feof(fp)) break;
+        if(strcmp(key, key_string) == 0){
+            char* ret = (char*)malloc(sizeof(char)*strlen(value_string)+1);
+            if(!ret){
+                printf("error: malloc space for return value fails\n");
+                return NULL;
+            }
+            strcpy(ret,value_string);
+            return ret;
+        }
+    }
+    printf("error: key [%s] does not exist\n",key);
+    return NULL;
+
 }
