@@ -27,7 +27,6 @@ int kvdb_open(kvdb_t *db, const char *filename){
 }
 int kvdb_close(kvdb_t *db){
 	printf("close~\n");
-	printf("opened = %d\n",db->opened);
 	pthread_mutex_lock(&db->lk);
 	if(db->opened != 1){
 		printf("error: current kvdb has not successfully opened a db file yet\n");
@@ -35,7 +34,6 @@ int kvdb_close(kvdb_t *db){
 		return -1;
 	}
 	db->opened = 0;
-	printf("opened = %d\n",db->opened);
 	if(!db->fp){
 		printf("error: file has been closed. This may be due to the operation of other threads\n");
 	} 
