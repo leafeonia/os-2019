@@ -41,7 +41,7 @@ void* test4(){
 
 int main() {
   pthread_t p1,p2;
-  kvdb_t db;
+  //kvdb_t db;
   //pthread_create(&p1,NULL,test1,(void*)&db);
   //pthread_create(&p2,NULL,test2,(void*)&db);
   pthread_create(&p1,NULL,test3,NULL);
