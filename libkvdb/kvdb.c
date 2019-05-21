@@ -67,7 +67,9 @@ int kvdb_close(kvdb_t *db){
 	printf("close1\n");
 	
 	file_t* bye;
+	printf("close2\n");
 	if(strcmp(file_list->filename,db->filename) == 0){
+		printf("close3\n");
 		bye = file_list;
 		file_list = file_list->next;
 	}
@@ -75,7 +77,7 @@ int kvdb_close(kvdb_t *db){
 		file_t* cur = file_list;
 		file_t* prev = file_list;
 		while(cur){
-			printf("close2~\n");
+			printf("close4\n");
 			if(strcmp(cur->filename,db->filename) == 0){
 				bye = cur;
 				prev->next = cur->next;
