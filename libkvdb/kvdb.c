@@ -4,24 +4,30 @@
 
 int kvdb_open(kvdb_t *db, const char *filename){
 	printf("open~\n");
+	pthread_mutex_lock(&db->lk);
 	FILE* fp = fopen(filename,"w+");
 	if(fp == NULL){
 		printf("error: fopen %s fails\n",filename);
+		pthread_mutex_unlock(&db->lk);
 		return -1;
 	}
 	db->opened = 1;
 	db->fp = fp;
 	db->filename = filename;
+	pthread_mutex_unlock(&db->lk);
 	return 0;
 }
 int kvdb_close(kvdb_t *db){
+	printf("close~\n");
+	pthread_mutex_lock(&db->lk);
 	if(db->opened != 1){
 		printf("error: current kvdb has not successfully opened a db file yet\n");
+		pthread_mutex_unlock(&db->lk);
 		return -1;
 	}
 	fclose(db->fp);
 	db->opened = 0;
-	printf("close~\n");
+	pthread_mutex_unlock(&db->lk);
 	return 0;
 }
 int kvdb_put(kvdb_t *db, const char *key, const char *value){

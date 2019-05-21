@@ -1,11 +1,13 @@
 #ifndef __KVDB_H__
 #define __KVDB_H__
 #include <stdio.h>
+#include <pthread.h>
 
 struct kvdb {  
 	FILE* fp; 
 	const char* filename;
 	int opened; //mark whether fp has been successfully opened.
+	pthread_mutex_t lk = PTHREAD_MUTEX_INITIALIZER;
 };   
 typedef struct kvdb kvdb_t;   
   
