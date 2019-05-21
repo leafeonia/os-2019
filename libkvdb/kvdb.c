@@ -56,7 +56,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     int matched = 0;
     while(!feof(fp)){
         char key_string[130];
-        char value_string[16000002] = (char*)malloc(16000002*sizeof(char));
+        char *value_string = (char*)malloc(16000002*sizeof(char));
         fgets(key_string,130,fp);
         fgets(value_string,16000002,fp);
         if(key_string[strlen(key_string)-1] == '\n') key_string[strlen(key_string)-1] = '\0';
@@ -102,7 +102,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
     rewind(fp);
     while(!feof(fp)){
         char key_string[130];
-        char value_string[16000002] = (char*)malloc(16000002*sizeof(char));
+        char *value_string = (char*)malloc(16000002*sizeof(char));
         fgets(key_string,130,fp);
         fgets(value_string,16000002,fp);
         if(key_string[strlen(key_string)-1] == '\n') key_string[strlen(key_string)-1] = '\0';
