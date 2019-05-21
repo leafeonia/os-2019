@@ -90,14 +90,14 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         printf("error: current kvdb has not successfully opened a db file yet\n");
         return -1;
     }
-    pthread_mutex_lock(&db->lk);
+    pthread_mutex_lock(db->lk);
     int fd = fileno(db->fp);
     flock(fd,LOCK_EX);
     char temp[] = "temp.txt";
     FILE* fp2 = fopen(temp,"w");
     if(fp2 == NULL){
         printf("error: create temporary file fails\n");
-        pthread_mutex_unlock(&db->lk);
+        pthread_mutex_unlock(db->lk);
         flock(fd,LOCK_UN);
         return -1;
     }
@@ -131,14 +131,14 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     if(remove(db->filename) == -1){
         printf("remove origin file fails\n");
         fopen(db->filename,"w+");
-        pthread_mutex_unlock(&db->lk);
+        pthread_mutex_unlock(db->lk);
         flock(fd,LOCK_UN);
         return -1;
     }
     rename(temp,db->filename);
     db->fp = fopen(db->filename,"r+");
     printf("update: filename = %s,db->fp = %p\n",db->filename,db->fp);
-    pthread_mutex_unlock(&db->lk);
+    pthread_mutex_unlock(db->lk);
     flock(fd,LOCK_UN);
     return 0;
 }
