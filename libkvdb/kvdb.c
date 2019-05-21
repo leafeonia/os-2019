@@ -73,7 +73,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
 }
 
 char *kvdb_get(kvdb_t *db, const char *key){
-    printf("get and pet my \033[33mfluffy tail~ \033[0m\n");
+    //printf("get and pet my \033[33mfluffy tail~ \033[0m\n");
     if(db->opened != 1){
         printf("error: current kvdb has not successfully opened a db file yet\n");
         return NULL;
