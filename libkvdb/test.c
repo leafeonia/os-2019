@@ -4,11 +4,11 @@
 #include <pthread.h>
 
 void* test1(){
-	/*printf("FA1\n");
+	printf("FA1\n");
 	kvdb_t db;
 	kvdb_open(&db, "a.db"); // BUG: should check for errors  
     kvdb_put(&db, "operating systems", "three-easy-pieces");
-    kvdb_close(&db);*/
+    kvdb_close(&db);
 	return NULL;
 }
 
