@@ -134,7 +134,8 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     //int fd = fileno(db->fp);
     //flock(fd,LOCK_EX);
     char temp[] = "temp.txt";
-    fopen(db->filename,"r+");
+    FILE* fptemp = fopen(db->filename,"r+");
+    printf("in put, opens %p\n",fptemp);
     FILE* fp2 = fopen(temp,"w");
     if(fp2 == NULL){
         printf("error: create temporary file fails\n");
