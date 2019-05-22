@@ -140,12 +140,13 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         char *value_string = (char*)malloc(16000002*sizeof(char));
         fgets(key_string,130,fp);
         fgets(value_string,16000002,fp);
-        if(key_string[strlen(key_string)-1] == '\n') key_string[strlen(key_string)-1] = '\0';
-        if(value_string[strlen(value_string)-1] == '\n') value_string[strlen(value_string)-1] = '\0';
         if(feof(fp)) {
         	free(value_string);
         	break;
         }
+        if(key_string[strlen(key_string)-1] == '\n') key_string[strlen(key_string)-1] = '\0';
+        if(value_string[strlen(value_string)-1] == '\n') value_string[strlen(value_string)-1] = '\0';
+        
         if(strcmp(key, key_string) == 0){
             matched = 1;
             fprintf(fp2, "%s\n", key);
