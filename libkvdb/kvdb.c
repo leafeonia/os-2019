@@ -151,7 +151,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     //flock(fd,LOCK_EX);
     char temp[] = "temp.txt";
     FILE* fptemp = fopen(db->filename,"r+");
-    printf("in put, opens %p, fd = %d\n",fptemp, fileno(fptemp));
+    //printf("in put, opens %p, fd = %d\n",fptemp, fileno(fptemp));
     FILE* fp2 = fopen(temp,"w");
     if(fp2 == NULL){
         printf("error: create temporary file fails\n");
@@ -162,7 +162,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     FILE* fp = fptemp;//db->fp;
     flock(fileno(fp),LOCK_EX);
     flock(fileno(fp2),LOCK_EX);
-    printf("in put, db->fp = %p, fd = %d\n",db->fp, fileno(db->fp));
+    //printf("in put, db->fp = %p, fd = %d\n",db->fp, fileno(db->fp));
     int matched = 0;
     while(!feof(fp)){
     	//printf("oho1\n");
