@@ -7,8 +7,8 @@ void* test1(){
 	printf("FA1\n");
 	kvdb_t db;
 	kvdb_open(&db, "a.db"); 
-    /*kvdb_put(&db, "operating systems", "three-easy-pieces");
-    kvdb_put(&db, "glaceon", "471");
+    kvdb_put(&db, "operating systems", "three-easy-pieces");
+    /*kvdb_put(&db, "glaceon", "471");
     kvdb_put(&db, "flareon", "136");
     kvdb_close(&db);
     kvdb_open(&db, "b.db");
