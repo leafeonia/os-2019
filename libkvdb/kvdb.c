@@ -27,6 +27,7 @@ int kvdb_open(kvdb_t *db, const char *filename){
 			db->filename = filename;
 			db->lk = cur->lk;
 			db->fp = cur->fp;
+			pthread_mutex_unlock(&open_lk);
 			return 0;
 		}
 		prev = cur;
@@ -36,6 +37,7 @@ int kvdb_open(kvdb_t *db, const char *filename){
 	FILE* fp = fopen(filename,"w+");
 	if(fp == NULL){
 		printf("error: fopen %s fails\n",filename);
+		pthread_mutex_unlock(&open_lk);
 		return -1;
 	}
 	pthread_mutex_t *lk = (pthread_mutex_t*)malloc(sizeof(pthread_mutex_t));
@@ -71,12 +73,14 @@ int kvdb_close(kvdb_t *db){
 	//printf("db->fp = %p, size = %d\n",db->fp,(int)sizeof(db->fp));
 	if(!db->fp){
 		printf("error: current kvdb has not successfully opened a db file yet\n");
+		pthread_mutex_unlock(&close_lk);
 		return -1;
 	}
 	//fclose(db->fp);
 	db->fp = NULL;
 	if(!found_filename(db->filename)){
 		printf("warning: the db file has been closed by other thread\n");
+		pthread_mutex_unlock(&close_lk);
 		return -1;
 	}
 	printf("close1\n");
