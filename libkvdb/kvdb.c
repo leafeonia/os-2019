@@ -133,7 +133,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
 		return -1;
 	}
     printf("[%d]put~\n",db->id);
-    printf("db->lk = %p\n",db->lk);
+    //printf("db->lk = %p\n",db->lk);
     //int fd = fileno(db->fp);
     //flock(fd,LOCK_EX);
     char temp[] = "temp.txt";
@@ -150,7 +150,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     printf("in put, db->fp = %p, fd = %d\n",db->fp, fileno(db->fp));
     int matched = 0;
     while(!feof(fp)){
-    	printf("oho1\n");
+    	//printf("oho1\n");
         char key_string[130];
         char *value_string = (char*)malloc(16000002*sizeof(char));
         fgets(key_string,130,fp);
@@ -177,13 +177,13 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         fprintf(fp2, "%s\n", key);
         fprintf(fp2, "%s\n", value);
     }
-    printf("checkpoint\n");
+    //printf("checkpoint\n");
     fclose(fp);
     fclose(fp2);
     fp = fopen(db->filename, "w");
     fp2 = fopen("temp.txt","r");
     while(!feof(fp2)){
-    	printf("meet again\n");
+    	//printf("meet again\n");
     	char key_string[130];
         char *value_string = (char*)malloc(16000002*sizeof(char));
         fgets(key_string,130,fp2);
