@@ -31,7 +31,8 @@ void* test2(void* arg){
 	kvdb_t db;
 	db.id = *(int*)arg;
 	kvdb_open(&db, "a.db"); 
-    kvdb_put(&db, "math", "161");
+    if(db.id == 2)kvdb_put(&db, "math", "161");
+    else kvdb_put(&db, "math", "175");
     printf("\033[36m[%d]%s - %s\033[0m\n",db.id,"math",kvdb_get(&db, "math"));
     kvdb_close(&db);
 	return NULL;
