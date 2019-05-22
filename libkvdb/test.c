@@ -3,10 +3,10 @@
 #include <stdlib.h> 
 #include <pthread.h>
 
-void* test1(){
+void* test1((void*) arg){
 	printf("FA1\n");
 	kvdb_t db;
-	db.id = 1;
+	db.id = *arg;
 	kvdb_open(&db, "a.db"); 
     kvdb_put(&db, "operating systems", "three-easy-pieces");
     kvdb_put(&db, "glaceon", "471");
@@ -25,10 +25,10 @@ void* test1(){
 	return NULL;
 }
 
-void* test2(){
+void* test2((void*) arg){
 	printf("FA2\n");
 	kvdb_t db;
-	db.id = 2;
+	db.id = *arg;
 	kvdb_open(&db, "a.db"); 
     kvdb_put(&db, "math", "161");
     printf("\033[36m%s - %s\033[0m\n","math",kvdb_get(&db, "math"));
@@ -37,11 +37,27 @@ void* test2(){
 }
 
 int main() {
-  pthread_t p1,p2;
-  pthread_create(&p1,NULL,test1,NULL);
-  pthread_create(&p2,NULL,test2,NULL);
-  pthread_join(p1,NULL);
-  pthread_join(p2,NULL);
+	int rc = fork();
+	if(rc < 0) printf("error");
+	else if(rc == 0){
+		pthread_t p1,p2;
+		int one = 1;
+		int two = 2;
+  		pthread_create(&p1,NULL,test1,(void*)&one);
+  		pthread_create(&p2,NULL,test2,(void*)&two);
+  		pthread_join(p1,NULL);
+  		pthread_join(p2,NULL);
+	}
+	else{
+		pthread_t p1,p2;
+		int three = 3;
+		int four = 4;
+  		pthread_create(&p1,NULL,test1,(void*)&three);
+  		pthread_create(&p2,NULL,test2,(void*)&four);
+  		pthread_join(p1,NULL);
+  		pthread_join(p2,NULL);
+	}
+  
   /*kvdb_t db;
   const char *key = "operating-systems";
   char *value1,*value2,*value3,*value4;
