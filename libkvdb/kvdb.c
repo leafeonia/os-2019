@@ -18,7 +18,7 @@ pthread_mutex_t open_lk = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t close_lk = PTHREAD_MUTEX_INITIALIZER;
 
 int kvdb_open(kvdb_t *db, const char *filename){
-	printf("open~\n");
+	printf("[%d]open~\n",db->id);
 	pthread_mutex_lock(&open_lk);
 	file_t* cur = file_list;
 	file_t* prev = file_list;
@@ -127,7 +127,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
 		printf("warning: the db file to put data has been closed by other thread. Fail to put data.\n");
 		return -1;
 	}
-    printf("put~\n");
+    printf("[%d]put~\n",db->id);
     printf("db->lk = %p\n",db->lk);
     //int fd = fileno(db->fp);
     //flock(fd,LOCK_EX);

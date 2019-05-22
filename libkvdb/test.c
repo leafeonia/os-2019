@@ -6,6 +6,7 @@
 void* test1(){
 	printf("FA1\n");
 	kvdb_t db;
+	db.id = 1;
 	kvdb_open(&db, "a.db"); 
     kvdb_put(&db, "operating systems", "three-easy-pieces");
     /*kvdb_put(&db, "glaceon", "471");
@@ -22,6 +23,7 @@ void* test1(){
 void* test2(){
 	printf("FA2\n");
 	kvdb_t db;
+	db.id = 2;
 	kvdb_open(&db, "a.db"); 
     kvdb_put(&db, "leafeon", "470");
     kvdb_close(&db);
