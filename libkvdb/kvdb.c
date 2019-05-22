@@ -158,6 +158,8 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         return -1;
     }
     FILE* fp = fptemp;//db->fp;
+    flock(fileno(fp),LOCK_EX);
+    flock(fileno(fp2),LOCK_EX);
     printf("in put, db->fp = %p, fd = %d\n",db->fp, fileno(db->fp));
     int matched = 0;
     while(!feof(fp)){
@@ -189,10 +191,14 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         fprintf(fp2, "%s\n", value);
     }
     //printf("checkpoint\n");
+    flock(fileno(fp),LOCK_UN);
+    flock(fileno(fp2),LOCK_UN);
     fclose(fp);
     fclose(fp2);
     fp = fopen(db->filename, "w");
     fp2 = fopen("temp.txt","r");
+    flock(fileno(fp),LOCK_EX);
+    flock(fileno(fp2),LOCK_EX);
     while(!feof(fp2)){
     	//printf("meet again\n");
     	char key_string[130];
@@ -207,6 +213,8 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         fprintf(fp, "%s", value_string);
         free(value_string);
     }
+    flock(fileno(fp),LOCK_UN);
+    flock(fileno(fp2),LOCK_UN);
     fclose(fp);
     fclose(fp2);
     //fopen(db->filename,"r+");
@@ -234,6 +242,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
 
     printf("update: filename = %s,db->fp = %p\n",db->filename,db->fp);*/
    	printf("[%d]put finished~\n",db->id);
+   	
     pthread_mutex_unlock(&put_lk);
     //flock(fd,LOCK_UN);
     return 0;
@@ -248,6 +257,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
         return NULL;
     }
     FILE* fp = fopen(db->filename,"r");
+    flock(fileno(fp),LOCK_EX);
     while(!feof(fp)){
         char key_string[130];
         char *value_string = (char*)malloc(16000002*sizeof(char));
@@ -261,6 +271,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
             if(!ret){
                 printf("error: malloc space for return value fails\n");
                 free(value_string);
+                flock(fileno(fp),LOCK_UN);
                 fclose(fp);
                 pthread_mutex_unlock(&get_lk);
                 return NULL;
@@ -268,6 +279,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
             strcpy(ret,value_string);
             free(value_string);
             printf("[%d], get and pet finished!~\n",db->id);
+            flock(fileno(fp),LOCK_UN);
             fclose(fp);
             pthread_mutex_unlock(&get_lk);
             return ret;
@@ -275,6 +287,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
         free(value_string);
     }
     printf("error: key [%s] does not exist\n",key);
+    flock(fileno(fp),LOCK_UN);
     fclose(fp);
     pthread_mutex_unlock(&get_lk);
     return NULL;

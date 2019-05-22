@@ -62,7 +62,6 @@ int main() {
   /*kvdb_t db;
   const char *key = "operating-systems";
   char *value1,*value2,*value3,*value4;
-
   kvdb_open(&db, "a.db"); // BUG: should check for errors  
   kvdb_put(&db, key, "three-easy-pieces");
   kvdb_put(&db, "leafeon", "470");
