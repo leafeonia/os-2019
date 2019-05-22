@@ -114,13 +114,14 @@ int kvdb_close(kvdb_t *db){
 
 int kvdb_put(kvdb_t *db, const char *key, const char *value){
 
-    printf("put~\n");
-    printf("db->lk = %p\n",db->lk);
+    
     if(!db->fp){
         printf("error: current kvdb has not successfully opened a db file yet\n");
         return -1;
     }
     pthread_mutex_lock(db->lk);
+    printf("put~\n");
+    printf("db->lk = %p\n",db->lk);
     //int fd = fileno(db->fp);
     //flock(fd,LOCK_EX);
     char temp[] = "temp.txt";
