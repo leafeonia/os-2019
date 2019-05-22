@@ -143,7 +143,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         //flock(fd,LOCK_UN);
         return -1;
     }
-    FILE* fp = db->fp;
+    FILE* fp = fptemp;//db->fp;
     printf("in put, fp = %p\n",db->fp);
     int matched = 0;
     while(!feof(fp)){
