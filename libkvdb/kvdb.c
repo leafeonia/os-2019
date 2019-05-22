@@ -163,7 +163,9 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         fprintf(fp, "%s", value_string);
         free(value_string);
     }
+    fclose(fp);
     fclose(fp2);
+    fopen(db->filename,"r+");
     remove("temp.txt");
     /*fclose(fp2);
     if(remove(db->filename) == -1){
