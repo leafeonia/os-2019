@@ -243,7 +243,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     assert(cur);
 
     printf("update: filename = %s,db->fp = %p\n",db->filename,db->fp);*/
-   	printf("[%d]put finished~\n",db->id);
+   	printf("[%d]put [%s]-[%s] finished~\n",db->id, key, value);
    	
     pthread_mutex_unlock(&put_lk);
     //flock(fd,LOCK_UN);
