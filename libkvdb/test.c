@@ -12,16 +12,16 @@ void* test1(void* arg){
     kvdb_put(&db, "operating systems", "three-easy-pieces");
     kvdb_put(&db, "glaceon", "471");
     kvdb_put(&db, "flareon", "136");
-    printf("\033[36m[%d]%s - %s\033[0m\n","glaceon",db.id,kvdb_get(&db, "glaceon"));
-    printf("\033[36m[%d]%s - %s\033[0m\n","leafeon",db.id,kvdb_get(&db, "leafeon"));
+    printf("\033[36m[%d]%s - %s\033[0m\n",db.id,"glaceon",kvdb_get(&db, "glaceon"));
+    printf("\033[36m[%d]%s - %s\033[0m\n",db.id,"leafeon",kvdb_get(&db, "leafeon"));
     kvdb_close(&db);
-    printf("\033[36m[%d]%s - %s\033[0m\n","glaceon",db.id,kvdb_get(&db, "glaceon"));
+    printf("\033[36m[%d]%s - %s\033[0m\n",db.id,"glaceon",kvdb_get(&db, "glaceon"));
     kvdb_open(&db, "b.db");
     kvdb_put(&db, "eevee", "132");
     kvdb_put(&db, "vaporeon", "134");
     kvdb_put(&db, "eevee", "133");
-    printf("\033[36m[%d]%s - %s\033[0m\n","glaceon",db.id,kvdb_get(&db, "glaceon"));
-    printf("\033[36m[%d]%s - %s\033[0m\n","eevee",db.id,kvdb_get(&db, "eevee"));
+    printf("\033[36m[%d]%s - %s\033[0m\n",db.id,"glaceon",kvdb_get(&db, "glaceon"));
+    printf("\033[36m[%d]%s - %s\033[0m\n",db.id,"eevee",kvdb_get(&db, "eevee"));
     kvdb_close(&db);
 	return NULL;
 }
@@ -32,7 +32,7 @@ void* test2(void* arg){
 	db.id = *(int*)arg;
 	kvdb_open(&db, "a.db"); 
     kvdb_put(&db, "math", "161");
-    printf("\033[36m[%d]%s - %s\033[0m\n","math",db.id,kvdb_get(&db, "math"));
+    printf("\033[36m[%d]%s - %s\033[0m\n",db.id,"math",kvdb_get(&db, "math"));
     kvdb_close(&db);
 	return NULL;
 }
