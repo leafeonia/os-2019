@@ -53,8 +53,8 @@ int main() {
 		pthread_t p1,p2;
 		int three = 3;
 		int four = 4;
-  		pthread_create(&p1,NULL,test1,(void*)&three);
-  		pthread_create(&p2,NULL,test2,(void*)&four);
+  		pthread_create(&p1,NULL,test1,(void*)&3);
+  		pthread_create(&p2,NULL,test2,(void*)&4);
   		pthread_join(p1,NULL);
   		pthread_join(p2,NULL);
 	}
