@@ -11,16 +11,16 @@ void* test1(){
     kvdb_put(&db, "operating systems", "three-easy-pieces");
     kvdb_put(&db, "glaceon", "471");
     kvdb_put(&db, "flareon", "136");
-    printf("%s - %d\n","glaceon",kvdb_get(&db, "glaceon"));
-    printf("%s - %d\n","leafeon",kvdb_get(&db, "leafeon"));
+    printf("%s - %s\n","glaceon",kvdb_get(&db, "glaceon"));
+    printf("%s - %s\n","leafeon",kvdb_get(&db, "leafeon"));
     kvdb_close(&db);
-    printf("%s - %d\n","glaceon",kvdb_get(&db, "glaceon"));
+    printf("%s - %s\n","glaceon",kvdb_get(&db, "glaceon"));
     kvdb_open(&db, "b.db");
     kvdb_put(&db, "eevee", "132");
     kvdb_put(&db, "vaporeon", "134");
     kvdb_put(&db, "eevee", "133");
-    printf("%s - %d\n","glaceon",kvdb_get(&db, "glaceon"));
-    printf("%s - %d\n","eevee",kvdb_get(&db, "eevee"));
+    printf("%s - %s\n","glaceon",kvdb_get(&db, "glaceon"));
+    printf("%s - %s\n","eevee",kvdb_get(&db, "eevee"));
     kvdb_close(&db);
 	return NULL;
 }
@@ -31,7 +31,7 @@ void* test2(){
 	db.id = 2;
 	kvdb_open(&db, "a.db"); 
     kvdb_put(&db, "math", "161");
-    printf("%s - %d\n","math",kvdb_get(&db, "math"));
+    printf("%s - %s\n","math",kvdb_get(&db, "math"));
     kvdb_close(&db);
 	return NULL;
 }
