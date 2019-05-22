@@ -8,6 +8,7 @@ void* test1(){
 	kvdb_t db;
 	kvdb_open(&db, "a.db"); 
     kvdb_put(&db, "operating systems", "three-easy-pieces");
+    kvdb_put(&db, "glaceon", "471");
     kvdb_close(&db);
 	return NULL;
 }
