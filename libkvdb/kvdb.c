@@ -27,7 +27,7 @@ int kvdb_open(kvdb_t *db, const char *filename){
 			db->filename = filename;
 			db->lk = cur->lk;
 			db->fp = cur->fp;
-			printf("[%d]open finished(same)~ db->fp = ,fd = %d%p\n",db->id, db->fp,fileno(db->fp));
+			printf("[%d]open finished(same)~ db->fp = %p,fd = %d\n",db->id, db->fp,fileno(db->fp));
 			pthread_mutex_unlock(&open_lk);
 			return 0;
 		}
