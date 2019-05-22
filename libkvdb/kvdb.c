@@ -126,7 +126,10 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         fgets(value_string,16000002,fp);
         if(key_string[strlen(key_string)-1] == '\n') key_string[strlen(key_string)-1] = '\0';
         if(value_string[strlen(value_string)-1] == '\n') value_string[strlen(value_string)-1] = '\0';
-        if(feof(fp)) break;
+        if(feof(fp)) {
+        	free(value_string);
+        	break;
+        }
         if(strcmp(key, key_string) == 0){
             matched = 1;
             fprintf(fp2, "%s\n", key);
@@ -143,7 +146,25 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         fprintf(fp2, "%s\n", value);
     }
     fclose(fp);
+    rewind(fp2);
+    fp = fopen(db->filename, "w");
+    while(!feof(fp2)){
+    	char key_string[130];
+        char *value_string = (char*)malloc(16000002*sizeof(char));
+        fgets(key_string,130,fp);
+        fgets(value_string,16000002,fp);
+        if(feof(fp)) {
+        	free(value_string);
+        	break;
+        }
+        fprintf(fp2, "%s\n", key_string);
+        fprintf(fp2, "%s\n", value_string);
+        free(value_string);
+    }
+    fclose(fp);
     fclose(fp2);
+    remove("temp.txt");
+    /*fclose(fp2);
     if(remove(db->filename) == -1){
         printf("remove origin file fails\n");
         fopen(db->filename,"w+");
@@ -164,7 +185,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     }
     assert(cur);
 
-    printf("update: filename = %s,db->fp = %p\n",db->filename,db->fp);
+    printf("update: filename = %s,db->fp = %p\n",db->filename,db->fp);*/
     pthread_mutex_unlock(db->lk);
     //flock(fd,LOCK_UN);
     return 0;
