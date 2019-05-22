@@ -128,7 +128,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         return -1;
     }
     if(!found_filename(db->filename)){
-		printf("warning: the db file to put data has been closed by other thread. Fail to put data: [%.20s] - [%.20s].\n",key, value);
+		printf("warning: the db file to put data has been closed by other thread. Fail to put data: [%.5s] - [%.5s].\n",key, value);
 		pthread_mutex_unlock(db->lk);
 		return -1;
 	}
