@@ -8,23 +8,23 @@ void* test1(){
 	kvdb_t db;
 	kvdb_open(&db, "a.db"); 
     kvdb_put(&db, "operating systems", "three-easy-pieces");
-    kvdb_put(&db, "glaceon", "471");
+    /*kvdb_put(&db, "glaceon", "471");
     kvdb_put(&db, "flareon", "136");
     kvdb_close(&db);
     kvdb_open(&db, "b.db");
     kvdb_put(&db, "eevee", "132");
     kvdb_put(&db, "vaporeon", "134");
-    kvdb_put(&db, "eevee", "133");
+    kvdb_put(&db, "eevee", "133");*/
     kvdb_close(&db);
 	return NULL;
 }
 
 void* test2(){
-	/*printf("FA2\n");
+	printf("FA2\n");
 	kvdb_t db;
 	kvdb_open(&db, "a.db"); 
     kvdb_put(&db, "leafeon", "470");
-    kvdb_close(&db);*/
+    kvdb_close(&db);
 	return NULL;
 }
 
