@@ -27,7 +27,7 @@ int kvdb_open(kvdb_t *db, const char *filename){
 			db->filename = filename;
 			db->lk = cur->lk;
 			db->fp = cur->fp;
-			printf("[%d]open finished(same)~ db->fp = %p\n",db->id, db->fp);
+			printf("[%d]open finished(same)~ db->fp = ,fd = %d%p\n",db->id, db->fp,fileno(db->fp));
 			pthread_mutex_unlock(&open_lk);
 			return 0;
 		}
@@ -55,7 +55,7 @@ int kvdb_open(kvdb_t *db, const char *filename){
 	db->lk = lk;
 	//db->opened = 1;
 	fclose(fp);
-	printf("[%d]open finished~(new), db->fp = %p\n",db->id, db->fp);
+	printf("[%d]open finished~(new), db->fp = %p,fd = %d\n",db->id, db->fp, fileno(db->fp));
 	pthread_mutex_unlock(&open_lk);
 	return 0;
 }
@@ -135,7 +135,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     //flock(fd,LOCK_EX);
     char temp[] = "temp.txt";
     FILE* fptemp = fopen(db->filename,"r+");
-    printf("in put, opens %p\n",fptemp);
+    printf("in put, opens %p, fd = %d\n",fptemp, fileno(fptemp));
     FILE* fp2 = fopen(temp,"w");
     if(fp2 == NULL){
         printf("error: create temporary file fails\n");
@@ -144,7 +144,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         return -1;
     }
     FILE* fp = fptemp;//db->fp;
-    printf("in put, fp = %p\n",db->fp);
+    printf("in put, db->fp = %p, fd = %d\n",db->fp, fileno(db->fp));
     int matched = 0;
     while(!feof(fp)){
     	printf("oho1\n");
