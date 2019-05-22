@@ -7,6 +7,7 @@
 #include "kvdb.h"
 struct file{
 	const char* filename;
+	int cnt;
 	pthread_mutex_t* lk;
 	FILE* fp;
 	struct file* next;
@@ -28,6 +29,7 @@ int kvdb_open(kvdb_t *db, const char *filename){
 			db->filename = filename;
 			db->lk = cur->lk;
 			db->fp = cur->fp;
+			cur->cnt++;
 			printf("[%d]open finished(same)~ db->fp = %p,fd = %d\n",db->id, db->fp,fileno(db->fp));
 			pthread_mutex_unlock(&open_lk);
 			return 0;
@@ -48,6 +50,7 @@ int kvdb_open(kvdb_t *db, const char *filename){
 	new_file->filename = filename;
 	new_file->fp = fp;
 	new_file->lk = lk;
+	new_file->cnt = 1;
 	new_file->next = NULL;
 	if(file_list == NULL) file_list = new_file;
 	else prev->next = new_file;
@@ -62,14 +65,14 @@ int kvdb_open(kvdb_t *db, const char *filename){
 	return 0;
 }
 
-static int found_filename(const char* filename){
-	if(!file_list) return 0;
+static file_t* found_filename(const char* filename){
+	if(!file_list) return NULL;
 	file_t* cur = file_list;
 	while(cur){
-		if(strcmp(cur->filename,filename) == 0) return 1;
+		if(strcmp(cur->filename,filename) == 0) return cur;
 		cur = cur->next;
 	}
-	return 0;
+	return NULL;
 }
 int kvdb_close(kvdb_t *db){
 	pthread_mutex_lock(&close_lk);
@@ -82,13 +85,19 @@ int kvdb_close(kvdb_t *db){
 	}
 	//fclose(db->fp);
 	db->fp = NULL;
-	if(!found_filename(db->filename)){
+	task_t* cur = found_filename(db->filename);
+	if(!cur){
 		printf("warning: the db file has been closed by other thread\n");
 		pthread_mutex_unlock(&close_lk);
 		return -1;
 	}
 	//printf("close1\n");
-	
+	if(cur->cnt > 1){
+		cur->cnt--;
+		pthread_mutex_unlock(&close_lk);
+		printf("[%d]close finished~(file cnt - 1,but not deleted)\n",db->id);
+		return 0;
+	}
 	file_t* bye;
 	//printf("close2\n");
 	if(strcmp(file_list->filename,db->filename) == 0){
