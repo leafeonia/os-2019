@@ -163,7 +163,6 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         fprintf(fp, "%s\n", value_string);
         free(value_string);
     }
-    fclose(fp);
     fclose(fp2);
     remove("temp.txt");
     /*fclose(fp2);
