@@ -3,7 +3,7 @@
 #include <stdlib.h> 
 #include <pthread.h>
 
-void* test1((void*) arg){
+void* test1(void* arg){
 	printf("FA1\n");
 	kvdb_t db;
 	db.id = *arg;
@@ -25,7 +25,7 @@ void* test1((void*) arg){
 	return NULL;
 }
 
-void* test2((void*) arg){
+void* test2(void* arg){
 	printf("FA2\n");
 	kvdb_t db;
 	db.id = *arg;
