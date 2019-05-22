@@ -12,9 +12,9 @@ void* test1(){
     kvdb_put(&db, "flareon", "136");
     kvdb_close(&db);
     kvdb_open(&db, "b.db");
-    kvdb_put("eevee", "132");
-    kvdb_put("vaporeon", "134");
-    kvdb_put("eevee", "133")
+    kvdb_put(&db, "eevee", "132");
+    kvdb_put(&db, "vaporeon", "134");
+    kvdb_put(&db, "eevee", "133")
 	return NULL;
 }
 
