@@ -54,8 +54,9 @@ int kvdb_open(kvdb_t *db, const char *filename){
 	db->filename = filename;
 	db->lk = lk;
 	//db->opened = 1;
-	fclose(fp);
+	
 	printf("[%d]open finished~(new), db->fp = %p,fd = %d\n",db->id, db->fp, fileno(db->fp));
+	fclose(fp);
 	pthread_mutex_unlock(&open_lk);
 	return 0;
 }
