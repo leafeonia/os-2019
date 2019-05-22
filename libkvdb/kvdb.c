@@ -159,8 +159,8 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         	free(value_string);
         	break;
         }
-        fprintf(fp, "%s\n", key_string);
-        fprintf(fp, "%s\n", value_string);
+        fprintf(fp, "%s", key_string);
+        fprintf(fp, "%s", value_string);
         free(value_string);
     }
     fclose(fp2);
