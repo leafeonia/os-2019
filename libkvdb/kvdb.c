@@ -76,7 +76,7 @@ int kvdb_close(kvdb_t *db){
 	//fclose(db->fp);
 	db->fp = NULL;
 	if(!found_filename(db->filename)){
-		printf("warning: the db file has been closed by other thread.");
+		printf("warning: the db file has been closed by other thread\n");
 		return 0;
 	}
 	printf("close1\n");
