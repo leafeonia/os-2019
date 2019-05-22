@@ -56,7 +56,7 @@ int kvdb_open(kvdb_t *db, const char *filename){
 	return 0;
 }
 
-static int found_name(const char* filename){
+static int found_filename(const char* filename){
 	if(!file_list) return 0;
 	file_t* cur = file_list;
 	while(cur){
