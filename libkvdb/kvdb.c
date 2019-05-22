@@ -40,6 +40,7 @@ int kvdb_open(kvdb_t *db, const char *filename){
 	}
 	
 	FILE* fp = fopen(filename,"w+");
+	flock(fileno(fp),LOCK_EX);
 	if(fp == NULL){
 		printf("error: fopen %s fails\n",filename);
 		pthread_mutex_unlock(&open_lk);
@@ -61,6 +62,7 @@ int kvdb_open(kvdb_t *db, const char *filename){
 	//db->opened = 1;
 	
 	printf("[%d]open finished~(new), db->fp = %p,fd = %d\n",db->id, db->fp, fileno(db->fp));
+	flock(fileno(fp),LOCK_UN);
 	fclose(fp);
 	pthread_mutex_unlock(&open_lk);
 	return 0;
