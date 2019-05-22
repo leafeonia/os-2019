@@ -135,7 +135,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     FILE* fp = db->fp;
     int matched = 0;
     while(!feof(fp)){
-    	//printf("oho1\n");
+    	printf("oho1\n");
         char key_string[130];
         char *value_string = (char*)malloc(16000002*sizeof(char));
         fgets(key_string,130,fp);
@@ -161,6 +161,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         fprintf(fp2, "%s\n", key);
         fprintf(fp2, "%s\n", value);
     }
+    printf("checkpoint\n");
     fclose(fp);
     fclose(fp2);
     fp = fopen(db->filename, "w");
