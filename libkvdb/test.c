@@ -15,6 +15,7 @@ void* test1(){
     kvdb_put(&db, "eevee", "132");
     kvdb_put(&db, "vaporeon", "134");
     kvdb_put(&db, "eevee", "133");
+    kvdb_close(&db);
 	return NULL;
 }
 
