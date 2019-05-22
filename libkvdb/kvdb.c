@@ -124,10 +124,12 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     pthread_mutex_lock(db->lk);
     if(!db->fp){
         printf("error: current kvdb has not successfully opened a db file yet\n");
+        pthread_mutex_unlock(db->lk);
         return -1;
     }
     if(!found_filename(db->filename)){
 		printf("warning: the db file to put data has been closed by other thread. Fail to put data.\n");
+		pthread_mutex_unlock(db->lk);
 		return -1;
 	}
     printf("[%d]put~\n",db->id);
