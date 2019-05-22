@@ -149,6 +149,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     rewind(fp2);
     fp = fopen(db->filename, "w");
     while(!feof(fp2)){
+    	printf("meet again\n");
     	char key_string[130];
         char *value_string = (char*)malloc(16000002*sizeof(char));
         fgets(key_string,130,fp2);
