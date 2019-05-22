@@ -77,7 +77,7 @@ int kvdb_close(kvdb_t *db){
 	db->fp = NULL;
 	if(!found_filename(db->filename)){
 		printf("warning: the db file has been closed by other thread\n");
-		return 0;
+		return -1;
 	}
 	printf("close1\n");
 	
@@ -119,6 +119,10 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         printf("error: current kvdb has not successfully opened a db file yet\n");
         return -1;
     }
+    if(!found_filename(db->filename)){
+		printf("warning: the db file to put data has been closed by other thread. Fail to put data.\n");
+		return -1;
+	}
     pthread_mutex_lock(db->lk);
     printf("put~\n");
     printf("db->lk = %p\n",db->lk);
