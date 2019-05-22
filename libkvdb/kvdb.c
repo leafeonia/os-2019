@@ -86,12 +86,12 @@ int kvdb_close(kvdb_t *db){
 		pthread_mutex_unlock(&close_lk);
 		return -1;
 	}
-	printf("close1\n");
+	//printf("close1\n");
 	
 	file_t* bye;
-	printf("close2\n");
+	//printf("close2\n");
 	if(strcmp(file_list->filename,db->filename) == 0){
-		printf("close3\n");
+		//printf("close3\n");
 		bye = file_list;
 		file_list = file_list->next;
 	}
@@ -99,7 +99,7 @@ int kvdb_close(kvdb_t *db){
 		file_t* cur = file_list;
 		file_t* prev = file_list;
 		while(cur){
-			printf("close4\n");
+			//printf("close4\n");
 			if(strcmp(cur->filename,db->filename) == 0){
 				bye = cur;
 				prev->next = cur->next;
@@ -110,12 +110,12 @@ int kvdb_close(kvdb_t *db){
 		}
 		assert(cur);//shouldn't reach end of list, which means no valid filename found
 	}
-	printf("close5\n");
+	//printf("close5\n");
 	free(bye);
-	printf("close6\n");
+	//printf("close6\n");
 	printf("[%d]close finished~\n",db->id);
 	pthread_mutex_unlock(&close_lk);
-	printf("close7\n");
+	//printf("close7\n");
 	return 0;
 }
 
