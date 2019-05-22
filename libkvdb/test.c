@@ -2,11 +2,12 @@
 #include <stdio.h>
 #include <stdlib.h> 
 #include <pthread.h>
+#include <unistd.h>
 
 void* test1(void* arg){
 	printf("FA1\n");
 	kvdb_t db;
-	db.id = *arg;
+	db.id = *(int*)arg;
 	kvdb_open(&db, "a.db"); 
     kvdb_put(&db, "operating systems", "three-easy-pieces");
     kvdb_put(&db, "glaceon", "471");
@@ -28,7 +29,7 @@ void* test1(void* arg){
 void* test2(void* arg){
 	printf("FA2\n");
 	kvdb_t db;
-	db.id = *arg;
+	db.id = *(int*)arg;
 	kvdb_open(&db, "a.db"); 
     kvdb_put(&db, "math", "161");
     printf("\033[36m%s - %s\033[0m\n","math",kvdb_get(&db, "math"));
