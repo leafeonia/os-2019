@@ -18,6 +18,7 @@ file_t* file_list = NULL;
 pthread_mutex_t open_lk = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t close_lk = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t put_lk = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t get_lk = PTHREAD_MUTEX_INITIALIZER;
 
 int kvdb_open(kvdb_t *db, const char *filename){
 	pthread_mutex_lock(&open_lk);
@@ -239,13 +240,14 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
 }
 
 char *kvdb_get(kvdb_t *db, const char *key){
-    printf("get and pet my \033[33mfluffy tail~ \033[0m\n");
+	pthread_mutex_lock(&get_lk);
+    printf("[%d]get and pet my \033[33mfluffy tail~ \033[0m\n",db->id);
     if(!db->fp){
         printf("error: current kvdb has not successfully opened a db file yet\n");
+        pthread_mutex_unlock(&get_lk);
         return NULL;
     }
-    FILE* fp = db->fp;
-    rewind(fp);
+    FILE* fp = fopen(db->filename,"r");
     while(!feof(fp)){
         char key_string[130];
         char *value_string = (char*)malloc(16000002*sizeof(char));
@@ -259,15 +261,22 @@ char *kvdb_get(kvdb_t *db, const char *key){
             if(!ret){
                 printf("error: malloc space for return value fails\n");
                 free(value_string);
+                fclose(fp);
+                pthread_mutex_unlock(&get_lk);
                 return NULL;
             }
             strcpy(ret,value_string);
             free(value_string);
+            printf("[%d], get and pet finished!~\n",db->id);
+            fclose(fp);
+            pthread_mutex_unlock(&get_lk);
             return ret;
         }
         free(value_string);
     }
     printf("error: key [%s] does not exist\n",key);
+    fclose(fp);
+    pthread_mutex_unlock(&get_lk);
     return NULL;
 
 }
