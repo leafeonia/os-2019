@@ -146,8 +146,9 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         fprintf(fp2, "%s\n", value);
     }
     fclose(fp);
-    rewind(fp2);
+    fclose(fp2);
     fp = fopen(db->filename, "w");
+    fp2 = fopen("temp.txt","r");
     while(!feof(fp2)){
     	printf("meet again\n");
     	char key_string[130];
