@@ -27,7 +27,7 @@ int kvdb_open(kvdb_t *db, const char *filename){
 			db->filename = filename;
 			db->lk = cur->lk;
 			db->fp = cur->fp;
-			printf("[%d]open finished(same)~\n",db->id);
+			printf("[%d]open finished(same)~ db->fp = %p\n",db->id, db->fp);
 			pthread_mutex_unlock(&open_lk);
 			return 0;
 		}
@@ -55,7 +55,7 @@ int kvdb_open(kvdb_t *db, const char *filename){
 	db->lk = lk;
 	//db->opened = 1;
 	fclose(fp);
-	printf("[%d]open finished~(new)\n",db->id);
+	printf("[%d]open finished~(new), db->fp = %p\n",db->id, db->fp);
 	pthread_mutex_unlock(&open_lk);
 	return 0;
 }
@@ -143,6 +143,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         return -1;
     }
     FILE* fp = db->fp;
+    printf("in put, fp = %p\n",db->fp);
     int matched = 0;
     while(!feof(fp)){
     	printf("oho1\n");
