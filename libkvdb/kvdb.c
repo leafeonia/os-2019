@@ -55,6 +55,16 @@ int kvdb_open(kvdb_t *db, const char *filename){
 	pthread_mutex_unlock(&open_lk);
 	return 0;
 }
+
+static int found_name(const char* filename){
+	if(!file_list) return 0;
+	file_t* cur = file_list;
+	while(cur){
+		if(strcmp(cur->filename,filename) == 0) return 1;
+		cur = cur->next;
+	}
+	return 0;
+}
 int kvdb_close(kvdb_t *db){
 	printf("close~\n");
 	pthread_mutex_lock(&close_lk);
@@ -65,6 +75,10 @@ int kvdb_close(kvdb_t *db){
 	}
 	//fclose(db->fp);
 	db->fp = NULL;
+	if(!found_filename(db->filename)){
+		printf("warning: the db file has been closed by other thread.");
+		return 0;
+	}
 	printf("close1\n");
 	
 	file_t* bye;
