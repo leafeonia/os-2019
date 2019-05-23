@@ -150,7 +150,8 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     //printf("db->lk = %p\n",db->lk);
     //int fd = fileno(db->fp);
     //flock(fd,LOCK_EX);
-    char temp[] = "temp.txt";
+    char temp[20];// = "temp.txt";
+    sprintf(temp,"temp%d.txt",rand() % 100000);
     FILE* fptemp = fopen(db->filename,"r+");
     //printf("in put, opens %p, fd = %d\n",fptemp, fileno(fptemp));
     FILE* fp2 = fopen(temp,"w+");
@@ -209,8 +210,8 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     fp2 = fopen(temp,"r");
     if(!fp2){
     	printf("\033[35m[%d]errorrrrrrr: %s %s,put [%s]-[%s] fails\033[0m\n\n",db->id,strerror(errno),temp,key,value);
-    	//pthread_mutex_unlock(&put_lk);
-    	//return -1;
+    	pthread_mutex_unlock(&put_lk);
+    	return -1;
     }
     flock(fileno(fp),LOCK_EX);
     flock(fileno(fp2),LOCK_EX);
