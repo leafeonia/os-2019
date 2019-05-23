@@ -212,9 +212,12 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     	//printf("meet again\n");
     	char key_string[130];
         char *value_string = (char*)malloc(16000002*sizeof(char));
-        fgets(key_string,130,fp2);
+        if(fgets(key_string,130,fp2) == NULL){
+        	free(value_string);
+        	break;
+        }
         fgets(value_string,16000002,fp2);
-        if(feof(fp2) || !key_string) {
+        if(feof(fp2)) {
         	free(value_string);
         	break;
         }
