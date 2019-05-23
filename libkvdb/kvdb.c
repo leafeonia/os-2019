@@ -16,9 +16,9 @@ typedef struct file file_t;
 file_t* file_list = NULL;
 
 pthread_mutex_t open_lk = PTHREAD_MUTEX_INITIALIZER;
-//pthread_mutex_t open_lk = PTHREAD_MUTEX_INITIALIZER;
-//pthread_mutex_t open_lk = PTHREAD_MUTEX_INITIALIZER;
-//pthread_mutex_t open_lk = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t close_lk = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t put_lk = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t get_lk = PTHREAD_MUTEX_INITIALIZER;
 
 int kvdb_open(kvdb_t *db, const char *filename){
 	pthread_mutex_lock(&open_lk);
@@ -78,12 +78,12 @@ static file_t* found_filename(const char* filename){
 	return NULL;
 }
 int kvdb_close(kvdb_t *db){
-	pthread_mutex_lock(&open_lk);
+	pthread_mutex_lock(&close_lk);
 	printf("[%d]close~\n",db->id);
 	//printf("db->fp = %p, size = %d\n",db->fp,(int)sizeof(db->fp));
 	if(!db->fp){
 		printf("error: current kvdb has not successfully opened a db file yet\n");
-		pthread_mutex_unlock(&open_lk);
+		pthread_mutex_unlock(&close_lk);
 		return -1;
 	}
 	//fclose(db->fp);
@@ -91,13 +91,13 @@ int kvdb_close(kvdb_t *db){
 	file_t* cur = found_filename(db->filename);
 	if(!cur){
 		printf("warning: the db file has been closed by other thread\n");
-		pthread_mutex_unlock(&open_lk);
+		pthread_mutex_unlock(&close_lk);
 		return -1;
 	}
 	//printf("close1\n");
 	if(cur->cnt > 1){
 		cur->cnt--;
-		pthread_mutex_unlock(&open_lk);
+		pthread_mutex_unlock(&close_lk);
 		printf("[%d]close finished~(file cnt - 1,but not deleted)\n",db->id);
 		return 0;
 	}
@@ -127,22 +127,22 @@ int kvdb_close(kvdb_t *db){
 	free(bye);
 	//printf("close6\n");
 	printf("[%d]close finished~\n",db->id);
-	pthread_mutex_unlock(&open_lk);
+	pthread_mutex_unlock(&close_lk);
 	//printf("close7\n");
 	return 0;
 }
 
 
 int kvdb_put(kvdb_t *db, const char *key, const char *value){
-    pthread_mutex_lock(&open_lk);
+    pthread_mutex_lock(&put_lk);
     if(!db->fp){
         printf("error: current kvdb has not successfully opened a db file yet\n");
-        pthread_mutex_unlock(&open_lk);
+        pthread_mutex_unlock(&put_lk);
         return -1;
     }
     if(!found_filename(db->filename)){
 		printf("\033[33mwarning: the db file to put data has been closed by other thread. Fail to put data: [%.20s] - [%.20s] into %s.\033[0m\n",key, value, db->filename);
-		pthread_mutex_unlock(&open_lk);
+		pthread_mutex_unlock(&put_lk);
 		return -1;
 	}
     printf("[%d]put~\n",db->id);
@@ -155,7 +155,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     FILE* fp2 = fopen(temp,"w");
     if(fp2 == NULL){
         printf("error: create temporary file fails\n");
-        pthread_mutex_unlock(&open_lk);
+        pthread_mutex_unlock(&put_lk);
         //flock(fd,LOCK_UN);
         return -1;
     }
@@ -245,17 +245,17 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     printf("update: filename = %s,db->fp = %p\n",db->filename,db->fp);*/
    	printf("[%d]put [%s]-[%s] finished~\n",db->id, key, value);
    	
-    pthread_mutex_unlock(&open_lk);
+    pthread_mutex_unlock(&put_lk);
     //flock(fd,LOCK_UN);
     return 0;
 }
 
 char *kvdb_get(kvdb_t *db, const char *key){
-	pthread_mutex_lock(&open_lk);
+	pthread_mutex_lock(&get_lk);
     //printf("[%d]get and pet my \033[33mfluffy tail~ \033[0m\n",db->id);
     if(!db->fp){
         printf("error: current kvdb has not successfully opened a db file yet\n");
-        pthread_mutex_unlock(&open_lk);
+        pthread_mutex_unlock(&get_lk);
         return NULL;
     }
     FILE* fp = fopen(db->filename,"r");
@@ -275,7 +275,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
                 free(value_string);
                 flock(fileno(fp),LOCK_UN);
                 fclose(fp);
-                pthread_mutex_unlock(&open_lk);
+                pthread_mutex_unlock(&get_lk);
                 return NULL;
             }
             strcpy(ret,value_string);
@@ -283,7 +283,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
             printf("[%d], get and pet finished!~\n",db->id);
             flock(fileno(fp),LOCK_UN);
             fclose(fp);
-            pthread_mutex_unlock(&open_lk);
+            pthread_mutex_unlock(&get_lk);
             return ret;
         }
         free(value_string);
@@ -291,7 +291,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
     printf("error: key [%s] does not exist\n",key);
     flock(fileno(fp),LOCK_UN);
     fclose(fp);
-    pthread_mutex_unlock(&open_lk);
+    pthread_mutex_unlock(&get_lk);
     return NULL;
 
 }
