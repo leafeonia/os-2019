@@ -224,7 +224,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     
     //printf("checkpoint\n");
     //flock(fileno(fp),LOCK_UN);
-    flock(fileno(fp2),LOCK_UN);
+    //flock(fileno(fp2),LOCK_UN);
     //fclose(fp);
     fclose(fp2);
     //fp = fopen(db->filename, "w");
@@ -313,7 +313,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
             if(!ret){
                 printf("error: malloc space for return value fails\n");
                 free(value_string);
-                flock(fileno(fp),LOCK_UN);
+                //flock(fileno(fp),LOCK_UN);
                 fclose(fp);
                 pthread_mutex_unlock(&get_lk);
                 return NULL;
@@ -321,7 +321,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
             strcpy(ret,value_string);
             free(value_string);
             //printf("[%d], get and pet finished!~\n",db->id);
-            flock(fileno(fp),LOCK_UN);
+            //flock(fileno(fp),LOCK_UN);
             fclose(fp);
             pthread_mutex_unlock(&get_lk);
             return ret;
@@ -329,7 +329,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
         free(value_string);
     }
     printf("error: key [%s] does not exist\n",key);
-    flock(fileno(fp),LOCK_UN);
+    //flock(fileno(fp),LOCK_UN);
     fclose(fp);
     pthread_mutex_unlock(&get_lk);
     return NULL;
