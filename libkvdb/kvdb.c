@@ -235,6 +235,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     fclose(fp);
     fclose(fp2);
     //fopen(db->filename,"r+");
+    printf("\033[35m[%d] remove %s\033[0m\n",db->id, temp);
     remove(temp);
     /*fclose(fp2);
     if(remove(db->filename) == -1){
