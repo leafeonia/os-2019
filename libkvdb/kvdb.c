@@ -253,8 +253,8 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         fprintf(fp, "%s", value_string);
         free(value_string);
     }
-    flock(fileno(fp),LOCK_UN);
-    flock(fileno(fp2),LOCK_UN);
+    //flock(fileno(fp),LOCK_UN);
+    //flock(fileno(fp2),LOCK_UN);
     fclose(fp);
     fclose(fp2);
     //fopen(db->filename,"r+");
