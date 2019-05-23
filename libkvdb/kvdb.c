@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <sys/file.h>
 #include "kvdb.h"
+#include <errno.h>
 struct file{
 	const char* filename;
 	int cnt;
