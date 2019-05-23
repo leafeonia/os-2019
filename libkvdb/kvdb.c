@@ -212,6 +212,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     flock(fileno(fp2),LOCK_EX);
     if(!fp2){
     	printf("errorrrrrrr: %s",strerror(errno));
+    	return -1;
     }
     while(!feof(fp2)){
     	//printf("meet again\n");
