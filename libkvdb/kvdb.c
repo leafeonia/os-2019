@@ -222,11 +222,11 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     flock(fileno(fp),LOCK_EX);*/
     
     //printf("checkpoint\n");
-    flock(fileno(fp),LOCK_UN);
+    //flock(fileno(fp),LOCK_UN);
     flock(fileno(fp2),LOCK_UN);
-    fclose(fp);
+    //fclose(fp);
     fclose(fp2);
-    fp = fopen(db->filename, "w");
+    //fp = fopen(db->filename, "w");
     fp2 = fopen(temp,"r");
     if(!fp2){
     	printf("\033[35m[%d]errorrrrrrr: %s %s,put [%s]-[%s] fails\033[0m\n\n",db->id,strerror(errno),temp,key,value);
@@ -234,9 +234,9 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     	pthread_mutex_unlock(&process_lk);
     	return -1;
     }
-    flock(fileno(fp),LOCK_EX);
+    //flock(fileno(fp),LOCK_EX);
     flock(fileno(fp2),LOCK_EX);
-    
+    fchmod(fileno(fp),S_IWUSR);
     while(!feof(fp2)){
     	//printf("meet again\n");
     	char key_string[130];
