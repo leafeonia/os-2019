@@ -208,7 +208,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     flock(fileno(fp),LOCK_EX);*/
     
     //printf("checkpoint\n");
-    flock(fileno(fp),LOCK_UN);
+    //flock(fileno(fp),LOCK_UN);
     flock(fileno(fp2),LOCK_UN);
     fclose(fp);
     fclose(fp2);
@@ -219,7 +219,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     	pthread_mutex_unlock(&put_lk);
     	return -1;
     }
-    flock(fileno(fp),LOCK_EX);
+    //flock(fileno(fp),LOCK_EX);
     flock(fileno(fp2),LOCK_EX);
     
     while(!feof(fp2)){
