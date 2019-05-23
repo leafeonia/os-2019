@@ -208,7 +208,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     fp = fopen(db->filename, "w");
     fp2 = fopen(temp,"r");
     if(!fp2){
-    	printf("\033[35merrorrrrrrr: %s %s,put [%s]-[%s] fails\033[0m\n\n",strerror(errno),temp,key,value);
+    	printf("\033[35m[%d]errorrrrrrr: %s %s,put [%s]-[%s] fails\033[0m\n\n",db->id,strerror(errno),temp,key,value);
     	pthread_mutex_unlock(&put_lk);
     	return -1;
     }
