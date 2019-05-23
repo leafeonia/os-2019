@@ -239,7 +239,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     flock(fileno(fp2),LOCK_EX);
     fchmod(fileno(fp),S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
     rewind(fp);
-    flock(fileno(fp),LOCK_EX);
+    //flock(fileno(fp),LOCK_EX);
     while(!feof(fp2)){
     	//printf("meet again\n");
     	char key_string[130];
