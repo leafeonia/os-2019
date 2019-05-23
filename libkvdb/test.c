@@ -3,7 +3,6 @@
 #include <stdlib.h> 
 #include <pthread.h>
 #include <unistd.h>
-
 void* test1(void* arg){
 	printf("FA1\n");
 	kvdb_t db;

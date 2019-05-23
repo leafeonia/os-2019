@@ -14,6 +14,7 @@ struct file{
 };
 typedef struct file file_t;
 file_t* file_list = NULL;
+extern int errno;
 
 pthread_mutex_t open_lk = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t close_lk = PTHREAD_MUTEX_INITIALIZER;
@@ -206,8 +207,12 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     fclose(fp2);
     fp = fopen(db->filename, "w");
     fp2 = fopen("temp.txt","r");
+    
     flock(fileno(fp),LOCK_EX);
     flock(fileno(fp2),LOCK_EX);
+    if(!fp2){
+    	printf("errorrrrrrr: %s",strerror(errno));
+    }
     while(!feof(fp2)){
     	//printf("meet again\n");
     	char key_string[130];
