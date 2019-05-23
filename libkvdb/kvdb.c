@@ -194,6 +194,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     }
     flock(fileno(fp),LOCK_UN);
     fclose(fp);
+    fflush(fp2);
     rewind(fp2);
     fp = fopen(db->filename, "w");
     flock(fileno(fp),LOCK_EX);
