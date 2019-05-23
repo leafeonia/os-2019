@@ -193,15 +193,15 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         fprintf(fp2, "%s\n", key);
         fprintf(fp2, "%s\n", value);
     }
-    flock(fileno(fp),LOCK_UN);
+    /*flock(fileno(fp),LOCK_UN);
     fclose(fp);
     fflush(fp);
     rewind(fp2);
     fp = fopen(db->filename, "w");
-    flock(fileno(fp),LOCK_EX);
+    flock(fileno(fp),LOCK_EX);*/
     
     //printf("checkpoint\n");
-    /*flock(fileno(fp),LOCK_UN);
+    flock(fileno(fp),LOCK_UN);
     flock(fileno(fp2),LOCK_UN);
     fclose(fp);
     fclose(fp2);
@@ -213,7 +213,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     	return -1;
     }
     flock(fileno(fp),LOCK_EX);
-    flock(fileno(fp2),LOCK_EX);*/
+    flock(fileno(fp2),LOCK_EX);
     
     while(!feof(fp2)){
     	//printf("meet again\n");
