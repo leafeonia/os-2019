@@ -23,19 +23,19 @@ pthread_mutex_t open_lk = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t close_lk = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t put_lk = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t get_lk = PTHREAD_MUTEX_INITIALIZER;
-pthread_mutex_t process_lk;
-pthread_mutexattr_t mutexattr;
+//pthread_mutex_t process_lk;
+//pthread_mutexattr_t mutexattr;
 
-int process_lock_initialized = 0;
+//int process_lock_initialized = 0;
 
 int kvdb_open(kvdb_t *db, const char *filename){
 	pthread_mutex_lock(&open_lk);
-	if(!process_lock_initialized){
+	/*if(!process_lock_initialized){
 	 	pthread_mutexattr_init(&mutexattr);         // 初始化 mutex 属性
     	pthread_mutexattr_setpshared(&mutexattr, PTHREAD_PROCESS_SHARED);               // 修改属性为进程间共享
     	pthread_mutex_init(&process_lk,&mutexattr);
     	process_lock_initialized = 1;
-	}
+	}*/
 	//printf("[%d]open~\n",db->id);
 	file_t* cur = file_list;
 	file_t* prev = file_list;
