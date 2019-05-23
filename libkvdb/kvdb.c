@@ -154,7 +154,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     //flock(fd,LOCK_EX);
     char temp[20];// = "temp.txt";
     struct timeval timee;
-    gettimeofday(&start, NULL);
+    gettimeofday(&timee, NULL);
     srand(timee.tv_usec);
     sprintf(temp,"temp%d.txt",rand() % 100000);
     FILE* fptemp = fopen(db->filename,"r+");
