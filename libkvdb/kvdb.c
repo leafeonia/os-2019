@@ -207,13 +207,13 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     fclose(fp2);
     fp = fopen(db->filename, "w");
     fp2 = fopen("temp.txt","r");
-    
-    flock(fileno(fp),LOCK_EX);
-    flock(fileno(fp2),LOCK_EX);
     if(!fp2){
     	printf("errorrrrrrr: %s",strerror(errno));
     	return -1;
     }
+    flock(fileno(fp),LOCK_EX);
+    flock(fileno(fp2),LOCK_EX);
+    
     while(!feof(fp2)){
     	//printf("meet again\n");
     	char key_string[130];
