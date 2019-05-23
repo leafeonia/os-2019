@@ -147,7 +147,7 @@ int kvdb_close(kvdb_t *db){
 
 
 int kvdb_put(kvdb_t *db, const char *key, const char *value){
-	pthread_mutex_lock(&process_lk);
+	//pthread_mutex_lock(&process_lk);
     pthread_mutex_lock(&put_lk);
     if(!db->fp){
         printf("error: current kvdb has not successfully opened a db file yet\n");
@@ -283,7 +283,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
    	//printf("[%d]put [%s]-[%s] finished~\n",db->id, key, value);
    	
     pthread_mutex_unlock(&put_lk);
-    pthread_mutex_unlock(&process_lk);
+    //pthread_mutex_unlock(&process_lk);
     //flock(fd,LOCK_UN);
     return 0;
 }
