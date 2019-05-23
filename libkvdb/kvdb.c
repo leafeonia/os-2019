@@ -51,7 +51,7 @@ int kvdb_open(kvdb_t *db, const char *filename){
 		prev = cur;
 		cur = cur->next;
 	}
-	
+	 
 	FILE* fp = fopen(filename,"w+");
 	flock(fileno(fp),LOCK_EX);
 	if(fp == NULL){
