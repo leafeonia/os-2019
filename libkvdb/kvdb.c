@@ -6,6 +6,7 @@
 #include <sys/file.h>
 #include "kvdb.h"
 #include <errno.h>
+#include <time.h>
 struct file{
 	const char* filename;
 	int cnt;
@@ -151,6 +152,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     //int fd = fileno(db->fp);
     //flock(fd,LOCK_EX);
     char temp[20];// = "temp.txt";
+    srand(time(NULL));
     sprintf(temp,"temp%d.txt",rand() % 100000);
     FILE* fptemp = fopen(db->filename,"r+");
     //printf("in put, opens %p, fd = %d\n",fptemp, fileno(fptemp));
