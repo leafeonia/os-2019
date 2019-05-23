@@ -160,7 +160,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     FILE* fptemp = fopen(db->filename,"r+");
     //printf("in put, opens %p, fd = %d\n",fptemp, fileno(fptemp));
     FILE* fp2 = fopen(temp,"w+");
-    printf("\033[34m[%d] opens %s\033\[0m",db->id, temp);
+    //printf("\033[34m[%d] opens %s\033\[0m",db->id, temp);
     if(fp2 == NULL){
         printf("error: create temporary file fails\n");
         pthread_mutex_unlock(&put_lk);
@@ -241,7 +241,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     fclose(fp);
     fclose(fp2);
     //fopen(db->filename,"r+");
-    printf("\033[34m[%d] remove %s\033[0m\n",db->id, temp);
+    //printf("\033[34m[%d] remove %s\033[0m\n",db->id, temp);
     remove(temp);
     /*fclose(fp2);
     if(remove(db->filename) == -1){
