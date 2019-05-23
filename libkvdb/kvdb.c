@@ -153,13 +153,13 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     if(!db->fp){
         printf("error: current kvdb has not successfully opened a db file yet\n");
         pthread_mutex_unlock(&put_lk);
-        pthread_mutex_unlock(&process_lk);
+        //pthread_mutex_unlock(&process_lk);
         return -1;
     }
     if(!found_filename(db->filename)){
 		printf("\033[33mwarning: the db file to put data has been closed by other thread. Fail to put data: [%.20s] - [%.20s] into %s.\033[0m\n",key, value, db->filename);
 		pthread_mutex_unlock(&put_lk);
-		pthread_mutex_unlock(&process_lk);
+		//pthread_mutex_unlock(&process_lk);
 		return -1;
 	}
     //printf("[%d]put~\n",db->id);
@@ -178,7 +178,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     if(fp2 == NULL){
         printf("error: create temporary file fails\n");
         pthread_mutex_unlock(&put_lk);
-        pthread_mutex_unlock(&process_lk);
+        //pthread_mutex_unlock(&process_lk);
         //flock(fd,LOCK_UN);
         return -1;
     }
@@ -232,7 +232,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     if(!fp2){
     	printf("\033[35m[%d]errorrrrrrr: %s %s,put [%s]-[%s] fails\033[0m\n\n",db->id,strerror(errno),temp,key,value);
     	pthread_mutex_unlock(&put_lk);
-    	pthread_mutex_unlock(&process_lk);
+    	//pthread_mutex_unlock(&process_lk);
     	return -1;
     }
     //flock(fileno(fp),LOCK_EX);
