@@ -252,7 +252,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
 
 char *kvdb_get(kvdb_t *db, const char *key){
 	pthread_mutex_lock(&get_lk);
-    printf("[%d]get and pet my \033[33mfluffy tail~ \033[0m\n",db->id);
+    //printf("[%d]get and pet my \033[33mfluffy tail~ \033[0m\n",db->id);
     if(!db->fp){
         printf("error: current kvdb has not successfully opened a db file yet\n");
         pthread_mutex_unlock(&get_lk);
