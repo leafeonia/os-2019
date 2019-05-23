@@ -214,7 +214,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         char *value_string = (char*)malloc(16000002*sizeof(char));
         fgets(key_string,130,fp2);
         fgets(value_string,16000002,fp2);
-        if(feof(fp2)) {
+        if(feof(fp2) || !key_string) {
         	free(value_string);
         	break;
         }
