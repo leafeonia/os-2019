@@ -33,6 +33,7 @@ int kvdb_open(kvdb_t *db, const char *filename){
 	 	pthread_mutexattr_init(&mutexattr);         // 初始化 mutex 属性
     	pthread_mutexattr_setpshared(&mutexattr, PTHREAD_PROCESS_SHARED);               // 修改属性为进程间共享
     	pthread_mutex_init(&process_lk,&mutexattr);
+    	process_lock_initialized = 1;
 	}
 	//printf("[%d]open~\n",db->id);
 	file_t* cur = file_list;
