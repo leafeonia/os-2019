@@ -208,7 +208,8 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     fp = fopen(db->filename, "w");
     fp2 = fopen("temp.txt","r");
     if(!fp2){
-    	printf("errorrrrrrr: %s",strerror(errno));
+    	printf("\033[35merrorrrrrrr: %s\033[0m\n\n",strerror(errno));
+    	pthread_mutex_unlock(&put_lk);
     	return -1;
     }
     flock(fileno(fp),LOCK_EX);
