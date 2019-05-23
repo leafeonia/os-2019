@@ -153,7 +153,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     char temp[] = "temp.txt";
     FILE* fptemp = fopen(db->filename,"r+");
     //printf("in put, opens %p, fd = %d\n",fptemp, fileno(fptemp));
-    FILE* fp2 = fopen(temp,"w");
+    FILE* fp2 = fopen(temp,"w+");
     if(fp2 == NULL){
         printf("error: create temporary file fails\n");
         pthread_mutex_unlock(&put_lk);
@@ -193,16 +193,16 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         fprintf(fp2, "%s\n", key);
         fprintf(fp2, "%s\n", value);
     }
-    /*flock(fileno(fp),LOCK_UN);
+    flock(fileno(fp),LOCK_UN);
     fclose(fp);
     fflush(fp);
     rewind(fp2);
     fp = fopen(db->filename, "w");
     flock(fileno(fp),LOCK_EX);
-    */
+    
     //printf("checkpoint\n");
-    //flock(fileno(fp),LOCK_UN);
-    //flock(fileno(fp2),LOCK_UN);
+    /*flock(fileno(fp),LOCK_UN);
+    flock(fileno(fp2),LOCK_UN);
     fclose(fp);
     fclose(fp2);
     fp = fopen(db->filename, "w");
@@ -212,8 +212,8 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     	pthread_mutex_unlock(&put_lk);
     	return -1;
     }
-    //flock(fileno(fp),LOCK_EX);
-    //flock(fileno(fp2),LOCK_EX);
+    flock(fileno(fp),LOCK_EX);
+    flock(fileno(fp2),LOCK_EX);*/
     
     while(!feof(fp2)){
     	//printf("meet again\n");
