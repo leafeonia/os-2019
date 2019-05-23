@@ -169,7 +169,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     struct timeval timee;
     gettimeofday(&timee, NULL);
     srand(timee.tv_usec);
-    sprintf(temp,"temp%d.txt",rand() % 100000);
+    sprintf(temp,"temp.txt");//,rand() % 100000);
     FILE* fptemp = fopen(db->filename,"r+");
     //printf("in put, opens %p, fd = %d\n",fptemp, fileno(fptemp));
     FILE* fp2 = fopen(temp,"w+");
