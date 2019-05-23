@@ -8,6 +8,7 @@
 #include "kvdb.h"
 #include <errno.h>
 #include <time.h>
+#include <sys/stat.h>
 struct file{
 	const char* filename;
 	int cnt;
@@ -236,7 +237,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     }
     //flock(fileno(fp),LOCK_EX);
     flock(fileno(fp2),LOCK_EX);
-    fchmod(fp,S_IWUSR|S_IRUSR);
+    fchmod(fp,S_IWUSR);
     rewind(fp);
     while(!feof(fp2)){
     	//printf("meet again\n");
