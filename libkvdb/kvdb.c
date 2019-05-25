@@ -330,12 +330,13 @@ char *kvdb_get(kvdb_t *db, const char *key){
     	fgets(buf,10000,fp);
     	printf("%s",buf);
     }
-    while(lseek(fileno(fp),n,SEEK_END) != -1){
+    while(fseek(fp),n,SEEK_END) != -1){
     //printf("enter, n = %lld\n",n);
-    	read(fileno(fp),smallbuf,1);
-    	if(strcmp("\n",smallbuf) == 0){
+    	//read(fileno(fp),smallbuf,1);
+    	char ch = fgetc(fp);
+    	if(ch == '\n'){
     		n++;
-    		lseek(fileno(fp),n,SEEK_END);
+    		fseek(fp,n,SEEK_END);
     		fgets(buf1, BUF_SIZE, fp);
     		fgets(buf2, BUF_SIZE, fp);
     		fgets(buf3, BUF_SIZE, fp);
