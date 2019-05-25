@@ -46,7 +46,7 @@ void* test2(void* arg){
 }
 
 int main(int argc, char** argv) {
-	if(strcmp(argv[1] == "2")) printf("bingo");
+	if(argc == 1) printf("bingo");
   		
 	int rc = fork();
 	if(rc < 0) printf("error");
