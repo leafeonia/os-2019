@@ -37,7 +37,7 @@ int kvdb_open(kvdb_t *db, const char *filename){
     	pthread_mutex_init(&process_lk,&mutexattr);
     	process_lock_initialized = 1;
 	}*/
-	//printf("[%d]open~\n",db->id);
+	printf("[%d]open~\n",db->id);
 	file_t* cur = file_list;
 	file_t* prev = file_list;
 	while(cur != NULL){
@@ -76,7 +76,7 @@ int kvdb_open(kvdb_t *db, const char *filename){
 	db->lk = lk;
 	//db->opened = 1;
 	
-	//printf("[%d]open finished~(new), db->fp = %p,fd = %d\n",db->id, db->fp, fileno(db->fp));
+	printf("[%d]open finished~(new), db->fp = %p,fd = %d\n",db->id, db->fp, fileno(db->fp));
 	flock(fileno(fp),LOCK_UN);
 	fclose(fp);
 	pthread_mutex_unlock(&open_lk);
@@ -94,7 +94,7 @@ static file_t* found_filename(const char* filename){
 }
 int kvdb_close(kvdb_t *db){
 	pthread_mutex_lock(&close_lk);
-	//printf("[%d]close~\n",db->id);
+	printf("[%d]close~\n",db->id);
 	//printf("db->fp = %p, size = %d\n",db->fp,(int)sizeof(db->fp));
 	if(!db->fp){
 		printf("error: current kvdb has not successfully opened a db file yet\n");
@@ -113,7 +113,7 @@ int kvdb_close(kvdb_t *db){
 	if(cur->cnt > 1){
 		cur->cnt--;
 		pthread_mutex_unlock(&close_lk);
-		//printf("[%d]close finished~(file cnt - 1,but not deleted)\n",db->id);
+		printf("[%d]close finished~(file cnt - 1,but not deleted)\n",db->id);
 		return 0;
 	}
 	file_t* bye;
@@ -141,7 +141,7 @@ int kvdb_close(kvdb_t *db){
 	//printf("close5\n");
 	free(bye);
 	//printf("close6\n");
-	//printf("[%d]close finished~\n",db->id);
+	printf("[%d]close finished~\n",db->id);
 	pthread_mutex_unlock(&close_lk);
 	//printf("close7\n");
 	return 0;
@@ -163,7 +163,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
 		//pthread_mutex_unlock(&process_lk);
 		return -1;
 	}
-    //printf("[%d]put~\n",db->id);
+    printf("[%d]put~\n",db->id);
     //printf("db->lk = %p\n",db->lk);
     //int fd = fileno(db->fp);
     //flock(fd,LOCK_EX);
@@ -297,7 +297,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     assert(cur);
 
     printf("update: filename = %s,db->fp = %p\n",db->filename,db->fp);*/
-   	//printf("[%d]put [%s]-[%s] finished~\n",db->id, key, value);
+   	printf("[%d]put [%s]-[%s] finished~\n",db->id, key, value);
    	
     pthread_mutex_unlock(&put_lk);
     //pthread_mutex_unlock(&process_lk);
@@ -307,7 +307,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
 
 char *kvdb_get(kvdb_t *db, const char *key){
 	pthread_mutex_lock(&get_lk);
-    //printf("[%d]get and pet my \033[33mfluffy tail~ \033[0m\n",db->id);
+    printf("[%d]get and pet my \033[33mfluffy tail~ \033[0m\n",db->id);
     if(!db->fp){
         printf("error: current kvdb has not successfully opened a db file yet\n");
         pthread_mutex_unlock(&get_lk);
@@ -331,6 +331,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
     			free(buf1);
     			free(buf3);
     			fclose(fp);
+    			printf("[%d], get and pet finished!~\n",db->id);
     			pthread_mutex_unlock(&get_lk);
     			return buf2;
     		}
