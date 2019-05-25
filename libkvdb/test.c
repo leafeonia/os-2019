@@ -45,7 +45,7 @@ void* test2(void* arg){
 	return NULL;
 }
 
-int main(int argc, char*[] argv) {
+int main(int argc, char** argv) {
 	if(strcmp(argv[1] == "2")) printf("bingo");
   		
 	int rc = fork();
