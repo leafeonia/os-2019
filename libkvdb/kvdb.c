@@ -346,11 +346,11 @@ char *kvdb_get(kvdb_t *db, const char *key){
     char *buf1 = (char*)malloc(BUF_SIZE*sizeof(char));
     char *buf2 = (char*)malloc(BUF_SIZE*sizeof(char));
     char *buf3 = (char*)malloc(BUF_SIZE*sizeof(char)); 
-    /*while(!feof(fp)){
+    while(!feof(fp)){
     	char buf[10000];
     	fgets(buf,10000,fp);
     	printf("%s",buf);
-    }*/
+    }
     while(fseek(fp,n,SEEK_END) != -1){
     //printf("enter, n = %lld\n",n);
     	//read(fileno(fp),smallbuf,1);
