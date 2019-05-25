@@ -367,7 +367,6 @@ char *kvdb_get(kvdb_t *db, const char *key){
     		fseek(fp,n,SEEK_END);
     		fgets(buf1, BUF_SIZE, fp);
     		fgets(buf2, BUF_SIZE, fp);
-    		may_crash();
     		fgets(buf3, BUF_SIZE, fp);
     		if(buf1[strlen(buf1)-1] == '\n') buf1[strlen(buf1)-1] = '\0';
     		if(buf2[strlen(buf2)-1] == '\n') buf2[strlen(buf2)-1] = '\0';
