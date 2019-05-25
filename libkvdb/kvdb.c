@@ -333,6 +333,9 @@ char *kvdb_get(kvdb_t *db, const char *key){
     		fgets(buf1, BUF_SIZE, fp);
     		fgets(buf2, BUF_SIZE, fp);
     		fgets(buf3, BUF_SIZE, fp);
+    		if(buf1[strlen(buf1)-1] == '\n') buf1[strlen(buf1)-1] = '\0';
+    		if(buf2[strlen(buf2)-1] == '\n') buf2[strlen(buf2)-1] = '\0';
+    		if(buf3[strlen(buf3)-1] == '\n') buf3[strlen(buf3)-1] = '\0';
     		//fscanf(fp,"%s %s %s",buf1,buf2,buf3);
     		printf("%s %s %s\n",buf1,buf2,buf3);
     		if(strcmp(buf1,key) == 0 && strcmp(buf3,"*") == 0){
