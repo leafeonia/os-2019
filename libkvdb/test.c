@@ -20,7 +20,7 @@ void* test1(void* arg){
     kvdb_put(&db, "eevee", "132");
     kvdb_put(&db, "vaporeon", "134");
     kvdb_open(&db2, "c.db");
-    printf("\033[36m[%d]%s - %s(should error open db fail)\033[0m\n",db.id,"FA",kvdb_get(&db2, "FA"));
+    printf("\033[36m[%d]%s - %s(should error no key)\033[0m\n",db.id,"FA",kvdb_get(&db2, "FA"));
     kvdb_put(&db2, "FA", "Van");
     printf("\033[36m[%d]%s - %s(should return Van)\033[0m\n",db.id,"FA",kvdb_get(&db2, "FA"));
     kvdb_close(&db2);

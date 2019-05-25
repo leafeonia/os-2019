@@ -55,12 +55,12 @@ int kvdb_open(kvdb_t *db, const char *filename){
 	}
 	 
 	FILE* fp = fopen(filename,"w+");
-	flock(fileno(fp),LOCK_EX);
 	if(fp == NULL){
 		printf("error: fopen %s fails\n",filename);
 		pthread_mutex_unlock(&open_lk);
 		return -1;
 	}
+	flock(fileno(fp),LOCK_EX);
 	pthread_mutex_t *lk = (pthread_mutex_t*)malloc(sizeof(pthread_mutex_t));
 	pthread_mutex_init(lk,NULL);
 	file_t *new_file = (file_t*)malloc(sizeof(file_t));
