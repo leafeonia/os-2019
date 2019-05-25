@@ -8,7 +8,7 @@ struct kvdb {
 	const char* filename;
 	//int opened; //mark whether fp has been successfully opened.
 	pthread_mutex_t *lk;
-	//int id;
+	int id;
 };   
 typedef struct kvdb kvdb_t;   
   
