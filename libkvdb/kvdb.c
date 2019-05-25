@@ -317,7 +317,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
         return NULL;
     }
     FILE* fp = fopen(db->filename,"r");
-    flock(fileno(fp),LOCK_EX);
+    //flock(fileno(fp),LOCK_EX);
     long long n = 0;
     char smallbuf[] = {'\0','\0'};
     char *buf1 = (char*)malloc(BUF_SIZE*sizeof(char));
