@@ -167,7 +167,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     //printf("db->lk = %p\n",db->lk);
     //int fd = fileno(db->fp);
     //flock(fd,LOCK_EX);
-    //char buf[] = "*\n";
+    char buf[] = "*\n";
     //printf("ckp1\n");
     FILE* fp = fopen(db->filename,"a+");
     //printf("ckp2\n");
@@ -177,10 +177,9 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     fflush(fp);
     //printf("ckp3\n");
     sync();
-    fprintf(fp,"*\n");
-    //write(fileno(fp),buf,2);
+    write(fileno(fp),buf,2);
     sync();
-    //flock(fileno(fp),LOCK_UN);
+    flock(fileno(fp),LOCK_UN);
     fclose(fp);
     
     
@@ -339,7 +338,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
     		if(buf2[strlen(buf2)-1] == '\n') buf2[strlen(buf2)-1] = '\0';
     		if(buf3[strlen(buf3)-1] == '\n') buf3[strlen(buf3)-1] = '\0';
     		//fscanf(fp,"%s %s %s",buf1,buf2,buf3);
-    		printf("%s %s %s\n",buf1,buf2,buf3);
+    		printf("success. n = %d.  %s %s %s\n",n,buf1,buf2,buf3);
     		if(strcmp(buf1,key) == 0 && strcmp(buf3,"*") == 0){
     			free(buf1);
     			free(buf3);
