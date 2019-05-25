@@ -346,11 +346,11 @@ char *kvdb_get(kvdb_t *db, const char *key){
     char *buf1 = (char*)malloc(BUF_SIZE*sizeof(char));
     char *buf2 = (char*)malloc(BUF_SIZE*sizeof(char));
     char *buf3 = (char*)malloc(BUF_SIZE*sizeof(char)); 
-    while(!feof(fp)){
+    /*while(!feof(fp)){
     	char buf[10000];
     	fgets(buf,10000,fp);
     	printf("%s",buf);
-    }
+    }*/
     while(fseek(fp,n,SEEK_END) != -1){
     //printf("enter, n = %lld\n",n);
     	//read(fileno(fp),smallbuf,1);
@@ -365,7 +365,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
     		if(buf2[strlen(buf2)-1] == '\n') buf2[strlen(buf2)-1] = '\0';
     		if(buf3[strlen(buf3)-1] == '\n') buf3[strlen(buf3)-1] = '\0';
     		//fscanf(fp,"%s %s %s",buf1,buf2,buf3);
-    		printf("success. n = %lld.  %s %s %s\n",n,buf1,buf2,buf3);
+    		//printf("success. n = %lld.  %s %s %s\n",n,buf1,buf2,buf3);
     		if(strcmp(buf1,key) == 0 && strcmp(buf3,"*") == 0){
     			free(buf1);
     			free(buf3);
