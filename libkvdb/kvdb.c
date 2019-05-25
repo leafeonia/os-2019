@@ -169,6 +169,11 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     char buf[] = "*\n";
     //printf("ckp1\n");
     FILE* fp = fopen(db->filename,"a+");
+    if(fp == NULL){
+    	printf("error: open database fails. Cannot put [%s]-[%s]\n",key,value);
+    	pthread_mutex_unlock(&put_lk);
+    	return -1;
+    }
     //printf("ckp2\n");
     flock(fileno(fp),LOCK_EX);
     fprintf(fp,"\n\n%s\n",key);
@@ -317,6 +322,11 @@ char *kvdb_get(kvdb_t *db, const char *key){
         return NULL;
     }
     FILE* fp = fopen(db->filename,"r");
+    if(fp == NULL){
+    	printf("error: cannot open database file. Please check whether the database file exists\n");
+    	pthread_mutex_unlock(&get_lk);
+        return NULL;
+    }
     flock(fileno(fp),LOCK_EX);
     long long n = 0;
     //char smallbuf[] = {'\0','\0'};

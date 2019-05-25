@@ -5,7 +5,7 @@
 #include <unistd.h>
 void* test1(void* arg){
 	printf("FA1\n");
-	kvdb_t db;
+	kvdb_t db,db2;
 	db.id = *(int*)arg;
 	kvdb_open(&db, "a.db"); 
     kvdb_put(&db, "operating systems", "three-easy-pieces");
@@ -19,10 +19,16 @@ void* test1(void* arg){
     kvdb_open(&db, "b.db");
     kvdb_put(&db, "eevee", "132");
     kvdb_put(&db, "vaporeon", "134");
+    kvdb_open(&db2, "c.db");
+    printf("\033[36m[%d]%s - %s(should error open db fail)\033[0m\n",db.id,"FA",kvdb_get(&db2, "FA"));
+    kvdb_put(&db2, "FA", "Van");
+    printf("\033[36m[%d]%s - %s(should return Van)\033[0m\n",db.id,"FA",kvdb_get(&db2, "FA"));
+    kvdb_close(&db2);
     kvdb_put(&db, "eevee", "133");
     printf("\033[36m[%d]%s - %s(should error no key)\033[0m\n",db.id,"glaceon",kvdb_get(&db, "glaceon"));
     printf("\033[36m[%d]%s - %s(should return 133)\033[0m\n",db.id,"eevee",kvdb_get(&db, "eevee"));
     kvdb_close(&db);
+    kvdb_close(&db2);
 	return NULL;
 }
 
