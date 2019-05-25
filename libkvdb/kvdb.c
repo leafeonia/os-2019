@@ -177,9 +177,10 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     fflush(fp);
     //printf("ckp3\n");
     sync();
-    write(fileno(fp),buf,2);
+    fprintf(fp,"*\n");
+    //write(fileno(fp),buf,2);
     sync();
-    flock(fileno(fp),LOCK_UN);
+    //flock(fileno(fp),LOCK_UN);
     fclose(fp);
     
     
