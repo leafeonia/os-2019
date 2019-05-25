@@ -324,7 +324,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
     char *buf2 = (char*)malloc(BUF_SIZE*sizeof(char));
     char *buf3 = (char*)malloc(BUF_SIZE*sizeof(char)); 
     while(lseek(fileno(fp),n,SEEK_END) != -1){
-    printf("enter\n");
+    printf("enter, n = %d\n",n);
     	read(fileno(fp),smallbuf,1);
     	if(strcmp("\n",smallbuf) == 0){
     		n++;
