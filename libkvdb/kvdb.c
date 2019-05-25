@@ -340,6 +340,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
     			return buf2;
     		}
     	}
+    	n--;
     }
     printf("error: key [%s] does not exist\n",key);
     free(buf1);
