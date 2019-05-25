@@ -28,6 +28,15 @@ pthread_mutex_t get_lk = PTHREAD_MUTEX_INITIALIZER;
 //pthread_mutexattr_t mutexattr;
 
 //int process_lock_initialized = 0;
+#define CRASH
+void may_crash(){
+#ifdef CRASH
+	struct timeval timee;
+    gettimeofday(&timee, NULL);
+    srand(timee.tv_usec);
+    if(rand() % 15 == 0) exit(0);
+#endif
+}
 
 int kvdb_open(kvdb_t *db, const char *filename){
 	pthread_mutex_lock(&open_lk);
@@ -45,6 +54,7 @@ int kvdb_open(kvdb_t *db, const char *filename){
 			db->filename = filename;
 			db->lk = cur->lk;
 			db->fp = cur->fp;
+			may_crash();
 			cur->cnt++;
 			//printf("[%d]open finished(same)~ db->fp = %p,fd = %d\n",db->id, db->fp,fileno(db->fp));
 			pthread_mutex_unlock(&open_lk);
