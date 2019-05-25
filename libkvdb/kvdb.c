@@ -169,11 +169,11 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     //flock(fd,LOCK_EX);
     char buf[] = "*\n";
     FILE* fp = fopen(db->filename,"a+");
-    flock(fp,LOCK_EX);
+    flock(fileno(fp),LOCK_EX);
     fprintf(fp,"%s\n",key);
     fprintf(fp,"%s\n",value);
     sync();
-    write(fileno(fd),buf,2);
+    write(fileno(fp),buf,2);
     sync();
     fclose(fp);
     
@@ -313,7 +313,6 @@ char *kvdb_get(kvdb_t *db, const char *key){
         pthread_mutex_unlock(&get_lk);
         return NULL;
     }
-    char buf1
     FILE* fp = fopen(db->filename,"r");
     flock(fileno(fp),LOCK_EX);
     long long n = 0;
@@ -322,7 +321,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
     char *buf2 = (char*)malloc(BUF_SIZE*sizeof(char));
     char *buf3 = (char*)malloc(BUF_SIZE*sizeof(char)); 
     while(lseek(fileno(fp),n,SEEK_END) != -1){
-    	read(fd,smallbuf,1);
+    	read(fileno(fp),smallbuf,1);
     	if(strcmp("\n",smallbuf) == 0){
     		n++;
     		lseek(fd,n,SEEK_END);
