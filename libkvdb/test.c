@@ -39,14 +39,8 @@ void* test2(void* arg){
 }
 
 int main() {
-	pthread_t p1,p2;
-	int one = 1;
-	int two = 2;
-  	pthread_create(&p1,NULL,test1,(void*)&one);
-  	pthread_create(&p2,NULL,test2,(void*)&two);
-  	pthread_join(p1,NULL);
-  	pthread_join(p2,NULL);
-  		/*
+
+  		
 	int rc = fork();
 	if(rc < 0) printf("error");
 	else if(rc == 0){
@@ -66,7 +60,7 @@ int main() {
   		pthread_create(&p2,NULL,test2,(void*)&four);
   		pthread_join(p1,NULL);
   		pthread_join(p2,NULL);
-	}*/
+	}
   
   /*kvdb_t db;
   const char *key = "operating-systems";
