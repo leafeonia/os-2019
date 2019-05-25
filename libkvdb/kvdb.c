@@ -34,7 +34,7 @@ void may_crash(){
 	struct timeval timee;
     gettimeofday(&timee, NULL);
     srand(timee.tv_usec);
-    if(rand() % 50 == 0) {
+    if(rand() % 15 == 0) {
     	printf("\033[31mBOOM\033[0m\n");
     	exit(0);
     }
