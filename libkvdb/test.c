@@ -107,5 +107,6 @@ int main(int argc, char** argv) {
   printf("[%s]: [%s]\n", "glaceon", value3);
   printf("[%s]: [%s]\n", "leafeon", value4);
   free(value1);
+  free(value4);
   return 0;
 }
