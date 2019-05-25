@@ -166,12 +166,11 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     printf("[%d]put~\n",db->id);
     //printf("db->lk = %p\n",db->lk);
     //int fd = fileno(db->fp);
-    flock(fd,LOCK_EX);
     char buf[] = "*\n";
     //printf("ckp1\n");
     FILE* fp = fopen(db->filename,"a+");
     //printf("ckp2\n");
-    //flock(fileno(fp),LOCK_EX);
+    flock(fileno(fp),LOCK_EX);
     fprintf(fp,"\n\n%s\n",key);
     fprintf(fp,"%s\n",value);
     fflush(fp);
