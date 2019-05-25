@@ -175,6 +175,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     sync();
     write(fileno(fp),buf,2);
     sync();
+    flock(fileno(fp),LOCK_UN);
     fclose(fp);
     
     
