@@ -172,10 +172,10 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     flock(fileno(fp),LOCK_EX);
     fprintf(fp,"%s\n",key);
     fprintf(fp,"%s\n",value);
+    printf("ckp1\n");
     sync();
     write(fileno(fp),buf,2);
     sync();
-    flock(fileno(fp),LOCK_UN);
     fclose(fp);
     
     
