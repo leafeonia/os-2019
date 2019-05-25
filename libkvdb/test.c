@@ -13,6 +13,7 @@ void* test1(void* arg){
     kvdb_put(&db, "flareon", "136");
     printf("\033[36m[%d]%s - %s(should return 471)\033[0m\n",db.id,"glaceon",kvdb_get(&db, "glaceon"));
     printf("\033[36m[%d]%s - %s(should error no key)\033[0m\n",db.id,"leafeon",kvdb_get(&db, "leafeon"));
+    printf("\033[36m[%d]%s - %s(should return three-easy-pieces)\033[0m\n",db.id,"operating systems",kvdb_get(&db, "operating systems"));
     kvdb_close(&db);
     printf("\033[36m[%d]%s - %s(should error not open)\033[0m\n",db.id,"glaceon",kvdb_get(&db, "glaceon"));
     kvdb_open(&db, "b.db");
