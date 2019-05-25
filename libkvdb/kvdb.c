@@ -54,7 +54,7 @@ int kvdb_open(kvdb_t *db, const char *filename){
 		cur = cur->next;
 	}
 	 
-	FILE* fp = fopen(filename,"w+");
+	FILE* fp = fopen(filename,"a+");
 	if(fp == NULL){
 		printf("error: fopen %s fails\n",filename);
 		pthread_mutex_unlock(&open_lk);
