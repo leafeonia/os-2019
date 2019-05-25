@@ -19,5 +19,7 @@ int main() {
   //free(value2);
   free(value3);
   //free(value4);
+  value2 = value4;
+  value4 = value2;
   return 0;
 }
