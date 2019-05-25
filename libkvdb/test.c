@@ -6,7 +6,7 @@
 void* test1(void* arg){
 	printf("FA1\n");
 	kvdb_t db,db2;
-	db.id = *(int*)arg;
+	db.id = db2.id = *(int*)arg;
 	kvdb_open(&db, "a.db"); 
     kvdb_put(&db, "operating systems", "three-easy-pieces");
     kvdb_put(&db, "glaceon", "471");
