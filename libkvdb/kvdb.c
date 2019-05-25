@@ -321,7 +321,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
     FILE* fp = fopen(db->filename,"r");
     //flock(fileno(fp),LOCK_EX);
     long long n = 0;
-    char smallbuf[] = {'\0','\0'};
+    //char smallbuf[] = {'\0','\0'};
     char *buf1 = (char*)malloc(BUF_SIZE*sizeof(char));
     char *buf2 = (char*)malloc(BUF_SIZE*sizeof(char));
     char *buf3 = (char*)malloc(BUF_SIZE*sizeof(char)); 
@@ -330,7 +330,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
     	fgets(buf,10000,fp);
     	printf("%s",buf);
     }
-    while(fseek(fp),n,SEEK_END) != -1){
+    while(fseek(fp,n,SEEK_END) != -1){
     //printf("enter, n = %lld\n",n);
     	//read(fileno(fp),smallbuf,1);
     	char ch = fgetc(fp);
