@@ -329,7 +329,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
     //printf("enter, n = %lld\n",n);
     	read(fileno(fp),smallbuf,1);
     	if(strcmp("\n",smallbuf) == 0){
-    		n += 2;
+    		n++;
     		lseek(fileno(fp),n,SEEK_END);
     		fscanf(fp,"%s %s %s",buf1,buf2,buf3);
     		printf("%s %s %s\n",buf1,buf2,buf3);
@@ -341,7 +341,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
     			pthread_mutex_unlock(&get_lk);
     			return buf2;
     		}
-    		n -= 2;
+    		n--;
     	}
     	n--;
     }
