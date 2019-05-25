@@ -28,7 +28,7 @@ pthread_mutex_t get_lk = PTHREAD_MUTEX_INITIALIZER;
 //pthread_mutexattr_t mutexattr;
 
 //int process_lock_initialized = 0;
-#define CRASH
+// #define CRASH
 void may_crash(){
 #ifdef CRASH
 	struct timeval timee;
