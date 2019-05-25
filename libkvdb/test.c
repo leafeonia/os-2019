@@ -48,22 +48,21 @@ void* test2(void* arg){
 int main(int argc, char** argv) {
 	if(argc == 2) {
       kvdb_t db;
-	  const char *key = "operating systems";
-	  char *value1,*value3;
 	  kvdb_open(&db, "a.db"); // BUG: should check for errors  
-	  //kvdb_put(&db, key, "three-easy-pieces");
-	  //kvdb_put(&db, "leafeon", "470");
-	  //kvdb_put(&db, "leafeon", "471");
-	  value1 = kvdb_get(&db, key);
-	  //value2 = kvdb_get(&db, "leafeon");
-	  value3 = kvdb_get(&db, "glaceon");
+	  printf("\033[36m[%d]%s - %s(should return 471)\033[0m\n",db.id,"glaceon",kvdb_get(&db, "glaceon"));
+	  printf("\033[36m[%d]%s - %s(should error no key)\033[0m\n",db.id,"leafeon",kvdb_get(&db, "leafeon"));
+	  printf("\033[36m[%d]%s - %s(should return 136)\033[0m\n",db.id,"flareon",kvdb_get(&db, "flareon"));
 	  kvdb_close(&db);
-	  printf("[%s]: [%s]\n", key, value1);
-	  //printf("[%s]: [%s]\n", "leafeon", value2);
-	  printf("[%s]: [%s]\n", "glaceon", value3);
-	  //printf("[%s]: [%s]\n", "leafeon", value4);
-	  free(value1);
-	  free(value3);
+	  kvdb_open(&db, "b.db");
+		
+		kvdb_open(&db2, "c.db");
+		printf("\033[36m[%d]%s - %s(should return Van)\033[0m\n",db.id,"FA",kvdb_get(&db2, "FA"));
+		kvdb_close(&db2);
+		
+		printf("\033[36m[%d]%s - %s(should error no key)\033[0m\n",db.id,"glaceon",kvdb_get(&db, "glaceon"));
+		printf("\033[36m[%d]%s - %s(should return 133)\033[0m\n",db.id,"eevee",kvdb_get(&db, "eevee"));
+		kvdb_close(&db);
+		kvdb_close(&db2);
 	  return 0;
 	}
   		
