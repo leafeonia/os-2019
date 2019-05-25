@@ -58,7 +58,6 @@ int main(int argc, char** argv) {
 	  //value2 = kvdb_get(&db, "leafeon");
 	  value3 = kvdb_get(&db, "glaceon");
 	  kvdb_close(&db);
-	  value4 = kvdb_get(&db, "leafeon");
 	  printf("[%s]: [%s]\n", key, value1);
 	  //printf("[%s]: [%s]\n", "leafeon", value2);
 	  printf("[%s]: [%s]\n", "glaceon", value3);
