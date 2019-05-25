@@ -324,7 +324,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
     	read(fileno(fp),smallbuf,1);
     	if(strcmp("\n",smallbuf) == 0){
     		n++;
-    		lseek(fd,n,SEEK_END);
+    		lseek(fileno(fp),n,SEEK_END);
     		fscanf(fp,"%s %s %s",buf1,buf2,buf3);
     		printf("%s %s %s\n",buf1,buf2,buf3);
     		if(strcmp(buf1,key) == 0 && strcmp(buf3,"*") == 0){
