@@ -3,6 +3,7 @@
 #include <stdlib.h> 
 #include <pthread.h>
 #include <unistd.h>
+#include <string.h>
 void* test1(void* arg){
 	printf("FA1\n");
 	kvdb_t db,db2;
@@ -44,7 +45,7 @@ void* test2(void* arg){
 	return NULL;
 }
 
-int main() {
+int main(int argc, char*[] argv) {
 	if(strcmp(argv[1] == "2")) printf("bingo");
   		
 	int rc = fork();
