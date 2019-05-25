@@ -172,7 +172,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     FILE* fp = fopen(db->filename,"a+");
     //printf("ckp2\n");
     //flock(fileno(fp),LOCK_EX);
-    fprintf(fp,"\n%s\n",key);
+    fprintf(fp,"\n\n%s\n",key);
     fprintf(fp,"%s\n",value);
     fflush(fp);
     //printf("ckp3\n");
