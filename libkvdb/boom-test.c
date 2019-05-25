@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <kvdb.h>
+#include "kvdb.h"
 int main() {
   kvdb_t db;
   const char *key = "operating-systems";
