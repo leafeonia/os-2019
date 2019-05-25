@@ -339,6 +339,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
     			pthread_mutex_unlock(&get_lk);
     			return buf2;
     		}
+    		n--;
     	}
     	n--;
     }
