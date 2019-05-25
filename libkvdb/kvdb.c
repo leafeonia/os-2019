@@ -166,7 +166,7 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     printf("[%d]put~\n",db->id);
     //printf("db->lk = %p\n",db->lk);
     //int fd = fileno(db->fp);
-    //flock(fd,LOCK_EX);
+    flock(fd,LOCK_EX);
     char buf[] = "*\n";
     //printf("ckp1\n");
     FILE* fp = fopen(db->filename,"a+");
@@ -179,7 +179,6 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     sync();
     write(fileno(fp),buf,2);
     sync();
-    flock(fileno(fp),LOCK_UN);
     fclose(fp);
     
     
@@ -319,7 +318,7 @@ char *kvdb_get(kvdb_t *db, const char *key){
         return NULL;
     }
     FILE* fp = fopen(db->filename,"r");
-    //flock(fileno(fp),LOCK_EX);
+    flock(fileno(fp),LOCK_EX);
     long long n = 0;
     //char smallbuf[] = {'\0','\0'};
     char *buf1 = (char*)malloc(BUF_SIZE*sizeof(char));
