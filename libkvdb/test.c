@@ -47,7 +47,7 @@ void* test2(void* arg){
 
 int main(int argc, char** argv) {
 	if(argc == 2) {
-      kvdb_t db;
+      kvdb_t db,db2;
 	  kvdb_open(&db, "a.db"); // BUG: should check for errors  
 	  printf("\033[36m[%d]%s - %s(should return 471)\033[0m\n",db.id,"glaceon",kvdb_get(&db, "glaceon"));
 	  printf("\033[36m[%d]%s - %s(should error no key)\033[0m\n",db.id,"leafeon",kvdb_get(&db, "leafeon"));
