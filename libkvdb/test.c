@@ -47,7 +47,7 @@ void* test2(void* arg){
 }
 
 int main(int argc, char** argv) {
-	if(argc == 2) {
+	/*if(argc == 2) {
       kvdb_t db,db2;
 	  kvdb_open(&db, "a.db"); // BUG: should check for errors  
 	  printf("\033[36m[%d]%s - %s(should return 471)\033[0m\n",db.id,"glaceon",kvdb_get(&db, "glaceon"));
@@ -88,9 +88,9 @@ int main(int argc, char** argv) {
   		pthread_create(&p2,NULL,test2,(void*)&four);
   		pthread_join(p1,NULL);
   		pthread_join(p2,NULL);
-	}
+	}*/
   
-  /*kvdb_t db;
+  kvdb_t db;
   const char *key = "operating-systems";
   char *value1,*value2,*value3,*value4;
   kvdb_open(&db, "a.db"); // BUG: should check for errors  
@@ -107,5 +107,5 @@ int main(int argc, char** argv) {
   printf("[%s]: [%s]\n", "glaceon", value3);
   printf("[%s]: [%s]\n", "leafeon", value4);
   free(value1);
-  */return 0;
+  return 0;
 }
