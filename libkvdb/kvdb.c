@@ -18,6 +18,7 @@ struct file{
 };
 typedef struct file file_t;
 file_t* file_list = NULL;
+#define BUF_SIZE 16000002
 
 pthread_mutex_t open_lk = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t close_lk = PTHREAD_MUTEX_INITIALIZER;
@@ -166,6 +167,20 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     //printf("db->lk = %p\n",db->lk);
     //int fd = fileno(db->fp);
     //flock(fd,LOCK_EX);
+    char buf[] = "*\n";
+    FILE* fp = fopen(db->filename,"a+");
+    flock(fp,LOCK_EX);
+    fprintf(fp,"%s\n",key);
+    fprintf(fp,"%s\n",value);
+    sync();
+    write(fileno(fd),buf,2);
+    sync();
+    fclose(fp);
+    
+    
+    
+    
+    /*
     char temp[20];// = "temp.txt";
     struct timeval timee;
     gettimeofday(&timee, NULL);
@@ -215,12 +230,6 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
         fprintf(fp2, "%s\n", key);
         fprintf(fp2, "%s\n", value);
     }
-    /*flock(fileno(fp),LOCK_UN);
-    fclose(fp);
-    fflush(fp);
-    rewind(fp2);
-    fp = fopen(db->filename, "w");
-    flock(fileno(fp),LOCK_EX);*/
     
     //printf("checkpoint\n");
     //flock(fileno(fp),LOCK_UN);
@@ -260,7 +269,12 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     fclose(fp2);
     //fopen(db->filename,"r+");
     //printf("\033[34m[%d] remove %s\033[0m\n",db->id, temp);
-    remove(temp);
+    remove(temp);*/
+    
+    
+    
+    
+    
     /*fclose(fp2);
     if(remove(db->filename) == -1){
         printf("remove origin file fails\n");
@@ -299,9 +313,37 @@ char *kvdb_get(kvdb_t *db, const char *key){
         pthread_mutex_unlock(&get_lk);
         return NULL;
     }
+    char buf1
     FILE* fp = fopen(db->filename,"r");
     flock(fileno(fp),LOCK_EX);
-    while(!feof(fp)){
+    long long n = 0;
+    char smallbuf[] = {'\0','\0'};
+    char *buf1 = (char*)malloc(BUF_SIZE*sizeof(char));
+    char *buf2 = (char*)malloc(BUF_SIZE*sizeof(char));
+    char *buf3 = (char*)malloc(BUF_SIZE*sizeof(char)); 
+    while(lseek(fileno(fp),n,SEEK_END) != -1){
+    	read(fd,smallbuf,1);
+    	if(strcmp("\n",smallbuf) == 0){
+    		n++;
+    		lseek(fd,n,SEEK_END);
+    		fscanf(fp,"%s %s %s",buf1,buf2,buf3);
+    		printf("%s %s %s\n",buf1,buf2,buf3);
+    		if(strcmp(buf1,key) == 0 && strcmp(buf3,"*") == 0){
+    			free(buf1);
+    			free(buf3);
+    			fclose(fp);
+    			pthread_mutex_unlock(&get_lk);
+    			return buf2;
+    		}
+    	}
+    }
+    printf("error: key [%s] does not exist\n",key);
+    free(buf1);
+    free(buf2);
+    free(buf3);
+    
+    
+    /*while(!feof(fp)){
         char key_string[130];
         char *value_string = (char*)malloc(16000002*sizeof(char));
         fgets(key_string,130,fp);
@@ -330,7 +372,10 @@ char *kvdb_get(kvdb_t *db, const char *key){
         free(value_string);
     }
     printf("error: key [%s] does not exist\n",key);
-    //flock(fileno(fp),LOCK_UN);
+    //flock(fileno(fp),LOCK_UN);*/
+    
+    
+    
     fclose(fp);
     pthread_mutex_unlock(&get_lk);
     return NULL;
