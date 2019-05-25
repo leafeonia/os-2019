@@ -48,7 +48,7 @@ void* test2(void* arg){
 int main(int argc, char** argv) {
 	if(argc == 2) {
       kvdb_t db;
-	  const char *key = "operating-systems";
+	  const char *key = "operating systems";
 	  char *value1,*value3;
 	  kvdb_open(&db, "a.db"); // BUG: should check for errors  
 	  //kvdb_put(&db, key, "three-easy-pieces");
