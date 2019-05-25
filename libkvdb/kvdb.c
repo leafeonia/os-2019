@@ -168,13 +168,13 @@ int kvdb_put(kvdb_t *db, const char *key, const char *value){
     //int fd = fileno(db->fp);
     //flock(fd,LOCK_EX);
     char buf[] = "*\n";
-    printf("ckp1\n");
+    //printf("ckp1\n");
     FILE* fp = fopen(db->filename,"a+");
-    printf("ckp2\n");
+    //printf("ckp2\n");
     //flock(fileno(fp),LOCK_EX);
     fprintf(fp,"%s\n",key);
     fprintf(fp,"%s\n",value);
-    printf("ckp3\n");
+    //printf("ckp3\n");
     sync();
     write(fileno(fp),buf,2);
     sync();
