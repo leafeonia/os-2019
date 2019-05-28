@@ -18,7 +18,7 @@ struct file{
 };
 typedef struct file file_t;
 file_t* file_list = NULL;
-#define BUF_SIZE 16000002
+#define BUF_SIZE 17000002
 
 pthread_mutex_t open_lk = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t close_lk = PTHREAD_MUTEX_INITIALIZER;
