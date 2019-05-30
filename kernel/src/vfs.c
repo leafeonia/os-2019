@@ -44,7 +44,7 @@ int vfs_close(int fd){
 }
 
 
-MODULE_DEF(kmt) {
+MODULE_DEF(vfs) {
   .init   = vfs_init,
   .access = vfs_create,
   .mount = vfs_mount,
