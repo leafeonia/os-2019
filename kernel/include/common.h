@@ -68,6 +68,6 @@ typedef struct fsops {
 
 typedef struct filesystem {
   fsops_t *ops;
-  dev_t *dev;
+  device_t *dev;
 }filesystem_t;
 #endif
