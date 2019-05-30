@@ -44,7 +44,7 @@ typedef struct inodeops {
   // 你可以自己设计readdir的功能
 }inodeops_t;
 
-typedef struct unsigned int dev_t;
+typedef unsigned int dev_t;
 
 typedef struct inode {
   int refcnt;
