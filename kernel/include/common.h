@@ -39,7 +39,7 @@ typedef struct inodeops {
   off_t (*lseek)(file_t *file, off_t offset, int whence);
   int (*mkdir)(const char *name);
   int (*rmdir)(const char *name);
-  int (*link)(const char *name, inode_t *inode);
+  int (*link)(const char *name, struct inode *inode);
   int (*unlink)(const char *name);
   // 你可以自己设计readdir的功能
 }inodeops_t;
