@@ -9,7 +9,6 @@ void vfs_init(){
 	GOLDLOG("hello L3!");
 	procfs.dev = NULL;
 	
-	
 }
 int vfs_access(const char *path, int mode){
 	return 0;
