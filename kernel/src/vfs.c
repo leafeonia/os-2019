@@ -46,7 +46,7 @@ int vfs_close(int fd){
 
 MODULE_DEF(vfs) {
   .init   = vfs_init,
-  .access = vfs_create,
+  .access = vfs_access,
   .mount = vfs_mount,
   .unmount = vfs_unmount,
   .mkdir = vfs_mkdir,
