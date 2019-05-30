@@ -5,15 +5,7 @@
 #include <nanos.h>
 #define NR_FILE 20
 
-struct file;
-struct task {
-	const char* name;
-	_Context context;
-	long long fence1;
-	uint8_t stack[4096];
-	struct file fildes[NR_FILE];
-	long long fence2;
-};
+
 struct spinlock {
 	const char* name;
 	int locked;
@@ -33,6 +25,15 @@ typedef struct file {
   struct inode *inode;
   uint64_t offset;
 }file_t;
+
+struct task {
+	const char* name;
+	_Context context;
+	long long fence1;
+	uint8_t stack[4096];
+	file_t fildes[NR_FILE];
+	long long fence2;
+};
 
 typedef struct inodeops {
   int (*open)(file_t *file, int flags);
