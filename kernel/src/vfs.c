@@ -3,10 +3,13 @@
 #include <devices.h>
 #include "my_os.h"
 
-
+static filesystem_t procfs;
 
 void vfs_init(){
-	GOLDLOG("hello L3!\n");
+	GOLDLOG("hello L3!");
+	procfs.dev = NULL;
+	
+	
 }
 int vfs_access(const char *path, int mode){
 	return 0;
