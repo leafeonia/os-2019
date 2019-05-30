@@ -21,7 +21,16 @@ struct semaphore {
 	struct spinlock lock;
 	int value;
 };
-struct inodeops {
+
+
+
+typedef struct file {
+  int refcnt; // 引用计数
+  struct inode *inode;
+  uint64_t offset;
+}file_t;
+
+typedef struct inodeops {
   int (*open)(file_t *file, int flags);
   int (*close)(file_t *file);
   ssize_t (*read)(file_t *file, char *buf, size_t size);
@@ -32,33 +41,29 @@ struct inodeops {
   int (*link)(const char *name, inode_t *inode);
   int (*unlink)(const char *name);
   // 你可以自己设计readdir的功能
-};
+}inodeops_s;
 
 
 
-struct inode {
+typedef struct inode {
   int refcnt;
   void *ptr;       // private data
-  struct filesystem *fs;
-  struct inodeops *ops; // 在inode被创建时，由文件系统的实现赋值
+  filesystem_t *fs;
+  inodeops_t *ops; // 在inode被创建时，由文件系统的实现赋值
                    // inode ops也是文件系统的一部分
 
-};
+}inode_t;
 
-struct file {
-  int refcnt; // 引用计数
-  struct inode *inode;
-  uint64_t offset;
-}
 
-struct fsops {
-  void (*init)(struct filesystem *fs, const char *name, dev_t *dev);
-  struct inode *(*lookup)(struct filesystem *fs, const char *path, int flags);
+
+typedef struct fsops {
+  void (*init)(filesystem_t *fs, const char *name, dev_t *dev);
+  inode_t *(*lookup)(filesystem_t *fs, const char *path, int flags);
   int (*close)(inode_t *inode);
-};
+}fsops_t;
 
-struct filesystem {
-  struct fsops *ops;
+typedef struct filesystem {
+  fsops_t *ops;
   dev_t *dev;
-};
+}filesystem_t;
 #endif
