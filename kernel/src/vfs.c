@@ -3,8 +3,10 @@
 #include <devices.h>
 #include "my_os.h"
 
-void vfs_init(){
 
+
+void vfs_init(){
+	printf("hello L3!\n");
 }
 int vfs_access(const char *path, int mode){
 	return 0;

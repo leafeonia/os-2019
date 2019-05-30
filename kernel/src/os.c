@@ -85,7 +85,7 @@ static void os_init() {
   pmm->init();
   kmt->init(); 
   kmt->spin_init(&lk_trap,"lk_trap");
-  
+  vfs->init();
   //_vme_init(pmm->alloc,pmm->free);
   dev->init();
   #ifdef L2_TEST
