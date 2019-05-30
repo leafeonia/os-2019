@@ -6,7 +6,7 @@
 
 
 void vfs_init(){
-	printf("hello L3!\n");
+	GOLDLOG("hello L3!\n");
 }
 int vfs_access(const char *path, int mode){
 	return 0;

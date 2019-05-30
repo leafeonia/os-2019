@@ -25,3 +25,5 @@
 #define INT_MIN -2147483648
 #define MAGIC1 0x123456789012345
 #define MAGIC2 0x987654321098765
+
+#define GOLDLOG(s) printf("\33[1;33m%s\n\33[0m",s)
