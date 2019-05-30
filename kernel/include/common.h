@@ -22,7 +22,8 @@ struct semaphore {
 	int value;
 };
 
-
+struct inodeops;
+struct inode;
 
 typedef struct file {
   int refcnt; // 引用计数
@@ -41,7 +42,7 @@ typedef struct inodeops {
   int (*link)(const char *name, inode_t *inode);
   int (*unlink)(const char *name);
   // 你可以自己设计readdir的功能
-}inodeops_s;
+}inodeops_t;
 
 
 
