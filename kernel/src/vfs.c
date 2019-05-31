@@ -15,6 +15,7 @@ void vfs_init(){
 	GOLDLOG("hello L3!");
 	blkfs->ops = blkfs_ops;
 	device_t *dev = dev_lookup("ramdisk0");
+	printf("?");
 	blkfs_ops->init = vfs_init_wrapped;
 	blkfs->ops->init(blkfs,"blkfs",dev);
 	
