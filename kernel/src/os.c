@@ -83,7 +83,7 @@ void dummy_test(void* arg){
 void fs(){
 	vfs->open("/",1);
 	vfs->open("/mnt",2);
-	vfs->open("/mmt",3);
+	//vfs->open("/mmt",3);
 	while(1);
 }
 
