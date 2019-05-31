@@ -108,6 +108,7 @@ int vfs_open(const char *path, int flags){
 	for(int i = 3;i < NR_FILE;i++){
 		//printf("%d: %x\n",i,(*cur)->fildes[i]);
 		file_t* tmp = (*cur)->fildes[i];
+		printf("%s\n",tmp);
 		if(tmp == NULL){
 			fd = i;
 			break;
@@ -118,8 +119,6 @@ int vfs_open(const char *path, int flags){
 	file->refcnt = 1;
 	file->offset = 0;
 	(*cur)->fildes[fd] = file;
-	
-	
 	printf("return fd = %d\n",fd);
 	return fd;
 }
