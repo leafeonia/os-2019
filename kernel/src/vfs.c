@@ -3,11 +3,20 @@
 #include <devices.h>
 #include "my_os.h"
 
-static filesystem_t procfs;
+static filesystem_t* blkfs;
+static fsops_t* blkfs_ops;
+
+void vfs_init wrapped(filesystem_t *fs, const char *name, device_t *dev){
+	fs->name = name;
+	fs->dev = dev;	
+}
 
 void vfs_init(){
 	GOLDLOG("hello L3!");
-	procfs.dev = NULL;
+	blkfs->ops = blkfs_ops;
+	device_t *dev = dev_lookup("ramdisk0");
+	blkfs_ops->init = vfs_init_wrapped;
+	blkfs->ops->init(blkfs,"blkfs",dev);
 	
 }
 int vfs_access(const char *path, int mode){

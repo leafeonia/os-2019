@@ -67,6 +67,7 @@ typedef struct fsops {
 }fsops_t;
 
 typedef struct filesystem {
+  const char* name;
   fsops_t *ops;
   device_t *dev;
 }filesystem_t;
