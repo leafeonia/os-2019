@@ -26,7 +26,7 @@ void vfs_init(){
 	device_t *dev = dev_lookup("ramdisk0");
 	blkfs_ops->init = vfs_init_wrapped;
 	blkfs->ops->init(blkfs,"blkfs",dev);
-	kmt->spin_init(lk_vfs);
+	kmt->spin_init(lk_vfs,"lk_vfs");
 	vfs_mount("/",blkfs);
 	
 }
@@ -40,7 +40,7 @@ int vfs_mount(const char *path, filesystem_t *fs){
 	for(int i = 0;i < mt_idx;i++){
 		for(int j = i + 1;j < mt_idx;j++){
 			if(strlen(mt_list[i].path) > strlen(mt_list[j].path)){
-				mount_point temp = mt_list[i];
+				struct mount_point temp = mt_list[i];
 				mt_list[i] = mt_list[j];
 				mt_list[j] = temp;
 			}
