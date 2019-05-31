@@ -218,7 +218,7 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 		//GOLDLOG("FAQ");
 		task->fildes[i] = NULL;
 	}
-	printf("%s: %x",task->name,task->fildes);
+	printf("%s: %x\n",task->name,task->fildes);
 	for(int i = 3;i < NR_FILE;i++){
 		//printf("-%x-\n",task->fildes[i]);
 	}
