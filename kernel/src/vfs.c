@@ -71,7 +71,7 @@ int vfs_open(const char *path, int flags){
 	else if(strncmp(path,"/dev",4) == 0){
 		printf("dev\n");
 	}
-	else if(strncmp(path,"/",1 == 0)){
+	else if(strncmp(path,"/",1) == 0){
 		printf("blockfs\n");
 	}
 	else{
