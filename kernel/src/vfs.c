@@ -14,6 +14,7 @@ void vfs_init_wrapped(filesystem_t *fs, const char *name, device_t *dev){
 void vfs_init(){
 	GOLDLOG("hello L3!");
 	blkfs->ops = blkfs_ops;
+	printf("??");
 	device_t *dev = dev_lookup("ramdisk0");
 	printf("?");
 	blkfs_ops->init = vfs_init_wrapped;
