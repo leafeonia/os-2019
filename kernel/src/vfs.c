@@ -106,7 +106,7 @@ int vfs_open(const char *path, int flags){
 	task_t** cur = current_task[_cpu()];
 	int ret = (*cur)->fd;
 	(*cur)->fd++;
-	printf("return fd = %d",ret);
+	printf("return fd = %d\n",ret);
 	return ret;
 }
 ssize_t vfs_read(int fd, void *buf, size_t nbyte){
