@@ -5,13 +5,13 @@
 
 static filesystem_t* blkfs;
 static fsops_t* blkfs_ops;
-struct mount_point{
+/*struct mount_point{
 	char* path;
 	filesystem_t* fs;
 };
-static mount_point mt_list[5];
+static struct mount_point mt_list[5];
 static int mt_idx = 0;
-//static spinlock_t lk_vfs_mt;
+static spinlock_t lk_vfs_mt;*/
 
 void vfs_init_wrapped(filesystem_t *fs, const char *name, device_t *dev){
 	fs->name = name;
