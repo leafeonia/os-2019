@@ -80,6 +80,7 @@ int vfs_open(const char *path, int flags){
 		if(i == mt_idx) panic("filesystem not found\n");
 		if(strncmp(path,mt_list[i].path,strlen(mt_list[i].path)) == 0){
 			printf("%s\n",mt_list[i].path);
+			break;
 		}
 	}
 	return 0;
