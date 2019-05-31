@@ -45,6 +45,7 @@ void vfs_init(){
 	blkfs->ops->init(blkfs,"blkfs",dev);
 	kmt->spin_init(&lk_vfs,"lk_vfs");
 	vfs_mount("/",blkfs);
+	vfs_mount("/mnt",blkfs);
 	
 }
 int vfs_access(const char *path, int mode){
