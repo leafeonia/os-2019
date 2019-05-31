@@ -6,7 +6,7 @@
 static filesystem_t* blkfs;
 static fsops_t* blkfs_ops;
 
-void vfs_init wrapped(filesystem_t *fs, const char *name, device_t *dev){
+void vfs_init_wrapped(filesystem_t *fs, const char *name, device_t *dev){
 	fs->name = name;
 	fs->dev = dev;	
 }
