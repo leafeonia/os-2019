@@ -109,7 +109,7 @@ int vfs_open(const char *path, int flags){
 	for(int i = 3;i < NR_FILE;i++){
 		//printf("%d: %x\n",i,(*cur)->fildes[i]);
 		file_t* tmp = (*cur)->fildes[i];
-		printf("*%x*\n",tmp);
+		//printf("*%x*\n",tmp);
 		if(tmp == NULL){
 			fd = i;
 			break;
