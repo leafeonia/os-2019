@@ -3,8 +3,8 @@
 #include <devices.h>
 #include "my_os.h"
 
-static filesystem_t* blkfs;
-static fsops_t* blkfs_ops;
+static filesystem_t* blkfs, *devfs, *procfs;
+static fsops_t* blkfs_ops, *devfs_ops, *procfs_ops;
 struct mount_point{
 	const char* path;
 	filesystem_t* fs;
@@ -37,15 +37,31 @@ int vfs_mount(const char *path, filesystem_t *fs){
 
 void vfs_init(){
 	GOLDLOG("hello L3!");
+	
+	
 	blkfs = pmm->alloc(sizeof(filesystem_t));
 	blkfs_ops = pmm->alloc(sizeof(fsops_t));
 	blkfs->ops = blkfs_ops;
 	device_t *dev = dev_lookup("ramdisk0");
 	blkfs_ops->init = vfs_init_wrapped;
 	blkfs->ops->init(blkfs,"blkfs",dev);
+	
+	devfs = pmm->alloc(sizeof(filesystem_t));
+	devfs_ops = pmm->alloc(sizeof(fsops_t));
+	devfs->ops = devfs_ops;
+	devfs_ops->init = vfs_init_wrapped;
+	devfs->ops->init(devfs,"devfs",NULL);
+	
+	procfs = pmm->alloc(sizeof(filesystem_t));
+	procfs_ops = pmm->alloc(sizeof(fsops_t));
+	procfs->ops = procfs_ops;
+	procfs_ops->init = vfs_init_wrapped;
+	procfs->ops->init(procfs,"procfs",NULL);
+	
 	kmt->spin_init(&lk_vfs,"lk_vfs");
 	vfs_mount("/",blkfs);
-	vfs_mount("/mnt",blkfs);
+	vfs_mount("/dev",devfs);
+	vfs_mount("/proc",procfs);
 	
 }
 int vfs_access(const char *path, int mode){
