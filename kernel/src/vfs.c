@@ -13,7 +13,7 @@ void vfs_init_wrapped(filesystem_t *fs, const char *name, device_t *dev){
 
 void vfs_init(){
 	GOLDLOG("hello L3!");
-	blkfs = pmm->alloc(sizeof(filesystem));
+	blkfs = pmm->alloc(sizeof(filesystem_t));
 	blkfs->ops = blkfs_ops;
 	printf("??");
 	device_t *dev = dev_lookup("ramdisk0");
