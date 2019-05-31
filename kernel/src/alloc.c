@@ -2,7 +2,7 @@
 #include <klib.h>
 #include <my_os.h>
 
-#define NAIVE
+//#define NAIVE
 //#define NALLOC 128
 
 
@@ -111,16 +111,14 @@ static void* fancy_alloc(size_t nbytes){
 
 static void *kalloc(size_t size) {
 //printf("before kalloc, _intr_read = %d\n",_intr_read());
-  void* ret,*dummy;
+  void* ret;
 #ifdef NAIVE
   kmt->spin_lock(&mem_lock);
-  dummy = fancy_alloc(1);
   ret = (void*)pm_start;
   pm_start += size;  
   //printf("%x from cpu#%d\n",ret,_cpu()+1);
   kmt->spin_unlock(&mem_lock);
   return ret;
-  return dummy;
 #else
   kmt->spin_lock(&mem_lock);
   ret = fancy_alloc(size);
