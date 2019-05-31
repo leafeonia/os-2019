@@ -84,7 +84,6 @@ int vfs_unlink(const char *path){
 	return 0;
 }
 int vfs_open(const char *path, int flags){
-	kmt->spin_lock(&lk_vfs);
 	/*if(strncmp(path,"/proc",5) == 0){
 		printf("proc\n");
 	}
@@ -94,35 +93,20 @@ int vfs_open(const char *path, int flags){
 	else if(strncmp(path,"/",1) == 0){
 		printf("blockfs\n");
 	}*/
-	//filesystem_t* fs;
+	filesystem_t* fs;
 	for(int i = 0;i <= mt_idx;i++){
 		if(i == mt_idx) panic("filesystem not found\n");
 		if(strncmp(path,mt_list[i].path,strlen(mt_list[i].path)) == 0){
 			printf("%s\n",mt_list[i].path);
-			//fs = mt_list[i].fs;
+			fs = mt_list[i].fs;
 			break;
 		}
 	}
-	extern task_t** current_task[16];
 	task_t** cur = current_task[_cpu()];
-	int fd = -1;
-	for(int i = 3;i < NR_FILE;i++){
-		//printf("%d: %x\n",i,(*cur)->fildes[i]);
-		file_t* tmp = (*cur)->fildes[i];
-		//printf("%s",tmp);
-		if(tmp == NULL){
-			fd = i;
-			break;
-		}
-	}
-	if(fd == -1) panic("no available fd(MAXIMUM 20)\n");
-	file_t* file = pmm->alloc(sizeof(file_t));
-	file->refcnt = 1;
-	file->offset = 0;
-	(*cur)->fildes[fd] = file;
-	printf("return fd = %d\n",fd);
-	kmt->spin_unlock(&lk_vfs);
-	return fd;
+	int ret = (*cur)->fd;
+	(*cur)->fd++;
+	printf("return fd = %d",ret);
+	return ret;
 }
 ssize_t vfs_read(int fd, void *buf, size_t nbyte){
 	return 0;
