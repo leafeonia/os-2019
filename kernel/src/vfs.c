@@ -5,6 +5,13 @@
 
 static filesystem_t* blkfs;
 static fsops_t* blkfs_ops;
+struct mount_point{
+	char* path;
+	filesystem_t* fs;
+};
+static mount_point mt_list[5];
+static int mt_idx = 0;
+//static spinlock_t lk_vfs_mt;
 
 void vfs_init_wrapped(filesystem_t *fs, const char *name, device_t *dev){
 	fs->name = name;
@@ -16,17 +23,30 @@ void vfs_init(){
 	blkfs = pmm->alloc(sizeof(filesystem_t));
 	blkfs_ops = pmm->alloc(sizeof(fsops_t));
 	blkfs->ops = blkfs_ops;
-	printf("??");
 	device_t *dev = dev_lookup("ramdisk0");
-	printf("?");
 	blkfs_ops->init = vfs_init_wrapped;
 	blkfs->ops->init(blkfs,"blkfs",dev);
+	//kmt->spin_init(lk_vfs_mt);
+	//vfs_mount("/",blkfs);
 	
 }
 int vfs_access(const char *path, int mode){
 	return 0;
 }
 int vfs_mount(const char *path, filesystem_t *fs){
+	/*kmt->spin_lock(&lk_vfs_mt);
+	mt_list[mt_idx].path = path;
+	mt_list[mt_idx++].fs = fs;
+	for(int i = 0;i < mt_idx;i++){
+		for(int j = i + 1;j < mt_idx){
+			if(strlen(mt_list[i].path) > strlen(mt_list[j].path)){
+				mount_point temp = mt_list[i];
+				mt_list[i] = mt_list[j];
+				mt_list[j] = temp;
+			}
+		}
+	}
+	kmt->spin_unlock(&lk_vfs_mt);*/
 	return 0;
 }
 int vfs_unmount(const char *path){
@@ -45,6 +65,18 @@ int vfs_unlink(const char *path){
 	return 0;
 }
 int vfs_open(const char *path, int flags){
+	if(strncmp(path,"/proc",5) == 0){
+		printf("proc\n");
+	}
+	else if(strncmp(path,"/dev",4) == 0){
+		printf("dev\n");
+	}
+	else if(strncmp(path,"/",1 == 0)){
+		printf("blockfs\n");
+	}
+	else{
+		panic("filesystem not found\n");
+	}
 	return 0;
 }
 ssize_t vfs_read(int fd, void *buf, size_t nbyte){

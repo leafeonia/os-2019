@@ -4,6 +4,7 @@
 #include "my_os.h"
 
 //#define L2_TEST
+#define L3_TEST
 #define NR_IRQ 20
 
 struct irq{
@@ -79,6 +80,10 @@ void dummy_test(void* arg){
 	//printf("FA\n");
 }
 
+void fs(){
+	vfs->open("/",1);
+}
+
 static void os_init() {
   //LOG("os_init");
   //printf("begin of os_init. intr_read = %d\n",_intr_read());
@@ -111,6 +116,9 @@ static void os_init() {
   kmt->create(pmm->alloc(sizeof(task_t)), "dummy9", dummy_test, (void*)9);
   kmt->create(pmm->alloc(sizeof(task_t)), "dummy10", dummy_test, (void*)10);
   kmt->create(pmm->alloc(sizeof(task_t)), "dummy11", dummy_test, (void*)11);*/
+  #endif
+  #ifdef L3_TEST
+  kmt->create(pmm->alloc(sizeof(task_t)), "fs", fs, NULL);
   #endif
   //printf("end of os_init. intr_read = %d\n",_intr_read());
 }
