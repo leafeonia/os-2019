@@ -120,6 +120,7 @@ static void *kalloc(size_t size) {
   //printf("%x from cpu#%d\n",ret,_cpu()+1);
   kmt->spin_unlock(&mem_lock);
   return ret;
+  return dummy;
 #else
   kmt->spin_lock(&mem_lock);
   ret = fancy_alloc(size);
