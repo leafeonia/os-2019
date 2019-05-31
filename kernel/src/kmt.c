@@ -218,6 +218,9 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 		GOLDLOG("FAQ");
 		task->fildes[i] = NULL;
 	}
+	for(int i = 3;i < NR_FILE;i++){
+		printf("-%x-\n",task->fildes[i]);
+	}
 	task->fence1 = MAGIC1;
 	task->fence2 = MAGIC2;
 	
