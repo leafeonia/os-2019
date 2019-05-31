@@ -120,7 +120,7 @@ int vfs_open(const char *path, int flags){
 	file->refcnt = 1;
 	file->offset = 0;
 	(*cur)->fildes[fd] = file;
-	printf("return fd = %d\n",fd);
+	printf("return fd = %d,(*cur)->fildes[fd] = %s\n",fd,(*cur)->fildes[fd]);
 	kmt->spin_unlock(&lk_vfs);
 	return fd;
 }
