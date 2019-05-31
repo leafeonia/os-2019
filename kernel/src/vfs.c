@@ -113,6 +113,10 @@ int vfs_open(const char *path, int flags){
 	}
 	if(fd == -1) panic("no available fd(MAXIMUM 20)\n");
 	file_t* file = pmm->alloc(sizeof(file_t));
+	file->refcnt = 1;
+	file->offset = 0;
+	
+	
 	printf("return fd = %d\n",fd);
 	return fd;
 }
