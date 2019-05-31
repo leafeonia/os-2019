@@ -217,7 +217,6 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 	for(int i = 3;i <= NR_FILE;i++){
 		task->fildes[i] = NULL;
 	}
-	task->fd_idx = 3;
 	task->fence1 = MAGIC1;
 	task->fence2 = MAGIC2;
 	

@@ -104,9 +104,14 @@ int vfs_open(const char *path, int flags){
 	}
 	extern task_t** current_task[16];
 	task_t** cur = current_task[_cpu()];
-	int ret = (*cur)->fd;
-	(*cur)->fd++;
-	printf("return fd = %d\n",ret);
+	int fd = -1;
+	for(int i = 3;i < NR_FILE;i++){
+		if((*cur)->fildes[i] == NULL){
+			fd = i;
+		}
+	}
+	if(fd == -1) panic("no available fd(MAXIMUM 20)\n");
+	printf("return fd = %d\n",fd);
 	return ret;
 }
 ssize_t vfs_read(int fd, void *buf, size_t nbyte){
