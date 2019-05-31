@@ -115,6 +115,7 @@ int vfs_open(const char *path, int flags){
 	file_t* file = pmm->alloc(sizeof(file_t));
 	file->refcnt = 1;
 	file->offset = 0;
+	(*cur)->fildes[fd] = file;
 	
 	
 	printf("return fd = %d\n",fd);
