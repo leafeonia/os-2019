@@ -111,7 +111,7 @@ static void* fancy_alloc(size_t nbytes){
 
 static void *kalloc(size_t size) {
 //printf("before kalloc, _intr_read = %d\n",_intr_read());
-  void* ret,dummy;
+  void* ret,*dummy;
 #ifdef NAIVE
   kmt->spin_lock(&mem_lock);
   dummy = fancy_alloc(1);
