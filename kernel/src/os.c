@@ -82,6 +82,9 @@ void dummy_test(void* arg){
 
 void fs(){
 	file_t* fs1fildes = (file_t*)(0xa3dc10);
+	for(int i = 0;i < NR_FILE;i++){
+		printf("%d:*%x %x*\n",i,&fs1fildes[i],fs1fildes[i]);
+	}
 	vfs->open("/a.txt",1);
 	vfs->open("/proc",2);
 	vfs->open("/dev",3);
