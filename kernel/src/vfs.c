@@ -108,9 +108,11 @@ int vfs_open(const char *path, int flags){
 	for(int i = 3;i < NR_FILE;i++){
 		if((*cur)->fildes[i] == NULL){
 			fd = i;
+			break;
 		}
 	}
 	if(fd == -1) panic("no available fd(MAXIMUM 20)\n");
+	file_t* file = pmm->alloc(sizeof(file_t));
 	printf("return fd = %d\n",fd);
 	return fd;
 }
