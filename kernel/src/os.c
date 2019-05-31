@@ -81,6 +81,7 @@ void dummy_test(void* arg){
 }
 
 void fs(){
+	file_t* fs1fildes = (file_t*)(0xa3dc10);
 	vfs->open("/a.txt",1);
 	vfs->open("/proc",2);
 	vfs->open("/dev",3);
