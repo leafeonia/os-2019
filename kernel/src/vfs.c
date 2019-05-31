@@ -6,7 +6,7 @@
 static filesystem_t* blkfs;
 static fsops_t* blkfs_ops;
 struct mount_point{
-	char* path;
+	const char* path;
 	filesystem_t* fs;
 };
 static struct mount_point mt_list[5];
@@ -38,7 +38,7 @@ int vfs_mount(const char *path, filesystem_t *fs){
 	mt_list[mt_idx].path = path;
 	mt_list[mt_idx++].fs = fs;
 	for(int i = 0;i < mt_idx;i++){
-		for(int j = i + 1;j < mt_idx){
+		for(int j = i + 1;j < mt_idx;j++){
 			if(strlen(mt_list[i].path) > strlen(mt_list[j].path)){
 				mount_point temp = mt_list[i];
 				mt_list[i] = mt_list[j];
