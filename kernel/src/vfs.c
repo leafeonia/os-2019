@@ -84,7 +84,7 @@ int vfs_unlink(const char *path){
 	return 0;
 }
 int vfs_open(const char *path, int flags){
-	if(strncmp(path,"/proc",5) == 0){
+	/*if(strncmp(path,"/proc",5) == 0){
 		printf("proc\n");
 	}
 	else if(strncmp(path,"/dev",4) == 0){
@@ -92,7 +92,7 @@ int vfs_open(const char *path, int flags){
 	}
 	else if(strncmp(path,"/",1) == 0){
 		printf("blockfs\n");
-	}
+	}*/
 	for(int i = 0;i <= mt_idx;i++){
 		if(i == mt_idx) panic("filesystem not found\n");
 		if(strncmp(path,mt_list[i].path,strlen(mt_list[i].path)) == 0){
