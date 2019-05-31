@@ -82,6 +82,7 @@ void dummy_test(void* arg){
 
 void fs(){
 	vfs->open("/",1);
+	while(1);
 }
 
 static void os_init() {
