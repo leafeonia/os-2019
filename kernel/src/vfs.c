@@ -106,7 +106,7 @@ int vfs_open(const char *path, int flags){
 	task_t** cur = current_task[_cpu()];
 	int fd = -1;
 	for(int i = 3;i < NR_FILE;i++){
-		//printf("%d: %x\n",i,(*cur)->fildes[i]);
+		printf("%d: %x\n",i,(*cur)->fildes[i]);
 		if((*cur)->fildes[i] == NULL){
 			fd = i;
 			break;
