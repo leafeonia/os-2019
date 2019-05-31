@@ -214,7 +214,7 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 	_Area stack = (_Area){task->stack, &(task->fence2)};
 	task->context = *_kcontext(stack, entry, arg);
 	task->name = name;
-	for(int i = 3;i <= NR_FILE;i++){
+	for(int i = 3;i < NR_FILE;i++){
 		task->fildes[i] = NULL;
 	}
 	task->fence1 = MAGIC1;
