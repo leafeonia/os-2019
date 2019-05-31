@@ -102,7 +102,7 @@ int vfs_open(const char *path, int flags){
 			break;
 		}
 	}
-	extern task_t** current_task;
+	extern task_t** current_task[16];
 	task_t** cur = current_task[_cpu()];
 	int ret = (*cur)->fd;
 	(*cur)->fd++;
