@@ -18,21 +18,6 @@ void vfs_init_wrapped(filesystem_t *fs, const char *name, device_t *dev){
 	fs->dev = dev;	
 }
 
-void vfs_init(){
-	GOLDLOG("hello L3!");
-	blkfs = pmm->alloc(sizeof(filesystem_t));
-	blkfs_ops = pmm->alloc(sizeof(fsops_t));
-	blkfs->ops = blkfs_ops;
-	device_t *dev = dev_lookup("ramdisk0");
-	blkfs_ops->init = vfs_init_wrapped;
-	blkfs->ops->init(blkfs,"blkfs",dev);
-	kmt->spin_init(lk_vfs,"lk_vfs");
-	vfs_mount("/",blkfs);
-	
-}
-int vfs_access(const char *path, int mode){
-	return 0;
-}
 int vfs_mount(const char *path, filesystem_t *fs){
 	kmt->spin_lock(&lk_vfs);
 	mt_list[mt_idx].path = path;
@@ -49,6 +34,23 @@ int vfs_mount(const char *path, filesystem_t *fs){
 	kmt->spin_unlock(&lk_vfs);
 	return 0;
 }
+
+void vfs_init(){
+	GOLDLOG("hello L3!");
+	blkfs = pmm->alloc(sizeof(filesystem_t));
+	blkfs_ops = pmm->alloc(sizeof(fsops_t));
+	blkfs->ops = blkfs_ops;
+	device_t *dev = dev_lookup("ramdisk0");
+	blkfs_ops->init = vfs_init_wrapped;
+	blkfs->ops->init(blkfs,"blkfs",dev);
+	kmt->spin_init(&lk_vfs,"lk_vfs");
+	vfs_mount("/",blkfs);
+	
+}
+int vfs_access(const char *path, int mode){
+	return 0;
+}
+
 int vfs_unmount(const char *path){
 	return 0;
 }
