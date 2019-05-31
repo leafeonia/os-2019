@@ -32,7 +32,7 @@ struct task {
 	long long fence1;
 	uint8_t stack[4096];
 	file_t fildes[NR_FILE];
-	int fd;
+	int fd_idx;
 	long long fence2;
 };
 
