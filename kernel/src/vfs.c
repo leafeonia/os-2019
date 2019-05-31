@@ -106,7 +106,7 @@ int vfs_open(const char *path, int flags){
 	extern task_t** current_task[16];
 	task_t** cur = current_task[_cpu()];
 	int fd = -1;
-	for(int i = 10;i > 3;i--){
+	for(int i = 3;i < 20;i++){
 		//printf("%d: %x\n",i,(*cur)->fildes[i]);
 		file_t* tmp = (*cur)->fildes[i];
 		printf("%d:*%x*\n",i,tmp);
