@@ -112,7 +112,7 @@ int vfs_open(const char *path, int flags){
 	}
 	if(fd == -1) panic("no available fd(MAXIMUM 20)\n");
 	printf("return fd = %d\n",fd);
-	return ret;
+	return fd;
 }
 ssize_t vfs_read(int fd, void *buf, size_t nbyte){
 	return 0;
