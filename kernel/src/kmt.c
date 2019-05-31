@@ -215,11 +215,12 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 	task->context = *_kcontext(stack, entry, arg);
 	task->name = name;
 	for(int i = 3;i < NR_FILE;i++){
-		GOLDLOG("FAQ");
+		//GOLDLOG("FAQ");
 		task->fildes[i] = NULL;
 	}
+	printf("%s: %x",task->name,task->fildes);
 	for(int i = 3;i < NR_FILE;i++){
-		printf("-%x-\n",task->fildes[i]);
+		//printf("-%x-\n",task->fildes[i]);
 	}
 	task->fence1 = MAGIC1;
 	task->fence2 = MAGIC2;
