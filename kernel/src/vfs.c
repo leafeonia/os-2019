@@ -93,16 +93,16 @@ int vfs_open(const char *path, int flags){
 	else if(strncmp(path,"/",1) == 0){
 		printf("blockfs\n");
 	}*/
-	filesystem_t* fs;
+	//filesystem_t* fs;
 	for(int i = 0;i <= mt_idx;i++){
 		if(i == mt_idx) panic("filesystem not found\n");
 		if(strncmp(path,mt_list[i].path,strlen(mt_list[i].path)) == 0){
 			printf("%s\n",mt_list[i].path);
-			fs = mt_list[i].fs;
+			//fs = mt_list[i].fs;
 			break;
 		}
 	}
-	task_t** cur = current_task[_cpu()];
+	extern task_t** cur = current_task[_cpu()];
 	int ret = (*cur)->fd;
 	(*cur)->fd++;
 	printf("return fd = %d",ret);
