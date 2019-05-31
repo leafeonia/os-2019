@@ -81,7 +81,7 @@ void dummy_test(void* arg){
 }
 
 void fs(){
-	vfs->open("/",1);
+	vfs->open("/a.txt",1);
 	vfs->open("/proc",2);
 	vfs->open("/dev",3);
 	while(1);
