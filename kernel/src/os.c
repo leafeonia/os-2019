@@ -83,7 +83,7 @@ void dummy_test(void* arg){
 void fs(){
 	file_t* fs1fildes = (file_t*)(0xa3dc10);
 	for(int i = 0;i < NR_FILE;i++){
-		printf("%d:?%x %x?\n",i,&fs1fildes[i],fs1fildes[i]);
+		printf("%d:?%x %x?\n",i,(char*)fs1fildes+4*i,*((char*)fs1fildes+4*i);
 	}
 	vfs->open("/a.txt",1);
 	vfs->open("/proc",2);
@@ -126,7 +126,7 @@ static void os_init() {
   #endif
   #ifdef L3_TEST
   kmt->create(pmm->alloc(sizeof(task_t)), "fs1", fs, NULL);
-  kmt->create(pmm->alloc(sizeof(task_t)), "fs2", fs, NULL);
+  //kmt->create(pmm->alloc(sizeof(task_t)), "fs2", fs, NULL);
   #endif
   //printf("end of os_init. intr_read = %d\n",_intr_read());
 }
