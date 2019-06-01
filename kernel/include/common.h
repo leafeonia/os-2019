@@ -31,7 +31,7 @@ struct task {
 	_Context context;
 	long long fence1;
 	uint8_t stack[4096];
-	file_t *fildes[10];
+	file_t *fildes[40];
 	long long fence2;
 };
 
