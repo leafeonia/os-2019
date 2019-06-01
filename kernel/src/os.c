@@ -221,6 +221,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
 		printf("%d:?%x %x?\n",i,(char*)fs1fildes+4*i,*((file_t*)((char*)fs1fildes+4*i)));
 	}
 LOG("I love your mom");
+assert(0);
   
   //return context;
   //printf("os_trap returns task with context address: 0x%x\n",ret);
