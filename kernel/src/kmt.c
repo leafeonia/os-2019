@@ -220,7 +220,7 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 	}
 	printf("%s: %x %x\n",task->name, task, task->fildes);
 	for(int i = 3;i < NR_FILE;i++){
-		if(strcmp(name,"fs1") == 0)printf("%d:-%x %x-\n",i,&(task->fildes[i]),task->fildes[i]);
+		if(strcmp(name,"fs1") == 0)printf("%d:-%x %x- cpu:%d\n",i,&(task->fildes[i]),task->fildes[i], _cpu());
 	}
 	task->fence1 = MAGIC1;
 	task->fence2 = MAGIC2;
