@@ -220,7 +220,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
 		char tmp[20];
 		memset(tmp,0,sizeof(tmp));
 		sprintf(tmp,"%x",*((file_t*)((char*)fs1fildes+4*i)));
-		if(strcmp(tmp,"0") == 0){
+		if(strcmp(tmp,"0") != 0){
 			for(int i = 0;i < strlen(tmp);i++){
 				printf("%d - %d\n",i,tmp[i]);
 			}
