@@ -220,7 +220,8 @@ static _Context *os_trap(_Event ev, _Context *context) {
 		char tmp[20];
 		sprintf(tmp,"%x",*((file_t*)((char*)fs1fildes+4*i)));
 		if(strcmp(tmp,"0") == 0){
-			for(volatile int i = 0;i < 100000000;i++);
+			printf("killer: %s\n",tmp);
+			for(volatile int i = 0;i < 10000000;i++);
 			assert(0);
 		}
 			
