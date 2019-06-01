@@ -218,6 +218,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
 	for(int i = 0;i < NR_FILE;i++){
 		printf("%d:?%x %x?\n",i,(char*)fs1fildes+4*i,*((file_t*)((char*)fs1fildes+4*i)));
 		char tmp[20];
+		memset(tmp,0,sizeof(tmp));
 		sprintf(tmp,"%x",*((file_t*)((char*)fs1fildes+4*i)));
 		if(strcmp(tmp,"0") == 0){
 			printf("killer: %s, strcmp(%s, \"0\") = %d\n",tmp,tmp,strcmp(tmp,"0"));
