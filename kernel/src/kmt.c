@@ -242,6 +242,7 @@ static int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), 
 	//kmt_spin_unlock(&lk_kmt_create);
 	for(int i = 3;i < NR_FILE;i++){
 		if(strcmp(name,"fs1") == 0)printf("%d:-%x %x- cpu:%d\n",i,&(task->fildes[i]),task->fildes[i], _cpu());
+	}
 	return 0;
 }
 
