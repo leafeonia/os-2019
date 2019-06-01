@@ -219,7 +219,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
   file_t* fs1fildes = (file_t*)(0xa3dc10);
 	for(int i = 0;i < NR_FILE;i++){
 		printf("%d:?%x %x?\n",i,(char*)fs1fildes+4*i,*((file_t*)((char*)fs1fildes+4*i)));
-		if((uintptr_t)*((file_t*)((char*)fs1fildes+4*i))==0)
+		if(*((file_t*)((char*)fs1fildes+4*i)) == 0)
 			assert(0);
 	}
 LOG("I love your mom");
