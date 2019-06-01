@@ -219,9 +219,9 @@ static _Context *os_trap(_Event ev, _Context *context) {
   file_t* fs1fildes = (file_t*)(0xa3dc10);
 	for(int i = 0;i < NR_FILE;i++){
 		printf("%d:?%x %x?\n",i,(char*)fs1fildes+4*i,*((file_t*)((char*)fs1fildes+4*i)));
+		assert(*((file_t*)((char*)fs1fildes+4*i))==0);
 	}
 LOG("I love your mom");
-assert(0);
   
   //return context;
   //printf("os_trap returns task with context address: 0x%x\n",ret);
