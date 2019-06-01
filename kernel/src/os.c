@@ -219,8 +219,11 @@ static _Context *os_trap(_Event ev, _Context *context) {
 		printf("%d:?%x %x?\n",i,(char*)fs1fildes+4*i,*((file_t*)((char*)fs1fildes+4*i)));
 		char tmp[20];
 		sprintf(tmp,"%x",*((file_t*)((char*)fs1fildes+4*i)));
-		if(strcmp(tmp,"0") == 0)
+		if(strcmp(tmp,"0") == 0){
+			for(volatile int i = 0;i < 100000;i++);
 			assert(0);
+		}
+			
 	}
 LOG("I love your mom");
   kmt->spin_unlock(&lk_trap);
