@@ -183,11 +183,6 @@ static void alloc_test(){
 } */
 
 static void os_run() {
-file_t* fs1fildes = (file_t*)(0xa3dc10);
-	for(int i = 0;i < NR_FILE;i++){
-		printf("%d:?%x %x?\n",i,(char*)fs1fildes+4*i,*((file_t*)((char*)fs1fildes+4*i)));
-	}
-LOG("I love your mom");
   hello();
   //alloc_test();
   _intr_write(1);
@@ -220,6 +215,12 @@ static _Context *os_trap(_Event ev, _Context *context) {
   	}
   }
   kmt->spin_unlock(&lk_trap);
+  
+  file_t* fs1fildes = (file_t*)(0xa3dc10);
+	for(int i = 0;i < NR_FILE;i++){
+		printf("%d:?%x %x?\n",i,(char*)fs1fildes+4*i,*((file_t*)((char*)fs1fildes+4*i)));
+	}
+LOG("I love your mom");
   
   //return context;
   //printf("os_trap returns task with context address: 0x%x\n",ret);
