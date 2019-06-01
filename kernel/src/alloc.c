@@ -29,7 +29,7 @@ static void pmm_init() {
   pm_end   = (uintptr_t)_heap.end;
   kmt->spin_init(&mem_lock,"memory lock");
   
-  printf("\33[1;32mpmm_init:%x\33[0m\n", pm_start);
+  // printf("\33[1;32mpmm_init:%x\33[0m\n", pm_start);
 }
 
 static void free(void* ap){
@@ -97,7 +97,7 @@ static void* fancy_alloc(size_t nbytes){
 			//assert((uintptr_t)freep > 0x200000);
 			
 			//sizeof(void*) != sizeof(HEADER),so return (void*)p+1 is wrong
-			printf("\33[1;33malloc: %x\33[0m\n", p+1);
+			// printf("\33[1;33malloc: %x\33[0m\n", p+1);
 			return (void*)(p+1);
 		}
 		if (p == freep){
