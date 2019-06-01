@@ -183,7 +183,10 @@ static void alloc_test(){
 } */
 
 static void os_run() {
-//fs();
+file_t* fs1fildes = (file_t*)(0xa3dc10);
+	for(int i = 0;i < NR_FILE;i++){
+		printf("%d:?%x %x?\n",i,(char*)fs1fildes+4*i,*((file_t*)((char*)fs1fildes+4*i)));
+	}
 LOG("I love your mom");
   hello();
   //alloc_test();
