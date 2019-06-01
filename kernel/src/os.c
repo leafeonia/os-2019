@@ -221,8 +221,8 @@ static _Context *os_trap(_Event ev, _Context *context) {
 		memset(tmp,0,sizeof(tmp));
 		sprintf(tmp,"%x",*((file_t*)((char*)fs1fildes+4*i)));
 		if(strcmp(tmp,"0") != 0){
-			printf("killer: %s, strcmp(%s, \"0\") = %d\n",tmp,tmp,strcmp(tmp,"0"));
-			assert(0);
+			//printf("killer: %s, strcmp(%s, \"0\") = %d\n",tmp,tmp,strcmp(tmp,"0"));
+			//assert(0);
 		}
 			
 	}
