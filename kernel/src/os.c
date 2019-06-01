@@ -183,7 +183,7 @@ static void alloc_test(){
 } */
 
 static void os_run() {
-fs();
+//fs();
 LOG("I love your mom");
   hello();
   //alloc_test();
