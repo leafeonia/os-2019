@@ -28,6 +28,8 @@ static void pmm_init() {
   pm_start = (uintptr_t)_heap.start; 
   pm_end   = (uintptr_t)_heap.end;
   kmt->spin_init(&mem_lock,"memory lock");
+  
+  printf("\33[1m;32pmm_init:%x\33[0m\n", pm_start);
 }
 
 static void free(void* ap){
