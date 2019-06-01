@@ -214,15 +214,18 @@ static _Context *os_trap(_Event ev, _Context *context) {
   		if(next) ret = next;
   	}
   }
-  kmt->spin_unlock(&lk_trap);
-  
-  file_t* fs1fildes = (file_t*)(0xa3dc10);
+    file_t* fs1fildes = (file_t*)(0xa3dc10);
 	for(int i = 0;i < NR_FILE;i++){
 		printf("%d:?%x %x?\n",i,(char*)fs1fildes+4*i,*((file_t*)((char*)fs1fildes+4*i)));
-		if((file_t*)((char*)fs1fildes+4*i) == NULL)
+		char tmp[20];
+		sprintf(tmp,"%x",*((file_t*)((char*)fs1fildes+4*i)));
+		if(strcmp(tmp,"0") == 0)
 			assert(0);
 	}
 LOG("I love your mom");
+  kmt->spin_unlock(&lk_trap);
+  
+
   
   //return context;
   //printf("os_trap returns task with context address: 0x%x\n",ret);
