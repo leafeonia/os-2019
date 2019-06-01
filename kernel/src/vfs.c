@@ -37,6 +37,7 @@ int vfs_mount(const char *path, filesystem_t *fs){
 
 void vfs_init(){
 	GOLDLOG("hello L3!");
+	printf("size: %d\n\n",sizeof(task_t));
 	
 	
 	blkfs = pmm->alloc(sizeof(filesystem_t));
