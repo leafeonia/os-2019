@@ -183,10 +183,10 @@ static void alloc_test(){
 } */
 
 static void os_run() {
+fs();
   hello();
   //alloc_test();
   _intr_write(1);
-  fs();
   while (1) {
     _yield();
   }
