@@ -184,6 +184,7 @@ static void alloc_test(){
 
 static void os_run() {
 fs();
+LOG("I love your mom");
   hello();
   //alloc_test();
   _intr_write(1);
