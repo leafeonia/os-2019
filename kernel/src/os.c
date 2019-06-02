@@ -87,7 +87,7 @@ void fs(){
 	}*/
 	//vfs->open("/a.txt",1);
 	//vfs->open("/proc/fa/fa2/proc",2);
-	vfs->open("/dev/tty1",1);
+	//vfs->open("/dev/tty1",1);
 	while(1);
 }
 
