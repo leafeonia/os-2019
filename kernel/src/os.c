@@ -86,8 +86,8 @@ void fs(){
 		printf("%d:?%x %x?\n",i,(char*)fs1fildes+4*i,*((file_t*)((char*)fs1fildes+4*i)));
 	}*/
 	vfs->open("/a.txt",1);
-	vfs->open("/proc",2);
-	vfs->open("/dev",3);
+	vfs->open("/proc/fa/fa2/proc",2);
+	vfs->open("/dev/fa/dev/a.txt",3);
 	while(1);
 }
 
