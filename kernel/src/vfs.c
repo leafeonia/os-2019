@@ -13,9 +13,15 @@ static struct mount_point mt_list[5];
 static int mt_idx = 0;
 static spinlock_t lk_vfs;
 
+inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
+	
+	return NULL;
+}
+
 void blkfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	fs->name = name;
-	fs->dev = dev;	
+	fs->dev = dev;
+	//dev->ops->write()	
 }
 
 void procfs_init(filesystem_t *fs, const char *name, device_t *dev){
