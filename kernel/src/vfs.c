@@ -5,7 +5,7 @@
 
 static filesystem_t* blkfs, *devfs, *procfs;
 static fsops_t* blkfs_ops, *devfs_ops, *procfs_ops;
-static inodeops_t* blk_inode_ops, *dev_inode_ops, *proc_inode_ops;
+static inodeops_t* dev_inode_ops;//blk_inode_ops, *dev_inode_ops, *proc_inode_ops;
 static inode_t* devfs_inode[10];
 
 
@@ -67,7 +67,7 @@ void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	devfs_ops->lookup = devfsops_lookup;
 	
 	//close (omit)
-	devfs_ops->close = (int *())boom;
+	//devfs_ops->close = boom;
 	
 	
 	
