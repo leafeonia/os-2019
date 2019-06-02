@@ -50,6 +50,12 @@ int dev_inode_open(file_t *file, int flags, inode_t* inode){
 	return 0;
 }
 
+ssize_t dev_inode_write(file_t *file, const char *buf, size_t size){
+	device_t* dev = file->inode->ptr;
+	char text = "FAFAFAFAFAFAFA";
+	dev->ops->write(dev, 0, text, strlen(text));
+}
+
 
 inode_t* devfsops_lookup(filesystem_t *fs, const char *path, int flags){
 	if(path[0] == '/') path = path + 1;
@@ -66,6 +72,8 @@ void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	//initialize inodeops of inode of devfs.
 	dev_inode_ops = pmm->alloc(sizeof(inodeops_t));
 	dev_inode_ops->open = dev_inode_open;
+	dev_inode_ops->write = dev_inode_write;
+	
 	
 	
 	
@@ -81,7 +89,7 @@ void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
 		devfs_inode[i]->ptr = devices[i]->ptr;
 		devfs_inode[i]->ops = dev_inode_ops;
 		devfs_inode[i]->fs = devfs;
-		printf("%d: ptr = 0x%x, ops = 0x%x\n",i,devfs_inode[i]->ptr,devfs_inode[i]->ops);
+		//printf("%d: ptr = 0x%x, ops = 0x%x\n",i,devfs_inode[i]->ptr,devfs_inode[i]->ops);
 	}
 	
 	
@@ -224,6 +232,10 @@ ssize_t vfs_read(int fd, void *buf, size_t nbyte){
 	return 0;
 }
 ssize_t vfs_write(int fd, void *buf, size_t nbyte){
+	extern task_t** current_task[16];
+	task_t** cur = current_task[_cpu()];
+	file_t* file = (*cur)->fildes[fd];
+	file->inode->ops->write(file, buf, nbyte);
 	return 0;
 }
 off_t vfs_lseek(int fd, off_t offset, int whence){

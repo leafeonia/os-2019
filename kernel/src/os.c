@@ -87,7 +87,9 @@ void fs(){
 	}*/
 	//vfs->open("/a.txt",1);
 	//vfs->open("/proc/fa/fa2/proc",2);
-	vfs->open("/dev/tty1",1);
+	int fd = vfs->open("/dev/tty1",1);
+	char buf[] = "sjhcbsdcygb";
+	vfs->write(fd, buf, strlen(buf));
 	while(1);
 }
 
