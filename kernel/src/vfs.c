@@ -5,6 +5,9 @@
 
 static filesystem_t* blkfs, *devfs, *procfs;
 static fsops_t* blkfs_ops, *devfs_ops, *procfs_ops;
+static inode_t* devfs_inode[10];
+
+
 struct mount_point{
 	const char* path;
 	filesystem_t* fs;
@@ -34,14 +37,16 @@ inode_t* devfsops_lookup(filesystem_t *fs, const char *path, int flags){
 	if(path[0] == '/') path = path + 1;
 	printf("Welcome to devfs_lookup. dev_name = %s\n",path);
 	device_t* dev = dev_lookup(path);
-	return NULL;
-	return (inode_t*)dev;
-	
+	return devfs_inode[dev->id];
 }
 
 void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	fs->name = name;
 	fs->dev = dev;	
+	extern device_t* devices[8];
+	for(int i = 0;i < 8;i++){
+		devfs_inode[i] = devices[i]->ptr;
+	}
 	devfs_ops->lookup = devfsops_lookup;
 }
 
