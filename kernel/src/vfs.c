@@ -95,7 +95,7 @@ int vfs_open(const char *path, int flags){
 	else if(strncmp(path,"/",1) == 0){
 		printf("blockfs\n");
 	}*/
-	filesystem_t* fs;
+	filesystem_t* fs = NULL;
 	int omit = 0; //omit the part of path that is registered in mount point
 	for(int i = 0;i <= mt_idx;i++){
 		if(i == mt_idx) panic("filesystem not found\n");
