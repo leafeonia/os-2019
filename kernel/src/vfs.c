@@ -34,8 +34,9 @@ void procfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	fs->dev = dev;	
 }
 
-void boom(){
-	panic("The file system doesn't support this function");
+int boom(){
+	LOG("The file system doesn't support this function");
+	return -1;
 }
 
 inode_t* devfsops_lookup(filesystem_t *fs, const char *path, int flags){
@@ -57,17 +58,18 @@ void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	//init.
 	extern device_t* devices[8];
 	for(int i = 0;i < 8;i++){
+		devfs_inode[i] = pmm->alloc(sizeof(fsops_t));
 		devfs_inode[i]->ptr = devices[i]->ptr;
 		devfs_inode[i]->ops = dev_inode_ops;
 		devfs_inode[i]->fs = devfs;
 	}
-	devfs_ops->init = boom;//has been done above
+	
 	
 	//lookup
 	devfs_ops->lookup = devfsops_lookup;
 	
 	//close (omit)
-	//devfs_ops->close = boom;
+	devfs_ops->close = boom;
 	
 	
 	
@@ -106,7 +108,6 @@ void vfs_init(){
 	blkfs_ops->init = blkfs_init;
 	blkfs->ops->init(blkfs,"blkfs",dev);
 	
-	GOLDLOG("BYe L3!");
 	devfs = pmm->alloc(sizeof(filesystem_t));
 	devfs_ops->init = devfs_init;
 	devfs->ops->init(devfs,"devfs",NULL);
