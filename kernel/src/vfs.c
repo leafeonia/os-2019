@@ -233,6 +233,7 @@ ssize_t vfs_read(int fd, void *buf, size_t nbyte){
 	return 0;
 }
 ssize_t vfs_write(int fd, void *buf, size_t nbyte){
+LOG("BEST MOM");
 	extern task_t** current_task[16];
 	task_t** cur = current_task[_cpu()];
 	file_t* file = (*cur)->fildes[fd];
