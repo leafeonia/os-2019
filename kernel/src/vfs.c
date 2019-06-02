@@ -67,7 +67,7 @@ void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	devfs_ops->lookup = devfsops_lookup;
 	
 	//close (omit)
-	devfs_ops->close = boom;
+	devfs_ops->close = (int *())boom;
 	
 	
 	
