@@ -21,6 +21,7 @@ inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
 void blkfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	fs->name = name;
 	fs->dev = dev;
+	//rd_t* rd = dev->ptr;
 	//dev->ops->write()	
 }
 
@@ -30,6 +31,9 @@ void procfs_init(filesystem_t *fs, const char *name, device_t *dev){
 }
 
 inode_t* devfsops_lookup(filesystem_t *fs, const char *path, int flags){
+	if(path[0] == '/') path = path + 1;
+	printf("Welcome to devfs_lookup. dev_name = %s\n",path);
+	device_t* dev = dev_lookup(path);
 	return NULL;
 }
 
