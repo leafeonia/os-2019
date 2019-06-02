@@ -46,6 +46,7 @@ int boom(){
 
 
 int dev_inode_open(file_t *file, int flags, inode_t* inode){
+	file->inode = inode;
 	return 0;
 }
 
@@ -207,7 +208,8 @@ int vfs_open(const char *path, int flags){
 	file->offset = 0;
 	(*cur)->fildes[fd] = file;
 	printf("return fd = %d\n",fd);
-	inode->ops->open(file, flags,inode);
+	inode->ops->open(file, flags, inode);
+	printf("fa");
 	kmt->spin_unlock(&lk_vfs);
 	return fd;
 }
