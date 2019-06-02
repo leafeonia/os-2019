@@ -106,7 +106,7 @@ int vfs_open(const char *path, int flags){
 			break;
 		}
 	}
-	char* fs_path = path + omit;
+	const char* fs_path = path + omit;
 	GOLDLOG(fs_path);
 	extern task_t** current_task[16];
 	task_t** cur = current_task[_cpu()];
