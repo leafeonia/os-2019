@@ -106,6 +106,7 @@ void vfs_init(){
 	blkfs_ops->init = blkfs_init;
 	blkfs->ops->init(blkfs,"blkfs",dev);
 	
+	GOLDLOG("BYe L3!");
 	devfs = pmm->alloc(sizeof(filesystem_t));
 	devfs_ops->init = devfs_init;
 	devfs->ops->init(devfs,"devfs",NULL);
@@ -116,7 +117,7 @@ void vfs_init(){
 	procfs_ops->init = procfs_init;
 	procfs->ops->init(procfs,"procfs",NULL);
 	
-	GOLDLOG("BYe L3!");
+	
 	kmt->spin_init(&lk_vfs,"lk_vfs");
 	vfs_mount("/",blkfs);
 	vfs_mount("/dev",devfs);
