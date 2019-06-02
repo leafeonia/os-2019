@@ -17,8 +17,8 @@ struct semaphore {
 	int value;
 };
 
-struct inodeops;
-struct inode;
+typedef struct inodeops inodeops_t;
+typedef struct inode inode_t;
 
 typedef struct file {
   int refcnt; // 引用计数
@@ -35,28 +35,28 @@ struct task {
 	file_t *fildes[NR_FILE];
 };
 
-typedef struct inodeops {
-  int (*open)(file_t *file, int flags);
+inodeops_t{
+  int (*open)(file_t *file, int flags, inode_t *inode);
   int (*close)(file_t *file);
   ssize_t (*read)(file_t *file, char *buf, size_t size);
   ssize_t (*write)(file_t *file, const char *buf, size_t size);
   off_t (*lseek)(file_t *file, off_t offset, int whence);
   int (*mkdir)(const char *name);
   int (*rmdir)(const char *name);
-  int (*link)(const char *name, struct inode *inode);
+  int (*link)(const char *name, inode_t *inode);
   int (*unlink)(const char *name);
   // 你可以自己设计readdir的功能
-}inodeops_t;
+};
 
 
-typedef struct inode {
+inode_t {
   int refcnt;
   void *ptr;       // private data
   filesystem_t *fs;
   inodeops_t *ops; // 在inode被创建时，由文件系统的实现赋值
                    // inode ops也是文件系统的一部分
 
-}inode_t;
+};
 
 
 

@@ -34,10 +34,21 @@ void procfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	fs->dev = dev;	
 }
 
+
+
+
+
+
 int boom(){
 	LOG("The file system doesn't support this function");
 	return -1;
 }
+
+
+int dev_inode_open(file_t *file, int flags, inode_t* inode){
+	return 0;
+}
+
 
 inode_t* devfsops_lookup(filesystem_t *fs, const char *path, int flags){
 	if(path[0] == '/') path = path + 1;
@@ -75,9 +86,11 @@ void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	
 	//initialize inodeops of inode of devfs.
 	dev_inode_ops = pmm->alloc(sizeof(inodeops_t));
-	
-	
+	dev_inode_ops->open = dev_inode_open;
 }
+
+
+
 
 int vfs_mount(const char *path, filesystem_t *fs){
 	kmt->spin_lock(&lk_vfs);
@@ -195,7 +208,6 @@ int vfs_open(const char *path, int flags){
 	(*cur)->fildes[fd] = file;
 	printf("return fd = %d\n",fd);
 	inode->ops->open(file, flags);
-	printf("fa");
 	kmt->spin_unlock(&lk_vfs);
 	return fd;
 }
