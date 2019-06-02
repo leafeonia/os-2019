@@ -30,7 +30,7 @@ struct task {
 	const char* name;
 	_Context context;
 	long long fence1;
-	uint8_t stack[10000];
+	uint8_t stack[50000];
 	long long fence2;
 	file_t *fildes[NR_FILE];
 };
