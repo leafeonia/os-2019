@@ -207,7 +207,7 @@ int vfs_open(const char *path, int flags){
 	file->offset = 0;
 	(*cur)->fildes[fd] = file;
 	printf("return fd = %d\n",fd);
-	inode->ops->open(file, flags);
+	inode->ops->open(file, flags,inode);
 	kmt->spin_unlock(&lk_vfs);
 	return fd;
 }
