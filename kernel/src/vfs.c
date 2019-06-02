@@ -102,6 +102,7 @@ int vfs_open(const char *path, int flags){
 		//printf("%s %s %d\n",path,mt_list[i].path,strlen(mt_list[i].path));
 		if(strncmp(path,mt_list[i].path,strlen(mt_list[i].path)) == 0){
 			omit = strlen(mt_list[i].path);
+			printf("found: %s\n",mt_list[i].path);
 			//fs = mt_list[i].fs;
 			break;
 		}
