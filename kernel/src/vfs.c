@@ -54,6 +54,7 @@ ssize_t dev_inode_write(file_t *file, const char *buf, size_t size){
 	device_t* dev = file->inode->ptr;
 	char text[] = "FAFAFAFAFAFAFA";
 	dev->ops->write(dev, 0, text, strlen(text));
+	return 0;
 }
 
 
