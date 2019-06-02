@@ -12,6 +12,7 @@ int rd_init(device_t *dev) {
     char *space = pmm->alloc(RD_SIZE);
     rd->start = space;
     rd->end   = space + RD_SIZE;
+    printf("0: start: %x, end: %x\n",rd->start,rd->end);
   }
   return 0;
 }
