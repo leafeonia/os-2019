@@ -234,10 +234,11 @@ ssize_t vfs_read(int fd, void *buf, size_t nbyte){
 }
 ssize_t vfs_write(int fd, void *buf, size_t nbyte){
 	kmt->spin_lock(&lk_vfs);
-LOG("BEST MOM");
+printf("fd = %d\n",fd);
 	extern task_t** current_task[16];
 	task_t** cur = current_task[_cpu()];
 	file_t* file = (*cur)->fildes[fd];
+LOG("BEST MOM");
 	file->inode->ops->write(file, buf, nbyte);
 LOG("BEST KID");
 	kmt->spin_unlock(&lk_vfs);
