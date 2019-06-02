@@ -13,7 +13,17 @@ static struct mount_point mt_list[5];
 static int mt_idx = 0;
 static spinlock_t lk_vfs;
 
-void vfs_init_wrapped(filesystem_t *fs, const char *name, device_t *dev){
+void blkfs_init(filesystem_t *fs, const char *name, device_t *dev){
+	fs->name = name;
+	fs->dev = dev;	
+}
+
+void procfs_init(filesystem_t *fs, const char *name, device_t *dev){
+	fs->name = name;
+	fs->dev = dev;	
+}
+
+void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	fs->name = name;
 	fs->dev = dev;	
 }
@@ -44,19 +54,19 @@ void vfs_init(){
 	blkfs_ops = pmm->alloc(sizeof(fsops_t));
 	blkfs->ops = blkfs_ops;
 	device_t *dev = dev_lookup("ramdisk0");
-	blkfs_ops->init = vfs_init_wrapped;
+	blkfs_ops->init = blkfs_init;
 	blkfs->ops->init(blkfs,"blkfs",dev);
 	
 	devfs = pmm->alloc(sizeof(filesystem_t));
 	devfs_ops = pmm->alloc(sizeof(fsops_t));
 	devfs->ops = devfs_ops;
-	devfs_ops->init = vfs_init_wrapped;
+	devfs_ops->init = devfs_init;
 	devfs->ops->init(devfs,"devfs",NULL);
 	
 	procfs = pmm->alloc(sizeof(filesystem_t));
 	procfs_ops = pmm->alloc(sizeof(fsops_t));
 	procfs->ops = procfs_ops;
-	procfs_ops->init = vfs_init_wrapped;
+	procfs_ops->init = procfs_init;
 	procfs->ops->init(procfs,"procfs",NULL);
 	
 	kmt->spin_init(&lk_vfs,"lk_vfs");
@@ -134,7 +144,7 @@ int vfs_open(const char *path, int flags){
 	file->offset = 0;
 	(*cur)->fildes[fd] = file;
 	printf("return fd = %d\n",fd);
-	inode->ops->open(file, flags);
+	//inode->ops->open(file, flags);
 	kmt->spin_unlock(&lk_vfs);
 	return fd;
 }
