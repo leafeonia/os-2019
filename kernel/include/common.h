@@ -35,7 +35,7 @@ struct task {
 	file_t *fildes[NR_FILE];
 };
 
-inodeops_t{
+struct inodeops{
   int (*open)(file_t *file, int flags, inode_t *inode);
   int (*close)(file_t *file);
   ssize_t (*read)(file_t *file, char *buf, size_t size);
@@ -49,7 +49,7 @@ inodeops_t{
 };
 
 
-inode_t {
+struct inode{
   int refcnt;
   void *ptr;       // private data
   filesystem_t *fs;
