@@ -5,6 +5,7 @@
 
 static filesystem_t* blkfs, *devfs, *procfs;
 static fsops_t* blkfs_ops, *devfs_ops, *procfs_ops;
+static inodeops_t* blk_inode_ops, *dev_inode_ops, *proc_inode_ops;
 static inode_t* devfs_inode[10];
 
 
@@ -33,6 +34,10 @@ void procfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	fs->dev = dev;	
 }
 
+void boom(){
+	panic("The file system doesn't support this function");
+}
+
 inode_t* devfsops_lookup(filesystem_t *fs, const char *path, int flags){
 	if(path[0] == '/') path = path + 1;
 	printf("Welcome to devfs_lookup. dev_name = %s\n",path);
@@ -43,11 +48,33 @@ inode_t* devfsops_lookup(filesystem_t *fs, const char *path, int flags){
 void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	fs->name = name;
 	fs->dev = dev;	
+	
+	
+	//initialize fsops of devfs.
+	devfs_ops = pmm->alloc(sizeof(fsops_t));
+	devfs->ops = devfs_ops;
+	
+	//init.
 	extern device_t* devices[8];
 	for(int i = 0;i < 8;i++){
-		devfs_inode[i] = devices[i]->ptr;
+		devfs_inode[i]->ptr = devices[i]->ptr;
+		devfs_inode[i]->ops = dev_inode_ops;
+		devfs_inode[i]->fs = devfs;
 	}
+	devfs_ops->init = boom;//has been done above
+	
+	//lookup
 	devfs_ops->lookup = devfsops_lookup;
+	
+	//close (omit)
+	devfs_ops->close = boom;
+	
+	
+	
+	//initialize inodeops of inode of devfs.
+	dev_inode_ops = pmm->alloc(sizeof(inodeops_t));
+	
+	
 }
 
 int vfs_mount(const char *path, filesystem_t *fs){
@@ -80,8 +107,6 @@ void vfs_init(){
 	blkfs->ops->init(blkfs,"blkfs",dev);
 	
 	devfs = pmm->alloc(sizeof(filesystem_t));
-	devfs_ops = pmm->alloc(sizeof(fsops_t));
-	devfs->ops = devfs_ops;
 	devfs_ops->init = devfs_init;
 	devfs->ops->init(devfs,"devfs",NULL);
 	
