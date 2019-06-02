@@ -119,7 +119,7 @@ int vfs_open(const char *path, int flags){
 	}
 	const char* fs_path = path + omit;
 	//GOLDLOG(fs_path);
-	//inode_t* inode = fs->ops->lookup(fs,fs_path,flags);
+	inode_t* inode = fs->ops->lookup(fs,fs_path,flags);
 	extern task_t** current_task[16];
 	task_t** cur = current_task[_cpu()];
 	int fd = -1;
@@ -144,7 +144,7 @@ int vfs_open(const char *path, int flags){
 	file->offset = 0;
 	(*cur)->fildes[fd] = file;
 	printf("return fd = %d\n",fd);
-	//inode->ops->open(file, flags);
+	inode = NULL;//->ops->open(file, flags);
 	kmt->spin_unlock(&lk_vfs);
 	return fd;
 }
