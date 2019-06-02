@@ -35,6 +35,8 @@ inode_t* devfsops_lookup(filesystem_t *fs, const char *path, int flags){
 	printf("Welcome to devfs_lookup. dev_name = %s\n",path);
 	device_t* dev = dev_lookup(path);
 	return NULL;
+	return (inode_t*)dev;
+	
 }
 
 void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
