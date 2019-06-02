@@ -239,6 +239,7 @@ LOG("BEST MOM");
 	task_t** cur = current_task[_cpu()];
 	file_t* file = (*cur)->fildes[fd];
 	file->inode->ops->write(file, buf, nbyte);
+LOG("BEST KID");
 	kmt->spin_unlock(&lk_vfs);
 	return 0;
 }
