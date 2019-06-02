@@ -63,6 +63,13 @@ void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	fs->dev = dev;	
 	
 	
+	//initialize inodeops of inode of devfs.
+	dev_inode_ops = pmm->alloc(sizeof(inodeops_t));
+	dev_inode_ops->open = dev_inode_open;
+	
+	
+	
+	
 	//initialize fsops of devfs.
 	devfs_ops = pmm->alloc(sizeof(fsops_t));
 	devfs->ops = devfs_ops;
@@ -87,9 +94,7 @@ void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	
 	
 	
-	//initialize inodeops of inode of devfs.
-	dev_inode_ops = pmm->alloc(sizeof(inodeops_t));
-	dev_inode_ops->open = dev_inode_open;
+	
 }
 
 
