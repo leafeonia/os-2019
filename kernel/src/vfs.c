@@ -95,20 +95,21 @@ int vfs_open(const char *path, int flags){
 	else if(strncmp(path,"/",1) == 0){
 		printf("blockfs\n");
 	}*/
-	//filesystem_t* fs;
+	filesystem_t* fs;
 	int omit = 0; //omit the part of path that is registered in mount point
 	for(int i = 0;i <= mt_idx;i++){
 		if(i == mt_idx) panic("filesystem not found\n");
 		//printf("%s %s %d\n",path,mt_list[i].path,strlen(mt_list[i].path));
 		if(strncmp(path,mt_list[i].path,strlen(mt_list[i].path)) == 0){
 			omit = strlen(mt_list[i].path);
-			printf("found: %s\n",mt_list[i].path);
-			//fs = mt_list[i].fs;
+			//printf("found: %s\n",mt_list[i].path);
+			fs = mt_list[i].fs;
 			break;
 		}
 	}
 	const char* fs_path = path + omit;
-	GOLDLOG(fs_path);
+	//GOLDLOG(fs_path);
+	inode_t* inode = fs->ops->lookup(fs_path,flags);
 	extern task_t** current_task[16];
 	task_t** cur = current_task[_cpu()];
 	int fd = -1;
@@ -133,6 +134,7 @@ int vfs_open(const char *path, int flags){
 	file->offset = 0;
 	(*cur)->fildes[fd] = file;
 	printf("return fd = %d\n",fd);
+	inode->ops->open(file, flags);
 	kmt->spin_unlock(&lk_vfs);
 	return fd;
 }
