@@ -30,7 +30,7 @@ inode_t* devfsops_lookup(filesystem_t *fs, const char *path, int flags){
 void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	fs->name = name;
 	fs->dev = dev;	
-	fsops->lookup = devfsops_lookup;
+	devfs_ops->lookup = devfsops_lookup;
 }
 
 int vfs_mount(const char *path, filesystem_t *fs){
@@ -149,7 +149,7 @@ int vfs_open(const char *path, int flags){
 	file->offset = 0;
 	(*cur)->fildes[fd] = file;
 	printf("return fd = %d\n",fd);
-	inode->ops->open(file, flags)++;;
+	inode->ops->open(file, flags);
 	kmt->spin_unlock(&lk_vfs);
 	return fd;
 }
