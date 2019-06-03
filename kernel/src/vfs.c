@@ -39,7 +39,7 @@ int dev_inode_open(file_t *file, int flags, inode_t* inode){
 	return 0;
 }
 
-ssize_t /dev_inode_write(file_t *file, const char *buf, size_t size){
+ssize_t dev_inode_write(file_t *file, const char *buf, size_t size){
 	//kmt->spin_lock(&lk_devfs);
 	LOG("YEAH");
 	device_t* dev = file->inode->ptr;
