@@ -43,7 +43,7 @@ ssize_t dev_inode_write(file_t *file, const char *buf, size_t size){
 	kmt->spin_lock(&lk_devfs);
 	LOG("YEAH");
 	device_t* dev = file->inode->ptr;
-	//printf("inode = 0x%x, dev = 0x%x, dev->name = %s, \n",file->inode, dev, dev->name);
+	printf("inode = 0x%x, dev = 0x%x, dev->name = %s, \n",file->inode, dev, dev->name);
 	/*extern device_t* devices[8];
 	for(int i = 0;i < 8;i++){
 		printf("devices. id = %d, ptr = 0x%x, name = %s\n",devices[i]->id,devices[i]->ptr,devices[i]->name);
