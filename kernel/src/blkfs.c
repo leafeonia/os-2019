@@ -8,32 +8,45 @@
 #define BITMAP_OFFSET 4096
 #define DATA_OFFSET 8192
 #define ROOT 2
+#define NR_DIRE 64
 
 static inodeops_t* blk_inode_ops;
 
-static inode_t inodes[NR_INODE];
-static unsigned char data_bitmap[BLOCK_SIZE];
+
+typedef struct directory{
+	const char name[60];
+	int inode_id;
+}dire_t;
+
 //****************************************
 //| INODES  |  DATA BITMAP |  DATA ...
 //****************************************
 //  BLOCK 0       BLOCK 1    BLOCK 2 - 999
 void blkfsops_init(filesystem_t *fs, const char *name, device_t *dev){
-	//assert(sizeof(inode_t) == 16); //16 * NR_INODE = BLOCK_SIZE
+	assert(sizeof(inode_t) == 64); //64 * NR_INODE = BLOCK_SIZE
+	inode_t inodes[NR_INODE];
+    unsigned char data_bitmap[BLOCK_SIZE];
+    
 	for(int i = 0;i < NR_INODE;i++){
 		inodes[i].refcnt = 0;
 		inodes[i].ptr = NULL;
 		inodes[i].fs = fs;
 		inodes[i].ops = blk_inode_ops;
+		for(int i = 0;i < 12;i++){
+			inodes[i].block[i] = -1;
+		}
 	}
 	memset(data_bitmap,0,sizeof(data_bitmap));
-	printf("offset = %d\n",sizeof(inode_t));
+	//printf("size = %d\n",sizeof(inode_t));
 	dev->ops->write(dev, 0, inodes, BLOCK_SIZE);
 	dev->ops->write(dev, BITMAP_OFFSET, data_bitmap, BLOCK_SIZE);
 	
 	
-	//Initialize root directory.
+	//Initialize root directory. Data reside in block 2(data: 0)
+	dire_t dire[NR_DIRE];  
+	printf("sizeof dire = %d\n",sizeof(dire));
 	inodes[ROOT].refcnt = 1;
-	inodes[ROOT].ptr = (void*)0;
+	inodes[ROOT].block[0] = 0;
 	data_bitmap[0] = 1;
 	
 	
