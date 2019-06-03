@@ -36,7 +36,7 @@ struct task {
 };
 
 struct inodeops{
-  int (*open)(file_t *file, int flags);
+  int (*open)(file_t *file, int flags, inode_t* inode);
   int (*close)(file_t *file);
   ssize_t (*read)(file_t *file, char *buf, size_t size);
   ssize_t (*write)(file_t *file, const char *buf, size_t size);
