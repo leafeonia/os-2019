@@ -218,9 +218,9 @@ int vfs_open(const char *path, int flags){
 		}
 	}
 	const char* fs_path = path + omit;
-	GOLDLOG(fs_path);
+	//GOLDLOG(fs_path);
 	inode_t* inode = fs->ops->lookup(fs,fs_path,flags);
-	printf("inode->ptr = 0x%x\n",inode->ptr);
+	//printf("inode->ptr = 0x%x\n",inode->ptr);
 	extern task_t** current_task[16];
 	task_t** cur = current_task[_cpu()];
 	int fd = -1;
@@ -244,7 +244,7 @@ int vfs_open(const char *path, int flags){
 	file->refcnt = 1;
 	file->offset = 0;
 	(*cur)->fildes[fd] = file;
-	printf("return fd = %d\n",fd);
+	//printf("return fd = %d\n",fd);
 	inode->ops->open(file, flags, inode);
 	//printf("fa");
 	kmt->spin_unlock(&lk_vfs);
@@ -255,13 +255,13 @@ ssize_t vfs_read(int fd, void *buf, size_t nbyte){
 }
 ssize_t vfs_write(int fd, void *buf, size_t nbyte){
 	kmt->spin_lock(&lk_vfs);
-printf("fd = %d\n",fd);
+//printf("fd = %d\n",fd);
 	extern task_t** current_task[16];
 	task_t** cur = current_task[_cpu()];
 	file_t* file = (*cur)->fildes[fd];
-LOG("BEST MOM");
+//LOG("BEST MOM");
 	file->inode->ops->write(file, buf, nbyte);
-LOG("BEST KID");
+//LOG("BEST KID");
 	kmt->spin_unlock(&lk_vfs);
 	return 0;
 }
