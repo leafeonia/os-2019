@@ -1,4 +1,5 @@
 #include <common.h>
+#include "vfs.h"
 
 int dev_inode_open(file_t *file, int flags, inode_t* inode){
 	kmt->spin_lock(&lk_dev_inode_ops);
