@@ -89,13 +89,17 @@ void fs(){
 	//vfs->open("/a.txt",1);
 	//vfs->open("/proc/fa/fa2/proc",2);
 	int fd = vfs->open("/dev/tty1",1);
+	int fd2 = vfs->open("ramdisk1",1);
 	char buf[] = "D o  y o u  l i k e  w h a t  y o u  s e e";
 	char buf2[] = "\ndeep dark fantasy";
+	char buf4[] = "leafeon~";
 	vfs->write(fd, buf, strlen(buf));
 	vfs->write(fd, buf2, strlen(buf2));
+	
+	vfs->write(fd2, buf4, strlen(buf4));
 	char buf3[100];
 	vfs->lseek(fd,0,0);
-	vfs->read(fd, buf3, strlen(buf3));
+	vfs->read(fd, buf3, strlen(buf4));
 	printf("read: %s\n",buf3);
 	vfs->close(fd);
 	vfs->write(fd, buf, strlen(buf));
