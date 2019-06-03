@@ -140,7 +140,6 @@ ssize_t vfs_read(int fd, void *buf, size_t nbyte){
 		LOG("error: current file has been closed. Read fails.");
 		return 1;
 	}
-	LOG("read");
 	return file->inode->ops->read(file, buf, nbyte);
 }
 ssize_t vfs_write(int fd, void *buf, size_t nbyte){
