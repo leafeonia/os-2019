@@ -16,12 +16,14 @@ static char data_bitmap[BLOCK_SIZE];
 void blkfsops_init(filesystem_t *fs, const char *name, device_t *dev){
 	assert(sizeof(inode_t) == 16); //16 * NR_INODE = BLOCK_SIZE
 	for(int i = 0;i < NR_INODE;i++){
-		inodes[i]->refcnt = 0;
-		inodes[i]->ptr = NULL;
-		inodes[i]->fs = fs;
-		inodes[i]->ops = blk_inode_ops;
+		inodes[i].refcnt = 0;
+		inodes[i].ptr = NULL;
+		inodes[i].fs = fs;
+		inodes[i].ops = blk_inode_ops;
 	}
 	memset(data_bitmap,0,sizeof(data_bitmap));
+	printf("offset = %d\n",sizeof(inode_t)*NR_INODE);
+	dev->ops->write(dev, 0, inodes, sizeof(inode_t)*NR_INODE);
 }
 
 inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
