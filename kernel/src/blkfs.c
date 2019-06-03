@@ -15,8 +15,6 @@ static char data_bitmap[BLOCK_SIZE];
 //  BLOCK 0       BLOCK 1    BLOCK 2 - 999
 void blkfsops_init(filesystem_t *fs, const char *name, device_t *dev){
 	assert(sizeof(inode_t) == 16); //16 * NR_INODE = BLOCK_SIZE
-	inodes = pmm->alloc(NR_INODE * sizeof(inode_t));
-	data_bitmap = pmm->alloc(BLOCK_SIZE * sizeof(char));
 	for(int i = 0;i < NR_INODE;i++){
 		inodes[i]->refcnt = 0;
 		inodes[i]->ptr = NULL;
