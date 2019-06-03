@@ -1,5 +1,6 @@
 #include <common.h>
 #include "vfs.h"
+#include <klib.h>
 
 int boom(){
 	LOG("The file system doesn't support this function");
