@@ -4,20 +4,21 @@
 #include <devices.h>
 
 #define BLOCK_SIZE 4096
-#define NR_INODE 256
+#define NR_INODE 64
 #define BITMAP_OFFSET 4096
 #define DATA_OFFSET 8192
+#define ROOT 2
 
 static inodeops_t* blk_inode_ops;
 
 static inode_t inodes[NR_INODE];
-static char data_bitmap[BLOCK_SIZE];
+static unsigned char data_bitmap[BLOCK_SIZE];
 //****************************************
 //| INODES  |  DATA BITMAP |  DATA ...
 //****************************************
 //  BLOCK 0       BLOCK 1    BLOCK 2 - 999
 void blkfsops_init(filesystem_t *fs, const char *name, device_t *dev){
-	assert(sizeof(inode_t) == 16); //16 * NR_INODE = BLOCK_SIZE
+	//assert(sizeof(inode_t) == 16); //16 * NR_INODE = BLOCK_SIZE
 	for(int i = 0;i < NR_INODE;i++){
 		inodes[i].refcnt = 0;
 		inodes[i].ptr = NULL;
@@ -25,12 +26,21 @@ void blkfsops_init(filesystem_t *fs, const char *name, device_t *dev){
 		inodes[i].ops = blk_inode_ops;
 	}
 	memset(data_bitmap,0,sizeof(data_bitmap));
-	printf("offset = %d\n",sizeof(inode_t)*NR_INODE);
+	printf("offset = %d\n",sizeof(inode_t));
 	dev->ops->write(dev, 0, inodes, BLOCK_SIZE);
 	dev->ops->write(dev, BITMAP_OFFSET, data_bitmap, BLOCK_SIZE);
+	
+	
+	//Initialize root directory.
+	inodes[ROOT].refcnt = 1;
+	inodes[ROOT].ptr = (void*)0;
+	data_bitmap[0] = 1;
+	
+	
 }
 
 inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
+
 	return NULL;
 }
 

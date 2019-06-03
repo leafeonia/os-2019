@@ -86,7 +86,7 @@ void fs(){
 	for(int i = 0;i < NR_FILE;i++){
 		printf("%d:?%x %x?\n",i,(char*)fs1fildes+4*i,*((file_t*)((char*)fs1fildes+4*i)));
 	}*/
-	vfs->open("/a.txt",1);
+	//vfs->open("/a.txt",1);
 	//vfs->open("/proc/fa/fa2/proc",2);
 	int fd = vfs->open("/dev/tty1",1);
 	int fd2 = vfs->open("/dev/ramdisk0",1);
