@@ -78,7 +78,7 @@ void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	fs->name = name;
 	fs->dev = dev;	
 	
-	kmt->spin_lock(&lk_devfs);
+	kmt->spin_init(&lk_devfs);
 	
 	
 	//initialize inodeops of inode of devfs.
