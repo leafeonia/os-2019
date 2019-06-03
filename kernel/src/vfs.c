@@ -52,10 +52,10 @@ int dev_inode_open(file_t *file, int flags, inode_t* inode){
 
 ssize_t dev_inode_write(file_t *file, const char *buf, size_t size){
 	LOG("YEAH");
-	device_t* dev = file->inode->ptr;
+	//device_t* dev = file->inode->ptr;
 	printf("inode = 0x%x, dev = 0x%x, dev->name = %s, \n",file->inode, dev, dev->name);
 	char text[] = "FAFAFAFAFAFAFA";
-	dev->ops->write(dev, 0, text, strlen(text));
+	//dev->ops->write(dev, 0, text, strlen(text));
 	device_t* dev2 = dev_lookup("tty2");
 	dev2->ops->write(dev, 0, text, strlen(text));
 	return 0;
