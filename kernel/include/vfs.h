@@ -18,3 +18,4 @@ int dev_inode_open(file_t *file, int flags, inode_t* inode);
 ssize_t dev_inode_write(file_t *file, const char *buf, size_t size);
 inode_t* devfsops_lookup(filesystem_t *fs, const char *path, int flags);
 void devfs_init(filesystem_t *fs, const char *name, device_t *dev);
+int sjdfb();
