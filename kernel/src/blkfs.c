@@ -1,6 +1,7 @@
 #include <common.h>
 #include "vfs.h"
 #include <klib.h>
+#include <devices.h>
 
 #define BLOCK_SIZE 4096
 #define NR_INODE 64
