@@ -1,5 +1,4 @@
 #include <common.h>
-#include "vfs.h"
 #include <klib.h>
 
 int boom(){
