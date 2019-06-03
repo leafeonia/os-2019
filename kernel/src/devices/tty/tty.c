@@ -189,6 +189,7 @@ ssize_t tty_read(device_t *dev, off_t offset, void *buf, size_t count) {
   kmt->sem_wait(&tty->cooked);
   kmt->sem_wait(&tty->lock);
   size_t nread = 0;
+  LOG("?");
 
   struct tty_queue *q = &tty->queue;
   while (1) {
