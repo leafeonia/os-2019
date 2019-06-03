@@ -46,6 +46,7 @@ static void consumer(){
 
 void echo_task(void *name){
 	device_t *tty = dev_lookup(name);
+	printf("tty: 0x%x, tty->ops = 0x%x\n",tty,tty->ops);
 	while(1){
 		//printf("echo %s\n",name);
 		char line[128], text[128];
