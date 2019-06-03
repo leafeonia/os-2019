@@ -16,11 +16,22 @@ int boom(){
 
 void dummy(){}
 
-int dev_inode_open(file_t *file, int flags, inode_t* inode){
-	kmt->spin_lock(&lk_dev_inode_ops);
+int dev_inode_open(file_t *file, int flags){
+	/*kmt->spin_lock(&lk_dev_inode_ops);
 	file->inode = inode;
-	kmt->spin_unlock(&lk_dev_inode_ops);
+	kmt->spin_unlock(&lk_dev_inode_ops);*/
 	return 0;
+}
+
+int dev_inode_close(file_t *file){
+	return 0;
+}
+
+ssize_t dev_inode_read(file_t *file, char *buf, size_t size){
+	device_t* dev = file->inode->ptr;
+	ssize_t nread = dev->ops->read(dev, file->offset, buf, size);
+	file->offset += size;
+	return size;
 }
 
 ssize_t dev_inode_write(file_t *file, const char *buf, size_t size){
@@ -32,13 +43,16 @@ ssize_t dev_inode_write(file_t *file, const char *buf, size_t size){
 	for(int i = 0;i < 8;i++){
 		printf("devices. id = %d, ptr = 0x%x, name = %s\n",devices[i]->id,devices[i]->ptr,devices[i]->name);
 	}*/
-	dev->ops->write(dev, 0, buf, strlen(buf));
+	dev->ops->write(dev, file->offset, buf, strlen(buf));
+	file->offset += size;
 	//LOG("YEAH2");
 	//device_t* dev2 = dev_lookup("tty2");
 	//dev2->ops->write(dev2, 0, text, strlen(text));
 	kmt->spin_unlock(&lk_dev_inode_ops);
-	return 0;
+	return size;
 }
+
+
 
 
 
@@ -71,11 +85,13 @@ void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	
 	//initialize inodeops of inode of devfs.
 	dev_inode_ops = pmm->alloc(sizeof(inodeops_t));
-	dev_inode_ops->open = dev_inode_open;
-	dev_inode_ops->write = dev_inode_write;
-	dev_inode_ops->mkdir = boom;
-	dev_inode_ops->rmdir = boom;
-	dev_inode_ops->link = boom;
+	dev_inode_ops->open   = dev_inode_open;
+	dev_inode_ops->close  = dev_inode_close;
+	dev_inode_ops->read   = dev_inode_read;
+	dev_inode_ops->write  = dev_inode_write;
+	dev_inode_ops->mkdir  = boom;
+	dev_inode_ops->rmdir  = boom;
+	dev_inode_ops->link   = boom;
 	dev_inode_ops->unlink = boom;
 	
 	

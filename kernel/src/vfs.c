@@ -9,6 +9,12 @@ static int mt_idx = 0;
 static spinlock_t lk_vfs;
 
 
+file_t* fd2file(int fd){
+	extern task_t** current_task[16];
+	task_t** cur = current_task[_cpu()];
+	return (*cur)->fildes[fd];
+}
+
 int vfs_mount(const char *path, filesystem_t *fs){
 	kmt->spin_lock(&lk_vfs);
 	mt_list[mt_idx].path = path;
@@ -119,32 +125,41 @@ int vfs_open(const char *path, int flags){
 	file_t* file = pmm->alloc(sizeof(file_t));
 	file->refcnt = 1;
 	file->offset = 0;
+	file->inode = inode;
 	(*cur)->fildes[fd] = file;
 	//printf("return fd = %d\n",fd);
-	inode->ops->open(file, flags, inode);
-	//printf("fa");
+	//inode->ops->open(file, flags, inode);
 	kmt->spin_unlock(&lk_vfs);
 	return fd;
 }
 ssize_t vfs_read(int fd, void *buf, size_t nbyte){
-	return 0;
+	file_t* file = fd2file(fd);
+	if(!file->inode){
+		LOG("error: current file has been closed.");
+		return 1;
+	}
+	return file->inode->ops->read(file, buf, nbyte);
 }
 ssize_t vfs_write(int fd, void *buf, size_t nbyte){
-	kmt->spin_lock(&lk_vfs);
-//printf("fd = %d\n",fd);
-	extern task_t** current_task[16];
-	task_t** cur = current_task[_cpu()];
-	file_t* file = (*cur)->fildes[fd];
-//LOG("BEST MOM");
-	file->inode->ops->write(file, buf, nbyte);
-//LOG("BEST KID");
-	kmt->spin_unlock(&lk_vfs);
-	return 0;
+	file_t* file = fd2file(fd);
+	if(!file->inode){
+		LOG("error: current file has been closed.");
+		return 1;
+	}
+	//kmt->spin_lock(&lk_vfs);
+	
+	
+	return file->inode->ops->write(file, buf, nbyte);
+	//kmt->spin_unlock(&lk_vfs);
 }
 off_t vfs_lseek(int fd, off_t offset, int whence){
 	return 0;
 }
 int vfs_close(int fd){
+	file_t* file = fd2file(fd);
+	assert(file);
+	file->offset = 0;
+	file->inode = NULL;
 	return 0;
 }
 

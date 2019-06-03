@@ -90,7 +90,9 @@ void fs(){
 	//vfs->open("/proc/fa/fa2/proc",2);
 	int fd = vfs->open("/dev/tty1",1);
 	char buf[] = "D o  y o u  l i k e  w h a t  y o u  s e e";
+	char buf2[] = "\ndeep dark fantasy";
 	vfs->write(fd, buf, strlen(buf));
+	vfs->write(fd, buf2, strlen(buf));
 	while(1);
 }
 
