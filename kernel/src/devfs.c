@@ -1,5 +1,7 @@
 #include <common.h>
 #include <klib.h>
+#include "my_os.h"
+#include <device.h>
 
 static spinlock_t lk_dev_inode_ops;
 static inodeops_t* dev_inode_ops;
