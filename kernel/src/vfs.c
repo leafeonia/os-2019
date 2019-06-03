@@ -66,12 +66,12 @@ inode_t* devfsops_lookup(filesystem_t *fs, const char *path, int flags){
 	device_t* dev = dev_lookup(path);
 	char* devices_tmp[] = {"ramdisk0","ramdisk1","input","fb","tty1","tty2","tty3","tty4"};
 	int id = 0;
-	for(;id < 8;i++){
-		if(strcmp(devices_tmp[i],path) == 0) break;
+	for(;id < 8;id++){
+		if(strcmp(devices_tmp[id],path) == 0) break;
 	}
 	if(id = 8){
 		LOG("devfs: lookup device fails.");
-		return NULL''
+		return NULL;
 	}
 	return devfs_inode[id];
 }
