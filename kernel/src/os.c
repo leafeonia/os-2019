@@ -99,6 +99,8 @@ void fs(){
 	vfs->write(fd2, buf4, strlen(buf4));
 	char buf3[100];
 	//vfs->lseek(fd2,0,0);
+	vfs->close(fd2)
+	fd2 = vfs->open("/dev/ramdisk1",1);
 	vfs->read(fd2, buf3, strlen(buf4));
 	printf("read: %s\n",buf3);
 	vfs->close(fd);
