@@ -44,10 +44,12 @@ void blkfsops_init(filesystem_t *fs, const char *name, device_t *dev){
 	
 	//Initialize root directory. Data reside in block 2(data: 0)
 	dire_t dire[NR_DIRE];  
-	printf("sizeof dire = %d\n",sizeof(dire));
+	memset(dire,0,sizeof(dire));
+	//printf("sizeof dire = %d\n",sizeof(dire));
 	inodes[ROOT].refcnt = 1;
 	inodes[ROOT].block[0] = 0;
 	data_bitmap[0] = 1;
+	dire[0].name = ".";
 	
 	
 }
