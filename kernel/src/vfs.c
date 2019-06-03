@@ -51,13 +51,13 @@ int dev_inode_open(file_t *file, int flags, inode_t* inode){
 }
 
 ssize_t dev_inode_write(file_t *file, const char *buf, size_t size){
-	LOG("YEAH");
+	//LOG("YEAH");
 	device_t* dev = file->inode->ptr;
 	//printf("inode = 0x%x, dev = 0x%x, dev->name = %s, \n",file->inode, dev, dev->name);
-	extern device_t* devices[8];
+	/*extern device_t* devices[8];
 	for(int i = 0;i < 8;i++){
 		printf("devices. id = %d, ptr = 0x%x, name = %s\n",devices[i]->id,devices[i]->ptr,devices[i]->name);
-	}
+	}*/
 	char text[] = "FAFAFAFAFAFAFA";
 	dev->ops->write(dev, 0, text, strlen(text));
 	//device_t* dev2 = dev_lookup("tty2");
@@ -68,7 +68,7 @@ ssize_t dev_inode_write(file_t *file, const char *buf, size_t size){
 
 inode_t* devfsops_lookup(filesystem_t *fs, const char *path, int flags){
 	if(path[0] == '/') path = path + 1;
-	printf("Welcome to devfs_lookup. dev_name = %s\n",path);
+	//printf("Welcome to devfs_lookup. dev_name = %s\n",path);
 	//device_t* dev = dev_lookup(path);
 	char* devices_tmp[] = {"ramdisk0","ramdisk1","input","fb","tty1","tty2","tty3","tty4"};
 	int id = 0;
@@ -101,16 +101,16 @@ void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	devfs->ops = devfs_ops;
 	
 	//init.
-	extern device_t* devices[8];
+	/*extern device_t* devices[8];
 	for(int i = 0;i < 8;i++){
 		printf("devices. id = %d, ptr = 0x%x, name = %s\n",devices[i]->id,devices[i]->ptr,devices[i]->name);
-	}
+	}*/
 	for(int i = 0;i < 8;i++){
 		devfs_inode[i] = pmm->alloc(sizeof(fsops_t));
 		devfs_inode[i]->ptr = devices[i];
 		devfs_inode[i]->ops = dev_inode_ops;
 		devfs_inode[i]->fs = devfs;
-		printf("%d: ptr = 0x%x, ops = 0x%x,devfs_inode[%d] = 0x%x\n",i,devfs_inode[i]->ptr,devfs_inode[i]->ops,i ,devfs_inode[i]);
+		//printf("%d: ptr = 0x%x, ops = 0x%x,devfs_inode[%d] = 0x%x\n",i,devfs_inode[i]->ptr,devfs_inode[i]->ops,i ,devfs_inode[i]);
 	}
 	
 	
