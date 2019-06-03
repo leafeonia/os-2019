@@ -1,6 +1,10 @@
 #include <common.h>
 #include <klib.h>
 
+static spinlock_t lk_dev_inode_ops;
+static inodeops_t* dev_inode_ops;
+static inode_t* devfs_inode[10];
+
 int boom(){
 	LOG("The file system doesn't support this function");
 	return -1;
