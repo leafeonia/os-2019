@@ -4,7 +4,9 @@
 #include <devices.h>
 
 #define BLOCK_SIZE 4096
-#define NR_INODE 64
+#define NR_INODE 256
+#define BITMAP_OFFSET 4096
+#define DATA_OFFSET 8192
 
 static inodeops_t* blk_inode_ops;
 
@@ -24,7 +26,8 @@ void blkfsops_init(filesystem_t *fs, const char *name, device_t *dev){
 	}
 	memset(data_bitmap,0,sizeof(data_bitmap));
 	printf("offset = %d\n",sizeof(inode_t)*NR_INODE);
-	dev->ops->write(dev, 0, inodes, sizeof(inode_t)*NR_INODE);
+	dev->ops->write(dev, 0, inodes, BLOCK_SIZE);
+	dev->ops->write(dev, BITMAP_OFFSET, data_bitmap, BLOCK_SIZE);
 }
 
 inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){

@@ -1,6 +1,7 @@
+#define O_CREAT 0x10
+
 filesystem_t* blkfs, *devfs, *procfs;
 fsops_t* blkfs_ops, *devfs_ops, *procfs_ops;
-
 
 
 struct mount_point{
