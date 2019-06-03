@@ -43,18 +43,17 @@ int dev_inode_open(file_t *file, int flags, inode_t* inode){
 
 ssize_t dev_inode_write(file_t *file, const char *buf, size_t size){
 	kmt->spin_lock(&lk_dev_inode_ops);
-	LOG("YEAH");
+	//LOG("YEAH");
 	device_t* dev = file->inode->ptr;
-	printf("inode = 0x%x, dev = 0x%x, dev->name = %s, dev->ops = 0x%x \n",file->inode, dev, dev->name, dev->ops);
+	//printf("inode = 0x%x, dev = 0x%x, dev->name = %s, dev->ops = 0x%x \n",file->inode, dev, dev->name, dev->ops);
 	/*extern device_t* devices[8];
 	for(int i = 0;i < 8;i++){
 		printf("devices. id = %d, ptr = 0x%x, name = %s\n",devices[i]->id,devices[i]->ptr,devices[i]->name);
 	}*/
-	char text[] = "FA";
-	dev->ops->write(dev, 0, text, strlen(text));
-	LOG("YEAH2");
-	device_t* dev2 = dev_lookup("tty2");
-	dev2->ops->write(dev2, 0, text, strlen(text));
+	dev->ops->write(dev, 0, buf, strlen(buf));
+	//LOG("YEAH2");
+	//device_t* dev2 = dev_lookup("tty2");
+	//dev2->ops->write(dev2, 0, text, strlen(text));
 	kmt->spin_unlock(&lk_dev_inode_ops);
 	return 0;
 }
