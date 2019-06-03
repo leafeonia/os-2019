@@ -93,6 +93,8 @@ void fs(){
 	char buf2[] = "\ndeep dark fantasy";
 	vfs->write(fd, buf, strlen(buf));
 	vfs->write(fd, buf2, strlen(buf));
+	vfs->close(fd);
+	vfs->write(fd, buf, strlen(buf));
 	while(1);
 }
 
