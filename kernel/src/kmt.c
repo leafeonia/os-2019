@@ -83,7 +83,7 @@ static void kmt_sem_wait(sem_t *sem){
 		if(sem->value > 0){
 			
 			sem->value--;
-			//printf("wait: %s: value = %d\n",sem->name,sem->value);
+			printf("wait: %s: value = %d\n",sem->name,sem->value);
 			LOG("leave kmt_sem_wait");
 			kmt_spin_unlock(&sem->lock);
 			return;
