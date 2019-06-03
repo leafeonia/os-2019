@@ -63,13 +63,13 @@ ssize_t dev_inode_write(file_t *file, const char *buf, size_t size){
 inode_t* devfsops_lookup(filesystem_t *fs, const char *path, int flags){
 	if(path[0] == '/') path = path + 1;
 	printf("Welcome to devfs_lookup. dev_name = %s\n",path);
-	device_t* dev = dev_lookup(path);
+	//device_t* dev = dev_lookup(path);
 	char* devices_tmp[] = {"ramdisk0","ramdisk1","input","fb","tty1","tty2","tty3","tty4"};
 	int id = 0;
 	for(;id < 8;id++){
 		if(strcmp(devices_tmp[id],path) == 0) break;
 	}
-	if(id = 8){
+	if(id == 8){
 		LOG("devfs: lookup device fails.");
 		return NULL;
 	}
