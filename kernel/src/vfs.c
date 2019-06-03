@@ -53,7 +53,7 @@ int dev_inode_open(file_t *file, int flags, inode_t* inode){
 ssize_t dev_inode_write(file_t *file, const char *buf, size_t size){
 	LOG("YEAH");
 	device_t* dev = file->inode->ptr;
-	printf("dev->id = %d\n",dev->id);
+	printf("inode = 0x%x, dev = 0x%x, dev->id = %d\n",file->inode, dev, dev->id);
 	char text[] = "FAFAFAFAFAFAFA";
 	dev->ops->write(dev, 0, text, strlen(text));
 	return 0;
@@ -95,7 +95,7 @@ void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
 		devfs_inode[i]->ptr = devices[i]->ptr;
 		devfs_inode[i]->ops = dev_inode_ops;
 		devfs_inode[i]->fs = devfs;
-		printf("%d: ptr = 0x%x, ops = 0x%x\n",i,devfs_inode[i]->ptr,devfs_inode[i]->ops);
+		printf("%d: ptr = 0x%x, ops = 0x%x,devfs_inode[%d] = 0x%x\n",i,devfs_inode[i]->ptr,devfs_inode[i]->ops,i ,devfs_inode[i]);
 	}
 	
 	
