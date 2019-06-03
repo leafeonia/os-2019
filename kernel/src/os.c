@@ -95,12 +95,10 @@ void fs(){
 	vfs->write(fd, buf, strlen(buf));
 	vfs->write(fd, buf2, strlen(buf2));
 	
-	char buf3[100];
+	/*char buf3[100];
 	vfs->read(fd, buf3, strlen(buf));
-	printf("read1: %s\n",buf3);
-	vfs->lseek(fd,0,0);
-	vfs->read(fd, buf3, strlen(buf));
-	printf("read2: %s\n",buf3);
+	printf("read1: %s\n",buf3);*/
+
 	vfs->close(fd);
 	vfs->write(fd, buf, strlen(buf));
 	while(1);
