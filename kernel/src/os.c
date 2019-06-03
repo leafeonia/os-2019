@@ -89,7 +89,7 @@ void fs(){
 	//vfs->open("/a.txt",1);
 	//vfs->open("/proc/fa/fa2/proc",2);
 	int fd = vfs->open("/dev/tty1",1);
-	int fd2 = vfs->open("/dev/ramdisk1",1);
+	int fd2 = vfs->open("/dev/ramdisk0",1);
 	char buf[] = "D o  y o u  l i k e  w h a t  y o u  s e e";
 	char buf2[] = "\ndeep dark fantasy";
 	char buf3[] = "leafeonia~";
@@ -104,7 +104,7 @@ void fs(){
 	vfs->close(fd2);
 	vfs->read(fd2,buf4,strlen(buf3));
 	printf("read2: %s\n",buf4);
-	fd2 = vfs->open("/dev/ramdisk1",1);
+	fd2 = vfs->open("/dev/ramdisk0",1);
 	vfs->read(fd2,buf4,strlen(buf3));
 	printf("read3: %s\n",buf4);
 	/*char buf3[100];
