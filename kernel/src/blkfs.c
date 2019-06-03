@@ -59,10 +59,11 @@ void blkfsops_init(filesystem_t *fs, const char *name, device_t *dev){
 
 inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
 	int inode_id = ROOT;
-	char current_path[100];
-	strcpy(current_path,path);
-	while(strlen(current_path)){
-		if(current_path[0] == '/') current_path += 1;
+	char tmp_path[100];
+	strcpy(tmp_path,path);
+	char* cur_path = tmp_path;
+	while(strlen(cur_path)){
+		if(cur_path[0] == '/') cur_path += 1;
 	}
 	return NULL;
 }
