@@ -203,8 +203,9 @@ int vfs_open(const char *path, int flags){
 		}
 	}
 	const char* fs_path = path + omit;
-	//GOLDLOG(fs_path);
+	GOLDLOG(fs_path);
 	inode_t* inode = fs->ops->lookup(fs,fs_path,flags);
+	printf("inode->ptr = 0x%x\n",inode->ptr);
 	extern task_t** current_task[16];
 	task_t** cur = current_task[_cpu()];
 	int fd = -1;
