@@ -1,5 +1,6 @@
 #include <common.h>
 #include "vfs.h"
+#include <klib.h>
 
 #define BLOCK_SIZE 4096
 #define NR_INODE 64
@@ -11,7 +12,7 @@ void blkfsops_init(filesystem_t *fs, const char *name, device_t *dev){
 
 }
 
-inode_t blkfdops_lookup(filesystem_t *fs, const char *path, int flags){
+inode_t* blkfdops_lookup(filesystem_t *fs, const char *path, int flags){
 	return NULL;
 }
 
