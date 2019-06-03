@@ -7,9 +7,23 @@
 
 static inodeops_t* blk_inode_ops;
 
-
+static inode_t* inodes[NR_INODE];
+static char data_bitmap[BLOCK_SIZE];
+//****************************************
+//| INODES  |  DATA BITMAP |  DATA ...
+//****************************************
+//  BLOCK 0       BLOCK 1    BLOCK 2 - 999
 void blkfsops_init(filesystem_t *fs, const char *name, device_t *dev){
-
+	assert(sizeof(inode_t) == 16); //16 * NR_INODE = BLOCK_SIZE
+	inodes = pmm->alloc(NR_INODE * sizeof(inode_t));
+	data_bitmap = pmm->alloc(BLOCK_SIZE * sizeof(char));
+	for(int i = 0;i < NR_INODE;i++){
+		inodes[i]->refcnt = 0;
+		inodes[i]->ptr = NULL;
+		inodes[i]->fs = fs;
+		inodes[i]->ops = blk_inode_ops;
+	}
+	memset(data_bitmap,0,sizeof(data_bitmap));
 }
 
 inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
@@ -55,4 +69,6 @@ void blkfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	blkfs_ops->init = blkfsops_init;
 	blkfs_ops->lookup = blkfsops_lookup;
 	blkfs_ops->close = blkfsops_close;
+	
+	blkfs_ops->init(fs, name, dev);
 }
