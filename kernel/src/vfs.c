@@ -54,6 +54,10 @@ ssize_t dev_inode_write(file_t *file, const char *buf, size_t size){
 	LOG("YEAH");
 	//device_t* dev = file->inode->ptr;
 	//printf("inode = 0x%x, dev = 0x%x, dev->name = %s, \n",file->inode, dev, dev->name);
+	extern device_t* devices[8];
+	for(int i = 0;i < 8;i++){
+		printf("devices. id = %d, ptr = 0x%x, name = %s\n",devices[i]->id,devices[i]->ptr,devices[i]->name);
+	}
 	char text[] = "FAFAFAFAFAFAFA";
 	//dev->ops->write(dev, 0, text, strlen(text));
 	device_t* dev2 = dev_lookup("tty2");
@@ -99,7 +103,7 @@ void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	//init.
 	extern device_t* devices[8];
 	for(int i = 0;i < 8;i++){
-		printf("id = %d, ptr = 0x%x, name = %s\n",devices[i]->id,devices[i]->ptr,devices[i]->name);
+		printf("devices. id = %d, ptr = 0x%x, name = %s\n",devices[i]->id,devices[i]->ptr,devices[i]->name);
 	}
 	for(int i = 0;i < 8;i++){
 		devfs_inode[i] = pmm->alloc(sizeof(fsops_t));
