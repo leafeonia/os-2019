@@ -92,7 +92,10 @@ void fs(){
 	char buf[] = "D o  y o u  l i k e  w h a t  y o u  s e e";
 	char buf2[] = "\ndeep dark fantasy";
 	vfs->write(fd, buf, strlen(buf));
-	vfs->write(fd, buf2, strlen(buf));
+	vfs->write(fd, buf2, strlen(buf2));
+	char buf3[100];
+	vfs->read(fd, buf3, strlen(buf2));
+	printf("%s\n",buf3);
 	vfs->close(fd);
 	vfs->write(fd, buf, strlen(buf));
 	while(1);
