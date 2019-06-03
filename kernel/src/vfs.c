@@ -58,7 +58,7 @@ ssize_t dev_inode_write(file_t *file, const char *buf, size_t size){
 	for(int i = 0;i < 8;i++){
 		printf("devices. id = %d, ptr = 0x%x, name = %s\n",devices[i]->id,devices[i]->ptr,devices[i]->name);
 	}*/
-	char text[] = "FAFAFAFAFAFAFA";
+	char text[] = "FA";
 	dev->ops->write(dev, 0, text, strlen(text));
 	//device_t* dev2 = dev_lookup("tty2");
 	//dev2->ops->write(dev2, 0, text, strlen(text));
