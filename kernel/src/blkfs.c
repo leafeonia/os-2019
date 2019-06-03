@@ -49,7 +49,10 @@ void blkfsops_init(filesystem_t *fs, const char *name, device_t *dev){
 	inodes[ROOT].refcnt = 1;
 	inodes[ROOT].block[0] = 0;
 	data_bitmap[0] = 1;
-	dire[0].name = ".";
+	strcpy(dire[0].name,".");
+	dire[0].inode_id = ROOT;
+	strcpy(dire[1].name,"..");
+	dire[1].inode_id = ROOT;
 	
 	
 }
