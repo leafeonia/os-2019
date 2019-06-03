@@ -29,6 +29,7 @@ int dev_inode_close(file_t *file){
 
 ssize_t dev_inode_read(file_t *file, char *buf, size_t size){
 	device_t* dev = file->inode->ptr;
+	printf("name: %s\n",dev->name);
 	ssize_t nread = dev->ops->read(dev, file->offset, buf, size);
 		LOG("read2");
 	file->offset += size;
