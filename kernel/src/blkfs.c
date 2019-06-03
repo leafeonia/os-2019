@@ -7,7 +7,7 @@
 
 static inodeops_t* blk_inode_ops;
 
-static inode_t* inodes[NR_INODE];
+static inode_t inodes[NR_INODE];
 static char data_bitmap[BLOCK_SIZE];
 //****************************************
 //| INODES  |  DATA BITMAP |  DATA ...
