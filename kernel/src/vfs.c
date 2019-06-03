@@ -88,6 +88,9 @@ void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	//init.
 	extern device_t* devices[8];
 	for(int i = 0;i < 8;i++){
+		printf("id = %d, ptr = 0x%x\n",devices[i]->id,devices[i]->ptr);
+	}
+	for(int i = 0;i < 8;i++){
 		devfs_inode[i] = pmm->alloc(sizeof(fsops_t));
 		devfs_inode[i]->ptr = devices[i]->ptr;
 		devfs_inode[i]->ops = dev_inode_ops;
