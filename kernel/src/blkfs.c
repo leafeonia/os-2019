@@ -1,3 +1,5 @@
+#include <common.h>
+
 inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
 	return NULL;
 }
