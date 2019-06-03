@@ -1,6 +1,11 @@
 #include <common.h>
 #include "vfs.h"
 
+int boom(){
+	LOG("The file system doesn't support this function");
+	return -1;
+}
+
 int dev_inode_open(file_t *file, int flags, inode_t* inode){
 	kmt->spin_lock(&lk_dev_inode_ops);
 	file->inode = inode;
@@ -92,7 +97,4 @@ void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	
 }
 
-int boom(){
-	LOG("The file system doesn't support this function");
-	return -1;
-}
+
