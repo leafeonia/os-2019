@@ -40,7 +40,7 @@ void vfs_init(){
 	
 	
 	blkfs = pmm->alloc(sizeof(filesystem_t));
-	device_t *dev = dev_lookup("ramdisk0");
+	device_t *dev = dev_lookup("ramdisk1");
 	blkfs_ops->init = blkfs_init;
 	blkfs->ops->init(blkfs,"blkfs",dev);
 	

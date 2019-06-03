@@ -4,7 +4,7 @@
 #include <kernel.h>
 #include <nanos.h>
 #define NR_FILE 20
-#define BLOCK_SIZE 512
+
 
 struct spinlock {
 	const char* name;

@@ -1,15 +1,57 @@
 #include <common.h>
 #include "vfs.h"
 
-inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
+#define BLOCK_SIZE 4096
+#define NR_INODE 64
+
+static inodeops_t* blk_inode_ops;
+
+
+void blkfsops_init(filesystem_t *fs, const char *name, device_t *dev){
+
+}
+
+inode_t blkfdops_lookup(filesystem_t *fs, const char *path, int flags){
 	return NULL;
+}
+
+int blkfsops_close(inode_t *inode){
+	return 0;
 }
 
 void blkfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	fs->name = name;
 	fs->dev = dev;
+	printf("sizeof(inode_t) = %d\n",sizeof(inode_t));
+	
+	
+	//initialize inodeops of inode of blkfs.
+	blk_inode_ops = pmm->alloc(sizeof(inodeops_t));
+	
+	/*
+	never used.
+	
+	blk_inode_ops->open   = 
+	blk_inode_ops->close  = 
+	blk_inode_ops->lseek  = 
+	*/
+	
+	/*
+	blk_inode_ops->read   = dev_inode_read;
+	blk_inode_ops->write  = dev_inode_write;
+	
+	blk_inode_ops->mkdir  = boom;
+	blk_inode_ops->rmdir  = boom;
+	blk_inode_ops->link   = boom;
+	blk_inode_ops->unlink = boom;
+	*/
+	
 	blkfs_ops = pmm->alloc(sizeof(fsops_t));
 	blkfs->ops = blkfs_ops;
 	//rd_t* rd = dev->ptr;
 	//dev->ops->write()	
+	
+	blkfs_ops->init = blkfsops_init;
+	blkfs_ops->lookup = blkfsops_lookup;
+	blkfs_ops->close = blkfsops_close;
 }
