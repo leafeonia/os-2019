@@ -32,8 +32,6 @@ void vfs_init(){
 	
 	
 	blkfs = pmm->alloc(sizeof(filesystem_t));
-	blkfs_ops = pmm->alloc(sizeof(fsops_t));
-	blkfs->ops = blkfs_ops;
 	device_t *dev = dev_lookup("ramdisk0");
 	blkfs_ops->init = blkfs_init;
 	blkfs->ops->init(blkfs,"blkfs",dev);
@@ -43,8 +41,6 @@ void vfs_init(){
 	devfs->ops->init(devfs,"devfs",NULL);
 	
 	procfs = pmm->alloc(sizeof(filesystem_t));
-	procfs_ops = pmm->alloc(sizeof(fsops_t));
-	procfs->ops = procfs_ops;
 	procfs_ops->init = procfs_init;
 	procfs->ops->init(procfs,"procfs",NULL);
 	

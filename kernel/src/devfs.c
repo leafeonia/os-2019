@@ -9,8 +9,13 @@ static inodeops_t* dev_inode_ops;
 static inode_t* devfs_inode[10];
 
 int boom(){
-	LOG("The file system doesn't support this function");
+	LOG("devfs doesn't support this function");
 	return -1;
+}
+
+
+void dummy(){
+	return 0;
 }
 
 int dev_inode_open(file_t *file, int flags, inode_t* inode){
@@ -36,6 +41,7 @@ ssize_t dev_inode_write(file_t *file, const char *buf, size_t size){
 	kmt->spin_unlock(&lk_dev_inode_ops);
 	return 0;
 }
+
 
 
 inode_t* devfsops_lookup(filesystem_t *fs, const char *path, int flags){
@@ -69,6 +75,10 @@ void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	dev_inode_ops = pmm->alloc(sizeof(inodeops_t));
 	dev_inode_ops->open = dev_inode_open;
 	dev_inode_ops->write = dev_inode_write;
+	dev_inode_ops->mkdir = boom;
+	dev_inode_ops->rmdir = boom;
+	dev_inode_ops->link = boom;
+	dev_inode_ops->unlink = boom;
 	
 	
 	
@@ -90,6 +100,7 @@ void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
 		devfs_inode[i]->fs = devfs;
 		//printf("%d: ptr = 0x%x, ops = 0x%x,devfs_inode[%d] = 0x%x\n",i,devfs_inode[i]->ptr,devfs_inode[i]->ops,i ,devfs_inode[i]);
 	}
+	devfs_ops->init = dummy;//init has been done above.
 	
 	
 	
@@ -97,7 +108,7 @@ void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	devfs_ops->lookup = devfsops_lookup;
 	
 	//close (omit)
-	devfs_ops->close = boom;
+	devfs_ops->close = boom; //inode is static, never close an inode.
 	
 	
 	
