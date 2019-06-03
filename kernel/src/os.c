@@ -46,7 +46,7 @@ static void consumer(){
 
 void echo_task(void *name){
 	device_t *tty = dev_lookup(name);
-	printf("tty: 0x%x, tty->ops = 0x%x\n",tty,tty->ops);
+	//printf("tty: 0x%x, tty->ops = 0x%x\n",tty,tty->ops);
 	while(1){
 		//printf("echo %s\n",name);
 		char line[128], text[128];
@@ -89,7 +89,7 @@ void fs(){
 	//vfs->open("/a.txt",1);
 	//vfs->open("/proc/fa/fa2/proc",2);
 	int fd = vfs->open("/dev/tty1",1);
-	char buf[] = "sjhcbsdcygb";
+	char buf[] = "D o  y o u  l i k e  w h a t  y o u  s e e";
 	vfs->write(fd, buf, strlen(buf));
 	while(1);
 }
