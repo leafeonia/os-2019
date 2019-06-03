@@ -101,8 +101,8 @@ void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	devfs->ops = devfs_ops;
 	
 	//init.
-	/*extern device_t* devices[8];
-	for(int i = 0;i < 8;i++){
+	extern device_t* devices[8];
+	/*for(int i = 0;i < 8;i++){
 		printf("devices. id = %d, ptr = 0x%x, name = %s\n",devices[i]->id,devices[i]->ptr,devices[i]->name);
 	}*/
 	for(int i = 0;i < 8;i++){
