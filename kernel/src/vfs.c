@@ -64,7 +64,16 @@ inode_t* devfsops_lookup(filesystem_t *fs, const char *path, int flags){
 	if(path[0] == '/') path = path + 1;
 	printf("Welcome to devfs_lookup. dev_name = %s\n",path);
 	device_t* dev = dev_lookup(path);
-	return devfs_inode[dev->id];
+	char* devices_tmp[] = {"ramdisk0","ramdisk1","input","fb","tty1","tty2","tty3","tty4"};
+	int id = 0;
+	for(;id < 8;i++){
+		if(strcmp(devices_tmp[i],path) == 0) break;
+	}
+	if(id = 8){
+		LOG("devfs: lookup device fails.");
+		return NULL''
+	}
+	return devfs_inode[id];
 }
 
 void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
