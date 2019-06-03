@@ -104,7 +104,7 @@ void fs(){
 	vfs->close(fd2);
 	vfs->read(fd2,buf4,strlen(buf3));
 	printf("read2: %s\n",buf4);
-	fd2 = vfs->open("/dev/ramdisk0",1);
+	fd2 = vfs->open("/dev/ramdisk1",1);
 	vfs->read(fd2,buf4,strlen(buf3));
 	printf("read3: %s\n",buf4);
 	/*char buf3[100];
