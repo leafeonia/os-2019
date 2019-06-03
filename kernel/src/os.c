@@ -95,7 +95,7 @@ void fs(){
 	vfs->write(fd, buf2, strlen(buf2));
 	char buf3[100];
 	vfs->read(fd, buf3, strlen(buf2));
-	printf("%s\n",buf3);
+	printf("read: %s\n",buf3);
 	vfs->close(fd);
 	vfs->write(fd, buf, strlen(buf));
 	while(1);
