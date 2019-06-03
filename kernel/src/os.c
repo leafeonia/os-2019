@@ -130,7 +130,7 @@ static void os_init() {
   #ifdef L3_TEST
   kmt->create(pmm->alloc(sizeof(task_t)), "fs1", fs, NULL);
   kmt->create(pmm->alloc(sizeof(task_t)), "fs2", fs, NULL);
-  kmt->create(pmm->alloc(sizeof(task_t)), "print1", echo_task, "tty1");
+  //kmt->create(pmm->alloc(sizeof(task_t)), "print1", echo_task, "tty1");
   #endif
   //printf("end of os_init. intr_read = %d\n",_intr_read());
 }
