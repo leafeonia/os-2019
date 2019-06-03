@@ -95,7 +95,7 @@ void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
 		devfs_inode[i]->ptr = devices[i]->ptr;
 		devfs_inode[i]->ops = dev_inode_ops;
 		devfs_inode[i]->fs = devfs;
-		//printf("%d: ptr = 0x%x, ops = 0x%x\n",i,devfs_inode[i]->ptr,devfs_inode[i]->ops);
+		printf("%d: ptr = 0x%x, ops = 0x%x\n",i,devfs_inode[i]->ptr,devfs_inode[i]->ops);
 	}
 	
 	
