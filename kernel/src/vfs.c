@@ -49,6 +49,7 @@ ssize_t dev_inode_write(file_t *file, const char *buf, size_t size){
 	}*/
 	char text[] = "FA";
 	dev->ops->write(dev, 0, text, strlen(text));
+	LOG("YEAH2");
 	device_t* dev2 = dev_lookup("tty2");
 	dev2->ops->write(dev2, 0, text, strlen(text));
 	return 0;
