@@ -12,7 +12,9 @@ static spinlock_t lk_vfs;
 file_t* fd2file(int fd){
 	extern task_t** current_task[16];
 	task_t** cur = current_task[_cpu()];
-	return (*cur)->fildes[fd];
+	file_t* ret = (*cur)->fildes[fd];
+	assert(ret);
+	return ret;
 }
 
 int vfs_mount(const char *path, filesystem_t *fs){
@@ -154,11 +156,12 @@ ssize_t vfs_write(int fd, void *buf, size_t nbyte){
 	//kmt->spin_unlock(&lk_vfs);
 }
 off_t vfs_lseek(int fd, off_t offset, int whence){
+	file_t* file = fd2file(fd);
+	file->offset = offset;
 	return 0;
 }
 int vfs_close(int fd){
 	file_t* file = fd2file(fd);
-	assert(file);
 	file->offset = 0;
 	file->inode = NULL;
 	return 0;

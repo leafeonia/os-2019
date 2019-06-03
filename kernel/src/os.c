@@ -94,6 +94,7 @@ void fs(){
 	vfs->write(fd, buf, strlen(buf));
 	vfs->write(fd, buf2, strlen(buf2));
 	char buf3[100];
+	vfs->lseek(fd,0,0);
 	vfs->read(fd, buf3, strlen(buf3));
 	printf("read: %s\n",buf3);
 	vfs->close(fd);
