@@ -61,6 +61,9 @@ inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
 	int inode_id = ROOT;
 	char current_path[100];
 	strcpy(current_path,path);
+	while(current_path){
+		if(current_path[0] == '/') current_path++;
+	}
 	return NULL;
 }
 
