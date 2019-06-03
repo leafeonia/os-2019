@@ -20,7 +20,7 @@ device_t *devices[0 DEVICES(DEV_CNT)];
 device_t *dev_lookup(const char *name) {
   for (int i = 0; i < LENGTH(devices); i++) 
     if (strcmp(devices[i]->name, name) == 0){
-    	printf("dev find %d, address: 0x%x ,name : %s\n",i, devices[i],devices[i]->name);
+    	printf("dev find %d, address: 0x%x ,ptr = 0x%x,name : %s\n",i, devices[i],devices[i]->ptr,devices[i]->name);
     	return devices[i];
     }
       
