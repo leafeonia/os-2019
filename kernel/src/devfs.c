@@ -14,9 +14,7 @@ int boom(){
 }
 
 
-void dummy(){
-	return 0;
-}
+void dummy(){}
 
 int dev_inode_open(file_t *file, int flags, inode_t* inode){
 	kmt->spin_lock(&lk_dev_inode_ops);
