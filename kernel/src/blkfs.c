@@ -22,6 +22,29 @@ typedef struct directory{
 	int inode_id;
 }dire_t;
 
+
+
+
+
+
+
+int blk_inode_open(file_t *file, int flags, inode_t* inode){
+	/*kmt->spin_lock(&lk_dev_inode_ops);
+	file->inode = inode;
+	kmt->spin_unlock(&lk_dev_inode_ops);*/
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
 //****************************************
 //| INODES  |  DATA BITMAP |  DATA ...
 //****************************************
@@ -176,11 +199,11 @@ void blkfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	//initialize inodeops of inode of blkfs.
 	blk_inode_ops = pmm->alloc(sizeof(inodeops_t));
 	
-	/*
-	never used.
 	
-	blk_inode_ops->open   = 
-	blk_inode_ops->close  = 
+	
+	
+	blk_inode_ops->open   = blk_inode_open;
+	/*blk_inode_ops->close  = 
 	blk_inode_ops->lseek  = 
 	*/
 	
