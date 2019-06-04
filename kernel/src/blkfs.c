@@ -51,13 +51,14 @@ void blkfsops_init(filesystem_t *fs, const char *name, device_t *dev){
 	memset(dire,0,sizeof(dire));
 	//printf("sizeof dire = %d\n",sizeof(dire));
 	inodes[ROOT].refcnt = 1;
-	inodes[ROOT].block[0] = 0;
+	inodes[ROOT].block[0] = 0; /*root directory resides in data block #0 */
 	data_bitmap[0] = 1;
 	strcpy(dire[0].name,".");
 	dire[0].inode_id = ROOT;
 	strcpy(dire[1].name,"..");
 	dire[1].inode_id = ROOT;
-	dev->ops->write(dev, DATA_OFFSET, dire, BLOCK_SIZE);
+	dev->ops->write(dev, DATA(0), dire, BLOCK_SIZE);
+	dev->ops->write(dev, 0, inodes, BLOCK_SIZE);
 	dev->ops->write(dev, BITMAP_OFFSET, data_bitmap, BLOCK_SIZE);
 	
 }
