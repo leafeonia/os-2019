@@ -115,7 +115,7 @@ void fs(){
 	vfs->write(fd, buf, strlen(buf));*/
 	vfs->open("/test.txt",0);
 	vfs->open("/test.txt",O_CREAT);
-	//vfs->open("/test.txt",O_CREAT);
+	vfs->open("/test.txt",O_CREAT);
 	//vfs->close(fd3);
 	while(1);
 }
