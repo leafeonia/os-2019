@@ -175,22 +175,26 @@ int vfs_open(const char *path, int flags){
 	return fd;
 }
 ssize_t vfs_read(int fd, void *buf, size_t nbyte){
+	kmt->spin_lock(&lk_vfs);
 	file_t* file = fd2file(fd);
 	if(!file->inode){
 		LOG("error: current file has been closed. Read fails.");
 		return 1;
 	}
+	kmt->spin_unlock(&lk_vfs);
 	return file->inode->ops->read(file, buf, nbyte);
 }
 ssize_t vfs_write(int fd, void *buf, size_t nbyte){
+	kmt->spin_lock(&lk_vfs);
 	file_t* file = fd2file(fd);
 	if(!file->inode){
 		LOG("error: current file has been closed. Write fails");
+		kmt->spin_unlock(&lk_vfs);
 		return 1;
 	}
 	//kmt->spin_lock(&lk_vfs);
 	
-	
+	kmt->spin_unlock(&lk_vfs);
 	return file->inode->ops->write(file, buf, nbyte);
 	//kmt->spin_unlock(&lk_vfs);
 }
