@@ -123,6 +123,31 @@ void fs(){
 	while(1);
 }
 
+static void shell(void* name){
+  char buf[128];
+  device_t* tty = dev_lookup(name);
+  sprintf(buf, "/dev/%s", name);
+  int stdin = vfs->open(buf, 1);
+  int stdout = vfs->open(buf, 4);
+  while (1) {
+    char line[128], text[128];
+    sprintf(text, "(%s) $ ", name); tty_write(tty, text);
+    int nread = tty->ops->read(tty, 0, line, sizeof(line));
+    line[nread - 1] = '\0';
+    if(strcmp("ls",line) == 0){
+    	sprintf(text, "catch ls.\n"); tty_write(tty, text);
+    }
+    else sprintf(text, "Echo: %s.\n", line); tty_write(tty, text);
+    // supported commands:
+    //   ls
+    //   cd /proc
+    //   cat filename
+    //   mkdir /bin
+    //   rm /bin/abc
+    //   ...
+  }
+}
+
 static void os_init() {
   //LOG("os_init");
   //printf("begin of os_init. intr_read = %d\n",_intr_read());
@@ -159,7 +184,7 @@ static void os_init() {
   #ifdef L3_TEST
   kmt->create(pmm->alloc(sizeof(task_t)), "fs1", fs, NULL);
   //kmt->create(pmm->alloc(sizeof(task_t)), "fs2", fs, NULL);
-  kmt->create(pmm->alloc(sizeof(task_t)), "print1", echo_task, "tty2");
+  kmt->create(pmm->alloc(sizeof(task_t)), "shell1", shell, "tty2");
   #endif
   //printf("end of os_init. intr_read = %d\n",_intr_read());
 }
