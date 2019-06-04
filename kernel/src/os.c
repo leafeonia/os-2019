@@ -156,8 +156,8 @@ static void shell(void* name){
     if(strcmp("ls",input) == 0){
     	ls(output, pwd);
     }
-    else if(strncmp("touch",input,5) == 0){
-    	sprintf(output,"catch touch");
+    else if(strncmp("touch ",input,6) == 0){
+    	sprintf(output,"catch touch\n");
     }
     else {
     	sprintf(output, "Echo: %s.\n", input);
