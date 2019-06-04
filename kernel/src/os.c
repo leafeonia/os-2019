@@ -163,6 +163,7 @@ static void shell(void* name){
     //char input[128], output[512];
     sprintf(output, "(%s) $ ", name); 
     //tty->ops->write(tty, 0, output, strlen(output));
+    LOG("FA1");
     vfs->write(stdout, output, sizeof(output));
     int nread = vfs->read(stdin, input, sizeof(input));
     input[nread - 1] = '\0';
