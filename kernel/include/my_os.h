@@ -2,7 +2,7 @@
 #define DEBUG
 
 #ifdef DEBUG
-	#define LOG(...) printf("\033[35m"__VA_ARGS__"\033[0m"); 
+	#define LOG(...) printf("\033[35m__VA_ARGS__\033[0m"); 
 #else
 	#define LOG(...) ((void)0)
 #endif
