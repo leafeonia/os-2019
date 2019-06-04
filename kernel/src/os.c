@@ -113,6 +113,9 @@ void fs(){
 
 	vfs->close(fd);
 	vfs->write(fd, buf, strlen(buf));
+	
+	int fd3 = vfs->open("/..");
+	vfs->close(fd3);
 	while(1);
 }
 

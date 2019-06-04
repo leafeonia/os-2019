@@ -9,6 +9,7 @@
 #define DATA_OFFSET 8192
 #define ROOT 2
 #define NR_DIRE 64
+#define DATA(d) (DATA_OFFSET + BLOCK_SIZE * d)
 
 static inodeops_t* blk_inode_ops;
 
@@ -33,7 +34,7 @@ void blkfsops_init(filesystem_t *fs, const char *name, device_t *dev){
 		inodes[i].fs = fs;
 		inodes[i].ops = blk_inode_ops;
 		for(int i = 0;i < 12;i++){
-			inodes[i].block[i] = -1;
+			inodes[i].block[i] = -1; //!!
 		}
 	}
 	memset(data_bitmap,0,sizeof(data_bitmap));
@@ -58,13 +59,33 @@ void blkfsops_init(filesystem_t *fs, const char *name, device_t *dev){
 }
 
 inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
-	int inode_id = ROOT;
-	char tmp_path[100];
-	strcpy(tmp_path,path);
-	char* cur_path = tmp_path;
-	while(strlen(cur_path)){
-		if(cur_path[0] == '/') cur_path += 1;
+	//int dir_inode = ROOT; //current directory inode id
+	int inode_id = ROOT; //return inode id
+	dire_t dir[NR_DIRE];
+	char* left_path = path;
+	char cur_path[100];
+	while(strlen(left_path)){
+		if(left_path[0] == '/') left_path += 1;
+		memset(cur_path, 0, sizeof(cur_path));
+		for(int i = 0;i < 100;i++){
+			if(cur_path + i == '\0' || cur_path + i == '/') break;
+			cur_path[i] = left_path + i;
+		}
+		fs->dev->ops->read(dev, DATA(inode_id), dir, BLOCK_SIZE);
+		for(int i = 0;i <= NR_DIRE;i++){
+			if(i == NR_DIRE){
+				printf("\033[1;35merror when lookup: path \"%s\" not found\33[0m",path);
+				return NULL;
+			}
+			if(strcmp(cur_path, dir[i].name) == 0){
+				printf("found %s, inode_id = %d\n",cur_path, dir[i].inode_id);
+				inode_id = dir[i].inode_id;
+				break;
+			}
+		}
+		left_path += strlen(cur_path);
 	}
+	printf("finally : %d\n", inode_id);
 	return NULL;
 }
 
@@ -75,7 +96,7 @@ int blkfsops_close(inode_t *inode){
 void blkfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	fs->name = name;
 	fs->dev = dev;
-	printf("sizeof(inode_t) = %d\n",sizeof(inode_t));
+	//printf("sizeof(inode_t) = %d\n",sizeof(inode_t));
 	
 	
 	//initialize inodeops of inode of blkfs.
