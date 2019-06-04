@@ -139,6 +139,7 @@ static void ls(char* output, char* pwd){
 		}
 		//printf("%d - name: %s, inode_id: %d\n",i,dir[i].name, dir[i].inode_id);
 	}
+	strcat(output,"\n");
 }
 
 static void shell(void* name){
