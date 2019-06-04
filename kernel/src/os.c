@@ -166,7 +166,9 @@ static void shell(void* name){
     //tty->ops->write(tty, 0, output, strlen(output));
     //LOG("FA1");
     vfs->write(stdout, output, sizeof(output));
+    CYANLOG("nya2~");
     int nread = vfs->read(stdin, input, sizeof(input));
+    CYANLOG("nya3~");
     input[nread - 1] = '\0';
     if(strcmp("ls",input) == 0){
     	ls(output, pwd);
