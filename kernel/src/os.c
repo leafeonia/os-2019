@@ -154,14 +154,15 @@ static void shell(void* name){
     int nread = tty->ops->read(tty, 0, input, sizeof(input));
     input[nread - 1] = '\0';
     if(strcmp("ls",input) == 0){
-    	//sprintf(text, "catch ls.\n");
     	ls(output, pwd);
-    	tty->ops->write(tty, 0, output, strlen(output));
+    }
+    else if(strncmp("touch",input,5) == 0){
+    	sprintf(output,"catch touch");
     }
     else {
     	sprintf(output, "Echo: %s.\n", input);
-    	tty->ops->write(tty, 0, output, strlen(output));
     }
+    tty->ops->write(tty, 0, output, strlen(output));
     // supported commands:
     //   ls
     //   cd /proc
