@@ -17,6 +17,29 @@ file_t* fd2file(int fd){
 	return ret;
 }
 
+int getfd(){
+	extern task_t** current_task[16];
+	task_t** cur = current_task[_cpu()];
+	int fd = -1;
+	/*printf("in vfs. %s: %x\n",(*cur)->name,(*cur)->fildes);
+	for(int i = 3;i < 20;i++){
+		//printf("%d: %x\n",i,(*cur)->fildes[i]);
+		file_t* tmp = (*cur)->fildes[i];
+		printf("%d:*%x %x*\n",i,&(*cur)->fildes[i],tmp);
+	}*/
+	for(int i = 3;i < 20;i++){
+		//printf("%d: %x\n",i,(*cur)->fildes[i]);
+		file_t* tmp = (*cur)->fildes[i];
+		//printf("%d:*%x*\n",i,tmp);
+		if(tmp == NULL){
+			fd = i;
+			break;
+		}
+	}
+	if(fd == -1) panic("no available fd(MAXIMUM 20)\n");
+	return fd;
+}
+
 int vfs_mount(const char *path, filesystem_t *fs){
 	kmt->spin_lock(&lk_vfs);
 	mt_list[mt_idx].path = path;
@@ -73,6 +96,23 @@ int vfs_rmdir(const char *path){
 	return 0;
 }
 int vfs_link(const char *oldpath, const char *newpath){
+	filesystem_t* fs = NULL;
+	int omit = 0; 
+	for(int i = 0;i <= mt_idx;i++){
+		if(i == mt_idx) panic("filesystem not found\n");
+		
+		if(strncmp(path,mt_list[i].path,strlen(mt_list[i].path)) == 0){
+			omit = strlen(mt_list[i].path);
+			fs = mt_list[i].fs;
+			break;
+		}
+	}
+	const char* fs_path = path + omit;
+	inode_t* inode = fs->ops->lookup(fs,fs_path,0); //TODOFLAG
+	if(!inode){
+		LOG("vfs->link(%s, %s) fails", oldpath, newpath);
+		return -1;
+	}
 	return 0;
 }
 int vfs_unlink(const char *path){
@@ -113,23 +153,7 @@ int vfs_open(const char *path, int flags){
 	//printf("inode->ptr = 0x%x\n",inode->ptr);
 	extern task_t** current_task[16];
 	task_t** cur = current_task[_cpu()];
-	int fd = -1;
-	/*printf("in vfs. %s: %x\n",(*cur)->name,(*cur)->fildes);
-	for(int i = 3;i < 20;i++){
-		//printf("%d: %x\n",i,(*cur)->fildes[i]);
-		file_t* tmp = (*cur)->fildes[i];
-		printf("%d:*%x %x*\n",i,&(*cur)->fildes[i],tmp);
-	}*/
-	for(int i = 3;i < 20;i++){
-		//printf("%d: %x\n",i,(*cur)->fildes[i]);
-		file_t* tmp = (*cur)->fildes[i];
-		//printf("%d:*%x*\n",i,tmp);
-		if(tmp == NULL){
-			fd = i;
-			break;
-		}
-	}
-	if(fd == -1) panic("no available fd(MAXIMUM 20)\n");
+	int fd = getfd();
 	file_t* file = pmm->alloc(sizeof(file_t));
 	file->refcnt = 1;
 	file->offset = 0;
