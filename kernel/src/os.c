@@ -131,7 +131,13 @@ static void ls(char* output, char* pwd){
 	dire_t dir[NR_DIRE];
 	vfs->read(fd,dir,BLOCK_SIZE);
 	for(int i = 0;i < NR_DIRE;i++){
-		printf("%d - name: %s, inode_id: %d\n",i,dir[i].name, dir[i].inode_id);
+		if(dir[i].inode_id){
+			if(strcmp(dir[i].name,".") == 0 || strcmp(dir[i].name,"..") == 0) continue;
+			char temp[64];
+			sprintf(temp,"%s ",dir[i].name);
+			strcat(output, temp);
+		}
+		//printf("%d - name: %s, inode_id: %d\n",i,dir[i].name, dir[i].inode_id);
 	}
 }
 
@@ -141,19 +147,19 @@ static void shell(void* name){
   char pwd[128];
   sprintf(pwd,"/");
   while (1) {
-    char line[128], text[128];
-    sprintf(text, "(%s) $ ", name); 
-    tty->ops->write(tty, 0, text, strlen(text));
-    int nread = tty->ops->read(tty, 0, line, sizeof(line));
-    line[nread - 1] = '\0';
-    if(strcmp("ls",line) == 0){
-    	sprintf(text, "catch ls.\n");
-    	ls(text, pwd);
-    	tty->ops->write(tty, 0, text, strlen(text));
+    char input[128], output[512];
+    sprintf(output, "(%s) $ ", name); 
+    tty->ops->write(tty, 0, output, strlen(output));
+    int nread = tty->ops->read(tty, 0, input, sizeof(input));
+    input[nread - 1] = '\0';
+    if(strcmp("ls",input) == 0){
+    	//sprintf(text, "catch ls.\n");
+    	ls(output, pwd);
+    	tty->ops->write(tty, 0, output, strlen(output));
     }
     else {
-    	sprintf(text, "Echo: %s.\n", line);
-    	tty->ops->write(tty, 0, text, strlen(text));
+    	sprintf(output, "Echo: %s.\n", input);
+    	tty->ops->write(tty, 0, output, strlen(output));
     }
     // supported commands:
     //   ls

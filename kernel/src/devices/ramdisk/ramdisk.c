@@ -7,12 +7,12 @@ int rd_init(device_t *dev) {
   if (dev->id == 1) {
     rd->start = &initrd_start;
     rd->end   = &initrd_end;
-    printf("%s: start: %x, end: %x\n",dev->name, rd->start,rd->end);
+    //printf("%s: start: %x, end: %x\n",dev->name, rd->start,rd->end);
   } else {
     char *space = pmm->alloc(RD_SIZE);
     rd->start = space;
     rd->end   = space + RD_SIZE;
-    printf("%s: start: %x, end: %x\n",dev->name, rd->start,rd->end);
+    //printf("%s: start: %x, end: %x\n",dev->name, rd->start,rd->end);
   }
   return 0;
 }
