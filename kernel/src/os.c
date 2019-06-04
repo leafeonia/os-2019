@@ -116,6 +116,7 @@ void fs(){
 	vfs->open("/test.txt",0);
 	vfs->open("/test.txt",O_CREAT);
 	vfs->open("/test.txt",O_CREAT);
+	vfs->open("/a/b.txt",O_CREAT);
 	//vfs->close(fd3);
 	while(1);
 }
