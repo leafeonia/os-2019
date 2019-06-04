@@ -4,6 +4,7 @@
 #include <kernel.h>
 #include <nanos.h>
 #define NR_FILE 20
+#define O_CREAT 0x10
 
 
 struct spinlock {
