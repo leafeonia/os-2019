@@ -183,7 +183,9 @@ inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
 		left_path += strlen(cur_path);
 	}
 	printf("finally : %d\n", inode_id);
-	return NULL;
+	inode_t* ret = pmm->alloc(sizeof(inode_t));
+	fs->dev->ops->read(fs->dev, INODE(inode_id), ret, sizeof(inode_t));
+	return ret;
 }
 
 int blkfsops_close(inode_t *inode){
