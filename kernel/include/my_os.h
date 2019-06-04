@@ -27,3 +27,5 @@
 #define MAGIC2 0x987654321098765
 
 #define GOLDLOG(...) printf("\033[1;33m");printf(__VA_ARGS__);printf("\033[0m\n"); 
+
+#define CYANLOG(...) printf("\033[1;36m");printf(__VA_ARGS__);printf("\033[0m\n"); 
