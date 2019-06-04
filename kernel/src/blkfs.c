@@ -63,7 +63,7 @@ void blkfsops_init(filesystem_t *fs, const char *name, device_t *dev){
 int get_data_offset(int inode_id){
 	inode_t inode;
 	blkfs->dev->ops->read(blkfs->dev, INODE(inode_id), &inode, sizeof(inode_t));
-	printf("get_data_offset: %d\n",inode->block[0]);
+	printf("get_data_offset: %d\n",inode.block[0]);
 	return 0;
 }
 
