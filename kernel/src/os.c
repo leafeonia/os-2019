@@ -150,7 +150,7 @@ static void shell(void* name){
   device_t* tty = dev_lookup(name);
   
   char pwd[128];
-  sprintf(pwd,"/");
+  sprintf(pwd,"/dev");
   while (1) {
     char input[128], output[512];
     sprintf(output, "(%s) $ ", name); 
