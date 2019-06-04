@@ -169,7 +169,7 @@ int vfs_close(int fd){
 	file_t* file = fd2file(fd);
 	file->offset = 0;
 	file->inode->refcnt--;
-	LOG("file->inode->block[0] = %d",file->inode->block[0]);
+	//LOG("file->inode->block[0] = %d",file->inode->block[0]);
 	file->inode->fs->ops->close(file->inode); //devfs: do nothing   blkfs: free the inode
 	file->inode = NULL;
 	return 0;
