@@ -2,12 +2,17 @@
 
 filesystem_t* blkfs, *devfs, *procfs;
 fsops_t* blkfs_ops, *devfs_ops, *procfs_ops;
-
+#define NR_DIRE 64  //each directory contains at most 64 files
 
 struct mount_point{
 	const char* path;
 	filesystem_t* fs;
 };
+
+typedef struct directory{
+	char name[60];
+	int inode_id;
+}dire_t;
 
 
 //devfs
