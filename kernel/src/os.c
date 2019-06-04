@@ -194,9 +194,9 @@ static void os_init() {
   kmt->create(pmm->alloc(sizeof(task_t)), "dummy11", dummy_test, (void*)11);*/
   #endif
   #ifdef L3_TEST
-  kmt->create(pmm->alloc(sizeof(task_t)), "fs1", fs, NULL);
+  //kmt->create(pmm->alloc(sizeof(task_t)), "fs1", fs, NULL);
   //kmt->create(pmm->alloc(sizeof(task_t)), "fs2", fs, NULL);
-  kmt->create(pmm->alloc(sizeof(task_t)), "shell1", shell, "tty2");
+  kmt->create(pmm->alloc(sizeof(task_t)), "shell1", shell, "tty1");
   #endif
   //printf("end of os_init. intr_read = %d\n",_intr_read());
 }
