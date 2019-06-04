@@ -126,6 +126,10 @@ void fs(){
 
 static void ls(char* output, char* pwd){
 	char path[128];
+	if(strncmp("/dev",pwd,4) == 0){
+		sprintf(output,"ramdisk0 ramdisk1 input fb tty1 tty2 tty3 tty4\n");
+		return;
+	}
 	sprintf(path,"%s/.",pwd);
 	int fd = vfs->open(path, 0);//TODOFLAG
 	dire_t dir[NR_DIRE];
