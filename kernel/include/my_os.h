@@ -6,6 +6,7 @@
 #else
 	#define LOG(s) ((void)0)
 #endif*/
+#ifdef DEBUG
 #	define Log_write(format, ...) \
   do { \
     if (log_fp != NULL) { \
