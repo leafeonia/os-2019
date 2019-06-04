@@ -81,7 +81,7 @@ int get_available_data_block(){
 int get_available_inode(){
 	inode_t inodes[NR_INODE];
 	blkfs->dev->ops->read(blkfs->dev, 0, &inodes, BLOCK_SIZE);
-	for(int i = 0;i < NR_INODE;i++){
+	for(int i = 2;i < NR_INODE;i++){
 		if(inodes[i].refcnt == 0) {
 			inodes[i].refcnt = 1;
 			inodes[i].block[0] = get_available_data_block();
