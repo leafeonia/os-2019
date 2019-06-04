@@ -1,34 +1,11 @@
 
 #define DEBUG
 
-/*#ifdef DEBUG
-	#define LOG(s) printf("\33[1;35m%s\n\33[0m",s)
-#else
-	#define LOG(s) ((void)0)
-#endif*/
 #ifdef DEBUG
-#	define Log_write(format, ...) \
-  do { \
-    if (log_fp != NULL) { \
-      fprintf(log_fp, format, ## __VA_ARGS__); \
-      fflush(log_fp); \
-    } \
-  } while (0)
+	#define LOG(...) printf("\033[31m"__VA_ARGS__"\033[0m"); 
 #else
-#	define Log_write(format, ...)
+	#define LOG(...) ((void)0)
 #endif
-
-#define printflog(format, ...) \
-  do { \
-    printf(format, ## __VA_ARGS__); \
-    fflush(stdout); \
-    Log_write(format, ## __VA_ARGS__); \
-  } while (0)
-
-#define LOG(format, ...) \
-    printflog("\33[1;34m[%s,%d,%s] " format "\33[0m\n", \
-        __FILE__, __LINE__, __func__, ## __VA_ARGS__)
-
 
 #define Assert(cond) \
 	do { \
