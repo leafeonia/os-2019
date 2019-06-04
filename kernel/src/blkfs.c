@@ -35,6 +35,13 @@ int blk_inode_open(file_t *file, int flags, inode_t* inode){
 	return 0;
 }
 
+ssize_t blk_inode_read(file_t *file, char *buf, size_t size){
+	device_t* dev = file->inode->fs->dev;
+	ssize_t nread = dev->ops->read(dev, DATA(inode->block[0]) + file->offset, buf, size);
+	file->offset += size;
+	return nread;
+}
+
 
 
 
@@ -216,6 +223,7 @@ void blkfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	
 	
 	blk_inode_ops->open   = blk_inode_open;
+	blk_inode_ops->read   = blk_inode_read;
 	/*blk_inode_ops->close  = 
 	blk_inode_ops->lseek  = 
 	*/

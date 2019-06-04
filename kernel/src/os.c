@@ -2,6 +2,7 @@
 #include <klib.h>
 #include <devices.h>
 #include "my_os.h"
+#include "vfs.h"
 
 //#define L2_TEST
 #define L3_TEST
@@ -127,7 +128,8 @@ static void ls(char* output, char* pwd){
 	char path[128];
 	sprintf(path,"%s/.",pwd);
 	int fd = vfs->open(path, 0);//TODOFLAG
-	fd++;
+	dire_t dir[NR_DIRE];
+	vfs->read(fd,dir,BLOCK_SIZE);
 }
 
 static void shell(void* name){
