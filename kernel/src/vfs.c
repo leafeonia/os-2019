@@ -181,8 +181,9 @@ ssize_t vfs_read(int fd, void *buf, size_t nbyte){
 		LOG("error: current file has been closed. Read fails.");
 		return 1;
 	}
+	ssize_t ret = file->inode->ops->read(file, buf, nbyte);
 	kmt->spin_unlock(&lk_vfs);
-	return file->inode->ops->read(file, buf, nbyte);
+	return ret;
 }
 ssize_t vfs_write(int fd, void *buf, size_t nbyte){
 	kmt->spin_lock(&lk_vfs);
@@ -193,9 +194,9 @@ ssize_t vfs_write(int fd, void *buf, size_t nbyte){
 		return 1;
 	}
 	//kmt->spin_lock(&lk_vfs);
-	
+	ssize_t ret = file->inode->ops->write(file, buf, nbyte);
 	kmt->spin_unlock(&lk_vfs);
-	return file->inode->ops->write(file, buf, nbyte);
+	return ret;
 	//kmt->spin_unlock(&lk_vfs);
 }
 off_t vfs_lseek(int fd, off_t offset, int whence){
