@@ -162,6 +162,7 @@ off_t vfs_lseek(int fd, off_t offset, int whence){
 int vfs_close(int fd){
 	file_t* file = fd2file(fd);
 	file->offset = 0;
+	file->inode->fs->ops->close(file->inode); //devfs: do nothing   blkfs: free the inode
 	file->inode = NULL;
 	return 0;
 }

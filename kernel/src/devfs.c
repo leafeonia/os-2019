@@ -13,6 +13,7 @@ int boom(){
 	return -1;
 }
 
+int dummy2(){return 0;}
 
 void dummy(){}
 
@@ -124,7 +125,7 @@ void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	devfs_ops->lookup = devfsops_lookup;
 	
 	//close (omit)
-	devfs_ops->close = boom; //inode is static, never close an inode.
+	devfs_ops->close = dummy2; //inode is stored on stack, no need to free.
 	
 	
 	
