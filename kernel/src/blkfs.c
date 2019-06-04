@@ -72,7 +72,10 @@ int get_available_data_block(){
 	unsigned char data_bitmap[BLOCK_SIZE];
 	blkfs->dev->ops->read(blkfs->dev, BITMAP_OFFSET, data_bitmap, BLOCK_SIZE);
 	for(int i = 0;i < NR_DATA;i++){
-		if(!data_bitmap[i]) return i;
+		if(!data_bitmap[i]) {
+			GOLDLOG("get available data block #%d",i);
+			return i;
+		}
 	}
 	LOG("error: no available data block");
 	return -1;
@@ -88,7 +91,7 @@ int get_available_inode(){
 			return i;
 		}
 	}
-	LOG("error: no availabe inode");
+	LOG("error: no available inode");
 	return -1;
 }
 
