@@ -129,7 +129,7 @@ int vfs_unlink(const char *path){
 	return 0;
 }
 int vfs_open(const char *path, int flags){
-	//kmt->spin_lock(&lk_vfs);
+	kmt->spin_lock(&lk_vfs);
 	/*if(strncmp(path,"/proc",5) == 0){
 		printf("proc\n");
 	}
@@ -156,7 +156,7 @@ int vfs_open(const char *path, int flags){
 	inode_t* inode = fs->ops->lookup(fs,fs_path,flags);
 	if(!inode){
 		LOG("vfs->open(%s, %d) fails", path, flags);
-		//kmt->spin_unlock(&lk_vfs);
+		kmt->spin_unlock(&lk_vfs);
 		return -1;
 	}
 	//inode->refcnt++;
@@ -171,7 +171,7 @@ int vfs_open(const char *path, int flags){
 	(*cur)->fildes[fd] = file;
 	//printf("return fd = %d\n",fd);
 	//inode->ops->open(file, flags, inode);
-	//kmt->spin_unlock(&lk_vfs);
+	kmt->spin_unlock(&lk_vfs);
 	return fd;
 }
 ssize_t vfs_read(int fd, void *buf, size_t nbyte){
