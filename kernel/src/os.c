@@ -131,13 +131,18 @@ static void shell(void* name){
   int stdout = vfs->open(buf, 4);
   while (1) {
     char line[128], text[128];
-    sprintf(text, "(%s) $ ", name); tty_write(tty, text);
+    sprintf(text, "(%s) $ ", name); 
+    tty->ops->write(tty, 0, text, strlen(text));
     int nread = tty->ops->read(tty, 0, line, sizeof(line));
     line[nread - 1] = '\0';
     if(strcmp("ls",line) == 0){
-    	sprintf(text, "catch ls.\n"); tty_write(tty, text);
+    	sprintf(text, "catch ls.\n");
+    	tty->ops->write(tty, 0, text, strlen(text));
     }
-    else sprintf(text, "Echo: %s.\n", line); tty_write(tty, text);
+    else {
+    	sprintf(text, "Echo: %s.\n", line);
+    	tty->ops->write(tty, 0, text, strlen(text));
+    }
     // supported commands:
     //   ls
     //   cd /proc
