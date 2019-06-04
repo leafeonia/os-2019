@@ -11,6 +11,7 @@
 #define ROOT 2
 #define NR_DIRE 64
 #define DATA(d) (DATA_OFFSET + BLOCK_SIZE * d)
+#define INODE(d) (d * sizeof(inode_t))
 
 static inodeops_t* blk_inode_ops;
 
@@ -57,6 +58,13 @@ void blkfsops_init(filesystem_t *fs, const char *name, device_t *dev){
 	dire[1].inode_id = ROOT;
 	dev->ops->write(dev, DATA_OFFSET, dire, BLOCK_SIZE);
 	
+}
+
+int get_data_offset(int inode_id){
+	inode_t* inode;
+	blkfs->dev->ops->read(blkfs->dev, INODE(inode_id), inode, sizeof(inode_t));
+	printf("get_data_offset: %d\n",inode->offset);
+	return 0;
 }
 
 inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
