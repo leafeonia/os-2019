@@ -69,6 +69,7 @@ inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
 	char cur_path[100];
 	GOLDLOG(fs->dev->name);
 	while(strlen(left_path)){
+		GOLDLOG("left_path: %s",left_path);
 		if(left_path[0] == '/') left_path += 1;
 		memset(cur_path, 0, sizeof(cur_path));
 		for(int i = 0;i < 100;i++){
