@@ -123,12 +123,18 @@ void fs(){
 	while(1);
 }
 
+static void ls(char* output, char* pwd){
+	char path[128];
+	sprintf(path,"%s/.",pwd);
+	int fd = vfs->open(path, 0);//TODOFLAG
+	
+}
+
 static void shell(void* name){
-  char buf[128];
   device_t* tty = dev_lookup(name);
-  sprintf(buf, "/dev/%s", name);
-  //int stdin = vfs->open(buf, 1);
-  //int stdout = vfs->open(buf, 4);
+  
+  char pwd[128];
+  sprintf(pwd,"/");
   while (1) {
     char line[128], text[128];
     sprintf(text, "(%s) $ ", name); 
@@ -137,6 +143,7 @@ static void shell(void* name){
     line[nread - 1] = '\0';
     if(strcmp("ls",line) == 0){
     	sprintf(text, "catch ls.\n");
+    	ls(text, pwd);
     	tty->ops->write(tty, 0, text, strlen(text));
     }
     else {

@@ -45,46 +45,7 @@ int blk_inode_open(file_t *file, int flags, inode_t* inode){
 
 
 
-//****************************************
-//| INODES  |  DATA BITMAP |  DATA ...
-//****************************************
-//  BLOCK 0       BLOCK 1    BLOCK 2 - 999
-void blkfsops_init(filesystem_t *fs, const char *name, device_t *dev){
-	assert(sizeof(inode_t) * NR_INODE == BLOCK_SIZE); //64 * NR_INODE = BLOCK_SIZE
-	inode_t inodes[NR_INODE];
-    unsigned char data_bitmap[BLOCK_SIZE];
-    
-	for(int i = 0;i < NR_INODE;i++){
-		inodes[i].refcnt = 0;
-		inodes[i].ptr = NULL;
-		inodes[i].fs = fs;
-		inodes[i].ops = blk_inode_ops;
-		for(int i = 0;i < 12;i++){
-			inodes[i].block[i] = -1; //!!
-		}
-	}
-	memset(data_bitmap,0,sizeof(data_bitmap));
-	//printf("size = %d\n",sizeof(inode_t));
-	dev->ops->write(dev, 0, inodes, BLOCK_SIZE);
-	dev->ops->write(dev, BITMAP_OFFSET, data_bitmap, BLOCK_SIZE);
-	
-	
-	//Initialize root directory. Data reside in block 2(data: 0)
-	dire_t dire[NR_DIRE];  
-	memset(dire,0,sizeof(dire));
-	//printf("sizeof dire = %d\n",sizeof(dire));
-	inodes[ROOT].refcnt = 1;
-	inodes[ROOT].block[0] = 0; /*root directory resides in data block #0 */
-	data_bitmap[0] = 1;
-	strcpy(dire[0].name,".");
-	dire[0].inode_id = ROOT;
-	strcpy(dire[1].name,"..");
-	dire[1].inode_id = ROOT;
-	dev->ops->write(dev, DATA(0), dire, BLOCK_SIZE);
-	dev->ops->write(dev, 0, inodes, BLOCK_SIZE);
-	dev->ops->write(dev, BITMAP_OFFSET, data_bitmap, BLOCK_SIZE);
-	
-}
+
 
 int get_data_offset(int inode_id){
 	inode_t inode;
@@ -120,6 +81,52 @@ int get_available_inode(){
 	}
 	LOG("error: no available inode");
 	return -1;
+}
+
+
+//****************************************
+//| INODES  |  DATA BITMAP |  DATA ...
+//****************************************
+//  BLOCK 0       BLOCK 1    BLOCK 2 - 999
+void blkfsops_init(filesystem_t *fs, const char *name, device_t *dev){
+	assert(sizeof(inode_t) * NR_INODE == BLOCK_SIZE); //64 * NR_INODE = BLOCK_SIZE
+	inode_t inodes[NR_INODE];
+    unsigned char data_bitmap[BLOCK_SIZE];
+    
+	for(int i = 0;i < NR_INODE;i++){
+		inodes[i].refcnt = 0;
+		inodes[i].ptr = NULL;
+		inodes[i].fs = fs;
+		inodes[i].ops = blk_inode_ops;
+		for(int i = 0;i < 12;i++){
+			inodes[i].block[i] = -1; //!!
+		}
+	}
+	memset(data_bitmap,0,sizeof(data_bitmap));
+	//printf("size = %d\n",sizeof(inode_t));
+	dev->ops->write(dev, 0, inodes, BLOCK_SIZE);
+	dev->ops->write(dev, BITMAP_OFFSET, data_bitmap, BLOCK_SIZE);
+	
+	
+	//Initialize root directory. Data reside in block 2(data: 0)
+	dire_t dire[NR_DIRE];  
+	memset(dire,0,sizeof(dire));
+	//printf("sizeof dire = %d\n",sizeof(dire));
+	inodes[ROOT].refcnt = 1;
+	inodes[ROOT].block[0] = 0; /*root directory resides in data block #0 */
+	data_bitmap[0] = 1;
+	strcpy(dire[0].name,".");
+	dire[0].inode_id = ROOT;
+	strcpy(dire[1].name,"..");
+	dire[1].inode_id = ROOT;
+	strcpy(dire[2].name,"proc");
+	dire[2].inode_id = get_available_inode();
+	strcpy(dire[3].name,"dev");
+	dire[3].inode_id = get_available_inode();
+	dev->ops->write(dev, DATA(0), dire, BLOCK_SIZE);
+	dev->ops->write(dev, 0, inodes, BLOCK_SIZE);
+	dev->ops->write(dev, BITMAP_OFFSET, data_bitmap, BLOCK_SIZE);
+	
 }
 
 inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){

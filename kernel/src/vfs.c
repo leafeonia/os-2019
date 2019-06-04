@@ -113,6 +113,16 @@ int vfs_link(const char *oldpath, const char *newpath){
 		LOG("vfs->link(%s, %s) fails", oldpath, newpath);
 		return -1;
 	}
+	inode->refcnt++;
+	//printf("inode->ptr = 0x%x\n",inode->ptr);
+	extern task_t** current_task[16];
+	task_t** cur = current_task[_cpu()];
+	int fd = getfd();
+	file_t* file = pmm->alloc(sizeof(file_t));
+	file->refcnt = 1;
+	file->offset = 0;
+	file->inode = inode;
+	(*cur)->fildes[fd] = file;
 	return 0;
 }
 int vfs_unlink(const char *path){
