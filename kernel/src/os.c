@@ -151,15 +151,20 @@ static void touch(char* output, char* pwd, char* filename){
 }
 
 static void shell(void* name){
-  device_t* tty = dev_lookup(name);
-  
+  //device_t* tty = dev_lookup(name);
+  char input[512];
+  char output[512];
+  sprintf(input,"/dev/%s",name);
+  int stdin = vfs->open(buf, 1);//TODOFLAG
+  int stdout = vfs->open(buf, 4);
   char pwd[128];
-  sprintf(pwd,"/dev");
+  sprintf(pwd,"/");
   while (1) {
-    char input[128], output[512];
-    sprintf(output, "(%s) $ ", name); 
-    tty->ops->write(tty, 0, output, strlen(output));
-    int nread = tty->ops->read(tty, 0, input, sizeof(input));
+    //char input[128], output[512];
+    //sprintf(output, "(%s) $ ", name); 
+    //tty->ops->write(tty, 0, output, strlen(output));
+    vfs->write(stdout, output, sizeof(output));
+    int nread = vfs->read(stdin, input, sizeof(input));
     input[nread - 1] = '\0';
     if(strcmp("ls",input) == 0){
     	ls(output, pwd);
