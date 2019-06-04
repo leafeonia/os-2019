@@ -155,13 +155,13 @@ static void shell(void* name){
   char input[512];
   char output[512];
   sprintf(input,"/dev/%s",name);
-  int stdin = vfs->open(buf, 1);//TODOFLAG
-  int stdout = vfs->open(buf, 4);
+  int stdin = vfs->open(input, 1);//TODOFLAG
+  int stdout = vfs->open(input, 4);
   char pwd[128];
   sprintf(pwd,"/");
   while (1) {
     //char input[128], output[512];
-    //sprintf(output, "(%s) $ ", name); 
+    sprintf(output, "(%s) $ ", name); 
     //tty->ops->write(tty, 0, output, strlen(output));
     vfs->write(stdout, output, sizeof(output));
     int nread = vfs->read(stdin, input, sizeof(input));
@@ -179,7 +179,7 @@ static void shell(void* name){
     else {
     	sprintf(output, "Echo: %s.\n", input);
     }
-    tty->ops->write(tty, 0, output, strlen(output));
+    vfs->write(stdout, output, sizeof(output));
     // supported commands:
     //   ls
     //   cd /proc
