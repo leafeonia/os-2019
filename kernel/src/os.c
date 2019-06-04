@@ -127,8 +127,8 @@ static void shell(void* name){
   char buf[128];
   device_t* tty = dev_lookup(name);
   sprintf(buf, "/dev/%s", name);
-  int stdin = vfs->open(buf, 1);
-  int stdout = vfs->open(buf, 4);
+  //int stdin = vfs->open(buf, 1);
+  //int stdout = vfs->open(buf, 4);
   while (1) {
     char line[128], text[128];
     sprintf(text, "(%s) $ ", name); 
