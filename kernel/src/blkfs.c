@@ -191,7 +191,7 @@ inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
 }
 
 int blkfsops_close(inode_t *inode){
-	pmm->free(inode);
+	if(inode->refcnt == 0)pmm->free(inode);
 	return 0;
 }
 

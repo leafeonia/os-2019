@@ -109,6 +109,7 @@ int vfs_open(const char *path, int flags){
 		kmt->spin_unlock(&lk_vfs);
 		return -1;
 	}
+	inode->refcnt++;
 	//printf("inode->ptr = 0x%x\n",inode->ptr);
 	extern task_t** current_task[16];
 	task_t** cur = current_task[_cpu()];
@@ -167,6 +168,7 @@ off_t vfs_lseek(int fd, off_t offset, int whence){
 int vfs_close(int fd){
 	file_t* file = fd2file(fd);
 	file->offset = 0;
+	file->inode->refcnt--;
 	LOG("file->inode->block[0] = %d",file->inode->block[0]);
 	file->inode->fs->ops->close(file->inode); //devfs: do nothing   blkfs: free the inode
 	file->inode = NULL;
