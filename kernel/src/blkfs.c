@@ -17,10 +17,7 @@
 static inodeops_t* blk_inode_ops;
 
 
-typedef struct directory{
-	char name[60];
-	int inode_id;
-}dire_t;
+
 
 
 

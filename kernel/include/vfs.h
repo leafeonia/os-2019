@@ -3,6 +3,8 @@
 filesystem_t* blkfs, *devfs, *procfs;
 fsops_t* blkfs_ops, *devfs_ops, *procfs_ops;
 #define NR_DIRE 64  //each directory contains at most 64 files
+#define BLOCK_SIZE 4096
+
 
 struct mount_point{
 	const char* path;
