@@ -101,13 +101,13 @@ int vfs_link(const char *oldpath, const char *newpath){
 	for(int i = 0;i <= mt_idx;i++){
 		if(i == mt_idx) panic("filesystem not found\n");
 		
-		if(strncmp(path,mt_list[i].path,strlen(mt_list[i].path)) == 0){
+		if(strncmp(oldpath,mt_list[i].path,strlen(mt_list[i].path)) == 0){
 			omit = strlen(mt_list[i].path);
 			fs = mt_list[i].fs;
 			break;
 		}
 	}
-	const char* fs_path = path + omit;
+	const char* fs_path = oldpath + omit;
 	inode_t* inode = fs->ops->lookup(fs,fs_path,0); //TODOFLAG
 	if(!inode){
 		LOG("vfs->link(%s, %s) fails", oldpath, newpath);
