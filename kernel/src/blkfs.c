@@ -148,7 +148,7 @@ inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
 			//printf("dir[%d] name = %s, inode_id = %d\n",i ,dir[i].name, dir[i].inode_id);
 			if(i == NR_DIRE){
 				if(!(flags && O_CREAT)){
-					LOG("error when lookup: path \"%s\" not found\n",path);
+					LOG("error when lookup: path \"%s\" not found",path);
 					return NULL;
 				}
 				else{ //create new file
