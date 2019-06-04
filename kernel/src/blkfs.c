@@ -58,6 +58,7 @@ void blkfsops_init(filesystem_t *fs, const char *name, device_t *dev){
 	strcpy(dire[1].name,"..");
 	dire[1].inode_id = ROOT;
 	dev->ops->write(dev, DATA_OFFSET, dire, BLOCK_SIZE);
+	dev->ops->write(dev, BITMAP_OFFSET, data_bitmap, BLOCK_SIZE);
 	
 }
 
