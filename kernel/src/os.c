@@ -142,6 +142,10 @@ static void ls(char* output, char* pwd){
 	strcat(output,"\n");
 }
 
+static void touch(char* output, char* pwd, char* filename){
+	sprintf(output, filename);
+}
+
 static void shell(void* name){
   device_t* tty = dev_lookup(name);
   
@@ -158,6 +162,10 @@ static void shell(void* name){
     }
     else if(strncmp("touch ",input,6) == 0){
     	sprintf(output,"catch touch\n");
+    	char* newfile = input + 6;
+    	while(*newfile == ' ') newfile++; //remove blank
+    	if(strlen(newfile) == 0) sprintf(output,"touch: please type in filename\n");
+    	else touch(output, pwd, newfile);
     }
     else {
     	sprintf(output, "Echo: %s.\n", input);
