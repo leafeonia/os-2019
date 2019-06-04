@@ -187,7 +187,9 @@ int tty_init(device_t *dev) {
 ssize_t tty_read(device_t *dev, off_t offset, void *buf, size_t count) {
   tty_t *tty = dev->ptr;
   kmt->sem_wait(&tty->cooked);
+  printf("read1\n");
   kmt->sem_wait(&tty->lock);
+  printf("read2\n");
   size_t nread = 0;
 
 
