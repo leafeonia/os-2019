@@ -113,6 +113,7 @@ int get_available_inode(){
 		if(inodes[i].refcnt == 0) {
 			inodes[i].refcnt = 1;
 			inodes[i].block[0] = get_available_data_block();
+			blkfs->dev->ops->write(blkfs->dev, 0, &inodes, BLOCK_SIZE);
 			GOLDLOG("get available inode #%d",i);
 			return i;
 		}
