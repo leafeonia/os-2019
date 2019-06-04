@@ -65,6 +65,7 @@ static inline void tty_upd_putc(tty_t *tty, char ch) {
 static int tty_cook(tty_t *tty, char ch) {
   int ret = 0;
   kmt->sem_wait(&tty->lock);
+  printf("cook\n");
   struct tty_queue *q = &tty->queue;
   switch (ch) {
     case '\n':
