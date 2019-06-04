@@ -2,9 +2,16 @@
 
 filesystem_t* blkfs, *devfs, *procfs;
 fsops_t* blkfs_ops, *devfs_ops, *procfs_ops;
-#define NR_DIRE 64  //each directory contains at most 64 files
-#define BLOCK_SIZE 4096
 
+#define BLOCK_SIZE 4096
+#define NR_INODE 64
+#define BITMAP_OFFSET 4096
+#define DATA_OFFSET 8192
+#define ROOT 2
+#define NR_DIRE 64  //each directory contains at most 64 files
+#define NR_DATA 900
+#define DATA(d) (DATA_OFFSET + BLOCK_SIZE * d)
+#define INODE(d) (d * sizeof(inode_t))
 
 struct mount_point{
 	const char* path;

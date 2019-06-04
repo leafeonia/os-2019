@@ -130,6 +130,9 @@ static void ls(char* output, char* pwd){
 	int fd = vfs->open(path, 0);//TODOFLAG
 	dire_t dir[NR_DIRE];
 	vfs->read(fd,dir,BLOCK_SIZE);
+	for(int i = 0;i < NR_DIRE;i++){
+		printf("%d - name: %s, inode_id: %d\n",dir[i].name, dir[i].inode_id);
+	}
 }
 
 static void shell(void* name){
