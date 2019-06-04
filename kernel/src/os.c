@@ -127,7 +127,7 @@ static void ls(char* output, char* pwd){
 	char path[128];
 	sprintf(path,"%s/.",pwd);
 	int fd = vfs->open(path, 0);//TODOFLAG
-	
+	fd++;
 }
 
 static void shell(void* name){
