@@ -34,7 +34,7 @@ int blk_inode_open(file_t *file, int flags, inode_t* inode){
 
 ssize_t blk_inode_read(file_t *file, char *buf, size_t size){
 	device_t* dev = file->inode->fs->dev;
-	ssize_t nread = dev->ops->read(dev, DATA(inode->block[0]) + file->offset, buf, size);
+	ssize_t nread = dev->ops->read(dev, DATA(file->inode->block[0]) + file->offset, buf, size);
 	file->offset += size;
 	return nread;
 }
