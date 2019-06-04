@@ -159,7 +159,7 @@ int vfs_open(const char *path, int flags){
 		kmt->spin_unlock(&lk_vfs);
 		return -1;
 	}
-	inode->refcnt++;
+	//inode->refcnt++;
 	//printf("inode->ptr = 0x%x\n",inode->ptr);
 	extern task_t** current_task[16];
 	task_t** cur = current_task[_cpu()];
