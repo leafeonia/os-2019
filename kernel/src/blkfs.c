@@ -133,10 +133,10 @@ inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
 							LOG("error when create new file: no available inode");	
 							return NULL;
 						}
-						if(dir[i].inode_id == 0){
+						if(dir[j].inode_id == 0){
 							GOLDLOG("create file \"%s\" successfully",left_path);
-							strcpy(dir[i].name,left_path);
-							dir[i].inode_id = get_available_inode();
+							strcpy(dir[j].name,left_path);
+							dir[j].inode_id = get_available_inode();
 							break;
 						}
 					}
