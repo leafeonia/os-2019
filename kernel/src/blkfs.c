@@ -27,7 +27,7 @@ typedef struct directory{
 //****************************************
 //  BLOCK 0       BLOCK 1    BLOCK 2 - 999
 void blkfsops_init(filesystem_t *fs, const char *name, device_t *dev){
-	assert(sizeof(inode_t) == 64); //64 * NR_INODE = BLOCK_SIZE
+	assert(sizeof(inode_t) * NR_INODE == BLOCK_SIZE); //64 * NR_INODE = BLOCK_SIZE
 	inode_t inodes[NR_INODE];
     unsigned char data_bitmap[BLOCK_SIZE];
     
@@ -89,6 +89,7 @@ int get_available_inode(){
 		if(inodes[i].refcnt == 0) {
 			inodes[i].refcnt = 1;
 			inodes[i].block[0] = get_available_data_block();
+			GOLDLOG("get available inode #%d",i);
 			return i;
 		}
 	}
