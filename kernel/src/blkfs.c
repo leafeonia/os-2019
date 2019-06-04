@@ -9,7 +9,8 @@
 #define BITMAP_OFFSET 4096
 #define DATA_OFFSET 8192
 #define ROOT 2
-#define NR_DIRE 64
+#define NR_DIRE 64  //each directory contains at most 64 files
+#define NR_DATA 900
 #define DATA(d) (DATA_OFFSET + BLOCK_SIZE * d)
 #define INODE(d) (d * sizeof(inode_t))
 
@@ -67,12 +68,40 @@ int get_data_offset(int inode_id){
 	return 0;
 }
 
+int get_available_data_block(){
+	unsigned char data_bitmap[BLOCK_SIZE];
+	blkfs->dev->ops->read(blkfs->dev, BITMAP_OFFSET, data_bitmap, BLOCK_SIZE);
+	for(int i = 0;i < NR_DATA;i++){
+		if(!data_bitmap[i]) return i;
+	}
+	LOG("error: no available data block");
+	return -1;
+}
+
+int get_available_inode(){
+	inode_t inodes[NR_INODE];
+	blkfs->dev->ops->read(blkfs->dev, 0, &inodes, BLOCK_SIZE);
+	for(int i = 0;i < NR_INODE;i++){
+		if(inodes[i].refcnt == 0) {
+			inodes[i].refcnt = 1;
+			inodes[i].block[0] = get_available_data_block();
+			return i;
+		}
+	}
+	LOG("error: no availabe inode");
+	return -1;
+}
+
 inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
 	//int dir_inode = ROOT; //current directory inode id
 	int inode_id = ROOT; //return inode id
 	dire_t dir[NR_DIRE];
+	
+	//remove const
 	char tmp_path[100];
 	strcpy(tmp_path,path);
+	
+	
 	char* left_path = tmp_path;
 	char cur_path[100];
 	GOLDLOG(fs->dev->name);
@@ -88,8 +117,31 @@ inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
 		for(int i = 0;i <= NR_DIRE;i++){
 			printf("dir[%d] name = %s, inode_id = %d\n",i ,dir[i].name, dir[i].inode_id);
 			if(i == NR_DIRE){
-				LOG("error when lookup: path \"%s\" not found\n",path);
-				return NULL;
+				if(!(flag || O_CREAT)){
+					LOG("error when lookup: path \"%s\" not found\n",path);
+					return NULL;
+				}
+				else{ //create new file
+					for(int j = 0;j < strlen(left_path);j++){
+						if(*(left_path + j) == '/'){
+							LOG("error: create file in non-existing directory. Please use mkdir to create the directory first.");
+							return NULL;
+						}
+					}
+					for(int j = 0;j <= NR_DIRE;j++){
+						if(j == NR_DIRE){
+							LOG("error when create new file: no available inode");	
+							return NULL;
+						}
+						if(dir[i].inode_id == 0){
+							GOLDLOG("create file \"%s\" successfully",left_path);
+							dir[i].name = left_path;
+							dir[i].inode = get_available_inode();
+							break;
+						}
+					}
+				}
+				
 			}
 			if(strcmp(cur_path, dir[i].name) == 0){
 				printf("found %s, inode_id = %d\n",cur_path, dir[i].inode_id);
