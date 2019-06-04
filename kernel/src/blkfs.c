@@ -137,6 +137,8 @@ inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
 							GOLDLOG("create file \"%s\" successfully",left_path);
 							strcpy(dir[j].name,left_path);
 							dir[j].inode_id = get_available_inode();
+							blkfs->dev->ops->write(blkfs->dev, DATA(get_data_offset(inode_id)), dir, BLOCK_SIZE);
+							inode_id = dir[j].inode_id;
 							break;
 						}
 					}
