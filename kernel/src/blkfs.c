@@ -67,6 +67,7 @@ inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
 	strcpy(tmp_path,path);
 	char* left_path = tmp_path;
 	char cur_path[100];
+	GOLDLOG(fs->dev->name);
 	while(strlen(left_path)){
 		if(left_path[0] == '/') left_path += 1;
 		memset(cur_path, 0, sizeof(cur_path));
@@ -76,7 +77,7 @@ inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
 		}
 		fs->dev->ops->read(fs->dev, DATA(inode_id), dir, BLOCK_SIZE);
 		for(int i = 0;i <= NR_DIRE;i++){
-			printf("dir[%d] name = %s, inode_id = %d\n",i ,dir[i].name, dir[i].inode_id);
+			//printf("dir[%d] name = %s, inode_id = %d\n",i ,dir[i].name, dir[i].inode_id);
 			if(i == NR_DIRE){
 				LOG("error when lookup: path \"%s\" not found\n",path);
 				return NULL;

@@ -26,4 +26,4 @@
 #define MAGIC1 0x123456789012345
 #define MAGIC2 0x987654321098765
 
-#define GOLDLOG(s) printf("\33[1;33m%s\n\33[0m",s)
+#define GOLDLOG(...) printf("\033[1;35m");printf(__VA_ARGS__);printf("\033[0m\n"); 
