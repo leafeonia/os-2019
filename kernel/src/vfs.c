@@ -163,16 +163,19 @@ ssize_t vfs_write(int fd, void *buf, size_t nbyte){
 off_t vfs_lseek(int fd, off_t offset, int whence){
 	file_t* file = fd2file(fd);
 	file->offset = offset;
-	return 0;
+	return offset;
 }
 int vfs_close(int fd){
-	file_t* file = fd2file(fd);
+	extern task_t** current_task[16];
+	task_t** cur = current_task[_cpu()];
+	file_t* file = (*cur)->fildes[fd];
 	file->offset = 0;
-	GOLDLOG("%d",file->inode->refcnt);
+	//GOLDLOG("%d",file->inode->refcnt);
 	file->inode->refcnt--;
 	//LOG("file->inode->block[0] = %d",file->inode->block[0]);
 	file->inode->fs->ops->close(file->inode); //devfs: do nothing   blkfs: free the inode
 	file->inode = NULL;
+	(*cur)->fildes[fd] = NULL;
 	return 0;
 }
 
