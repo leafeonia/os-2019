@@ -151,7 +151,7 @@ static void touch(char* output, char* pwd, char* filename){
 	if(strcmp(pwd,"/") == 0) sprintf(newpath,"/%s",filename);
 	else sprintf(newpath,"%s/%s",pwd,filename);
 	sprintf(output,newpath);
-	//vfs->open()
+	vfs->open(newpath, O_CREAT);
 }
 
 static void shell(void* name){
