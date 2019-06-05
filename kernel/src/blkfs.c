@@ -47,6 +47,8 @@ int get_available_data_block(){
 	for(int i = 0;i < NR_DATA;i++){
 		if(!data_bitmap[i]) {
 			GOLDLOG("get available data block #%d",i);
+			data_bitmap[i] = 1;
+			blkfs->dev->ops->write(blkfs->dev, BITMAP_OFFSET, data_bitmap, BLOCK_SIZE);
 			return i;
 		}
 	}
