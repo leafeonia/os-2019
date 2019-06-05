@@ -27,7 +27,7 @@ ssize_t blk_inode_read(file_t *file, char *buf, size_t size){
 	return nread;
 }
 
-ssize_t blk_inode_write(file_t *file, char *buf, size_t size){
+ssize_t blk_inode_write(file_t *file, const char *buf, size_t size){
 	device_t* dev = file->inode->fs->dev;
 	
 	if(file->offset + size > BLOCK_SIZE){
