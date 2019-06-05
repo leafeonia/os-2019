@@ -201,7 +201,7 @@ static void shell(void* name){
     	}
     	*(content + le) = '\0';
     	if(strlen(content) == 0){
-    		sprintf(output,"echo: please type in content\n");
+    		sprintf(output,"echo: please type in content (content must be wrapped in \" \")\n");
     	}
     	else{
     		char* filename = content + le + 1;
