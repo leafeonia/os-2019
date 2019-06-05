@@ -179,7 +179,7 @@ ssize_t vfs_read(int fd, void *buf, size_t nbyte){
 	file_t* file = fd2file(fd);
 	if(!file->inode){
 		LOG("error: current file has been closed. Read fails.");
-		return -1;
+		return 1;
 	}
 	ssize_t ret = file->inode->ops->read(file, buf, nbyte);
 	//kmt->spin_unlock(&lk_vfs);
@@ -191,7 +191,7 @@ ssize_t vfs_write(int fd, void *buf, size_t nbyte){
 	if(!file->inode){
 		LOG("error: current file has been closed. Write fails");
 		//kmt->spin_unlock(&lk_vfs);
-		return -1;
+		return 1;
 	}
 	ssize_t ret = file->inode->ops->write(file, buf, nbyte);
 	//kmt->spin_unlock(&lk_vfs);

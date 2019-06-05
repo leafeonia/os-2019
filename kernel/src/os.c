@@ -141,7 +141,7 @@ static void ls(char* output, char* pwd){
 			sprintf(temp,"%s ",dir[i].name);
 			strcat(output, temp);
 		}
-		//printf("%d - name: %s, inode_id: %d\n",i,dir[i].name, dir[i].inode_id);
+		printf("%d - name: %s, inode_id: %d\n",i,dir[i].name, dir[i].inode_id);
 	}
 	strcat(output,"\n");
 }
