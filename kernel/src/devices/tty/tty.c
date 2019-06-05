@@ -65,7 +65,6 @@ static inline void tty_upd_putc(tty_t *tty, char ch) {
 static int tty_cook(tty_t *tty, char ch) {
   int ret = 0;
   kmt->sem_wait(&tty->lock);
-  printf("cook\n");
   struct tty_queue *q = &tty->queue;
   switch (ch) {
     case '\n':
@@ -90,7 +89,6 @@ static void tty_render(tty_t *tty) {
   struct character *ch = tty->buf;
   uint8_t *d = tty->dirty;
   kmt->sem_wait(&tty->lock);
-  printf("render\n");
   for (int y = 0; y < tty->lines; y++) {
     for (int x = 0; x < tty->columns; x++) {
       if (*d) {
@@ -189,9 +187,7 @@ int tty_init(device_t *dev) {
 ssize_t tty_read(device_t *dev, off_t offset, void *buf, size_t count) {
   tty_t *tty = dev->ptr;
   kmt->sem_wait(&tty->cooked);
-  printf("read1\n");
   kmt->sem_wait(&tty->lock);
-  printf("read2\n");
   size_t nread = 0;
 
 
@@ -211,16 +207,16 @@ ssize_t tty_read(device_t *dev, off_t offset, void *buf, size_t count) {
 }
 
 ssize_t tty_write(device_t *dev, off_t offset, const void *buf, size_t count) {
-  printf("111\n");
+  //printf("111\n");
   tty_t *tty = dev->ptr;
   kmt->sem_wait(&tty->lock);
-  printf("222\n");
+  //printf("222\n");
   for (size_t i = 0; i < count; i++) {
     tty_putc(tty, ((const char *)buf)[i]);
   }
   kmt->sem_signal(&tty->lock);
   tty_render(tty);
-  printf("333\n");
+  //printf("333\n");
   return count;
 }
 
