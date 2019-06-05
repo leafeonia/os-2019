@@ -147,7 +147,8 @@ static void ls(char* output, char* pwd){
 }
 
 static void touch(char* output, char* pwd, char* filename){
-	sprintf(output, filename);
+	sprintf(output,"%s/%s",pwd,filename);
+	//vfs->open()
 }
 
 static void shell(void* name){
