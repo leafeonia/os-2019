@@ -1,0 +1,4 @@
+file name must be less than 60 words.
+each directory can contain less than 62 files.
+cannot create file in non-existing directory.
+a file is less than 4KB.
