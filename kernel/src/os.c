@@ -179,6 +179,7 @@ static void cat(char* output, char* pwd, char* filename){
 	}
 	vfs->read(fd, output, BLOCK_SIZE);
 	vfs->close(fd);
+	strcat(output,"\n");
 }
 
 static void shell(void* name){
