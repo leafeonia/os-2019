@@ -252,14 +252,14 @@ static void shell(void* name){
     
     //pwd
     else if(strncmp("pwd",input ,3) == 0){
-    	sprintf(output,"%s\n" pwd);
+    	sprintf(output,"%s\n", pwd);
     }
     
     else if(strncmp("cat ",input ,4) == 0){
     	char* filename = input + 4;
     	while(*filename == ' ') filename++; //remove blank
     	if(strlen(filename) == 0) sprintf(output,"please type in filename\n");
-    	else touch(output, pwd, filename);
+    	else touch(output,pwd, filename);
     }
     else {
     	sprintf(output, "Invalid operation. Supported command: ls pwd echo touch.\n", input);
