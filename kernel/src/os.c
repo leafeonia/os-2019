@@ -214,7 +214,10 @@ static void shell(void* name){
     		else{
     			while(*filename == ' ') filename++;
     			if(strlen(filename) == 0) sprintf(output,"echo: please type in filename\n");
-    			else echo(pwd, filename, content);
+    			else {
+    				sprintf("add %s into file %s\n",content, filename);
+    				echo(pwd, filename, content);
+    			}
     		}
     	} 
     	
