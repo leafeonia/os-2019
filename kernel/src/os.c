@@ -173,7 +173,10 @@ static void cat(char* output, char* pwd, char* filename){
 	if(strcmp(pwd,"/") == 0) sprintf(newpath,"/%s",filename);
 	else sprintf(newpath,"%s/%s",pwd,filename);
 	int fd = vfs->open(newpath, 0);
-	if(fd == -1) return;
+	if(fd == -1) {
+		sprintf(output, "cat: open %s fails\n",newpath);
+		return;
+	}
 	vfs->read(fd, output, BLOCK_SIZE);
 	vfs->close(fd);
 }

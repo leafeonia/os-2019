@@ -157,7 +157,7 @@ int vfs_open(const char *path, int flags){
 	inode_t* inode = fs->ops->lookup(fs,fs_path,flags);
 	if(!inode){
 		LOG("vfs->open(%s, %d) fails", path, flags);
-		kmt->spin_unlock(&lk_vfs);
+		//kmt->spin_unlock(&lk_vfs);
 		return -1;
 	}
 	//inode->refcnt++;
