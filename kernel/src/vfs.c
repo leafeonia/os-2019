@@ -193,7 +193,6 @@ ssize_t vfs_write(int fd, void *buf, size_t nbyte){
 		//kmt->spin_unlock(&lk_vfs);
 		return 1;
 	}
-	//kmt->spin_lock(&lk_vfs);
 	ssize_t ret = file->inode->ops->write(file, buf, nbyte);
 	//kmt->spin_unlock(&lk_vfs);
 	return ret;
