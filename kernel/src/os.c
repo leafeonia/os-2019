@@ -173,6 +173,7 @@ static void shell(void* name){
   sprintf(pwd,"/");
   while (1) {
     //char input[128], output[512];
+    memset(output, 0, sizeof(output));
     sprintf(output, "(%s) $ ", name); 
     //tty->ops->write(tty, 0, output, strlen(output));
     //LOG("FA1");
