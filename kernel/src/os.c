@@ -186,6 +186,7 @@ static void shell(void* name){
     	else touch(pwd, newfile);
     }
     else if(strncmp("echo ",input,5) == 0){
+    	char content[4096];
     	
     }
     else if(strncmp("rm ",input, 3) == 0){
