@@ -148,7 +148,7 @@ static void ls(char* output, char* pwd){
 
 static void touch(char* output, char* pwd, char* filename){
 	char newpath[128];
-	if(strcmp(pwd,"/") == 0) sprintf(newpath,"/%s",pwd);
+	if(strcmp(pwd,"/") == 0) sprintf(newpath,"/%s",filename);
 	else sprintf(newpath,"%s/%s",pwd,filename);
 	sprintf(output,newpath);
 	//vfs->open()
