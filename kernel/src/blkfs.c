@@ -58,7 +58,7 @@ ssize_t blk_inode_write(file_t *file, const char *buf, size_t size){
 int get_data_offset(int inode_id){
 	inode_t inode;
 	blkfs->dev->ops->read(blkfs->dev, INODE(inode_id), &inode, sizeof(inode_t));
-	printf("get_data_offset: %d\n",inode.block[0]);
+	printf("inode #%d get_data_offset: %d\n",inode_id,inode.block[0]);
 	return 0;
 }
 
