@@ -37,7 +37,7 @@ ssize_t dev_inode_read(file_t *file, char *buf, size_t size){
 }
 
 ssize_t dev_inode_write(file_t *file, const char *buf, size_t size){
-	kmt->spin_lock(&lk_dev_inode_ops);
+	//kmt->spin_lock(&lk_dev_inode_ops);
 	//LOG("YEAH");
 	device_t* dev = file->inode->ptr;
 	//printf("inode = 0x%x, dev = 0x%x, dev->name = %s, dev->ops = 0x%x \n",file->inode, dev, dev->name, dev->ops);
@@ -50,7 +50,7 @@ ssize_t dev_inode_write(file_t *file, const char *buf, size_t size){
 	//LOG("YEAH2");
 	//device_t* dev2 = dev_lookup("tty2");
 	//dev2->ops->write(dev2, 0, text, strlen(text));
-	kmt->spin_unlock(&lk_dev_inode_ops);
+	//kmt->spin_unlock(&lk_dev_inode_ops);
 	return size;
 }
 
@@ -59,7 +59,7 @@ ssize_t dev_inode_write(file_t *file, const char *buf, size_t size){
 
 
 inode_t* devfsops_lookup(filesystem_t *fs, const char *path, int flags){
-	kmt->spin_lock(&lk_dev_inode_ops);
+	//kmt->spin_lock(&lk_dev_inode_ops);
 	if(path[0] == '/') path = path + 1;
 	//printf("Welcome to devfs_lookup. dev_name = %s\n",path);
 	//device_t* dev = dev_lookup(path);
@@ -72,7 +72,7 @@ inode_t* devfsops_lookup(filesystem_t *fs, const char *path, int flags){
 		LOG("devfs: lookup device fails.");
 		return NULL;
 	}
-	kmt->spin_unlock(&lk_dev_inode_ops);
+	//kmt->spin_unlock(&lk_dev_inode_ops);
 	return devfs_inode[id];
 }
 

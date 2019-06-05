@@ -129,7 +129,7 @@ int vfs_unlink(const char *path){
 	return 0;
 }
 int vfs_open(const char *path, int flags){
-	kmt->spin_lock(&lk_vfs);
+	//kmt->spin_lock(&lk_vfs);
 	/*if(strncmp(path,"/proc",5) == 0){
 		printf("proc\n");
 	}
@@ -171,33 +171,32 @@ int vfs_open(const char *path, int flags){
 	(*cur)->fildes[fd] = file;
 	//printf("return fd = %d\n",fd);
 	//inode->ops->open(file, flags, inode);
-	kmt->spin_unlock(&lk_vfs);
+	//kmt->spin_unlock(&lk_vfs);
 	return fd;
 }
 ssize_t vfs_read(int fd, void *buf, size_t nbyte){
-	kmt->spin_lock(&lk_vfs);
+	//kmt->spin_lock(&lk_vfs);
 	file_t* file = fd2file(fd);
 	if(!file->inode){
 		LOG("error: current file has been closed. Read fails.");
 		return 1;
 	}
 	ssize_t ret = file->inode->ops->read(file, buf, nbyte);
-	kmt->spin_unlock(&lk_vfs);
+	//kmt->spin_unlock(&lk_vfs);
 	return ret;
 }
 ssize_t vfs_write(int fd, void *buf, size_t nbyte){
-	kmt->spin_lock(&lk_vfs);
+	//kmt->spin_lock(&lk_vfs);
 	file_t* file = fd2file(fd);
 	if(!file->inode){
 		LOG("error: current file has been closed. Write fails");
-		kmt->spin_unlock(&lk_vfs);
+		//kmt->spin_unlock(&lk_vfs);
 		return 1;
 	}
 	//kmt->spin_lock(&lk_vfs);
 	ssize_t ret = file->inode->ops->write(file, buf, nbyte);
-	kmt->spin_unlock(&lk_vfs);
-	return ret;
 	//kmt->spin_unlock(&lk_vfs);
+	return ret;
 }
 off_t vfs_lseek(int fd, off_t offset, int whence){
 	file_t* file = fd2file(fd);
