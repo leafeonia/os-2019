@@ -185,6 +185,12 @@ static void shell(void* name){
     	if(strlen(newfile) == 0) sprintf(output,"touch: please type in filename\n");
     	else touch(pwd, newfile);
     }
+    else if(strncmp("echo ",input,5) == 0){
+    	
+    }
+    else if(strncmp("rm ",input, 3) == 0){
+    	rm(pwd, "");
+    }
     else {
     	sprintf(output, "Echo: %s.\n", input);
     }
