@@ -146,12 +146,16 @@ static void ls(char* output, char* pwd){
 	strcat(output,"\n");
 }
 
-static void touch(char* output, char* pwd, char* filename){
+static void touch(char* pwd, char* filename){
 	char newpath[128];
 	if(strcmp(pwd,"/") == 0) sprintf(newpath,"/%s",filename);
 	else sprintf(newpath,"%s/%s",pwd,filename);
-	sprintf(output,newpath);
+//	sprintf(output,newpath);
 	vfs->open(newpath, O_CREAT);
+}
+
+static void rm(char* pwd, char* filename){
+	
 }
 
 static void shell(void* name){
@@ -179,7 +183,7 @@ static void shell(void* name){
     	char* newfile = input + 6;
     	while(*newfile == ' ') newfile++; //remove blank
     	if(strlen(newfile) == 0) sprintf(output,"touch: please type in filename\n");
-    	else touch(output, pwd, newfile);
+    	else touch(pwd, newfile);
     }
     else {
     	sprintf(output, "Echo: %s.\n", input);
