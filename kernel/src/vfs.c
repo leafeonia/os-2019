@@ -176,11 +176,16 @@ int vfs_open(const char *path, int flags){
 }
 ssize_t vfs_read(int fd, void *buf, size_t nbyte){
 	//kmt->spin_lock(&lk_vfs);
+	if(nbyte >= 4096){
+		LOG("error: file size is always less than 4KB, read %d bytes is out of range\n", nbyte);
+		return -1;
+	}
 	file_t* file = fd2file(fd);
 	if(!file->inode){
 		LOG("error: current file has been closed. Read fails.");
-		return 1;
+		return -1;
 	}
+	file->offset += nbyte;
 	ssize_t ret = file->inode->ops->read(file, buf, nbyte);
 	//kmt->spin_unlock(&lk_vfs);
 	return ret;
