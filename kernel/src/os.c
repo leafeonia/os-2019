@@ -155,7 +155,13 @@ static void touch(char* pwd, char* filename){
 }
 
 void echo(char* pwd,char* filename,char* content){
-
+	char newpath[128];
+	if(strcmp(pwd,"/") == 0) sprintf(newpath,"/%s",filename);
+	else sprintf(newpath,"%s/%s",pwd,filename);
+	int fd = vfs->open(newpath, O_CREAT);
+	if(fd == -1) return;
+	vfs->write(fd, content, strlen(content));
+	vfs->close(fd);
 }
 
 static void rm(char* pwd, char* filename){
@@ -181,9 +187,13 @@ static void shell(void* name){
     vfs->write(stdout, output, sizeof(output));
     int nread = vfs->read(stdin, input, sizeof(input));
     input[nread - 1] = '\0';
+    
+    //ls
     if(strcmp("ls",input) == 0){
     	ls(output, pwd);
     }
+    
+    //touch
     else if(strncmp("touch ",input,6) == 0){
     	sprintf(output,"catch touch\n");
     	char* newfile = input + 6;
@@ -191,6 +201,8 @@ static void shell(void* name){
     	if(strlen(newfile) == 0) sprintf(output,"touch: please type in filename\n");
     	else touch(pwd, newfile);
     }
+    
+    //echo
     else if(strncmp("echo ",input,5) == 0){
     	char* content = input + 5;
     	while(*content && *content != '"') content++;
@@ -215,15 +227,22 @@ static void shell(void* name){
     			while(*filename == ' ') filename++;
     			if(strlen(filename) == 0) sprintf(output,"echo: please type in filename\n");
     			else {
-    				sprintf(output,"add %s into file %s\n",content, filename);
+    				sprintf(output,"add \"%s\" into file %s\n",content, filename);
     				echo(pwd, filename, content);
     			}
     		}
     	} 
     	
     }
+    
+    //rm
     else if(strncmp("rm ",input, 3) == 0){
     	rm(pwd, "");
+    }
+    
+    //pwd
+    else if(strncmp("pwd ",input ,4) == 0){
+    	sprintf(output, pwd);
     }
     else {
     	sprintf(output, "Invalid operation. Supported command: ls pwd echo touch.\n", input);
