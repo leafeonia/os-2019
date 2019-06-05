@@ -195,7 +195,7 @@ static void shell(void* name){
     	content++;
     	int le = 0;
     	for(;*(content+le);le++){
-    		if(*(content + le) == '"' && *(content + le - 1) != '\') break;
+    		if(*(content + le) == '"' && *(content + le - 1) != '\\') break;
     	}
     	*(content + le) = '\0';
     	if(strlen(content) == 0){
