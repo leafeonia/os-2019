@@ -259,7 +259,7 @@ static void shell(void* name){
     	char* filename = input + 4;
     	while(*filename == ' ') filename++; //remove blank
     	if(strlen(filename) == 0) sprintf(output,"please type in filename\n");
-    	else touch(output,pwd, filename);
+    	else cat(output,pwd, filename);
     }
     else {
     	sprintf(output, "Invalid operation. Supported command: ls pwd echo touch.\n", input);
