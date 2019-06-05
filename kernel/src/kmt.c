@@ -79,7 +79,7 @@ static void kmt_sem_wait(sem_t *sem){
 	kmt_spin_lock(&sem->lock);
 	//printf("enter kmt_sem_wait, sem->name = %s\n",sem->name);
 	while(1){
-		if(strcmp(sem->name,"tty lock") == 0 &&sem->value) printf(">>> %d\n",sem->value);
+		//if(strcmp(sem->name,"tty lock") == 0 &&sem->value) printf(">>> %d\n",sem->value);
 		if(sem->value > 0){
 			
 			sem->value--;
