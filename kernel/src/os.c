@@ -207,6 +207,7 @@ static void shell(void* name){
     		char* filename = content + le + 1;
     		le = 0;
     		while(*filename && strncmp(filename, ">>", 2)) filename++;
+    		filename += 2;
     		if(strlen(filename) == 0){
     			sprintf(output,"echo: %s\n", content);
     		}
