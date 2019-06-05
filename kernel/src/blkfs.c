@@ -27,6 +27,18 @@ ssize_t blk_inode_read(file_t *file, char *buf, size_t size){
 	return nread;
 }
 
+ssize_t blk_inode_write(file_t *file, char *buf, size_t size){
+	device_t* dev = file->inode->fs->dev;
+	
+	if(file->offset + size > BLOCK_SIZE){
+		LOG("error: blkfs supports maximum file size :4KB. Current offset is out of range. Read fails");
+		return -1;
+	}
+	ssize_t nwrite = dev->ops->write(dev, DATA(file->inode->block[0]) + file->offset, buf, size);
+	file->offset += size;
+	return nwrite;
+}
+
 
 
 
@@ -213,6 +225,7 @@ void blkfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	
 	blk_inode_ops->open   = blk_inode_open;
 	blk_inode_ops->read   = blk_inode_read;
+	blk_inode_ops->write  = blk_inode_write;
 	/*blk_inode_ops->close  = 
 	blk_inode_ops->lseek  = 
 	*/

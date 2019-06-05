@@ -141,7 +141,7 @@ static void ls(char* output, char* pwd){
 			sprintf(temp,"%s ",dir[i].name);
 			strcat(output, temp);
 		}
-		printf("%d - name: %s, inode_id: %d\n",i,dir[i].name, dir[i].inode_id);
+		//printf("%d - name: %s, inode_id: %d\n",i,dir[i].name, dir[i].inode_id);
 	}
 	strcat(output,"\n");
 }
@@ -152,6 +152,10 @@ static void touch(char* pwd, char* filename){
 	else sprintf(newpath,"%s/%s",pwd,filename);
 //	sprintf(output,newpath);
 	vfs->open(newpath, O_CREAT);
+}
+
+void echo(char* pwd,char* filename,char* content){
+
 }
 
 static void rm(char* pwd, char* filename){
@@ -186,14 +190,37 @@ static void shell(void* name){
     	else touch(pwd, newfile);
     }
     else if(strncmp("echo ",input,5) == 0){
-    	//char content[4096];
+    	char* content = input + 5;
+    	while(*content && *content != '"') content++;
+    	content++;
+    	int le = 0;
+    	for(;*(newfile+le);le++){
+    		if(*(newfile + le) == '"' && *(newfile + le - 1) != '\') break;
+    	}
+    	*(content + le) = '\0';
+    	if(strlen(content) == 0){
+    		sprintf(output,"echo: please type in content\n");
+    	}
+    	else{
+    		char* filename = content + le + 1;
+    		le = 0;
+    		while(*filename && strncmp(filename, ">>", 2)) filename++;
+    		if(strlen(filename) == 0){
+    			sprintf(output,"echo: %s\n", content);
+    		}
+    		else{
+    			while(*filename == ' ') filename++;
+    			if(strlen(filename) == 0) sprintf(output,"echo: please type in filename\n");
+    			else echo(pwd, filename, content);
+    		}
+    	} 
     	
     }
     else if(strncmp("rm ",input, 3) == 0){
     	rm(pwd, "");
     }
     else {
-    	sprintf(output, "Echo: %s.\n", input);
+    	sprintf(output, "Invalid operation. Supported command: ls pwd echo touch.\n", input);
     }
     vfs->write(stdout, output, sizeof(output));
     // supported commands:
