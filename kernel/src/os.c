@@ -168,10 +168,20 @@ static void rm(char* pwd, char* filename){
 	
 }
 
+static void cat(char* output, char* pwd, char* filename){
+	char newpath[128];
+	if(strcmp(pwd,"/") == 0) sprintf(newpath,"/%s",filename);
+	else sprintf(newpath,"%s/%s",pwd,filename);
+	int fd = vfs->open(newpath, 0);
+	if(fd == -1) return;
+	vfs->read(fd, output, BLOCK_SIZE);
+	vfs->close(fd);
+}
+
 static void shell(void* name){
   //device_t* tty = dev_lookup(name);
   char input[512];
-  char output[512];
+  char output[4096];
   sprintf(input,"/dev/%s",name);
   int stdin = vfs->open(input, 1);//TODOFLAG
   int stdout = vfs->open(input, 4);
@@ -241,8 +251,15 @@ static void shell(void* name){
     }
     
     //pwd
-    else if(strncmp("pwd ",input ,4) == 0){
-    	sprintf(output, pwd);
+    else if(strncmp("pwd",input ,3) == 0){
+    	sprintf(output,"%s\n" pwd);
+    }
+    
+    else if(strncmp("cat ",input ,4) == 0){
+    	char* filename = input + 4;
+    	while(*filename == ' ') filename++; //remove blank
+    	if(strlen(filename) == 0) sprintf(output,"please type in filename\n");
+    	else touch(output, pwd, filename);
     }
     else {
     	sprintf(output, "Invalid operation. Supported command: ls pwd echo touch.\n", input);
