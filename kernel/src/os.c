@@ -273,11 +273,16 @@ static void shell(void* name){
     	int le = 0;
     	while(*(oldpath + le) && *(oldpath + le) != ' ') le++;
     	if(!*(oldpath + le)) sprintf(output,"please type in newpath\n");
-    	char* newpath = oldpath + le;
-    	while(*newpath == ' ' ) newpath++;
-    	if(strlen(newpath) == 0) sprintf(output,"please type in newpath\n");
-    	GOLDLOG("link: %s %s\n",oldpath, newpath);
-    	vfs->link(oldpath, newpath);
+    	else{
+			char* newpath = oldpath + le;
+			while(*newpath == ' ' ) newpath++;
+			if(strlen(newpath) == 0) sprintf(output,"please type in newpath\n");
+			else{
+				GOLDLOG("link: %s %s\n",oldpath, newpath);
+				vfs->link(oldpath, newpath);
+			}
+    	}
+    	
     }
     else {
     	sprintf(output, "Invalid operation. Supported command: ls pwd echo touch.\n", input);
