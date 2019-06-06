@@ -25,7 +25,9 @@ const char* findfs(const char* path, filesystem_t* ret){
 		if(strncmp(path,mt_list[i].path,strlen(mt_list[i].path)) == 0){
 			CYANLOG("catch. %s %s",mt_list[i].path, mt_list[i].fs->name);
 			omit = strlen(mt_list[i].path);
-			ret = mt_list[i].fs;
+			ret->name = mt_list[i].fs->name;
+			ret->ops = mt_list[i].fs->ops;
+			ret->ptr = mt_list[i].fs->ptr;
 			break;
 		}
 	}
