@@ -19,7 +19,7 @@ int get_inode_id(inode_t* inode){
 	inode_t inodes[NR_INODE];
 	blkfs->dev->ops->read(blkfs->dev, 0, &inodes, BLOCK_SIZE);
 	for(int i = 0;i < NR_INODE;i++){
-		if(inodes[i].ptr = inode->ptr){
+		if(inodes[i].ptr == inode->ptr){
 			GOLDLOG("get_inode_id #%d",i);
 			return i;
 		}
