@@ -196,7 +196,7 @@ static void link(char* output, char* pwd, char* oldpath, char* newpath){
 		sprintf(absolute_oldpath,"%s/%s",pwd, oldpath);
 	}
 	if(vfs->link(absolute_oldpath, absolute_newpath)) sprintf(output, "link fails\n");
-	else sprintf(output,"\0");
+	//else sprintf(output,"\0");
 }
 
 static void mkdir(char* pwd, char* dirname){
@@ -223,6 +223,7 @@ static void shell(void* name){
     //tty->ops->write(tty, 0, output, strlen(output));
     //LOG("FA1");
     vfs->write(stdout, output, sizeof(output));
+    memset(output, 0, sizeof(output));
     int nread = vfs->read(stdin, input, sizeof(input));
     input[nread - 1] = '\0';
     
