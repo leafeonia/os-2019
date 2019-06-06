@@ -23,6 +23,7 @@ const char* findfs(const char* path, filesystem_t* ret){
 		if(i == mt_idx) panic("filesystem not found\n");
 		
 		if(strncmp(path,mt_list[i].path,strlen(mt_list[i].path)) == 0){
+			CYANLOG("catch. %s %s",mt_list[i].path, mt_list[i].fs->name);
 			omit = strlen(mt_list[i].path);
 			ret = mt_list[i].fs;
 			break;
