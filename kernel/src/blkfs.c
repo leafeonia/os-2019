@@ -45,6 +45,51 @@ ssize_t blk_inode_write(file_t *file, const char *buf, size_t size){
 
 int blk_inode_link(const char *name, inode_t *inode){
 	GOLDLOG("link: newpath = \"%s\"",name);
+	char* left_path = name;
+	char cur_path[128];
+	dire_t dir[NR_DIRE];
+	int inode_id = ROOT;
+	while(strlen(left_path)){
+		GOLDLOG("in blk_inode_link: left_path: %s",left_path);
+		if(left_path[0] == '/') left_path += 1;
+		memset(cur_path, 0, sizeof(cur_path));
+		for(int i = 0;i < 100;i++){
+			if(*(left_path + i) == '\0' || *(left_path + i) == '/') break;
+			cur_path[i] = *(left_path + i);
+		}
+		fs->dev->ops->read(fs->dev, DATA(get_data_offset(inode_id)), dir, BLOCK_SIZE);
+		for(int i = 0;i < NR_DIRE;i++){
+			if(i == NR_DIRE){
+					for(int j = 0;j < strlen(left_path);j++){
+						if(*(left_path + j) == '/'){
+							LOG("error: create file in non-existing directory. Please use mkdir to create the directory first.");
+							return NULL;
+						}
+					}
+					for(int j = 0;j <= NR_DIRE;j++){
+						if(j == NR_DIRE){
+							LOG("error when update directory: no available directory space");	
+							return NULL;
+						}
+						if(dir[j].inode_id == 0){
+							GOLDLOG("update file \"%s\" successfully",left_path);
+							strcpy(dir[j].name,left_path);
+							dir[j].inode_id = 5;
+							blkfs->dev->ops->write(blkfs->dev, DATA(get_data_offset(inode_id)), dir, BLOCK_SIZE);
+							inode_id = dir[j].inode_id;
+							break;
+						}
+					}
+				
+				
+			}
+			if(strcmp(cur_path, dir[i].name) == 0){
+				LOG("found %s, inode_id = %d\n",cur_path, dir[i].inode_id);
+				inode_id = dir[i].inode_id;
+				break;
+			}
+		}
+	}
 	return 0;
 }
 
@@ -184,7 +229,7 @@ inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
 					}
 					for(int j = 0;j <= NR_DIRE;j++){
 						if(j == NR_DIRE){
-							LOG("error when create new file: no available inode");	
+							LOG("error when create new file: no available directory space");	
 							return NULL;
 						}
 						if(dir[j].inode_id == 0){

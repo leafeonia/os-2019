@@ -60,7 +60,8 @@ struct inode{
   filesystem_t *fs;
   inodeops_t *ops; // 在inode被创建时，由文件系统的实现赋值
                    // inode ops也是文件系统的一部分
-  int block[12];       //block number in blkfs
+  int id;
+  int block[11];       //block number in blkfs
 };
 
 
