@@ -115,7 +115,7 @@ int vfs_link(const char *oldpath, const char *newpath){
 		return -1;
 	}
 	inode->refcnt++;
-	inode->ops->link(newpath, inode);
+	if(inode->ops->link(newpath, inode) != 0) return -1;
 	//printf("inode->ptr = 0x%x\n",inode->ptr);
 	extern task_t** current_task[16];
 	task_t** cur = current_task[_cpu()];
