@@ -6,7 +6,7 @@
 
 static inodeops_t* blk_inode_ops;
 
-int dummy(){return 0;}
+static int dummy(){return 0;}
 
 int blk_inode_open(file_t *file, int flags, inode_t* inode){
 	/*kmt->spin_lock(&lk_dev_inode_ops);
