@@ -101,6 +101,7 @@ int blk_inode_link(const char *name, inode_t *inode){
 				break;
 			}
 		}
+		left_path += strlen(cur_path);
 	}
 	return 0;
 }
