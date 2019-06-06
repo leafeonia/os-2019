@@ -183,6 +183,21 @@ static void cat(char* output, char* pwd, char* filename){
 	strcat(output,"\n");
 }
 
+static void link(char* pwd, char* oldpath, char* newpath){
+	CYANLOG("link: %s %s\n",oldpath, newpath);
+	char absolute_oldpath[128];
+	char absolute_newpath[128];
+	if(strcmp(pwd,"/") == 0) {
+		sprintf(absolute_newpath,"/%s",newpath);
+		sprintf(absolute_oldpath,"/%s",oldpath);
+	}
+	else{
+		sprintf(absolute_newpath,"%s/%s",pwd, newpath);
+		sprintf(absolute_oldpath,"%s/%s",pwd, oldpath);
+	}
+	vfs->link(absolute_oldpath, absolute_newpath);
+}
+
 static void shell(void* name){
   //device_t* tty = dev_lookup(name);
   char input[512];
@@ -278,10 +293,7 @@ static void shell(void* name){
 			char* newpath = oldpath + le + 1;
 			while(*newpath == ' ' ) newpath++;
 			if(strlen(newpath) == 0) sprintf(output,"please type in newpath\n");
-			else{
-				GOLDLOG("link: %s %s\n",oldpath, newpath);
-				vfs->link(oldpath, newpath);
-			}
+			else link(pwd, oldpath, newpath);
     	}
     	
     }

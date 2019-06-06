@@ -96,6 +96,7 @@ int vfs_rmdir(const char *path){
 	return 0;
 }
 int vfs_link(const char *oldpath, const char *newpath){
+	GOLDLOG("vfs->link: %s, %s\n",oldpath, newpath);
 	filesystem_t* fs = NULL;
 	int omit = 0; 
 	for(int i = 0;i <= mt_idx;i++){
@@ -114,6 +115,7 @@ int vfs_link(const char *oldpath, const char *newpath){
 		return -1;
 	}
 	inode->refcnt++;
+	inode->ops->link(newpath, inode);
 	//printf("inode->ptr = 0x%x\n",inode->ptr);
 	extern task_t** current_task[16];
 	task_t** cur = current_task[_cpu()];

@@ -43,6 +43,11 @@ ssize_t blk_inode_write(file_t *file, const char *buf, size_t size){
 	return nwrite;
 }
 
+int blk_inode_link(const char *name, inode_t *inode){
+	GOLDLOG("link: newpath = \"%s\"",name);
+	return 0;
+}
+
 
 
 
