@@ -18,8 +18,8 @@ int get_data_offset(int inode_id){
 int get_inode_id(inode_t* inode){
 	inode_t inodes[NR_INODE];
 	blkfs->dev->ops->read(blkfs->dev, 0, &inodes, BLOCK_SIZE);
-	for(int i = 0;i < NR_INODE;i++){
-		if(inodes[i].ptr == inode->ptr){
+	for(int i = 2;i < NR_INODE;i++){
+		if(inodes[i].block[0] == inode->block[0]){
 			GOLDLOG("get_inode_id #%d",i);
 			return i;
 		}
@@ -269,7 +269,7 @@ inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
 				
 			}
 			if(strcmp(cur_path, dir[i].name) == 0){
-				printf("found %s, inode_id = %d\n",cur_path, dir[i].inode_id);
+				GOLDLOG("blkfsops_lookup: found %s, inode_id = %d\n",cur_path, dir[i].inode_id);
 				inode_id = dir[i].inode_id;
 				break;
 			}
