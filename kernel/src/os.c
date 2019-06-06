@@ -160,6 +160,7 @@ void echo(char* pwd,char* filename,char* content){
 	else sprintf(newpath,"%s/%s",pwd,filename);
 	int fd = vfs->open(newpath, O_CREAT);
 	if(fd == -1) return;
+	vfs->lseek(fd, 0, SEEK_END);
 	vfs->write(fd, content, strlen(content));
 	vfs->close(fd);
 }

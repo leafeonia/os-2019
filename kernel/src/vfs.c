@@ -199,9 +199,17 @@ ssize_t vfs_write(int fd, void *buf, size_t nbyte){
 	return ret;
 }
 off_t vfs_lseek(int fd, off_t offset, int whence){
+	char buf[BLOCK_SIZE];
 	file_t* file = fd2file(fd);
-	file->offset = offset;
-	return offset;
+	if(whence == 0) file->offset = offset;
+	else if(whence == 1) file->offset += offset;
+	else if(whence == 2){
+		vfs->read(fd, buf, BLOCK_SIZE);
+		file->offset = strlen(buf) + offset;
+		GOLDLOG("vfs->lseek(SEEK_END), file->offset is now set as %d\n",file->offset);
+	}
+	else assert(0);
+	return file->offset;
 }
 int vfs_close(int fd){
 	extern task_t** current_task[16];
