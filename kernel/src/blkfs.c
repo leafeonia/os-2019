@@ -8,6 +8,13 @@ static inodeops_t* blk_inode_ops;
 
 static int dummy(){return 0;}
 
+int get_data_offset(int inode_id){
+	inode_t inode;
+	blkfs->dev->ops->read(blkfs->dev, INODE(inode_id), &inode, sizeof(inode_t));
+	printf("inode #%d get_data_offset: %d\n",inode_id,inode.block[0]);
+	return 0;
+}
+
 int blk_inode_open(file_t *file, int flags, inode_t* inode){
 	/*kmt->spin_lock(&lk_dev_inode_ops);
 	file->inode = inode;
@@ -45,7 +52,12 @@ ssize_t blk_inode_write(file_t *file, const char *buf, size_t size){
 
 int blk_inode_link(const char *name, inode_t *inode){
 	GOLDLOG("link: newpath = \"%s\"",name);
-	char* left_path = name;
+	
+	//remove const
+	char tmp_path[128];
+	strcpy(tmp_path,name);
+	
+	char* left_path = tmp_path;
 	char cur_path[128];
 	dire_t dir[NR_DIRE];
 	int inode_id = ROOT;
@@ -63,13 +75,13 @@ int blk_inode_link(const char *name, inode_t *inode){
 					for(int j = 0;j < strlen(left_path);j++){
 						if(*(left_path + j) == '/'){
 							LOG("error: create file in non-existing directory. Please use mkdir to create the directory first.");
-							return NULL;
+							return -1;
 						}
 					}
 					for(int j = 0;j <= NR_DIRE;j++){
 						if(j == NR_DIRE){
 							LOG("error when update directory: no available directory space");	
-							return NULL;
+							return -1;
 						}
 						if(dir[j].inode_id == 0){
 							GOLDLOG("update file \"%s\" successfully",left_path);
@@ -105,12 +117,7 @@ int blk_inode_link(const char *name, inode_t *inode){
 
 
 
-int get_data_offset(int inode_id){
-	inode_t inode;
-	blkfs->dev->ops->read(blkfs->dev, INODE(inode_id), &inode, sizeof(inode_t));
-	printf("inode #%d get_data_offset: %d\n",inode_id,inode.block[0]);
-	return 0;
-}
+
 
 int get_available_data_block(){
 	unsigned char data_bitmap[BLOCK_SIZE];
