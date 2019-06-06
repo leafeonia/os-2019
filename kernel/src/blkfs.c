@@ -71,8 +71,8 @@ int blk_inode_link(const char *name, inode_t *inode){
 		}
 		blkfs->dev->ops->read(blkfs->dev, DATA(get_data_offset(inode_id)), dir, BLOCK_SIZE);
 		GOLDLOG("enter1");
-		for(int i = 0;i < NR_DIRE;i++){
-			GOLDLOG("loop %d",i);
+		for(int i = 0;i <= NR_DIRE;i++){
+			//GOLDLOG("loop %d",i);
 			if(i == NR_DIRE){
 				GOLDLOG("enter2");
 					for(int j = 0;j < strlen(left_path);j++){
