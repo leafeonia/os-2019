@@ -70,9 +70,10 @@ int blk_inode_link(const char *name, inode_t *inode){
 			cur_path[i] = *(left_path + i);
 		}
 		blkfs->dev->ops->read(blkfs->dev, DATA(get_data_offset(inode_id)), dir, BLOCK_SIZE);
+		GOLDLOG("enter1");
 		for(int i = 0;i < NR_DIRE;i++){
 			if(i == NR_DIRE){
-				GOLDLOG("enter");
+				GOLDLOG("enter2");
 					for(int j = 0;j < strlen(left_path);j++){
 						if(*(left_path + j) == '/'){
 							LOG("error: create file in non-existing directory. Please use mkdir to create the directory first.");
