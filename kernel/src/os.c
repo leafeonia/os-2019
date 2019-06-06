@@ -180,7 +180,7 @@ static void cat(char* output, char* pwd, char* filename){
 	}
 	vfs->read(fd, output, BLOCK_SIZE);
 	vfs->close(fd);
-	//strcat(output,"\n");
+	strcat(output,"\n");
 }
 
 static void link(char* output, char* pwd, char* oldpath, char* newpath){
