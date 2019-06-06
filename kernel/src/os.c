@@ -276,7 +276,7 @@ static void shell(void* name){
     	char* newpath = oldpath + le;
     	while(*newpath == ' ' ) newpath++;
     	if(strlen(newpath) == 0) sprintf(output,"please type in newpath\n");
-    	sprintf("link: %s %s\n",oldpath, newpath);
+    	GOLDLOG("link: %s %s\n",oldpath, newpath);
     	vfs->link(oldpath, newpath);
     }
     else {
