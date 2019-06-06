@@ -119,7 +119,7 @@ int vfs_link(const char *oldpath, const char *newpath){
 	CYANLOG("vfs->link: %s, %s\n",oldpath, newpath);
 	filesystem_t fs;
 	const char* fs_path = findfs(oldpath,&fs);
-	CYANLOG("fs->name = %s",fs.name);
+	//CYANLOG("fs->name = %s",fs.name);
 	inode_t* inode = fs.ops->lookup(&fs,fs_path,0); //TODOFLAG
 	if(!inode){
 		LOG("vfs->link(%s, %s) fails", oldpath, newpath);
@@ -153,19 +153,8 @@ int vfs_open(const char *path, int flags){
 	else if(strncmp(path,"/",1) == 0){
 		printf("blockfs\n");
 	}*/
-	filesystem_t* fs = NULL;
-	int omit = 0; //omit the part of path that is registered in mount point
-	for(int i = 0;i <= mt_idx;i++){
-		if(i == mt_idx) panic("filesystem not found\n");
-		//printf("%s %s %d\n",path,mt_list[i].path,strlen(mt_list[i].path));
-		if(strncmp(path,mt_list[i].path,strlen(mt_list[i].path)) == 0){
-			omit = strlen(mt_list[i].path);
-			//printf("found: %s\n",mt_list[i].path);
-			fs = mt_list[i].fs;
-			break;
-		}
-	}
-	const char* fs_path = path + omit;
+	filesystem_t fs;
+	const char* fs_path = findfs(oldpath,&fs);
 	//CYANLOG(fs_path);
 	inode_t* inode = fs->ops->lookup(fs,fs_path,flags);
 	if(!inode){
