@@ -17,7 +17,7 @@ file_t* fd2file(int fd){
 	return ret;
 }
 
-const char* findfs(char* path, *filesystem ret){
+const char* findfs(char* path, *filesystem_t ret){
 	filesystem_t* fs = NULL;
 	int omit = 0; 
 	for(int i = 0;i <= mt_idx;i++){
