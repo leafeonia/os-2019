@@ -196,7 +196,7 @@ static void link(char* output, char* pwd, char* oldpath, char* newpath){
 		sprintf(absolute_oldpath,"%s/%s",pwd, oldpath);
 	}
 	if(vfs->link(absolute_oldpath, absolute_newpath)) sprintf(output, "link fails");
-	else sprintf(output,"");
+	else memset(output, 0,sizeof(output));
 }
 
 static void shell(void* name){
