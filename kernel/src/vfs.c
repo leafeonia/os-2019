@@ -17,6 +17,22 @@ file_t* fd2file(int fd){
 	return ret;
 }
 
+const char* findfs(char* path, *filesystem ret){
+	filesystem_t* fs = NULL;
+	int omit = 0; 
+	for(int i = 0;i <= mt_idx;i++){
+		if(i == mt_idx) panic("filesystem not found\n");
+		
+		if(strncmp(oldpath,mt_list[i].path,strlen(mt_list[i].path)) == 0){
+			omit = strlen(mt_list[i].path);
+			ret = &(mt_list[i].fs);
+			break;
+		}
+	}
+	const char* fs_path = oldpath + omit;
+	return fs_path;
+}
+
 int getfd(){
 	extern task_t** current_task[16];
 	task_t** cur = current_task[_cpu()];
@@ -98,18 +114,8 @@ int vfs_rmdir(const char *path){
 }
 int vfs_link(const char *oldpath, const char *newpath){
 	CYANLOG("vfs->link: %s, %s\n",oldpath, newpath);
-	filesystem_t* fs = NULL;
-	int omit = 0; 
-	for(int i = 0;i <= mt_idx;i++){
-		if(i == mt_idx) panic("filesystem not found\n");
-		
-		if(strncmp(oldpath,mt_list[i].path,strlen(mt_list[i].path)) == 0){
-			omit = strlen(mt_list[i].path);
-			fs = mt_list[i].fs;
-			break;
-		}
-	}
-	const char* fs_path = oldpath + omit;
+	filesystem_t fs;
+	const char* fs_path = findfs(oldpath,&fs);
 	inode_t* inode = fs->ops->lookup(fs,fs_path,0); //TODOFLAG
 	if(!inode){
 		LOG("vfs->link(%s, %s) fails", oldpath, newpath);
