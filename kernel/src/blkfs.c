@@ -165,7 +165,7 @@ void blkfsops_init(filesystem_t *fs, const char *name, device_t *dev){
 		inodes[i].ptr = NULL;
 		inodes[i].fs = fs;
 		inodes[i].ops = blk_inode_ops;
-		for(int i = 0;i < 12;i++){
+		for(int i = 0;i < 11;i++){
 			inodes[i].block[i] = -1; //!!
 		}
 	}
