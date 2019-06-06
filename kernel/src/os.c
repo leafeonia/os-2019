@@ -226,7 +226,7 @@ static void shell(void* name){
     
     //touch
     else if(strncmp("touch ",input,6) == 0){
-    	sprintf(output,"");
+    	sprintf(output,"\0");
     	char* newfile = input + 6;
     	while(*newfile == ' ') newfile++; //remove blank
     	if(strlen(newfile) == 0) sprintf(output,"touch: please type in filename\n");
