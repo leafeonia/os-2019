@@ -17,13 +17,12 @@ file_t* fd2file(int fd){
 	return ret;
 }
 
-const char* findfs(char* path, filesystem_t* ret){
-	filesystem_t* fs = NULL;
+const char* findfs(const char* path, filesystem_t* ret){
 	int omit = 0; 
 	for(int i = 0;i <= mt_idx;i++){
 		if(i == mt_idx) panic("filesystem not found\n");
 		
-		if(strncmp(oldpath,mt_list[i].path,strlen(mt_list[i].path)) == 0){
+		if(strncmp(path,mt_list[i].path,strlen(mt_list[i].path)) == 0){
 			omit = strlen(mt_list[i].path);
 			ret = &(mt_list[i].fs);
 			break;
