@@ -274,7 +274,8 @@ static void shell(void* name){
     	while(*(oldpath + le) && *(oldpath + le) != ' ') le++;
     	if(!*(oldpath + le)) sprintf(output,"please type in newpath\n");
     	else{
-			char* newpath = oldpath + le;
+    		*(oldpath + le) = '\0';
+			char* newpath = oldpath + le + 1;
 			while(*newpath == ' ' ) newpath++;
 			if(strlen(newpath) == 0) sprintf(output,"please type in newpath\n");
 			else{
