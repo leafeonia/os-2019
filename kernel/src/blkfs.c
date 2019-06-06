@@ -6,7 +6,7 @@
 
 static inodeops_t* blk_inode_ops;
 
-
+int dummy(){return 0;}
 
 int blk_inode_open(file_t *file, int flags, inode_t* inode){
 	/*kmt->spin_lock(&lk_dev_inode_ops);
@@ -227,17 +227,14 @@ void blkfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	
 	
 	
-	blk_inode_ops->open   = blk_inode_open;
+	blk_inode_ops->open   = dummy;//blk_inode_open;
 	blk_inode_ops->read   = blk_inode_read;
 	blk_inode_ops->write  = blk_inode_write;
-	blk_inode_ops->close  = blk_inode_close;
-	/*blk_inode_ops->lseek  = 
-	*/
+	blk_inode_ops->close  = dummy;//blk_inode_close;
+	blk_inode_ops->lseek  = dummy;
 	
-	/*
-	blk_inode_ops->read   = dev_inode_read;
-	blk_inode_ops->write  = dev_inode_write;
 	
+	/*	
 	blk_inode_ops->mkdir  = boom;
 	blk_inode_ops->rmdir  = boom;
 	blk_inode_ops->link   = boom;

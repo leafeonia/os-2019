@@ -91,7 +91,7 @@ void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	dev_inode_ops->close  = dev_inode_close;
 	dev_inode_ops->read   = dev_inode_read;
 	dev_inode_ops->write  = dev_inode_write;
-	dev_inode_ops->lseek  = boom;
+	dev_inode_ops->lseek  = dummy2;
 	dev_inode_ops->mkdir  = boom;
 	dev_inode_ops->rmdir  = boom;
 	dev_inode_ops->link   = boom;

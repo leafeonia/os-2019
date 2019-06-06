@@ -206,7 +206,7 @@ off_t vfs_lseek(int fd, off_t offset, int whence){
 	else if(whence == 2){
 		vfs->read(fd, buf, BLOCK_SIZE);
 		file->offset = strlen(buf) + offset;
-		GOLDLOG("vfs->lseek(SEEK_END), file->offset is now set as %d\n",file->offset);
+		GOLDLOG("vfs->lseek(SEEK_END), file->offset is now set as %d",file->offset);
 	}
 	else assert(0);
 	return file->offset;
