@@ -30,6 +30,7 @@ const char* findfs(const char* path, filesystem_t* ret){
 		}
 	}
 	const char* fs_path = path + omit;
+	CYANLOG("ret: %s",fs_path);
 	return fs_path;
 }
 
