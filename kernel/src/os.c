@@ -298,8 +298,9 @@ static void shell(void* name){
     	}
     	
     }
+    
     else {
-    	sprintf(output, "Invalid operation. Supported command: ls pwd echo touch cat link.\n", input);
+    	sprintf(output, "Invalid operation. Supported command: ls pwd echo touch cat link .\n", input);
     }
     vfs->write(stdout, output, sizeof(output));
     // supported commands:

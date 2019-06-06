@@ -15,6 +15,18 @@ int get_data_offset(int inode_id){
 	return 0;
 }
 
+int get_inode_id(inode_t* inode){
+	inode_t inodes[NR_INODE];
+	blkfs->dev->ops->read(blkfs->dev, 0, &inodes, BLOCK_SIZE);
+	for(int i = 0;i < NR_INODE;i++){
+		if(inodes[i].ptr = inode->ptr){
+			GOLDLOG("get_inode_id #%d",i);
+			return i;
+		}
+	}
+	assert(0);
+}
+
 int blk_inode_open(file_t *file, int flags, inode_t* inode){
 	/*kmt->spin_lock(&lk_dev_inode_ops);
 	file->inode = inode;
@@ -65,16 +77,13 @@ int blk_inode_link(const char *name, inode_t *inode){
 		GOLDLOG("in blk_inode_link: left_path: %s",left_path);
 		if(left_path[0] == '/') left_path += 1;
 		memset(cur_path, 0, sizeof(cur_path));
-		for(int i = 0;i < 100;i++){
+		for(int i = 0;i < 128;i++){
 			if(*(left_path + i) == '\0' || *(left_path + i) == '/') break;
 			cur_path[i] = *(left_path + i);
 		}
 		blkfs->dev->ops->read(blkfs->dev, DATA(get_data_offset(inode_id)), dir, BLOCK_SIZE);
-		GOLDLOG("enter1");
 		for(int i = 0;i <= NR_DIRE;i++){
-			//GOLDLOG("loop %d",i);
 			if(i == NR_DIRE){
-				GOLDLOG("enter2");
 					for(int j = 0;j < strlen(left_path);j++){
 						if(*(left_path + j) == '/'){
 							LOG("error: create file in non-existing directory. Please use mkdir to create the directory first.");
@@ -89,7 +98,7 @@ int blk_inode_link(const char *name, inode_t *inode){
 						if(dir[j].inode_id == 0){
 							GOLDLOG("update file \"%s\" successfully",left_path);
 							strcpy(dir[j].name,left_path);
-							dir[j].inode_id = 5;
+							dir[j].inode_id = get_inode_id(inode);
 							blkfs->dev->ops->write(blkfs->dev, DATA(get_data_offset(inode_id)), dir, BLOCK_SIZE);
 							inode_id = dir[j].inode_id;
 							break;
