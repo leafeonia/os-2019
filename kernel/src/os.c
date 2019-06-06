@@ -183,8 +183,8 @@ static void cat(char* output, char* pwd, char* filename){
 	strcat(output,"\n");
 }
 
-static void link(char* pwd, char* oldpath, char* newpath){
-	CYANLOG("link: %s %s\n",oldpath, newpath);
+static void link(char* output, char* pwd, char* oldpath, char* newpath){
+	CYANLOG("link: %s %s",oldpath, newpath);
 	char absolute_oldpath[128];
 	char absolute_newpath[128];
 	if(strcmp(pwd,"/") == 0) {
@@ -195,7 +195,8 @@ static void link(char* pwd, char* oldpath, char* newpath){
 		sprintf(absolute_newpath,"%s/%s",pwd, newpath);
 		sprintf(absolute_oldpath,"%s/%s",pwd, oldpath);
 	}
-	vfs->link(absolute_oldpath, absolute_newpath);
+	if(!vfs->link(absolute_oldpath, absolute_newpath)) sprintf(output, "link fails");
+	sprintf(output,"\n");
 }
 
 static void shell(void* name){
@@ -293,7 +294,7 @@ static void shell(void* name){
 			char* newpath = oldpath + le + 1;
 			while(*newpath == ' ' ) newpath++;
 			if(strlen(newpath) == 0) sprintf(output,"please type in newpath\n");
-			else link(pwd, oldpath, newpath);
+			else link(output, pwd, oldpath, newpath);
     	}
     	
     }
