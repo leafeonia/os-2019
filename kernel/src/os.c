@@ -199,6 +199,13 @@ static void link(char* output, char* pwd, char* oldpath, char* newpath){
 	else sprintf(output,"\0");
 }
 
+static void mkdir(char* pwd, char* dirname){
+	char newpath[128];
+	if(strcmp(pwd,"/") == 0) sprintf(newpath,"/%s",dirname);
+	else sprintf(newpath,"%s/%s",pwd,dirname);
+	vfs->mkdir(newpath);
+}
+
 static void shell(void* name){
   //device_t* tty = dev_lookup(name);
   char input[512];
@@ -299,6 +306,14 @@ static void shell(void* name){
     	
     }
     
+    else if(strncmp("mkdir ",input,6) == 0){
+    	char* dirname = input + 6;
+    	while(*dirname == ' ') dirname++;
+    	if(strlen(dirname) == 0) sprintf(output,"please type in name of new directory\n");
+    	else{
+    		mkdir(pwd, dirname);
+    	}
+    }
     else {
     	sprintf(output, "Invalid operation. Supported command: ls pwd echo touch cat link .\n", input);
     }

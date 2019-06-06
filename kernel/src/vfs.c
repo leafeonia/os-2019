@@ -58,7 +58,7 @@ int vfs_mount(const char *path, filesystem_t *fs){
 }
 
 void vfs_init(){
-	GOLDLOG("hello L3!");
+	CYANLOG("hello L3!");
 	//printf("size: %d\n\n",sizeof(task_t));
 	
 	
@@ -90,13 +90,14 @@ int vfs_unmount(const char *path){
 	return 0;
 }
 int vfs_mkdir(const char *path){
+	CYANLOG("mkdir: %s",path);
 	return 0;
 }
 int vfs_rmdir(const char *path){
 	return 0;
 }
 int vfs_link(const char *oldpath, const char *newpath){
-	GOLDLOG("vfs->link: %s, %s\n",oldpath, newpath);
+	CYANLOG("vfs->link: %s, %s\n",oldpath, newpath);
 	filesystem_t* fs = NULL;
 	int omit = 0; 
 	for(int i = 0;i <= mt_idx;i++){
@@ -155,7 +156,7 @@ int vfs_open(const char *path, int flags){
 		}
 	}
 	const char* fs_path = path + omit;
-	//GOLDLOG(fs_path);
+	//CYANLOG(fs_path);
 	inode_t* inode = fs->ops->lookup(fs,fs_path,flags);
 	if(!inode){
 		LOG("vfs->open(%s, %d) fails", path, flags);
@@ -208,7 +209,7 @@ off_t vfs_lseek(int fd, off_t offset, int whence){
 	else if(whence == 2){
 		vfs->read(fd, buf, BLOCK_SIZE);
 		file->offset = strlen(buf) + offset;
-		GOLDLOG("vfs->lseek(SEEK_END), file->offset is now set as %d",file->offset);
+		CYANLOG("vfs->lseek(SEEK_END), file->offset is now set as %d",file->offset);
 	}
 	else assert(0);
 	return file->offset;
@@ -218,7 +219,7 @@ int vfs_close(int fd){
 	task_t** cur = current_task[_cpu()];
 	file_t* file = (*cur)->fildes[fd];
 	file->offset = 0;
-	//GOLDLOG("%d",file->inode->refcnt);
+	//CYANLOG("%d",file->inode->refcnt);
 	file->inode->refcnt--;
 	//LOG("file->inode->block[0] = %d",file->inode->block[0]);
 	file->inode->fs->ops->close(file->inode); 
