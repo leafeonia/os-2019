@@ -69,7 +69,7 @@ int blk_inode_link(const char *name, inode_t *inode){
 			if(*(left_path + i) == '\0' || *(left_path + i) == '/') break;
 			cur_path[i] = *(left_path + i);
 		}
-		fs->dev->ops->read(fs->dev, DATA(get_data_offset(inode_id)), dir, BLOCK_SIZE);
+		blkfs->dev->ops->read(blkfs->dev, DATA(get_data_offset(inode_id)), dir, BLOCK_SIZE);
 		for(int i = 0;i < NR_DIRE;i++){
 			if(i == NR_DIRE){
 					for(int j = 0;j < strlen(left_path);j++){
