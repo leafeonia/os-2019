@@ -117,6 +117,7 @@ int vfs_link(const char *oldpath, const char *newpath){
 	CYANLOG("vfs->link: %s, %s\n",oldpath, newpath);
 	filesystem_t* fs = NULL;
 	const char* fs_path = findfs(oldpath,fs);
+	CYANLOG("fs = %x",fs);
 	CYANLOG("fs->name = %s",fs->name);
 	inode_t* inode = fs->ops->lookup(fs,fs_path,0); //TODOFLAG
 	if(!inode){
