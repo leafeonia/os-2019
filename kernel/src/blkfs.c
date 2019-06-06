@@ -237,6 +237,7 @@ void blkfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	blk_inode_ops->write  = blk_inode_write;
 	blk_inode_ops->close  = dummy;//blk_inode_close;
 	blk_inode_ops->lseek  = dummy;
+	blk_inode_ops->link   = blk_inode_link;
 	
 	
 	/*	
