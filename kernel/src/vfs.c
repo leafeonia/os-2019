@@ -24,7 +24,7 @@ const char* findfs(const char* path, filesystem_t* ret){
 		
 		if(strncmp(path,mt_list[i].path,strlen(mt_list[i].path)) == 0){
 			omit = strlen(mt_list[i].path);
-			ret = &(mt_list[i].fs);
+			ret = mt_list[i].fs;
 			break;
 		}
 	}
@@ -113,7 +113,7 @@ int vfs_rmdir(const char *path){
 }
 int vfs_link(const char *oldpath, const char *newpath){
 	CYANLOG("vfs->link: %s, %s\n",oldpath, newpath);
-	filesystem_t* fs;
+	filesystem_t* fs = NULL;
 	const char* fs_path = findfs(oldpath,fs);
 	inode_t* inode = fs->ops->lookup(fs,fs_path,0); //TODOFLAG
 	if(!inode){
