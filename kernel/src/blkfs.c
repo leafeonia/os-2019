@@ -99,7 +99,10 @@ int blk_inode_link(const char *name, inode_t *inode){
 				
 			}
 			if(strcmp(cur_path, dir[i].name) == 0){
-				LOG("found %s, inode_id = %d\n",cur_path, dir[i].inode_id);
+				if(*(left_path + strlen(cur_path)) == '\0'){
+					LOG("%s exists, link fails",name);
+				}
+				GOLDLOG("found %s, inode_id = %d\n",cur_path, dir[i].inode_id);
 				inode_id = dir[i].inode_id;
 				break;
 			}
