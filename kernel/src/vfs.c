@@ -27,7 +27,7 @@ const char* findfs(const char* path, filesystem_t* ret){
 			omit = strlen(mt_list[i].path);
 			ret->name = mt_list[i].fs->name;
 			ret->ops = mt_list[i].fs->ops;
-			ret->ptr = mt_list[i].fs->ptr;
+			ret->dev = mt_list[i].fs->dev;
 			break;
 		}
 	}
