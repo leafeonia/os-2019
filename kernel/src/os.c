@@ -196,7 +196,7 @@ static void link(char* output, char* pwd, char* oldpath, char* newpath){
 		sprintf(absolute_oldpath,"%s/%s",pwd, oldpath);
 	}
 	if(vfs->link(absolute_oldpath, absolute_newpath)) sprintf(output, "link fails");
-	else memset(output, 0,sizeof(output));
+	sprintf(output,"\n");
 }
 
 static void shell(void* name){
@@ -226,7 +226,7 @@ static void shell(void* name){
     
     //touch
     else if(strncmp("touch ",input,6) == 0){
-    	//sprintf(output,"catch touch\n");
+    	sprintf(output,"catch touch\n");
     	char* newfile = input + 6;
     	while(*newfile == ' ') newfile++; //remove blank
     	if(strlen(newfile) == 0) sprintf(output,"touch: please type in filename\n");
@@ -299,7 +299,7 @@ static void shell(void* name){
     	
     }
     else {
-    	sprintf(output, "Invalid operation. Supported command: ls pwd echo touch.\n", input);
+    	sprintf(output, "Invalid operation. Supported command: ls pwd echo touch cat link.\n", input);
     }
     vfs->write(stdout, output, sizeof(output));
     // supported commands:
