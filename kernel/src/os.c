@@ -207,7 +207,7 @@ static void mkdir(char* output, char* pwd, char* dirname){
 	if(vfs->mkdir(newpath) != 0) sprintf(output, "mkdir %s fails\n",dirname);
 }
 
-static void cd(char* pwd, char* dir){
+static void cd(char* output,char* pwd, char* dir){
 	if(strcmp(".",dir) == 0) return;
 	else if(strcmp("..",dir) == 0){
 		char* cur = pwd + strlen(pwd) - 1;
@@ -216,12 +216,15 @@ static void cd(char* pwd, char* dir){
 		if(strlen(pwd) == 0) sprintf(pwd,"/");
 	}
 	else{
-		if(strcmp(pwd, "/") == 0) strcat(pwd, dir);
+		char temp[128];
+		strcpy(temp, pwd);
+		if(strcmp(temp, "/") == 0) strcat(temp, dir);
 		else{
-			strcat(pwd,"/");
-			strcat(pwd,dir);
+			strcat(temp,"/");
+			strcat(temp,dir);
 		}
-		if(vfs->open(pwd,0) != 0) LOG("error");
+		if(vfs->open(temp,0) != 0) sprintf(output,"cd %s fails",dir);
+		else strcpy(pwd, temp);
 	}
 	CYANLOG("after cd, new pwd = %s",pwd);
 }
@@ -340,7 +343,7 @@ static void shell(void* name){
     	while(*dirname == ' ') dirname++;
     	if(strlen(dirname) == 0) sprintf(output,"please type in name of directory\n");
     	else{
-    		cd(pwd, dirname);
+    		cd(output, pwd, dirname);
     	}
     }
     
