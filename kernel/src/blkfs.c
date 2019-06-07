@@ -225,7 +225,7 @@ int blk_inode_unlink(const char* name){
 	for(int i = 0;i < NR_DIRE;i++){
 		if(strcmp(remove_file, dir[i].name) == 0){
 			dir[i].inode_id = 0;
-			dir[i].name = NULL;
+			dir[i].name = "";
 			blkfs->dev->ops->write(blkfs->dev,DATA(parent->block[0]), &dir,BLOCK_SIZE);
 			return 0;
 		}
