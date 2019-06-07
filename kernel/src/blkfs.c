@@ -249,14 +249,17 @@ inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
 	char cur_path[100];
 	//GOLDLOG(fs->dev->name);
 	while(strlen(left_path)){
-		GOLDLOG("left_path: %s",left_path);
 		if(left_path[0] == '/') left_path += 1;
+		GOLDLOG("left_path: %s",left_path);
 		memset(cur_path, 0, sizeof(cur_path));
 		for(int i = 0;i < 100;i++){
 			if(*(left_path + i) == '\0' || *(left_path + i) == '/') break;
 			cur_path[i] = *(left_path + i);
 		}
 		fs->dev->ops->read(fs->dev, DATA(get_data_offset(inode_id)), dir, BLOCK_SIZE);
+		for(int i = 0;i < NR_DIRE;i++){
+			printf("%d - name: %s, inode_id: %d\n",i,dir[i].name, dir[i].inode_id);
+		}
 		for(int i = 0;i <= NR_DIRE;i++){
 			//printf("dir[%d] name = %s, inode_id = %d\n",i ,dir[i].name, dir[i].inode_id);
 			if(i == NR_DIRE){
