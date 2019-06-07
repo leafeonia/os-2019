@@ -242,7 +242,7 @@ static void shell(void* name){
     //char input[128], output[512];
     memset(input,0,sizeof(input));
     memset(output, 0, sizeof(output));
-    sprintf(output, "(%s) %s $ ",pwd, name); 
+    sprintf(output, "(%s) %s $ ", name, pwd); 
     //tty->ops->write(tty, 0, output, strlen(output));
     //LOG("FA1");
     vfs->write(stdout, output, sizeof(output));
