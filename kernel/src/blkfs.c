@@ -162,9 +162,9 @@ int blk_inode_mkdir(const char *name, inode_t* inode){
 	dire_t dir[NR_DIRE];
 	//blkfs->dev->ops->read(blkfs->dev, DATA(inode->block[0]), &dir, BLOCK_SIZE);
 	strcpy(dir[0].name,".");
-	dir[0].inode_id = ROOT;
+	dir[0].inode_id = get_inode_id(inode);
 	strcpy(dir[1].name,"..");
-	dir[1].inode_id = get_inode_id(inode);
+	dir[1].inode_id = ROOT;
 	strcpy(dir[2].name,"test.txt");
 	dir[2].inode_id = get_available_inode();
 	//LOG("%d",inode->block[0]);
