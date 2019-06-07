@@ -211,14 +211,27 @@ int blk_inode_unlink(const char* name){
 	inode_t* parent = blkfsops_lookup(blkfs, parent_path, 0);
 	CYANLOG("parent->block[0] = %d",parent->block[0]);
 	remove_file = name + le + 1;
+	if(strcmp(remove_file,".") == 0 || strcmp(remove_file,"..") == 0){
+		LOG("error: cannot remove \".\" or \"..\" in a directory.");
+		return -1;
+	}
 	GOLDLOG("unlink %s from %s",remove_file, parent_path);
 	dire_t dir[NR_DIRE];
 	memset(dir,0,sizeof(dir));
 	blkfs->dev->ops->read(blkfs->dev, DATA(parent->block[0]), &dir, BLOCK_SIZE);
-	for(int i = 0;i < 10;i++){
-			CYANLOG("%d - name: %s, inode_id: %d",i,dir[i].name, dir[i].inode_id);
+	/*for(int i = 0;i < 10;i++){
+		CYANLOG("%d - name: %s, inode_id: %d",i,dir[i].name, dir[i].inode_id);
+	}*/
+	for(int i = 0;i < NR_DIRE;i++){
+		if(strcmp(remove_file, dir[i].name) == 0){
+			dir[i].inode_id = 0;
+			dir[i].name = NULL;
+			blkfs->dev->ops->write(blkfs->dev,DATA(parent->block[0]), &dir,BLOCK_SIZE);
+			return 0;
 		}
-	return 0;
+	}
+	LOG("error: file %s cannot be found in directory %s",remove_file, parent_path);
+	return -1;
 }
 
 
