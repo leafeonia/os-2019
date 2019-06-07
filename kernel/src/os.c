@@ -234,6 +234,13 @@ static void cd(char* output,char* pwd, char* dir){
 	CYANLOG("after cd, new pwd = %s",pwd);
 }
 
+static void rmdir(char* output, char* pwd, char* dirname){
+	char newpath[128];
+	if(strcmp(pwd,"/") == 0) sprintf(newpath,"/%s",dirname);
+	else sprintf(newpath,"%s/%s",pwd,dirname);
+	if(vfs->rmdir(newpath) != 0) sprintf(output, "rmdir %s fails\n",dirname);
+}
+
 static void shell(void* name){
   //device_t* tty = dev_lookup(name);
   char input[512];
@@ -355,8 +362,17 @@ static void shell(void* name){
     	}
     }
     
+    else if(strncmp("rmdir ",input, 6) == 0){
+    	char* dirname = input + 6;
+    	while(*dirname == ' ') dirname++;
+    	if(strlen(dirname) == 0) sprintf(output,"please type in name of new directory\n");
+    	else{
+    		rmdir(output, pwd, dirname);
+    	}
+    }
+    
     else {
-    	sprintf(output, "Invalid operation. Supported command: ls pwd echo touch cat link mkdir cd rm.\n", input);
+    	sprintf(output, "Invalid operation. Supported command: ls pwd echo touch cat link mkdir cd rm rmdir.\n", input);
     }
     vfs->write(stdout, output, sizeof(output));
     // supported commands:

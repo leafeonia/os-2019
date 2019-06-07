@@ -113,14 +113,17 @@ int vfs_mkdir(const char *path){
 	filesystem_t fs;
 	const char* fs_path = findfs(path,&fs);
 	inode_t* inode = fs.ops->lookup(&fs,fs_path,O_CREAT);
-	if(!inode){
-		LOG("vfs->mkdir(%s) fails", path);
-		return -1;
-	}
+	if(!inode) return -1;	
 	if(inode->ops->mkdir(fs_path, inode) != 0) return -1;
 	return 0;
 }
 int vfs_rmdir(const char *path){
+	CYANLOG("rmdir: %s",path);
+	filesystem_t fs;
+	const char* fs_path = findfs(path,&fs);
+	inode_t* inode = fs.ops->lookup(&fs,fs_path,O_CREAT);
+	if(!inode) return -1;
+	if(inode->ops->rmdir(fs_path, inode) != 0) return -1;
 	return 0;
 }
 int vfs_link(const char *oldpath, const char *newpath){

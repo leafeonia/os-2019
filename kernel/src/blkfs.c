@@ -253,6 +253,30 @@ int blk_inode_unlink(const char* name){
 	return -1;
 }
 
+int blk_inode_rmdir(const char* name){
+	GOLDLOG("rmdir %s",name);
+	int ret = is_dire(name);
+	if(ret == -1) return -1;
+	else if(ret == 0){
+		LOG("rmdir fail: cannot remove a file. Use rm instead");
+		return -1;
+	}
+	const char* remove_dir;
+	int le = strlen(name) - 1;
+	while(le > 0 && *(name + le) != '/') le--;
+	char parent_path[128];
+	if(le == 0) sprintf(parent_path,"/.");
+	else{
+		strcpy(parent_path, name);
+		parent_path[le] = '\0';
+	}
+	inode_t* parent = blkfsops_lookup(blkfs, parent_path, 0);
+	if(!parent) return -1;
+	remove_dir = name + le + 1;
+	GOLDLOG("unlink %s from %s",remove_dir, parent_path);
+	return 0;
+}
+
 
 
 
@@ -397,15 +421,9 @@ int blkfsops_close(inode_t *inode){
 void blkfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	fs->name = name;
 	fs->dev = dev;
-	//printf("sizeof(inode_t) = %d\n",sizeof(inode_t));
-	
 	
 	//initialize inodeops of inode of blkfs.
 	blk_inode_ops = pmm->alloc(sizeof(inodeops_t));
-	
-	
-	
-	
 	blk_inode_ops->open   = dummy;//blk_inode_open;
 	blk_inode_ops->read   = blk_inode_read;
 	blk_inode_ops->write  = blk_inode_write;
@@ -414,17 +432,11 @@ void blkfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	blk_inode_ops->link   = blk_inode_link;
 	blk_inode_ops->mkdir  = blk_inode_mkdir;
 	blk_inode_ops->unlink = blk_inode_unlink;
+	blk_inode_ops->rmdir  = blk_inode_rmdir;
 	
-	/*	
-	blk_inode_ops->rmdir  = boom;
-	
-	*/
 	
 	blkfs_ops = pmm->alloc(sizeof(fsops_t));
-	blkfs->ops = blkfs_ops;
-	//rd_t* rd = dev->ptr;
-	//dev->ops->write()	
-	
+	blkfs->ops = blkfs_ops;	
 	blkfs_ops->init = blkfsops_init;
 	blkfs_ops->lookup = blkfsops_lookup;
 	blkfs_ops->close = blkfsops_close;
