@@ -117,7 +117,7 @@ int vfs_mkdir(const char *path){
 		LOG("vfs->mkdir(%s) fails", path);
 		return -1;
 	}
-	if(inode->mkdir(fs_path, inode) != 0) return -1;
+	if(inode->ops->mkdir(fs_path, inode) != 0) return -1;
 	return 0;
 }
 int vfs_rmdir(const char *path){
