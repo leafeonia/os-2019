@@ -123,7 +123,7 @@ int vfs_rmdir(const char *path){
 	const char* fs_path = findfs(path,&fs);
 	inode_t* inode = fs.ops->lookup(&fs,fs_path,O_CREAT);
 	if(!inode) return -1;
-	if(inode->ops->rmdir(fs_path, inode) != 0) return -1;
+	if(inode->ops->rmdir(fs_path) != 0) return -1;
 	return 0;
 }
 int vfs_link(const char *oldpath, const char *newpath){
