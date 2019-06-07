@@ -291,7 +291,7 @@ int blk_inode_rmdir(const char* name,inode_t* inode){
 		CYANLOG("%d - name: %s, inode_id: %d",i,dir[i].name, dir[i].inode_id);
 	}*/
 	for(int i = 0;i < NR_DIRE;i++){
-		if(strcmp(remove_file, dir[i].name) == 0){
+		if(strcmp(remove_dir, dir[i].name) == 0){
 			dir[i].inode_id = 0;
 			sprintf(dir[i].name, "");
 			blkfs->dev->ops->write(blkfs->dev,DATA(parent->block[0]), &dir,BLOCK_SIZE);
