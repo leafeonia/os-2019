@@ -174,8 +174,8 @@ int blk_inode_mkdir(const char *name, inode_t* inode){
 	dir[0].inode_id = get_inode_id(inode);
 	strcpy(dir[1].name,"..");
 	dir[1].inode_id = ROOT;
-	strcpy(dir[2].name,"test.txt");
-	dir[2].inode_id = get_available_inode();
+	//strcpy(dir[2].name,"test.txt");
+	//dir[2].inode_id = get_available_inode();
 	//LOG("%d",inode->block[0]);
 	blkfs->dev->ops->write(blkfs->dev, DATA(inode->block[0]), dir, BLOCK_SIZE);
 	//test();
