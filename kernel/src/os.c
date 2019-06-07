@@ -199,7 +199,7 @@ static void link(char* output, char* pwd, char* oldpath, char* newpath){
 	//else sprintf(output,"\0");
 }
 
-static void mkdir(char* pwd, char* dirname){
+static void mkdir(char* output, char* pwd, char* dirname){
 	char newpath[128];
 	if(strcmp(pwd,"/") == 0) sprintf(newpath,"/%s",dirname);
 	else sprintf(newpath,"%s/%s",pwd,dirname);
@@ -312,7 +312,7 @@ static void shell(void* name){
     	while(*dirname == ' ') dirname++;
     	if(strlen(dirname) == 0) sprintf(output,"please type in name of new directory\n");
     	else{
-    		mkdir(pwd, dirname);
+    		mkdir(output, pwd, dirname);
     	}
     }
     else {
