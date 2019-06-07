@@ -23,7 +23,7 @@ const char* findfs(const char* path, filesystem_t* ret){
 		if(i == mt_idx) panic("filesystem not found\n");
 		
 		if(strncmp(path,mt_list[i].path,strlen(mt_list[i].path)) == 0){
-			CYANLOG("catch. %s %s",mt_list[i].path, mt_list[i].fs->name);
+			//CYANLOG("catch. %s %s",mt_list[i].path, mt_list[i].fs->name);
 			omit = strlen(mt_list[i].path);
 			ret->name = mt_list[i].fs->name;
 			ret->ops = mt_list[i].fs->ops;
@@ -32,7 +32,7 @@ const char* findfs(const char* path, filesystem_t* ret){
 		}
 	}
 	const char* fs_path = path + omit;
-	CYANLOG("ret: %s",fs_path);
+	//CYANLOG("ret: %s",fs_path);
 	return fs_path;
 }
 
@@ -110,6 +110,14 @@ int vfs_unmount(const char *path){
 }
 int vfs_mkdir(const char *path){
 	CYANLOG("mkdir: %s",path);
+	filesystem_t fs;
+	const char* fs_path = findfs(path,&fs);
+	inode_t* inode = fs.ops->lookup(&fs,fs_path,O_CREAT);
+	if(!inode){
+		LOG("vfs->mkdir(%s) fails", path);
+		return -1;
+	}
+	if(inode->mkdir(fs_path, inode) != 0) return -1;
 	return 0;
 }
 int vfs_rmdir(const char *path){
