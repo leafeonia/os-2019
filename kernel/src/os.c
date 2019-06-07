@@ -134,6 +134,7 @@ static void ls(char* output, char* pwd){
 	int fd = vfs->open(path, 0);//TODOFLAG
 	dire_t dir[NR_DIRE];
 	vfs->read(fd,dir,BLOCK_SIZE);
+	vfs->close(fd);
 	for(int i = 0;i < NR_DIRE;i++){
 		if(dir[i].inode_id){
 			if(strcmp(dir[i].name,".") == 0 || strcmp(dir[i].name,"..") == 0) continue;
