@@ -199,7 +199,7 @@ int blk_inode_mkdir(const char *name, inode_t* inode){
 
 int blk_inode_unlink(const char* name){
 	GOLDLOG("unlink %s",name);
-	char* remove_file;
+	const char* remove_file;
 	int parent_inode_id = 2;
 	int le = strlen(name) - 1;
 	char parent_path[128];
@@ -214,6 +214,7 @@ int blk_inode_unlink(const char* name){
 	}
 	remove_file = name + le + 1;
 	GOLDLOG("unlink %s from %s",remove_file, parent_path);
+	parent_inode_id++;
 	return 0;
 }
 
