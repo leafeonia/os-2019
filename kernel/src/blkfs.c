@@ -203,7 +203,7 @@ int blk_inode_unlink(const char* name){
 	int le = strlen(name) - 1;
 	while(le > 0 && *(name + le) != '/') le--;
 	char parent_path[128];
-	if(le == 0) sprintf(parent_path,"/");
+	if(le == 0) sprintf(parent_path,"/.");
 	else{
 		strcpy(parent_path, name);
 		parent_path[le] = '\0';
@@ -216,7 +216,7 @@ int blk_inode_unlink(const char* name){
 	memset(dir,0,sizeof(dir));
 	blkfs->dev->ops->read(blkfs->dev, DATA(parent->block[0]), &dir, BLOCK_SIZE);
 	for(int i = 0;i < 10;i++){
-			CYANLOG("%d - name: %s, inode_id: %d\n",i,dir[i].name, dir[i].inode_id);
+			CYANLOG("%d - name: %s, inode_id: %d",i,dir[i].name, dir[i].inode_id);
 		}
 	return 0;
 }
