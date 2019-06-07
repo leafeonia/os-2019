@@ -257,7 +257,7 @@ inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
 			cur_path[i] = *(left_path + i);
 		}
 		fs->dev->ops->read(fs->dev, DATA(get_data_offset(inode_id)), dir, BLOCK_SIZE);
-		for(int i = 0;i < NR_DIRE;i++){
+		for(int i = 0;i < 10;i++){
 			printf("%d - name: %s, inode_id: %d\n",i,dir[i].name, dir[i].inode_id);
 		}
 		for(int i = 0;i <= NR_DIRE;i++){
