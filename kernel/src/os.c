@@ -206,6 +206,24 @@ static void mkdir(char* output, char* pwd, char* dirname){
 	if(vfs->mkdir(newpath) != 0) sprintf(output, "mkdir %s fails\n",dirname);
 }
 
+static void cd(char* pwd, char* dir){
+	if(strcmp(".",dir) == 0) return;
+	else if(strcmp("..",dir) == 0){
+		char* cur = pwd + strlen(pwd) - 1;
+		while(cur != pwd && *cur != '/') cur--;
+		*cur = '\0';
+		if(strlen(pwd) == 0) sprintf(pwd,"/");
+	}
+	else{
+		if(strcmp(pwd, "/") == 0) strcat(pwd, dir);
+		else{
+			strcat(pwd,"/");
+			strcat(pwd,dir);
+		}
+	}
+	CYANLOG("after cd, new pwd = %s",pwd);
+}
+
 static void shell(void* name){
   //device_t* tty = dev_lookup(name);
   char input[512];
@@ -315,6 +333,15 @@ static void shell(void* name){
     		mkdir(output, pwd, dirname);
     	}
     }
+    else if(strncmp("cd ",input, 3) == 0){
+    	char* dirname = input + 6;
+    	while(*dirname == ' ') dirname++;
+    	if(strlen(dirname) == 0) sprintf(output,"please type in name of directory\n");
+    	else{
+    		cd(pwd, dirname);
+    	}
+    }
+    
     else {
     	sprintf(output, "Invalid operation. Supported command: ls pwd echo touch cat link .\n", input);
     }
