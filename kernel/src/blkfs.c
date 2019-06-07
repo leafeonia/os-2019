@@ -178,7 +178,7 @@ int blk_inode_mkdir(const char *name, inode_t* inode){
 		parent_path[le] = '\0';
 		inode_t* parent = blkfsops_lookup(blkfs, parent_path, 0);
 		parent_inode_id = get_inode_id(parent);
-		CYANLOG("parent_inode_id = %d",parent_inode_id);
+		GOLDLOG("parent_inode_id = %d",parent_inode_id);
 	}
 	
 	
