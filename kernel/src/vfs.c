@@ -150,6 +150,7 @@ int vfs_unlink(const char *path){
 	filesystem_t fs;
 	const char* fs_path = findfs(path,&fs);
 	inode_t* inode = fs.ops->lookup(&fs,fs_path,0);
+	if(!inode) return -1;
 	return inode->ops->unlink(path);
 //devfs: do nothing   blkfs: free the inode
 
