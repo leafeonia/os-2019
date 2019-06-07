@@ -200,21 +200,23 @@ int blk_inode_mkdir(const char *name, inode_t* inode){
 int blk_inode_unlink(const char* name){
 	GOLDLOG("unlink %s",name);
 	const char* remove_file;
-	int parent_inode_id = 2;
 	int le = strlen(name) - 1;
-	char parent_path[128];
 	while(le > 0 && *(name + le) != '/') le--;
-	if(le == 0) parent_inode_id = 2;//root
+	char parent_path[128];
+	if(le == 0) sprintf(parent_path,"/");
 	else{
 		strcpy(parent_path, name);
 		parent_path[le] = '\0';
-		inode_t* parent = blkfsops_lookup(blkfs, parent_path, 0);
-		parent_inode_id = get_inode_id(parent);
-		
 	}
+	inode_t* parent = blkfsops_lookup(blkfs, parent_path, 0);
 	remove_file = name + le + 1;
 	GOLDLOG("unlink %s from %s",remove_file, parent_path);
-	parent_inode_id++;
+	dire_t dir[NR_DIRE];
+	memset(dir,0,sizeof(dir));
+	blkfs->dev->ops->read(blkfs->dev, DATA(parent->block[0]), &dir, BLOCK_SIZE);
+	for(int i = 0;i < 10;i++){
+			CYANLOG("%d - name: %s, inode_id: %d\n",i,dir[i].name, dir[i].inode_id);
+		}
 	return 0;
 }
 
