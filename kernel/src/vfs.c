@@ -147,8 +147,12 @@ int vfs_link(const char *oldpath, const char *newpath){
 	return 0;
 }
 int vfs_unlink(const char *path){
+	filesystem_t fs;
+	const char* fs_path = findfs(path,&fs);
+	inode_t* inode = fs.ops->lookup(&fs,fs_path,0);
+	return inode->ops->unlink(path);
 //devfs: do nothing   blkfs: free the inode
-	return 0;
+
 }
 int vfs_open(const char *path, int flags){
 	//kmt->spin_lock(&lk_vfs);

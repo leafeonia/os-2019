@@ -197,6 +197,11 @@ int blk_inode_mkdir(const char *name, inode_t* inode){
   	return 0;
 }
 
+int blk_inode_unlink(const char* path){
+	GOLDLOG("unlink %s",path);
+	return 0;
+}
+
 
 
 
@@ -357,12 +362,11 @@ void blkfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	blk_inode_ops->lseek  = dummy;
 	blk_inode_ops->link   = blk_inode_link;
 	blk_inode_ops->mkdir  = blk_inode_mkdir;
-	
+	blk_inode_ops->unlink = blk_inode_unlink;
 	
 	/*	
-	blk_inode_ops->mkdir  = boom;
 	blk_inode_ops->rmdir  = boom;
-	blk_inode_ops->unlink = boom;
+	
 	*/
 	
 	blkfs_ops = pmm->alloc(sizeof(fsops_t));

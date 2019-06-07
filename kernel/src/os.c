@@ -166,8 +166,13 @@ void echo(char* pwd,char* filename,char* content){
 	vfs->close(fd);
 }
 
-static void rm(char* pwd, char* filename){
-	
+static void rm(char* output, char* pwd, char* filename){
+	char newpath[128];
+	if(strcmp(pwd,"/") == 0) sprintf(newpath,"/%s",filename);
+	else sprintf(newpath,"%s/%s",pwd,filename);
+	if(vfs->unlink(newpath) == -1){
+		sprintf(output, "rm fails\n");
+	}
 }
 
 static void cat(char* output, char* pwd, char* filename){
@@ -299,7 +304,10 @@ static void shell(void* name){
     
     //rm
     else if(strncmp("rm ",input, 3) == 0){
-    	rm(pwd, "");
+    	char* filename = input + 3;
+    	while(*filename == ' ') filename++; //remove blank
+    	if(strlen(filename) == 0) sprintf(output,"please type in filename\n");
+    	else rm(output, pwd, filename);
     }
     
     //pwd
@@ -348,7 +356,7 @@ static void shell(void* name){
     }
     
     else {
-    	sprintf(output, "Invalid operation. Supported command: ls pwd echo touch cat link .\n", input);
+    	sprintf(output, "Invalid operation. Supported command: ls pwd echo touch cat link mkdir cd.\n", input);
     }
     vfs->write(stdout, output, sizeof(output));
     // supported commands:
