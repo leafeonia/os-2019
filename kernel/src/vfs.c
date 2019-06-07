@@ -121,7 +121,7 @@ int vfs_rmdir(const char *path){
 	CYANLOG("rmdir: %s",path);
 	filesystem_t fs;
 	const char* fs_path = findfs(path,&fs);
-	inode_t* inode = fs.ops->lookup(&fs,fs_path,O_CREAT);
+	inode_t* inode = fs.ops->lookup(&fs,fs_path,0);
 	if(!inode) return -1;
 	if(inode->ops->rmdir(fs_path) != 0) return -1;
 	return 0;
