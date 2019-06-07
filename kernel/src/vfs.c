@@ -193,7 +193,7 @@ ssize_t vfs_read(int fd, void *buf, size_t nbyte){
 		LOG("error: current file has been closed. Read fails.");
 		return -1;
 	}
-	LOG("%d",vfs->inode->block[0]);
+	LOG("%d",file->inode->block[0]);
 	ssize_t ret = file->inode->ops->read(file, buf, nbyte);
 	//kmt->spin_unlock(&lk_vfs);
 	return ret;
