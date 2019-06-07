@@ -253,7 +253,7 @@ int blk_inode_unlink(const char* name){
 	return -1;
 }
 
-int blk_inode_rmdir(const char* name){
+int blk_inode_rmdir(const char* name,inode_t* inode){
 	GOLDLOG("rmdir %s",name);
 	int ret = is_dire(name);
 	if(ret == -1) return -1;
@@ -274,7 +274,33 @@ int blk_inode_rmdir(const char* name){
 	if(!parent) return -1;
 	remove_dir = name + le + 1;
 	GOLDLOG("unlink %s from %s",remove_dir, parent_path);
-	return 0;
+	
+	//check whether directory to delete is blank
+	dire_t dir[NR_DIRE];
+	memset(dir,0,sizeof(dir));
+	blkfs->dev->ops->read(blkfs->dev, DATA(inode->block[0]), &dir, BLOCK_SIZE);
+	for(int i = 2;i < NR_DIRE;i++){
+		if(dir[i].inode_id){
+			LOG("error: File(s) detected in directory. Use rm to remove them before rmdir");
+			return -1;
+		}
+	}
+	memset(dir,0,sizeof(dir));
+	blkfs->dev->ops->read(blkfs->dev, DATA(parent->block[0]), &dir, BLOCK_SIZE);
+	/*for(int i = 0;i < 10;i++){
+		CYANLOG("%d - name: %s, inode_id: %d",i,dir[i].name, dir[i].inode_id);
+	}*/
+	for(int i = 0;i < NR_DIRE;i++){
+		if(strcmp(remove_file, dir[i].name) == 0){
+			dir[i].inode_id = 0;
+			sprintf(dir[i].name, "");
+			blkfs->dev->ops->write(blkfs->dev,DATA(parent->block[0]), &dir,BLOCK_SIZE);
+			return 0;
+		}
+	}
+	LOG("error: directory %s cannot be found in directory %s",remove_dir, parent_path);
+	return -1;	
+	
 }
 
 
