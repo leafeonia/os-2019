@@ -209,6 +209,7 @@ int blk_inode_unlink(const char* name){
 		parent_path[le] = '\0';
 	}
 	inode_t* parent = blkfsops_lookup(blkfs, parent_path, 0);
+	CYANLOG("parent->block[0] = %d",parent->block[0]);
 	remove_file = name + le + 1;
 	GOLDLOG("unlink %s from %s",remove_file, parent_path);
 	dire_t dir[NR_DIRE];
