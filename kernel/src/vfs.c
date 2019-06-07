@@ -124,7 +124,7 @@ int vfs_rmdir(const char *path){
 	CYANLOG("rmdir: fs_path = %s",fs_path);
 	inode_t* inode = fs.ops->lookup(&fs,fs_path,0);
 	if(!inode) return -1;
-	if(inode->ops->rmdir(fs_path) != 0) return -1;
+	if(inode->ops->rmdir(path) != 0) return -1;
 	return 0;
 }
 int vfs_link(const char *oldpath, const char *newpath){
