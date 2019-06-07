@@ -334,7 +334,7 @@ static void shell(void* name){
     	}
     }
     else if(strncmp("cd ",input, 3) == 0){
-    	char* dirname = input + 6;
+    	char* dirname = input + 3;
     	while(*dirname == ' ') dirname++;
     	if(strlen(dirname) == 0) sprintf(output,"please type in name of directory\n");
     	else{
