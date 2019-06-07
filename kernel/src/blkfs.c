@@ -197,8 +197,26 @@ int blk_inode_mkdir(const char *name, inode_t* inode){
   	return 0;
 }
 
+int is_dire(const char* name){
+	inode_t* inode = blkfsops_lookup(blkfs, name, 0);
+	if(!inode) return -1;
+	dire_t dir[NR_DIRE];
+	blkfs->dev->ops->read(blkfs->dev, DATA(inode->block[0]), &dir, BLOCK_SIZE);
+	if(strcmp(dir[0].name,".") == 0 && strcmp(dir[1].name,"..") == 0){
+		CYANLOG("%s is a directory");
+		return 1;
+	}
+	CYANLOG("%s is not a directory",name);
+	return 0;
+}
 int blk_inode_unlink(const char* name){
 	GOLDLOG("unlink %s",name);
+	int ret = is_dire(name);
+	if(ret == -1) return -1;
+	else if(ret == 1){
+		LOG("unlink fail: cannot remove a directory. Use rmdir instead");
+		return -1;
+	}
 	const char* remove_file;
 	int le = strlen(name) - 1;
 	while(le > 0 && *(name + le) != '/') le--;
