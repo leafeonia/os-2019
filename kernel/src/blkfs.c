@@ -158,8 +158,17 @@ int blk_inode_link(const char *name, inode_t *inode){
 	return 0;
 }
 
+void test(){
+	dire_t dir[NR_DIRE];
+	blkfs->dev->ops->read(blkfs->dev, DATA(3), dir, BLOCK_SIZE);
+	for(int i = 0;i < 10;i++){
+			CYANLOG("%d - name: %s, inode_id: %d\n",i,dir[i].name, dir[i].inode_id);
+		}
+}
+
 int blk_inode_mkdir(const char *name, inode_t* inode){
 	dire_t dir[NR_DIRE];
+	memset(dir,0,sizeof(dir));
 	//blkfs->dev->ops->read(blkfs->dev, DATA(inode->block[0]), &dir, BLOCK_SIZE);
 	strcpy(dir[0].name,".");
 	dir[0].inode_id = get_inode_id(inode);
@@ -169,6 +178,7 @@ int blk_inode_mkdir(const char *name, inode_t* inode){
 	dir[2].inode_id = get_available_inode();
 	//LOG("%d",inode->block[0]);
 	blkfs->dev->ops->write(blkfs->dev, DATA(inode->block[0]), dir, BLOCK_SIZE);
+	test();
   	return 0;
 }
 
