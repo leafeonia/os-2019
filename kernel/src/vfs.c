@@ -121,6 +121,9 @@ int vfs_rmdir(const char *path){
 	CYANLOG("rmdir: %s",path);
 	filesystem_t fs;
 	const char* fs_path = findfs(path,&fs);
+	CYANLOG("rmdir: fs_path = %s",fs_path);
+	inode_t* inode = fs.ops->lookup(&fs,fs_path,0);
+	if(!inode) return -1;
 	if(inode->ops->rmdir(fs_path) != 0) return -1;
 	return 0;
 }
@@ -148,8 +151,10 @@ int vfs_link(const char *oldpath, const char *newpath){
 	return 0;
 }
 int vfs_unlink(const char *path){
+	CYANLOG("unlink: %s",path);
 	filesystem_t fs;
 	const char* fs_path = findfs(path,&fs);
+	CYANLOG("unlink: fs_path = %s",fs_path);
 	inode_t* inode = fs.ops->lookup(&fs,fs_path,0);
 	if(!inode) return -1;
 	return inode->ops->unlink(path);
