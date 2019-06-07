@@ -221,7 +221,7 @@ static void cd(char* pwd, char* dir){
 			strcat(pwd,"/");
 			strcat(pwd,dir);
 		}
-		if(vfs->open(pwd) != 0) LOG("error");
+		if(vfs->open(pwd,0) != 0) LOG("error");
 	}
 	CYANLOG("after cd, new pwd = %s",pwd);
 }
