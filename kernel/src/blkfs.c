@@ -203,10 +203,10 @@ int is_dire(const char* name){
 	dire_t dir[NR_DIRE];
 	blkfs->dev->ops->read(blkfs->dev, DATA(inode->block[0]), &dir, BLOCK_SIZE);
 	if(strcmp(dir[0].name,".") == 0 && strcmp(dir[1].name,"..") == 0){
-		CYANLOG("%s is a directory");
+		GOLDLOG("%s is a directory");
 		return 1;
 	}
-	CYANLOG("%s is not a directory",name);
+	GOLDLOG("%s is not a directory",name);
 	return 0;
 }
 int blk_inode_unlink(const char* name){
