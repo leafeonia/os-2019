@@ -15,6 +15,37 @@ int get_data_offset(int inode_id){
 	return 0;
 }
 
+int get_available_data_block(){
+	unsigned char data_bitmap[BLOCK_SIZE];
+	blkfs->dev->ops->read(blkfs->dev, BITMAP_OFFSET, data_bitmap, BLOCK_SIZE);
+	for(int i = 0;i < NR_DATA;i++){
+		if(!data_bitmap[i]) {
+			GOLDLOG("get available data block #%d",i);
+			data_bitmap[i] = 1;
+			blkfs->dev->ops->write(blkfs->dev, BITMAP_OFFSET, data_bitmap, BLOCK_SIZE);
+			return i;
+		}
+	}
+	LOG("error: no available data block");
+	return -1;
+}
+
+int get_available_inode(){
+	inode_t inodes[NR_INODE];
+	blkfs->dev->ops->read(blkfs->dev, 0, &inodes, BLOCK_SIZE);
+	for(int i = 2;i < NR_INODE;i++){
+		if(inodes[i].refcnt == 0) {
+			inodes[i].refcnt = 1;
+			inodes[i].block[0] = get_available_data_block();
+			blkfs->dev->ops->write(blkfs->dev, 0, &inodes, BLOCK_SIZE);
+			GOLDLOG("get available inode #%d",i);
+			return i;
+		}
+	}
+	LOG("error: no available inode");
+	return -1;
+}
+
 int get_inode_id(inode_t* inode){
 	inode_t inodes[NR_INODE];
 	blkfs->dev->ops->read(blkfs->dev, 0, &inodes, BLOCK_SIZE);
@@ -26,6 +57,11 @@ int get_inode_id(inode_t* inode){
 	}
 	assert(0);
 }
+
+
+
+
+
 
 int blk_inode_open(file_t *file, int flags, inode_t* inode){
 	/*kmt->spin_lock(&lk_dev_inode_ops);
@@ -131,7 +167,7 @@ int blk_inode_mkdir(const char *name, inode_t* inode){
 	dir[1].inode_id = get_inode_id(inode);
 	strcpy(dir[2].name,"test.txt");
 	dir[2].inode_id = get_available_inode();
-	bkfs->dev->ops->write(blkfs->dev, DATA(inode->block[0]), dir, BLOCK_SIZE);
+	blkfs->dev->ops->write(blkfs->dev, DATA(inode->block[0]), dir, BLOCK_SIZE);
   	return 0;
 }
 
@@ -148,36 +184,7 @@ int blk_inode_mkdir(const char *name, inode_t* inode){
 
 
 
-int get_available_data_block(){
-	unsigned char data_bitmap[BLOCK_SIZE];
-	blkfs->dev->ops->read(blkfs->dev, BITMAP_OFFSET, data_bitmap, BLOCK_SIZE);
-	for(int i = 0;i < NR_DATA;i++){
-		if(!data_bitmap[i]) {
-			GOLDLOG("get available data block #%d",i);
-			data_bitmap[i] = 1;
-			blkfs->dev->ops->write(blkfs->dev, BITMAP_OFFSET, data_bitmap, BLOCK_SIZE);
-			return i;
-		}
-	}
-	LOG("error: no available data block");
-	return -1;
-}
 
-int get_available_inode(){
-	inode_t inodes[NR_INODE];
-	blkfs->dev->ops->read(blkfs->dev, 0, &inodes, BLOCK_SIZE);
-	for(int i = 2;i < NR_INODE;i++){
-		if(inodes[i].refcnt == 0) {
-			inodes[i].refcnt = 1;
-			inodes[i].block[0] = get_available_data_block();
-			blkfs->dev->ops->write(blkfs->dev, 0, &inodes, BLOCK_SIZE);
-			GOLDLOG("get available inode #%d",i);
-			return i;
-		}
-	}
-	LOG("error: no available inode");
-	return -1;
-}
 
 
 //****************************************
