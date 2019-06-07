@@ -203,7 +203,7 @@ static void mkdir(char* output, char* pwd, char* dirname){
 	char newpath[128];
 	if(strcmp(pwd,"/") == 0) sprintf(newpath,"/%s",dirname);
 	else sprintf(newpath,"%s/%s",pwd,dirname);
-	vfs->mkdir(newpath);
+	if(vfs->mkdir(newpath) != 0) sprintf(output, "mkdir %s fails\n",dirname);
 }
 
 static void shell(void* name){

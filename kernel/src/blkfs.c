@@ -123,6 +123,7 @@ int blk_inode_link(const char *name, inode_t *inode){
 }
 
 int blk_inode_mkdir(const char *name, inode_t* inode){
+	
   	return 0;
 }
 
@@ -185,7 +186,7 @@ void blkfsops_init(filesystem_t *fs, const char *name, device_t *dev){
 		inodes[i].ptr = NULL;
 		inodes[i].fs = fs;
 		inodes[i].ops = blk_inode_ops;
-		for(int i = 0;i < 11;i++){
+		for(int i = 0;i < 12;i++){
 			inodes[i].block[i] = -1; //!!
 		}
 	}
@@ -214,7 +215,7 @@ void blkfsops_init(filesystem_t *fs, const char *name, device_t *dev){
 	dire[3].inode_id = get_available_inode();
 	dev->ops->write(dev, DATA(0), dire, BLOCK_SIZE);
 	//dev->ops->write(dev, 0, inodes, BLOCK_SIZE);
-	dev->ops->write(dev, BITMAP_OFFSET, data_bitmap, BLOCK_SIZE);
+	//dev->ops->write(dev, BITMAP_OFFSET, data_bitmap, BLOCK_SIZE);
 	
 }
 
