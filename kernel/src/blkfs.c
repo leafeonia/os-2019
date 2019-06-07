@@ -158,13 +158,13 @@ int blk_inode_link(const char *name, inode_t *inode){
 	return 0;
 }
 
-void test(){
+/*void test(){
 	dire_t dir[NR_DIRE];
 	blkfs->dev->ops->read(blkfs->dev, DATA(3), dir, BLOCK_SIZE);
 	for(int i = 0;i < 10;i++){
 			CYANLOG("%d - name: %s, inode_id: %d\n",i,dir[i].name, dir[i].inode_id);
 		}
-}
+}*/
 
 int blk_inode_mkdir(const char *name, inode_t* inode){
 	dire_t dir[NR_DIRE];
@@ -178,7 +178,7 @@ int blk_inode_mkdir(const char *name, inode_t* inode){
 	dir[2].inode_id = get_available_inode();
 	//LOG("%d",inode->block[0]);
 	blkfs->dev->ops->write(blkfs->dev, DATA(inode->block[0]), dir, BLOCK_SIZE);
-	test();
+	//test();
   	return 0;
 }
 
@@ -266,11 +266,11 @@ inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
 			if(*(left_path + i) == '\0' || *(left_path + i) == '/') break;
 			cur_path[i] = *(left_path + i);
 		}
-		LOG("DATA(%d)",get_data_offset(inode_id));
+		//LOG("DATA(%d)",get_data_offset(inode_id));
 		fs->dev->ops->read(fs->dev, DATA(get_data_offset(inode_id)), dir, BLOCK_SIZE);
-		for(int i = 0;i < 10;i++){
+		/*for(int i = 0;i < 10;i++){
 			printf("%d - name: %s, inode_id: %d\n",i,dir[i].name, dir[i].inode_id);
-		}
+		}*/
 		for(int i = 0;i <= NR_DIRE;i++){
 			//printf("dir[%d] name = %s, inode_id = %d\n",i ,dir[i].name, dir[i].inode_id);
 			if(i == NR_DIRE){
