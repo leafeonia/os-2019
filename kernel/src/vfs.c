@@ -250,9 +250,7 @@ off_t vfs_lseek(int fd, off_t offset, int whence){
 	if(whence == 0) file->offset = offset;
 	else if(whence == 1) file->offset += offset;
 	else if(whence == 2){
-		LOG("!");
 		vfs->read(fd, buf, BLOCK_SIZE);
-		LOG("!!");
 		file->offset = strlen(buf) + offset;
 		CYANLOG("vfs->lseek(SEEK_END), file->offset is now set as %d",file->offset);
 	}
