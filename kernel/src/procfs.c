@@ -18,6 +18,10 @@ static void dummy2(){}
 
 inode_t* procfsops_lookup(filesystem_t *fs, const char *path, int flags){
 	GOLDLOG("procfsops_lookup: path = %s",path);
+	if(flags & O_DIRE) {
+		LOG("no directory in devfs");
+		return NULL;
+	}
 	const char* left_path = path + 1;
 	if(strcmp(left_path,".") == 0) procfs_inode.block[0] = 1;
 	else if(strcmp(left_path,"cpuinfo") == 0) procfs_inode.block[0] = 2;
