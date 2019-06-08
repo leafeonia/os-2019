@@ -27,9 +27,9 @@ const char* findfs(const char* path, filesystem_t* ret){
 	}
 	if(strcmp(path, "/proc") == 0){
 		const char* fs_path = path + 1;
-		ret->name = procfs->name;
-		ret->ops = procfs->ops;
-		ret->dev = procfs->dev;
+		ret->name = blkfs->name;
+		ret->ops = blkfs->ops;
+		ret->dev = blkfs->dev;
 		return fs_path;
 	}
 	int omit = 0; 
