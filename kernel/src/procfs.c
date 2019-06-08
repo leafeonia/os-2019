@@ -23,7 +23,7 @@ void procfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	for(int i = 0;i < 16;i++){
 		for(int j = 0;j < NR_TASK;j++){
 			task_t* cur = tasks[i][j];
-			if(cur->fence1 == MAGIC1) GOLDLOG(cur->name);
+			if(cur->fence1 == MAGIC1) GOLDLOG("%d %d: %s",i,j,cur->name);
 		}
 	}
 
