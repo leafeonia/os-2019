@@ -236,6 +236,9 @@ static void cd(char* output,char* pwd, char* dir){
 
 static void rmdir(char* output, char* pwd, char* dirname){
 	char newpath[128];
+	if(strcmp(pwd,"/") == 0 && (strcmp(dirname,"proc") == 0 || strcmp(dirname,"dev") == 0)){
+		sprintf(output, "rmdir: removing /%s is prohibited\n", dirname);
+	}
 	if(strcmp(pwd,"/") == 0) sprintf(newpath,"/%s",dirname);
 	else sprintf(newpath,"%s/%s",pwd,dirname);
 	if(vfs->rmdir(newpath) != 0) sprintf(output, "rmdir %s fails\n",dirname);

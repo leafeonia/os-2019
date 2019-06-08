@@ -198,6 +198,7 @@ int blk_inode_mkdir(const char *name, inode_t* inode){
 }
 
 int is_dire(const char* name){
+	if(strcmp(name,"/dev") == 0 || strcmp(name,"/proc") == 0) return 1;
 	inode_t* inode = blkfsops_lookup(blkfs, name, 0);
 	if(!inode) return -1;
 	dire_t dir[NR_DIRE];
