@@ -367,7 +367,6 @@ void blkfsops_init(filesystem_t *fs, const char *name, device_t *dev){
 }
 
 inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
-	LOG("path1: %s",path);
 	//int dir_inode = ROOT; //current directory inode id
 	int inode_id = ROOT; //return inode id
 	dire_t dir[NR_DIRE];
@@ -436,8 +435,7 @@ inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
 	inode_t* ret = pmm->alloc(sizeof(inode_t));
 	fs->dev->ops->read(fs->dev, INODE(inode_id), ret, sizeof(inode_t));
 	//CYANLOG("%d",ret->block[0]);
-	LOG("path2: %s",path);
-	if((flags & O_DIRE) && strcmp(path,"/dev") != 0 && strcmp(path,"/proc") != 0){
+	if((flags & O_DIRE) && strcmp(path,"dev") != 0 && strcmp(path,"proc") != 0){
 		dire_t dir[NR_DIRE];
 		blkfs->dev->ops->read(blkfs->dev, DATA(ret->block[0]), &dir, BLOCK_SIZE);
 		if(strcmp(dir[0].name,".") == 0 && strcmp(dir[1].name,"..") == 0){
