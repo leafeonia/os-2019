@@ -24,8 +24,23 @@ inode_t* procfsops_lookup(filesystem_t *fs, const char *path, int flags){
 	else if(strcmp(left_path,"meminfo") == 0) procfs_inode.block[0] = 3;
 	else {
 		procfs_inode.block[0] = 0;
-		procfs_inode.block[1] = 0;
-		procfs_inode.block[2] = 4;
+		int found = 0;
+		for(int i = 0;i < 16;i++){
+			for(int j = 0;j < NR_TASK;j++){
+				if(strcmp(left_path, tasks[i][j]->name) == 0){
+					procfs_inode.block[1] = i;
+					procfs_inode.block[2] = j;
+					found = 1;
+					break;
+				}
+			}
+			if(found) break;
+		}
+		if(!found){
+			LOG("procfs lookup fails: %s not found");
+			return NULL;
+		}
+		
 		
 	}
 	return &procfs_inode;
@@ -63,7 +78,7 @@ ssize_t proc_inode_read(file_t *file, char *buf, size_t size){
 	else if(code == 0){
 		int j = file->inode->block[2];
 		int i = file->inode->block[1];
-		sprintf(buf,"pid: %d\ntask_name: %s\n",j*_ncpu() + i, tasks[i][j]->name);
+		sprintf(buf,"pid: %d\ntask_name: %s",j*_ncpu() + i - 3, tasks[i][j]->name);
 	}
 	file->offset += size;
 	return size;
