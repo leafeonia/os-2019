@@ -18,7 +18,7 @@ typedef union header{
 	ALIGN x;
 } HEADER;
 
-static uintptr_t pm_start, pm_end;
+uintptr_t pm_start, pm_end;
 //static lock_t mem_lock;
 static spinlock_t mem_lock;
 static HEADER base;

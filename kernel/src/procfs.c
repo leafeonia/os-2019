@@ -49,8 +49,11 @@ ssize_t proc_inode_read(file_t *file, char *buf, size_t size){
 			printf("%d - name: %s\n",i,dir[i].name );
 		}*/
 	}
-	else if(code == 2) sprintf(buf, "cpuinfo: %d",_ncpu());
-	else if(code == 3) sprintf(buf, "meminfo");
+	else if(code == 2) sprintf(buf, "cpuinfo: %d cpu(s) working",_ncpu());
+	else if(code == 3) {
+		extern uintptr_t pm_start;
+		sprintf(buf, "meminfo: heap upper bound is now at %x", pm_start);
+	}
 	file->offset += size;
 	return size;
 }
