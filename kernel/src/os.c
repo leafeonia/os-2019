@@ -133,8 +133,11 @@ static void ls(char* output, char* pwd){
 	sprintf(path,"%s/.",pwd);
 	int fd = vfs->open(path, 0);//TODOFLAG
 	dire_t dir[NR_DIRE];
+	LOG("FA");
 	vfs->read(fd,dir,BLOCK_SIZE);
+	LOG("?");
 	vfs->close(fd);
+	LOG("??");
 	for(int i = 0;i < NR_DIRE;i++){
 		if(dir[i].inode_id){
 			if(strcmp(dir[i].name,".") == 0 || strcmp(dir[i].name,"..") == 0) continue;
