@@ -1,5 +1,5 @@
 
-//#define DEBUG
+#define DEBUG
 #define ERR_LOG
 
 #ifdef ERR_LOG
