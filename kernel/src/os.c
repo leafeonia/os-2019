@@ -152,7 +152,7 @@ static void touch(char* output, char* pwd, char* filename){
 	if(strcmp(pwd,"/") == 0) sprintf(newpath,"/%s",filename);
 	else sprintf(newpath,"%s/%s",pwd,filename);
 //	sprintf(output,newpath);
-	if(vfs->open(newpath, O_CREAT) == -1) sprintf(output, "touch %s fails", filename);
+	if(vfs->open(newpath, O_CREAT) == -1) sprintf(output, "touch %s fails\n", filename);
 }
 
 void echo(char* pwd,char* filename,char* content){

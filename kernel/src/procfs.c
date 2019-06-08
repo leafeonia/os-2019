@@ -21,7 +21,11 @@ static void dummy2(){}
 inode_t* procfsops_lookup(filesystem_t *fs, const char *path, int flags){
 	GOLDLOG("procfsops_lookup: path = %s",path);
 	if(flags & O_DIRE) {
-		LOG("no directory in devfs");
+		LOG("no directory in procfs");
+		return NULL;
+	}
+	if(flag & O_CREAT){
+		LOG("procfs is read-only");
 		return NULL;
 	}
 	const char* left_path = path + 1;
