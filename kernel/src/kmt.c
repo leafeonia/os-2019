@@ -3,7 +3,7 @@
 #include <devices.h>
 #include "my_os.h"
 
-#define NR_TASK 21
+//#define NR_TASK 21
 
 static task_t* tasks[16][NR_TASK];
 static int task_id = 0;

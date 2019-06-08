@@ -4,6 +4,7 @@
 #include <kernel.h>
 #include <nanos.h>
 #define NR_FILE 20
+#define NR_TASK 21
 #define O_CREAT 0x10
 #define O_DIRE 0x20
 

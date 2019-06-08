@@ -376,7 +376,7 @@ static void shell(void* name){
     }
     
     else {
-    	sprintf(output, "Invalid operation. Supported command: ls pwd echo touch cat link mkdir cd rm rmdir.\n", input);
+    	sprintf(output, "Invalid operation. Supported commands: ls pwd echo touch cat link mkdir cd rm rmdir.\n", input);
     }
     vfs->write(stdout, output, sizeof(output));
     // supported commands:
