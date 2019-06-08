@@ -236,7 +236,7 @@ ssize_t vfs_write(int fd, void *buf, size_t nbyte){
 		//kmt->spin_unlock(&lk_vfs);
 		return -1;
 	}
-	if(inode->mode == O_RDONLY){
+	if(file->inode->mode == O_RDONLY){
 		LOG("error: write to read-only file");
 		return -1;
 	}
