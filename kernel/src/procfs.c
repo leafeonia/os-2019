@@ -4,6 +4,8 @@
 #include <devices.h>
 #include "my_os.h"
 
+
+#define PID(i,j) (j*_ncpu() + i - 3)
 static inodeops_t* proc_inode_ops;
 static inode_t procfs_inode;
 extern task_t* tasks[16][NR_TASK];
@@ -61,7 +63,7 @@ ssize_t proc_inode_read(file_t *file, char *buf, size_t size){
 				task_t* cur = tasks[i][j];
 				if(cur->fence1 == MAGIC1) {
 					if(strncmp(cur->name,"idle",4) == 0) continue;
-					sprintf(dir[cnt].name,cur->name);
+					sprintf(dir[cnt].name,PID(i,j));
 					dir[cnt++].inode_id = 1;
 				}
 			}
@@ -82,7 +84,7 @@ ssize_t proc_inode_read(file_t *file, char *buf, size_t size){
 	else if(code == 0){
 		int j = file->inode->block[2];
 		int i = file->inode->block[1];
-		sprintf(buf,"pid: %d\ntask_name: %s",j*_ncpu() + i - 3, tasks[i][j]->name);
+		sprintf(buf,"pid: %d\ntask_name: %s",PID(i,j), tasks[i][j]->name);
 	}
 	file->offset += size;
 	return size;
