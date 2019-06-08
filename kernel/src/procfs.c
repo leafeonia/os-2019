@@ -13,7 +13,7 @@ int boom(){
 }
 
 static int dummy(){return 0;}
-static int dummy2(){}
+static void dummy2(){}
 
 inode_t* procfsops_lookup(filesystem_t *fs, const char *path, int flags){
 	GOLDLOG("procfsops_lookup: path = %s",path);
@@ -53,7 +53,7 @@ void procfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	procfs_inode.ptr = NULL;
 	procfs_inode.refcnt = 0;
 	procfs_inode.fs = procfs;
-	procfs_inode.ops = procfs_inode_ops;
+	procfs_inode.ops = proc_inode_ops;
 	for(int i = 0;i < 12;i++) procfs_inode.block[i] = 0;
 	
 	
