@@ -33,7 +33,9 @@ inode_t* procfsops_lookup(filesystem_t *fs, const char *path, int flags){
 		int found = 0;
 		for(int i = 0;i < 16;i++){
 			for(int j = 0;j < NR_TASK;j++){
-				if(strcmp(left_path, tasks[i][j]->name) == 0){
+				char temp[4];
+				sprintf(temp,"%d",PID(i,j));
+				if(strcmp(left_path, temp) == 0){
 					procfs_inode.block[1] = i;
 					procfs_inode.block[2] = j;
 					found = 1;
@@ -43,7 +45,7 @@ inode_t* procfsops_lookup(filesystem_t *fs, const char *path, int flags){
 			if(found) break;
 		}
 		if(!found){
-			LOG("procfs lookup fails: %s not found");
+			LOG("procfs lookup fails: %s not found",path);
 			return NULL;
 		}
 		
