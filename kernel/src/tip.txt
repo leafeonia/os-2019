@@ -1,0 +1,2 @@
+add id to struct inode
+add is_dire to inode
