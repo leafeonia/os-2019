@@ -19,10 +19,10 @@ file_t* fd2file(int fd){
 
 const char* findfs(const char* path, filesystem_t* ret){
 	if(strcmp(path, "/dev") == 0){
-		const char* = path + 1;
+		const char* fs_path = path + 1;
 		ret->name = blkfs->name;
 		ret->ops = blkfs->ops;
-		ret->ops = blkfs->dev;
+		ret->dev = blkfs->dev;
 		return fs_path;
 	}
 	int omit = 0; 
