@@ -114,10 +114,10 @@ void fs(){
 
 	vfs->close(fd);
 	vfs->write(fd, buf, strlen(buf));*/
-	int fd1 = vfs->open("/test.txt",0);
+	//int fd1 = vfs->open("/test.txt",0);
 	int fd2 = vfs->open("/test.txt",O_CREAT);
 	int fd3 = vfs->open("/test.txt",0);
-	int fd4 = vfs->open("/a/b.txt",O_CREAT);
+	//int fd4 = vfs->open("/a/b.txt",O_CREAT);
 	CYANLOG("%d %d %d %d",fd1,fd2,fd3,fd4);
 	vfs->close(fd2);
 	vfs->close(fd3);
