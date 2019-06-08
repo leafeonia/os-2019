@@ -164,10 +164,11 @@ void echo(char* output, char* pwd,char* filename,char* content){
 		sprintf(output, "echo \"%s\" into %s fails\n",content, filename);
 		return;
 	}
-	vfs->lseek(fd, 0, SEEK_END);
 	LOG("?");
-	vfs->write(fd, content, strlen(content));
+	vfs->lseek(fd, 0, SEEK_END);
 	LOG("??");
+	vfs->write(fd, content, strlen(content));
+	LOG("???");
 	vfs->close(fd);
 }
 
