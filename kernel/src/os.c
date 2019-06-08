@@ -165,7 +165,9 @@ void echo(char* output, char* pwd,char* filename,char* content){
 		return;
 	}
 	vfs->lseek(fd, 0, SEEK_END);
+	LOG("?");
 	vfs->write(fd, content, strlen(content));
+	LOG("??");
 	vfs->close(fd);
 }
 
