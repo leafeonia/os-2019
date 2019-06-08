@@ -7,7 +7,7 @@
 static inodeops_t* proc_inode_ops;
 static inode_t procfs_inode;
 
-int boom(){
+static int boom(){
 	LOG("procfs doesn't support this function");
 	return -1;
 }
