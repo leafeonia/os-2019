@@ -7,6 +7,7 @@
 #define NR_TASK 21
 #define O_CREAT 0x10
 #define O_DIRE 0x20
+#define O_RDONLY 0x40
 
 #define SEEK_SET 0
 #define SEEK_CUR 1
@@ -62,6 +63,7 @@ struct inode{
   filesystem_t *fs;
   inodeops_t *ops; // 在inode被创建时，由文件系统的实现赋值
                    // inode ops也是文件系统的一部分
+  int mode;
   int block[12];       //block number in blkfs
 };
 
