@@ -6,6 +6,7 @@
 
 static inodeops_t* proc_inode_ops;
 static inode_t procfs_inode;
+extern task_t* tasks[16][NR_TASK];
 
 static int boom(){
 	LOG("procfs doesn't support this function");
@@ -21,6 +22,12 @@ inode_t* procfsops_lookup(filesystem_t *fs, const char *path, int flags){
 	if(strcmp(left_path,".") == 0) procfs_inode.block[0] = 1;
 	else if(strcmp(left_path,"cpuinfo") == 0) procfs_inode.block[0] = 2;
 	else if(strcmp(left_path,"meminfo") == 0) procfs_inode.block[0] = 3;
+	else {
+		procfs_inode.block[0] = 0;
+		procfs_inode.block[1] = 0;
+		procfs_inode.block[2] = 4;
+		
+	}
 	return &procfs_inode;
 }
 
@@ -30,7 +37,6 @@ ssize_t proc_inode_read(file_t *file, char *buf, size_t size){
 	if(code == 1) {
 		int cnt = 0;
 		dire_t* dir = (dire_t*)buf;
-		extern task_t* tasks[16][NR_TASK];
 		for(int i = 0;i < 16;i++){
 			for(int j = 0;j < NR_TASK;j++){
 				task_t* cur = tasks[i][j];
@@ -52,7 +58,12 @@ ssize_t proc_inode_read(file_t *file, char *buf, size_t size){
 	else if(code == 2) sprintf(buf, "cpuinfo: %d cpu(s) working",_ncpu());
 	else if(code == 3) {
 		extern uintptr_t pm_start;
-		sprintf(buf, "meminfo: heap upper bound is now at %x", pm_start);
+		sprintf(buf, "meminfo: heap bound is now at 0x%x", pm_start);
+	}
+	else if(code == 0){
+		int j = file->inode->block[2];
+		int i = file->inode->block[1];
+		sprintf(buf,"pid: %d\ntask_name: %s\n",j*_ncpu() + i, tasks[i][j]->name);
 	}
 	file->offset += size;
 	return size;
