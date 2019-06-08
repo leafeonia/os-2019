@@ -3,8 +3,8 @@
 #include <klib.h>
 #include <devices.h>
 #include "my_os.h"
-/*
-static inodeops_t* proc_inode_ops;
+
+/*static inodeops_t* proc_inode_ops;
 static inode_t* procfs_inode[10];
 
 int boom(){
@@ -14,6 +14,12 @@ int boom(){
 
 static int dummy(){return 0;}
 */
+inode_t* procfsops_lookup(filesystem_t *fs, const char *path, int flags){
+	GOLDLOG("procfsops_lookup: path = %s",path);
+	//if(strcmp(path,"/.") == 0) 
+	return NULL;
+}
+
 void procfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	fs->name = name;
 	fs->dev = dev;	
@@ -26,6 +32,8 @@ void procfs_init(filesystem_t *fs, const char *name, device_t *dev){
 			if(cur->fence1 == MAGIC1) printf("%d %d: %s\n",i,j,cur->name);
 		}
 	}
+	
+	procfs_ops->lookup = 
 
 	
 	
