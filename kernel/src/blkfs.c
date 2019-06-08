@@ -11,7 +11,7 @@ static int dummy(){return 0;}
 int get_data_offset(int inode_id){
 	inode_t inode;
 	blkfs->dev->ops->read(blkfs->dev, INODE(inode_id), &inode, sizeof(inode_t));
-	printf("inode #%d get_data_offset: %d\n",inode_id,inode.block[0]);
+	GOLDLOG("inode #%d get_data_offset: %d\n",inode_id,inode.block[0]);
 	return inode.block[0];
 }
 
