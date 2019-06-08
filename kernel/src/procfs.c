@@ -26,7 +26,17 @@ inode_t* procfsops_lookup(filesystem_t *fs, const char *path, int flags){
 
 ssize_t proc_inode_read(file_t *file, char *buf, size_t size){
 	int code = file->inode->block[0];
-	if(code == 1) sprintf(buf, "ls of procfs");
+	if(code == 1) {
+		int cnt = 0;
+		dire_t* dir = (dire_t*)buf;
+		extern task_t* tasks[16][NR_TASK];
+		for(int i = 0;i < 16;i++){
+			for(int j = 0;j < NR_TASK;j++){
+				task_t* cur = tasks[i][j];
+				if(cur->fence1 == MAGIC1) sprintf(dir[cnt++].name,cur->name);
+			}
+		}
+	}
 	else if(code == 2) sprintf(buf, "cpuinfo: %d",_ncpu());
 	else if(code == 3) sprintf(buf, "meminfo");
 	file->offset += size;
@@ -43,13 +53,7 @@ void procfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	procfs_ops = pmm->alloc(sizeof(fsops_t));
 	proc_inode_ops = pmm->alloc(sizeof(inodeops_t));
 	fs->ops = procfs_ops;
-	extern task_t* tasks[16][NR_TASK];
-	for(int i = 0;i < 16;i++){
-		for(int j = 0;j < NR_TASK;j++){
-			task_t* cur = tasks[i][j];
-			if(cur->fence1 == MAGIC1) printf("%d %d: %s\n",i,j,cur->name);
-		}
-	}
+	
 	
 	procfs_ops->init   = dummy2;
 	procfs_ops->lookup = procfsops_lookup;
