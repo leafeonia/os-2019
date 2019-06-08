@@ -395,7 +395,7 @@ inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
 		for(int i = 0;i <= NR_DIRE;i++){
 			//printf("dir[%d] name = %s, inode_id = %d\n",i ,dir[i].name, dir[i].inode_id);
 			if(i == NR_DIRE){
-				if(!(flags && O_CREAT)){
+				if(!(flags & O_CREAT)){
 					LOG("error when lookup: path \"%s\" not found",path);
 					return NULL;
 				}
@@ -435,6 +435,15 @@ inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
 	inode_t* ret = pmm->alloc(sizeof(inode_t));
 	fs->dev->ops->read(fs->dev, INODE(inode_id), ret, sizeof(inode_t));
 	//CYANLOG("%d",ret->block[0]);
+	if(flags & O_DIRE){
+		dire_t dir[NR_DIRE];
+		blkfs->dev->ops->read(blkfs->dev, DATA(inode->block[0]), &dir, BLOCK_SIZE);
+		if(strcmp(dir[0].name,".") == 0 && strcmp(dir[1].name,"..") == 0){
+			return ret;
+		}
+		LOG("error: %s is not a directory",path);
+		return NULL;
+	}
 	return ret;
 }
 

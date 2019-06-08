@@ -5,6 +5,7 @@
 #include <nanos.h>
 #define NR_FILE 20
 #define O_CREAT 0x10
+#define O_DIRE 0x20
 
 #define SEEK_SET 0
 #define SEEK_CUR 1
