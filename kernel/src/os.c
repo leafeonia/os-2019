@@ -228,7 +228,7 @@ static void cd(char* output,char* pwd, char* dir){
 			strcat(temp,"/");
 			strcat(temp,dir);
 		}
-		if(vfs->open(temp,0) == -1) sprintf(output,"cd %s fails\n",dir);
+		if(vfs->open(temp,O_DIRE) == -1) sprintf(output,"cd %s fails\n",dir);
 		else strcpy(pwd, temp);
 	}
 	CYANLOG("after cd, new pwd = %s",pwd);
