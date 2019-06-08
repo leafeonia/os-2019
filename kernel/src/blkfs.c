@@ -30,13 +30,14 @@ int get_available_data_block(){
 	return -1;
 }
 
-int get_available_inode(){
+int get_available_inode(int mode){
 	inode_t inodes[NR_INODE];
 	blkfs->dev->ops->read(blkfs->dev, 0, &inodes, BLOCK_SIZE);
 	for(int i = 2;i < NR_INODE;i++){
 		if(inodes[i].refcnt == 0) {
 			inodes[i].refcnt = 1;
 			inodes[i].block[0] = get_available_data_block();
+			if(mode & O_RDONLY) inodes[i].mode = O_RDONLY;
 			blkfs->dev->ops->write(blkfs->dev, 0, &inodes, BLOCK_SIZE);
 			GOLDLOG("get available inode #%d",i);
 			return i;
@@ -415,7 +416,7 @@ inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
 						if(dir[j].inode_id == 0){
 							GOLDLOG("create file \"%s\" successfully",left_path);
 							strcpy(dir[j].name,left_path);
-							dir[j].inode_id = get_available_inode();
+							dir[j].inode_id = get_available_inode(flags);
 							blkfs->dev->ops->write(blkfs->dev, DATA(get_data_offset(inode_id)), dir, BLOCK_SIZE);
 							inode_id = dir[j].inode_id;
 							break;

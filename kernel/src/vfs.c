@@ -126,7 +126,7 @@ int vfs_mkdir(const char *path){
 	CYANLOG("mkdir: %s",path);
 	filesystem_t fs;
 	const char* fs_path = findfs(path,&fs);
-	inode_t* inode = fs.ops->lookup(&fs,fs_path,O_CREAT);
+	inode_t* inode = fs.ops->lookup(&fs,fs_path,O_CREAT | O_RDONLY);
 	if(!inode) return -1;	
 	if(inode->ops->mkdir(fs_path, inode) != 0) return -1;
 	return 0;
@@ -234,6 +234,10 @@ ssize_t vfs_write(int fd, void *buf, size_t nbyte){
 	if(!file->inode){
 		LOG("error: current file has been closed. Write fails");
 		//kmt->spin_unlock(&lk_vfs);
+		return -1;
+	}
+	if(inode->mode == O_RDONLY){
+		LOG("error: write to read-only file");
 		return -1;
 	}
 	ssize_t ret = file->inode->ops->write(file, buf, nbyte);
