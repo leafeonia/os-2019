@@ -60,7 +60,7 @@ inode_t* procfsops_lookup(filesystem_t *fs, const char *path, int flags){
 
 ssize_t proc_inode_read(file_t *file, char *buf, size_t size){
 	int code = file->inode->block[0];
-	GOLDLOG("code = %d",code);
+	//GOLDLOG("code = %d",code);
 	if(code == 1) {
 		int cnt = 0;
 		dire_t* dir = (dire_t*)buf;

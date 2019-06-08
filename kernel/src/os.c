@@ -302,7 +302,7 @@ static void shell(void* name){
     		while(*filename && strncmp(filename, ">>", 2)) filename++;
     		filename += 2;
     		if(strlen(filename) == 0){
-    			sprintf(output,"echo: %s\n", content);
+    			sprintf(output,"%s\n", content);
     		}
     		else{
     			while(*filename == ' ') filename++;
