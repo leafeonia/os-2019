@@ -155,12 +155,15 @@ static void touch(char* output, char* pwd, char* filename){
 	if(vfs->open(newpath, O_CREAT) == -1) sprintf(output, "touch %s fails\n", filename);
 }
 
-void echo(char* pwd,char* filename,char* content){
+void echo(char* output, char* pwd,char* filename,char* content){
 	char newpath[128];
 	if(strcmp(pwd,"/") == 0) sprintf(newpath,"/%s",filename);
 	else sprintf(newpath,"%s/%s",pwd,filename);
 	int fd = vfs->open(newpath, O_CREAT);
-	if(fd == -1) return;
+	if(fd == -1) {
+		sprintf(output, "echo \"%s\" into %s fails\n",content, filename);
+		return;
+	}
 	vfs->lseek(fd, 0, SEEK_END);
 	vfs->write(fd, content, strlen(content));
 	vfs->close(fd);
@@ -306,7 +309,7 @@ static void shell(void* name){
     			if(strlen(filename) == 0) sprintf(output,"echo: please type in filename\n");
     			else {
     				//sprintf(output,"add \"%s\" into file %s\n",content, filename);
-    				echo(pwd, filename, content);
+    				echo(output, pwd, filename, content);
     			}
     		}
     	} 
