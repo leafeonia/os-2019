@@ -434,6 +434,8 @@ static void os_init() {
   //kmt->create(pmm->alloc(sizeof(task_t)), "fs2", fs, NULL);
   kmt->create(pmm->alloc(sizeof(task_t)), "shell1", shell, "tty1");
   kmt->create(pmm->alloc(sizeof(task_t)), "shell2", shell, "tty2");
+  kmt->create(pmm->alloc(sizeof(task_t)), "shell3", shell, "tty3");
+  kmt->create(pmm->alloc(sizeof(task_t)), "shell4", shell, "tty4");
   #endif
   //printf("end of os_init. intr_read = %d\n",_intr_read());
 }

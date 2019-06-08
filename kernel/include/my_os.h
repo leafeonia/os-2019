@@ -1,7 +1,8 @@
 
-#define DEBUG
+//#define DEBUG
+#define ERR_LOG
 
-#ifdef DEBUG
+#ifdef ERR_LOG
 	#define LOG(...) printf("\033[1;35m");printf(__VA_ARGS__);printf("\033[0m\n"); 
 #else
 	#define LOG(...) ((void)0)
@@ -26,6 +27,15 @@
 #define MAGIC1 0x123456789012345
 #define MAGIC2 0x987654321098765
 
-#define GOLDLOG(...) printf("\033[1;33m");printf(__VA_ARGS__);printf("\033[0m\n"); 
+#ifdef DEBUG
+	#define GOLDLOG(...) printf("\033[1;33m");printf(__VA_ARGS__);printf("\033[0m\n");
+#else
+	#define GOLDLOG(...) ((void)0) 
+#endif
 
-#define CYANLOG(...) printf("\033[36m");printf(__VA_ARGS__);printf("\033[0m\n"); 
+#ifdef DEBUG
+	#define CYANLOG(...) printf("\033[36m");printf(__VA_ARGS__);printf("\033[0m\n");
+#else
+	#define CYANLOG(...) ((void)0) 
+#endif
+
