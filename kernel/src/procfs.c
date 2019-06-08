@@ -24,7 +24,7 @@ inode_t* procfsops_lookup(filesystem_t *fs, const char *path, int flags){
 		LOG("no directory in procfs");
 		return NULL;
 	}
-	if(flag & O_CREAT){
+	if(flags & O_CREAT){
 		LOG("procfs is read-only");
 		return NULL;
 	}
