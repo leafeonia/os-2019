@@ -34,7 +34,10 @@ ssize_t proc_inode_read(file_t *file, char *buf, size_t size){
 		for(int i = 0;i < 16;i++){
 			for(int j = 0;j < NR_TASK;j++){
 				task_t* cur = tasks[i][j];
-				if(cur->fence1 == MAGIC1) sprintf(dir[cnt++].name,cur->name);
+				if(cur->fence1 == MAGIC1) {
+					sprintf(dir[cnt].name,cur->name);
+					dir[cnt++].inode_id = 1;
+				}
 			}
 		}
 		for(int i = 0;i < 10;i++){
