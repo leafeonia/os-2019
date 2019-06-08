@@ -437,7 +437,7 @@ inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
 	//CYANLOG("%d",ret->block[0]);
 	if(flags & O_DIRE){
 		dire_t dir[NR_DIRE];
-		blkfs->dev->ops->read(blkfs->dev, DATA(inode->block[0]), &dir, BLOCK_SIZE);
+		blkfs->dev->ops->read(blkfs->dev, DATA(ret->block[0]), &dir, BLOCK_SIZE);
 		if(strcmp(dir[0].name,".") == 0 && strcmp(dir[1].name,"..") == 0){
 			return ret;
 		}
