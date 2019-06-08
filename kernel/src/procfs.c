@@ -24,7 +24,7 @@ void procfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	fs->name = name;
 	fs->dev = dev;	
 	procfs_ops = pmm->alloc(sizeof(fsops_t));
-	procfs->ops = procfs_ops;
+	fs->ops = procfs_ops;
 	extern task_t* tasks[16][NR_TASK];
 	for(int i = 0;i < 16;i++){
 		for(int j = 0;j < NR_TASK;j++){

@@ -25,6 +25,13 @@ const char* findfs(const char* path, filesystem_t* ret){
 		ret->dev = blkfs->dev;
 		return fs_path;
 	}
+	if(strcmp(path, "/proc") == 0){
+		const char* fs_path = path + 1;
+		ret->name = procfs->name;
+		ret->ops = procfs->ops;
+		ret->dev = procfs->dev;
+		return fs_path;
+	}
 	int omit = 0; 
 	for(int i = 0;i <= mt_idx;i++){
 		if(i == mt_idx) panic("filesystem not found\n");
