@@ -5,7 +5,7 @@
 #include "my_os.h"
 
 static inodeops_t* proc_inode_ops;
-static inode_t* procfs_inode[10];
+//static inode_t* procfs_inode[10];
 
 int boom(){
 	LOG("procfs doesn't support this function");
@@ -29,7 +29,7 @@ void procfs_init(filesystem_t *fs, const char *name, device_t *dev){
 
 	
 	
-	
+	/*
 	proc_inode_ops = pmm->alloc(sizeof(inodeops_t));
 	proc_inode_ops->open   = proc_inode_open;
 	proc_inode_ops->close  = proc_inode_close;
@@ -39,5 +39,5 @@ void procfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	proc_inode_ops->mkdir  = boom;
 	proc_inode_ops->rmdir  = boom;
 	proc_inode_ops->link   = boom;
-	proc_inode_ops->unlink = boom;
+	proc_inode_ops->unlink = boom;*/
 }
