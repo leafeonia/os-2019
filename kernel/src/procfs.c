@@ -33,7 +33,7 @@ void procfs_init(filesystem_t *fs, const char *name, device_t *dev){
 		}
 	}
 	
-	procfs_ops->lookup = 
+	procfs_ops->lookup = procfsops_lookup;
 
 	
 	
