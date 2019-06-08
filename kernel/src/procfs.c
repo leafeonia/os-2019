@@ -40,8 +40,6 @@ ssize_t proc_inode_read(file_t *file, char *buf, size_t size){
 		for(int i = 0;i < 10;i++){
 			printf("%d - name: %s\n",i,dir[i].name );
 		}
-		
-	}
 	}
 	else if(code == 2) sprintf(buf, "cpuinfo: %d",_ncpu());
 	else if(code == 3) sprintf(buf, "meminfo");
