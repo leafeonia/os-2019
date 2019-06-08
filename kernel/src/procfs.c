@@ -116,7 +116,7 @@ void procfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	procfs_inode.refcnt = 0;
 	procfs_inode.fs = procfs;
 	procfs_inode.ops = proc_inode_ops;
-	for(int i = 0;i < 12;i++) procfs_inode.block[i] = 0;
+	for(int i = 0;i < 11;i++) procfs_inode.block[i] = 0;
 	
 	
 	
