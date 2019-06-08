@@ -41,6 +41,7 @@ void procfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	fs->name = name;
 	fs->dev = dev;	
 	procfs_ops = pmm->alloc(sizeof(fsops_t));
+	proc_inode_ops = pmm->alloc(sizeof(inodeops_t));
 	fs->ops = procfs_ops;
 	extern task_t* tasks[16][NR_TASK];
 	for(int i = 0;i < 16;i++){
@@ -61,7 +62,7 @@ void procfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	for(int i = 0;i < 12;i++) procfs_inode.block[i] = 0;
 	
 	
-	proc_inode_ops = pmm->alloc(sizeof(inodeops_t));
+	
 	proc_inode_ops->open   = dummy;
 	proc_inode_ops->close  = dummy;
 	proc_inode_ops->read   = proc_inode_read;
