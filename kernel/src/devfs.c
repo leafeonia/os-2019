@@ -59,6 +59,7 @@ ssize_t dev_inode_write(file_t *file, const char *buf, size_t size){
 
 
 inode_t* devfsops_lookup(filesystem_t *fs, const char *path, int flags){
+	if(flags & O_DIRE) return NULL; //no directory
 	//kmt->spin_lock(&lk_dev_inode_ops);
 	if(path[0] == '/') path = path + 1;
 	//printf("Welcome to devfs_lookup. dev_name = %s\n",path);

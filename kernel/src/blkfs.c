@@ -435,7 +435,7 @@ inode_t* blkfsops_lookup(filesystem_t *fs, const char *path, int flags){
 	inode_t* ret = pmm->alloc(sizeof(inode_t));
 	fs->dev->ops->read(fs->dev, INODE(inode_id), ret, sizeof(inode_t));
 	//CYANLOG("%d",ret->block[0]);
-	if(flags & O_DIRE){
+	if((flags & O_DIRE) && strcmp(path,"/dev") && strcmp(path,"/proc")){
 		dire_t dir[NR_DIRE];
 		blkfs->dev->ops->read(blkfs->dev, DATA(ret->block[0]), &dir, BLOCK_SIZE);
 		if(strcmp(dir[0].name,".") == 0 && strcmp(dir[1].name,"..") == 0){
