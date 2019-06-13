@@ -40,7 +40,7 @@ ssize_t dev_inode_write(file_t *file, const char *buf, size_t size){
 	//kmt->spin_lock(&lk_dev_inode_ops);
 	//LOG("YEAH");
 	device_t* dev = file->inode->ptr;
-	if(strncmp(ptr->name,"ramdisk",7) == 0){
+	if(strncmp(dev->name,"ramdisk",7) == 0){
 		LOG("cannot write into ramdisk");
 		return -1;
 	}
