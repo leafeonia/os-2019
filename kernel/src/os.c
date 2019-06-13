@@ -165,7 +165,11 @@ void echo(char* output, char* pwd,char* filename,char* content){
 		return;
 	}
 	if(strncmp(filename + strlen(filename) - 4,"tty",3) != 0) vfs->lseek(fd, 0, SEEK_END);
-	vfs->write(fd, content, strlen(content));
+	int ret = vfs->write(fd, content, strlen(content));
+	if(ret == -1) {
+		sprintf(output, "echo \"%s\" into %s fails\n",content, filename);
+		return;
+	}
 	vfs->close(fd);
 }
 
