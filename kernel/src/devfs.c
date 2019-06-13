@@ -40,6 +40,10 @@ ssize_t dev_inode_write(file_t *file, const char *buf, size_t size){
 	//kmt->spin_lock(&lk_dev_inode_ops);
 	//LOG("YEAH");
 	device_t* dev = file->inode->ptr;
+	if(strncmp(ptr->name,"ramdisk",7) == 0){
+		LOG("cannot write into ramdisk");
+		return -1;
+	}
 	//printf("inode = 0x%x, dev = 0x%x, dev->name = %s, dev->ops = 0x%x \n",file->inode, dev, dev->name, dev->ops);
 	/*extern device_t* devices[8];
 	for(int i = 0;i < 8;i++){
