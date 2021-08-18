@@ -1,4 +1,4 @@
-# NJU Operating System Project
+# NJU Operating System Course Project
 
 The project is the lab of Operating System course of Nanjing University. It implements a simplified operating system with multi-threaded memory allocation and recycling, multi-core thread scheduling and file system. Codes of multiple minilabs are also included.
 
